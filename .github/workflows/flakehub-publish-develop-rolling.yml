@@ -1,0 +1,23 @@
+name: "Publish every Git push to develop to FlakeHub"
+on:
+  push:
+    branches:
+      - "develop"
+jobs:
+  flakehub-publish:
+    runs-on: "ubuntu-latest"
+    permissions:
+      id-token: "write"
+      contents: "read"
+    steps:
+      - uses: "actions/checkout@v5"
+        with:
+          persist-credentials: false
+      - uses: "DeterminateSystems/determinate-nix-action@v3"
+      - uses: "DeterminateSystems/flakehub-push@main"
+        with:
+          name: "QF0xB/qnix-modules-develop"
+          rolling: false
+          tag: v0.0.1
+          visibility: "private"
+          include-output-paths: true

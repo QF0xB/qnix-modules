@@ -1,0 +1,64 @@
+{ lib, categories ? null, ... }:
+let
+  # Import module index
+  moduleIndex = import ../module-index.nix;
+  
+  # Default to all categories if not specified
+  allCategories = builtins.attrNames moduleIndex;
+  finalCategories = if categories != null then categories else allCategories;
+  
+  # Ensure core is always included
+  categoriesList = lib.unique (["core"] ++ finalCategories);
+  
+  # Validate categories exist in index
+  validCategories = builtins.filter (cat: builtins.hasAttr cat moduleIndex) categoriesList;
+  
+  # Collect all option modules from selected categories
+  collectOptions = category:
+    let
+      catModules = moduleIndex.${category} or {};
+      moduleNames = builtins.attrNames catModules;
+      # Build paths using string concatenation - Nix will resolve relative to this file
+      optionPaths = builtins.map (name: 
+        (toString ./../modules) + "/${category}/${name}/options/options.nix"
+      ) moduleNames;
+    in
+    optionPaths;
+  
+  # Collect all NixOS modules from selected categories
+  collectNixosModules = category:
+    let
+      catModules = moduleIndex.${category} or {};
+      moduleNames = builtins.attrNames catModules;
+      # Only include modules that have nixos = true
+      nixosModules = builtins.filter (name:
+        let info = catModules.${name};
+        in info.nixos or false
+      ) moduleNames;
+      modulePaths = builtins.map (name: 
+        (toString ./../modules) + "/${category}/${name}/nixos/module.nix"
+      ) nixosModules;
+    in
+    modulePaths;
+  
+  # Collect all imports
+  allOptionModules = lib.concatMap collectOptions validCategories;
+  allNixosModules = lib.concatMap collectNixosModules validCategories;
+  
+  # qnix options must be loaded first (defines the namespace)
+  # qnix is NOT in module-index, it's always loaded from modules/qnix/
+  # Use __dirname-relative path: loader/ is sibling to modules/
+  qnixOptions = [ ./../modules/qnix/options/options.nix ];
+  
+  # qnix nixos module (if it exists)
+  qnixNixosModule = if builtins.pathExists ./../modules/qnix/nixos/module.nix
+    then [ ./../modules/qnix/nixos/module.nix ]
+    else [];
+in
+lib.traceSeqN 1
+  ">>> [qnix/nixos] Categories: ${builtins.toString validCategories}"
+  {
+    # Import qnix options first, then other options, then modules
+    imports = qnixOptions ++ allOptionModules ++ qnixNixosModule ++ allNixosModules;
+  }
+
