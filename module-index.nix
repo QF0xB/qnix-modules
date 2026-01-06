@@ -4,6 +4,14 @@
   # Note: options/options.nix is assumed to always exist
 
   core = {
+    boot = {
+      nixos = true;
+      home = false;
+    };
+    user = {
+      nixos = true;
+      home = false;
+    };
   };
 
   desktop = {
