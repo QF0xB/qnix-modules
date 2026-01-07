@@ -1,0 +1,100 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Pre-commit hook to regenerate module-index.nix, MODULES.md, and documentation
+# when module files, docs generation, or module-index.nix changes
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+
+cd "$REPO_ROOT"
+
+# Get list of staged files
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM)
+
+# Check if any relevant files changed
+NEEDS_UPDATE=false
+
+for file in $STAGED_FILES; do
+  # Check if it's a module file
+  if [[ "$file" =~ ^modules/ ]]; then
+    NEEDS_UPDATE=true
+    break
+  fi
+  
+  # Check if it's docs generation files (not the generated docs themselves)
+  if [[ "$file" =~ ^docs/generation/ ]]; then
+    NEEDS_UPDATE=true
+    break
+  fi
+  
+  # Check if module-index.nix changed
+  if [[ "$file" == "module-index.nix" ]]; then
+    NEEDS_UPDATE=true
+    break
+  fi
+  
+  # Check if tools that generate files changed
+  if [[ "$file" =~ ^tools/(module-update\.py|gen-docs\.sh|update\.sh)$ ]]; then
+    NEEDS_UPDATE=true
+    break
+  fi
+done
+
+if [ "$NEEDS_UPDATE" = true ]; then
+  echo "Detected changes in modules, docs generation, or module-index.nix"
+  echo "Running tools/update.sh to regenerate files..."
+  
+  # Track which files might change
+  FILES_TO_CHECK=(
+    "module-index.nix"
+    "MODULES.md"
+    "docs/options.md"
+    "docs/options.json"
+    "docs/options.txt"
+  )
+  
+  # Store original state of files
+  declare -A ORIGINAL_HASHES
+  for file in "${FILES_TO_CHECK[@]}"; do
+    if [ -f "$file" ]; then
+      ORIGINAL_HASHES["$file"]=$(git hash-object "$file" 2>/dev/null || echo "")
+    fi
+  done
+  
+  # Run the update script
+  "$REPO_ROOT/tools/update.sh" || {
+    echo "Error: Failed to update generated files."
+    exit 1
+  }
+  
+  # Check if any generated files changed
+  CHANGED_FILES=()
+  for file in "${FILES_TO_CHECK[@]}"; do
+    if [ -f "$file" ]; then
+      NEW_HASH=$(git hash-object "$file" 2>/dev/null || echo "")
+      OLD_HASH="${ORIGINAL_HASHES[$file]:-}"
+      if [ "$NEW_HASH" != "$OLD_HASH" ]; then
+        CHANGED_FILES+=("$file")
+      fi
+    fi
+  done
+  
+  # If files changed, stage them and inform the user
+  if [ ${#CHANGED_FILES[@]} -gt 0 ]; then
+    echo ""
+    echo "The following generated files were updated:"
+    for file in "${CHANGED_FILES[@]}"; do
+      echo "  - $file"
+    done
+    echo ""
+    echo "Staging updated files..."
+    git add "${CHANGED_FILES[@]}"
+    echo ""
+    echo "✓ Generated files have been updated and staged."
+    echo "  Please review the changes and amend your commit if needed."
+  fi
+fi
+
+echo "Pre-commit checks completed successfully."
+
