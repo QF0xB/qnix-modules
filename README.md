@@ -145,6 +145,60 @@ This will:
 
 **Important**: Always commit the generated `module-index.nix` and `MODULES.md` files.
 
+## Documentation
+
+The repository includes comprehensive documentation generated from module options.
+
+### Generated Documentation
+
+Documentation is automatically generated in multiple formats:
+
+- **`docs/options.md`** - Markdown documentation (human-readable)
+- **`docs/options.json`** - JSON documentation (machine-readable)
+- **`docs/options.txt`** - ASCII/plain text documentation
+
+### Generating Documentation
+
+To generate documentation:
+
+```bash
+./tools/gen-docs.sh
+```
+
+This will:
+1. Evaluate all module options using `lib.evalModules`
+2. Generate documentation using `pkgs.nixosOptionsDoc`
+3. Copy the generated files to `docs/`
+
+**Note**: Documentation generation requires fetching `nixpkgs`, but this only happens when building docs (not during normal flake evaluation).
+
+### Building Documentation via Flake
+
+You can also build documentation directly via the flake:
+
+```bash
+# Build markdown documentation
+nix build .#docs.markdown --impure
+
+# Build JSON documentation
+nix build .#docs.json --impure
+
+# Build ASCII documentation
+nix build .#docs.ascii --impure
+```
+
+The `--impure` flag is required because documentation generation fetches `nixpkgs` dynamically.
+
+### Updating All Generated Files
+
+To update both the module index and documentation:
+
+```bash
+./tools/update.sh
+```
+
+This runs both `module-update.py` and `gen-docs.sh` in sequence.
+
 ## Module Options
 
 All modules expose options under `qnix.<module-name>.*`. At minimum, every module has:
@@ -223,6 +277,15 @@ qnix-modules/
 │   └── home.nix           # Home Manager module loader
 ├── module-index.nix       # Generated module index
 ├── MODULES.md             # Generated module documentation
+├── docs/                  # Generated documentation
+│   ├── generation/        # Documentation generation code
+│   ├── options.md         # Markdown documentation
+│   ├── options.json       # JSON documentation
+│   └── options.txt        # ASCII documentation
+├── hooks/                 # Git hooks (shared)
+│   ├── pre-commit         # Auto-regenerate on commit
+│   ├── install.sh         # Install hooks script
+│   └── README.md          # Hooks documentation
 ├── modules/               # Module directory
 │   ├── core/
 │   ├── desktop/
@@ -230,7 +293,9 @@ qnix-modules/
 │   └── pentesting/
 └── tools/
     ├── gen-module.sh      # Create new module
-    └── module-update.py   # Generate index & docs
+    ├── module-update.py   # Generate index & MODULES.md
+    ├── gen-docs.sh        # Generate documentation
+    └── update.sh          # Update all generated files
 ```
 
 ### Building and Testing
@@ -246,13 +311,48 @@ nix eval .#nixosModules.qnix
 nix eval .#homeManagerModules.qnix
 ```
 
+### Git Hooks
+
+Git hooks are provided to automatically regenerate files when needed.
+
+#### Installation
+
+Install the hooks:
+
+```bash
+./hooks/install.sh
+```
+
+This creates symlinks from `.git/hooks/` to the hooks in `hooks/`.
+
+#### Pre-commit Hook
+
+The `pre-commit` hook automatically regenerates generated files when relevant source files change:
+
+**Triggers on changes to:**
+- Module files (`modules/`)
+- Documentation generation (`docs/generation/`)
+- `module-index.nix`
+- Generation tools (`tools/module-update.py`, `tools/gen-docs.sh`, `tools/update.sh`)
+
+**Automatically regenerates:**
+- `module-index.nix`
+- `MODULES.md`
+- `docs/options.md`
+- `docs/options.json`
+- `docs/options.txt`
+
+**Auto-stages** any regenerated files that changed, so they're included in your commit.
+
+See [hooks/README.md](hooks/README.md) for more details.
+
 ### Workflow
 
 1. **Create a module**: `./tools/gen-module.sh b mymodule desktop`
 2. **Edit module files**: Add your configuration
-3. **Regenerate index**: `python3 tools/module-update.py`
+3. **Regenerate files**: The pre-commit hook will auto-regenerate, or run `./tools/update.sh` manually
 4. **Validate**: `nix eval .#checks` to ensure everything evaluates
-5. **Commit**: Include `module-index.nix` and `MODULES.md` in your commit
+5. **Commit**: Generated files (`module-index.nix`, `MODULES.md`, `docs/options.*`) are auto-staged by the hook
 
 ## Example Branches
 
@@ -286,3 +386,4 @@ See [BRANCHING.md](BRANCHING.md) for the complete branching strategy. Quick summ
 - [MODULES.md](MODULES.md) - Complete module documentation
 - [BRANCHING.md](BRANCHING.md) - Branching strategy and workflow
 - [example/](example/) - Example client and server configurations
+- [hooks/HOOKS.md](hooks/HOOKS.md) - Git hooks documentation and usage 
