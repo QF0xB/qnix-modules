@@ -38,7 +38,7 @@ create_nixos_module() {
 { lib, config, ... }:
 
 let
-  cfg = config.qnix.$MODULE_NAME;
+  cfg = config.qnix.${MODULE_CATEGORY}.${MODULE_NAME};
 in
 {
   config = lib.mkIf cfg.enable {
@@ -57,7 +57,7 @@ create_home_module() {
 { lib, config, ... }:
 
 let
-  cfg = config.qnix.$MODULE_NAME;
+  cfg = config.qnix.${MODULE_CATEGORY}.${MODULE_NAME};
 in
 {
   config = lib.mkIf cfg.enable {
@@ -76,7 +76,7 @@ create_options() {
 { lib, ... }:
 
 {
-  options.qnix.$MODULE_NAME = {
+  options.qnix.${MODULE_CATEGORY}.${MODULE_NAME} = {
     enable = lib.mkEnableOption "$MODULE_NAME" // {
       default = false;
     };
@@ -105,16 +105,16 @@ echo ""
 echo "Module structure created at: $MODULE_DIR"
 echo ""
 
-# Run module-update.py to regenerate the index
-if [[ -f "$DOTS_DIR/tools/module-update.py" ]]; then
-  echo "Regenerating module-index.nix..."
+# Run update.sh to regenerate all generated files
+if [[ -f "$DOTS_DIR/tools/update.sh" ]]; then
+  echo "Updating generated files..."
   cd "$DOTS_DIR"
-  python3 "$DOTS_DIR/tools/module-update.py" --root "$DOTS_DIR" || {
-    echo "Warning: Could not run module-update.py automatically."
-    echo "Please run it manually: python3 $DOTS_DIR/tools/module-update.py"
+  "$DOTS_DIR/tools/update.sh" || {
+    echo "Warning: Could not run update.sh automatically."
+    echo "Please run it manually: $DOTS_DIR/tools/update.sh"
   }
 else
-  echo "Warning: module-update.py not found. Please regenerate module-index.nix manually."
+  echo "Warning: update.sh not found. Please regenerate files manually."
 fi
 
 echo "Done!"

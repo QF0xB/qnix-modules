@@ -1,0 +1,452 @@
+== _module{zwsp}.args
+
+Additional arguments passed to each module in addition to ones like ``lib``, ``config``, and ``pkgs``, ``modulesPath``{zwsp}.
+
+This option is also available to all submodules{zwsp}. Submodules do not inherit args from their parent module, nor do they provide args to their parent module or sibling submodules{zwsp}. The sole exception to this is the argument ``name`` which is provided by parent modules to a submodule and contains the attribute name the submodule is bound to, or a unique generated name if it is not bound to an attribute{zwsp}.
+
+Some arguments are already passed by default, of which the following __cannot__ be changed with this option:
+
+[]
+* {empty}[.var]``lib``: The nixpkgs library{zwsp}.
+
+* {empty}[.var]``config``: The results of all options after merging the values from all modules together{zwsp}.
+
+* {empty}[.var]``options``: The options declared in all modules{zwsp}.
+
+* {empty}[.var]``specialArgs``: The ``specialArgs`` argument passed to ``evalModules``{zwsp}.
+
+* {empty}All attributes of [.var]``specialArgs``
++
+Whereas option values can generally depend on other option values thanks to laziness, this does not apply to ``imports``, which must be computed statically before anything else{zwsp}.
++
+For this reason, callers of the module system can provide ``specialArgs`` which are available during import resolution{zwsp}.
++
+For NixOS, ``specialArgs`` includes [.var]``modulesPath``, which allows you to import extra modules from the nixpkgs package tree without having to somehow make the module aware of the location of the ``nixpkgs`` or NixOS directories{zwsp}.
++
+----
+{ modulesPath, ... }: {
+  imports = [
+    (modulesPath + "/profiles/minimal.nix")
+  ];
+}
+----
+
+
+For NixOS, the default value for this option includes at least this argument:
+
+[options="compact"]
+* {empty}[.var]``pkgs``: The nixpkgs package set according to the [.option]``nixpkgs{zwsp}.pkgs`` option{zwsp}.
+
+
+
+
+__Type:__ lazy attribute set of raw value
+
+__Declared by:__
+
+* link:https://github.com/NixOS/nixpkgs/blob//lib/modules.nix[{zwsp}+<+{zwsp}nixpkgs/lib/modules{zwsp}.nix{gt}]
+
+
+
+== apps{zwsp}.browser
+
+
+
+The default browser
+
+
+
+__Type:__ package
+
+
+
+__Default:__ ``{zwsp}+<+{zwsp}derivation brave-1{zwsp}.85{zwsp}.118{gt}``
+
+
+
+== apps{zwsp}.file-manager
+
+
+
+The default file-manager
+
+
+
+__Type:__ package
+
+
+
+__Default:__ ``{zwsp}+<+{zwsp}derivation nemo-6{zwsp}.6{zwsp}.2{gt}``
+
+
+
+== apps{zwsp}.notes
+
+
+
+Notetaking app
+
+
+
+__Type:__ package
+
+
+
+__Default:__ ``{zwsp}+<+{zwsp}derivation obsidian-1{zwsp}.10{zwsp}.6{gt}``
+
+
+
+== apps{zwsp}.terminal
+
+
+
+The default terminal emulator
+
+
+
+__Type:__ package
+
+
+
+__Default:__ ``{zwsp}+<+{zwsp}derivation kitty-0{zwsp}.45{zwsp}.0{gt}``
+
+
+
+== boot{zwsp}.enable
+
+
+
+Whether to enable boot{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``false``
+
+
+
+__Example:__ ``true``
+
+
+
+== core{zwsp}.user{zwsp}.enable
+
+
+
+Whether to enable user{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``false``
+
+
+
+__Example:__ ``true``
+
+
+
+== core{zwsp}.user{zwsp}.defaultExtraGroups
+
+
+
+Groups to add to all users by default (e{zwsp}.g{zwsp}., {startsb} “video” “audio” {endsb})
+
+
+
+__Type:__ list of string
+
+
+
+__Default:__ ``{startsb} {endsb}``
+
+
+
+__Example:__
+
+----
+[
+  "video"
+  "audio"
+]
+----
+
+
+
+== core{zwsp}.user{zwsp}.root{zwsp}.enable
+
+
+
+Whether to enable root user{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``false``
+
+
+
+__Example:__ ``true``
+
+
+
+== core{zwsp}.user{zwsp}.root{zwsp}.password
+
+
+
+The password for the root user
+
+
+
+__Type:__ string
+
+
+
+__Default:__ ``{quot}{quot}``
+
+
+
+== core{zwsp}.user{zwsp}.users
+
+
+
+Users to create (attrset: username -{gt} user config)
+
+
+
+__Type:__ attribute set of (submodule)
+
+
+
+__Default:__ ``{ }``
+
+
+
+== core{zwsp}.user{zwsp}.users{zwsp}.{zwsp}+<+{zwsp}name{gt}{zwsp}.description
+
+
+
+User description/comment
+
+
+
+__Type:__ null or string
+
+
+
+__Default:__ ``null``
+
+
+
+== core{zwsp}.user{zwsp}.users{zwsp}.{zwsp}+<+{zwsp}name{gt}{zwsp}.extraGroups
+
+
+
+Additional groups for the user
+
+
+
+__Type:__ list of string
+
+
+
+__Default:__ ``{startsb} {endsb}``
+
+
+
+== core{zwsp}.user{zwsp}.users{zwsp}.{zwsp}+<+{zwsp}name{gt}{zwsp}.group
+
+
+
+Primary group for the user (required)
+
+
+
+__Type:__ string
+
+
+
+== core{zwsp}.user{zwsp}.users{zwsp}.{zwsp}+<+{zwsp}name{gt}{zwsp}.home
+
+
+
+Home directory path
+
+
+
+__Type:__ null or string
+
+
+
+__Default:__ ``null``
+
+
+
+== core{zwsp}.user{zwsp}.users{zwsp}.{zwsp}+<+{zwsp}name{gt}{zwsp}.ignoreShellProgramCheck
+
+
+
+Ignore shell program check
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``true``
+
+
+
+== core{zwsp}.user{zwsp}.users{zwsp}.{zwsp}+<+{zwsp}name{gt}{zwsp}.initialHashedPassword
+
+
+
+Initial hashed password
+
+
+
+__Type:__ null or string
+
+
+
+__Default:__ ``null``
+
+
+
+== core{zwsp}.user{zwsp}.users{zwsp}.{zwsp}+<+{zwsp}name{gt}{zwsp}.isNormalUser
+
+
+
+Whether this is a normal user (exactly one of isNormalUser or isSystemUser must be set)
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``true``
+
+
+
+== core{zwsp}.user{zwsp}.users{zwsp}.{zwsp}+<+{zwsp}name{gt}{zwsp}.isSystemUser
+
+
+
+Whether this is a system user (exactly one of isNormalUser or isSystemUser must be set)
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``false``
+
+
+
+== core{zwsp}.user{zwsp}.users{zwsp}.{zwsp}+<+{zwsp}name{gt}{zwsp}.openssh{zwsp}.authorizedKeys{zwsp}.keys
+
+
+
+SSH authorized keys
+
+
+
+__Type:__ list of string
+
+
+
+__Default:__ ``{startsb} {endsb}``
+
+
+
+== development
+
+
+
+Enable development tools{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``true``
+
+
+
+== headless
+
+
+
+Run system without graphical environment{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``false``
+
+
+
+== server
+
+
+
+Is this a server?
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``false``
+
+
+
+== wayland
+
+
+
+Is wayland running?
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``false``
+
+
+
+== work
+
+
+
+Enable work-related programs and services{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``false``
+
+

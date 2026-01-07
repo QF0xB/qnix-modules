@@ -83,7 +83,7 @@ def extract_option_info(options_file: Path) -> List[Dict[str, Any]]:
     """
     Extract option information from a Nix options file using regex.
     Returns list of option info dicts.
-    Handles both flat and nested options.
+    Handles both flat and nested options, including submodules.
     """
     if not options_file.is_file():
         return []
@@ -95,79 +95,189 @@ def extract_option_info(options_file: Path) -> List[Dict[str, Any]]:
     
     options = []
     
-    # Pattern to match mkOption calls (handles both types.bool and just bool)
-    # Matches: optionName = mkOption { type = ...; default = ...; description = ...; }
-    option_pattern = r'(\w+)\s*=\s*mkOption\s*\{([^}]+)\}'
-    
-    for match in re.finditer(option_pattern, content, re.MULTILINE | re.DOTALL):
-        option_name = match.group(1)
-        option_body = match.group(2)
+    def extract_from_body(option_body: str) -> Dict[str, Any]:
+        """Helper to extract type, default, and description from option body."""
+        # Extract type (handles types.bool, types.str, types.nullOr, types.listOf, etc.)
+        type_match = re.search(r'type\s*=\s*(?:lib\.)?types\.(\w+)', option_body)
+        if not type_match:
+            # Try nullOr pattern: type = lib.types.nullOr lib.types.str
+            nullor_match = re.search(r'type\s*=\s*(?:lib\.)?types\.nullOr\s+(?:lib\.)?types\.(\w+)', option_body)
+            if nullor_match:
+                opt_type = f"nullOr {nullor_match.group(1)}"
+            else:
+                # Try listOf pattern
+                listof_match = re.search(r'type\s*=\s*(?:lib\.)?types\.listOf\s+(?:lib\.)?types\.(\w+)', option_body)
+                if listof_match:
+                    opt_type = f"listOf {listof_match.group(1)}"
+                else:
+                    # Try attrsOf pattern
+                    attrs_match = re.search(r'type\s*=\s*(?:lib\.)?types\.attrsOf\s*\([^)]*types\.(\w+)', option_body)
+                    if attrs_match:
+                        opt_type = f"attrsOf {attrs_match.group(1)}"
+                    else:
+                        opt_type = None
+        else:
+            opt_type = type_match.group(1)
         
-        # Extract type (handles both types.bool and types.package)
-        type_match = re.search(r'type\s*=\s*types\.(\w+)', option_body)
-        opt_type = type_match.group(1) if type_match else None
-        
-        # Extract default
-        default_match = re.search(r'default\s*=\s*([^;]+);', option_body)
+        # Extract default (handles various formats)
+        default_match = re.search(r'default\s*=\s*([^;]+);', option_body, re.DOTALL)
         default_val = default_match.group(1).strip() if default_match else None
         if default_val:
             # Clean up default value
             default_val = default_val.replace('\n', ' ').strip()
-            # Remove extra whitespace
             default_val = re.sub(r'\s+', ' ', default_val)
-            if len(default_val) > 50:
+            # Handle common Nix values
+            if default_val in ['true', 'false', 'null']:
+                pass  # Keep as is
+            elif default_val.startswith('[') and default_val.endswith(']'):
+                # List - truncate if too long
+                if len(default_val) > 50:
+                    default_val = default_val[:47] + "...]"
+            elif len(default_val) > 50:
                 default_val = default_val[:47] + "..."
         
-        # Extract description (handles both single and double quotes)
-        desc_match = re.search(r'description\s*=\s*["\']([^"\']+)["\']', option_body)
+        # Extract description (handles both single and double quotes, multiline)
+        desc_match = re.search(r'description\s*=\s*["\']([^"\']+)["\']', option_body, re.DOTALL)
         if not desc_match:
-            # Try multiline description
-            desc_match = re.search(r'description\s*=\s*["\']([^"\']+)["\']', option_body, re.DOTALL)
+            # Try multiline with escaped quotes
+            desc_match = re.search(r'description\s*=\s*["\']((?:[^"\'\\]|\\.)+)["\']', option_body, re.DOTALL)
         description = desc_match.group(1).strip() if desc_match else None
+        if description:
+            # Unescape common sequences
+            description = description.replace('\\"', '"').replace("\\'", "'")
+        
+        return {
+            "type": opt_type or "unknown",
+            "default": default_val or "none",
+            "description": description or "No description",
+        }
+    
+    # Pattern to match mkOption calls (handles lib.mkOption, mkOption)
+    # Matches: optionName = (lib.)?mkOption { ... }
+    option_pattern = r'(\w+)\s*=\s*(?:lib\.)?mkOption\s*\{([^}]+)\}'
+    
+    # Pattern for mkEnableOption with string: optionName = mkEnableOption "description" // { default = ...; }
+    enable_option_pattern = r'(\w+)\s*=\s*(?:lib\.)?mkEnableOption\s*["\']([^"\']+)["\']'
+    
+    # Find all mkEnableOption calls with string descriptions
+    for match in re.finditer(enable_option_pattern, content, re.MULTILINE):
+        option_name = match.group(1)
+        description = match.group(2).strip()
+        
+        # Look for default value after the mkEnableOption call
+        # Pattern: // { default = ...; }
+        after_match = content[match.end():match.end()+300]  # Check next 300 chars
+        default_match = re.search(r'//\s*\{\s*default\s*=\s*([^;]+);', after_match, re.MULTILINE)
+        default_val = default_match.group(1).strip() if default_match else "false"
         
         options.append({
             "name": option_name,
-            "type": opt_type,
+            "type": "bool",
             "default": default_val,
             "description": description,
         })
     
-    # Also handle nested options (like apps.terminal, apps.browser)
-    # Pattern: apps = { terminal = mkOption { ... }; }
-    nested_section_pattern = r'(\w+)\s*=\s*\{([^}]+)\}'
-    for match in re.finditer(nested_section_pattern, content, re.MULTILINE | re.DOTALL):
-        section_name = match.group(1)
-        section_body = match.group(2)
+    # Find all mkOption calls at top level
+    for match in re.finditer(option_pattern, content, re.MULTILINE | re.DOTALL):
+        option_name = match.group(1)
+        option_body = match.group(2)
         
-        # Find mkOption calls within this section
+        # Skip if we already found this as an enable option
+        if any(opt["name"] == option_name for opt in options):
+            continue
+        
+        info = extract_from_body(option_body)
+        options.append({
+            "name": option_name,
+            **info
+        })
+    
+    # Handle nested options in submodules
+    # Pattern: sectionName = { optionName = mkOption { ... }; }
+    # This handles cases like: root = { enable = ...; password = ...; }
+    nested_section_pattern = r'(\w+)\s*=\s*\{'
+    pos = 0
+    while True:
+        match = re.search(nested_section_pattern, content[pos:], re.MULTILINE)
+        if not match:
+            break
+        
+        section_start = pos + match.start()
+        section_name = match.group(1)
+        
+        # Find the matching closing brace for this section
+        brace_count = 0
+        section_end = section_start + match.end()
+        for i, char in enumerate(content[section_start + match.end():], start=section_start + match.end()):
+            if char == '{':
+                brace_count += 1
+            elif char == '}':
+                if brace_count == 0:
+                    section_end = i + 1
+                    break
+                brace_count -= 1
+        
+        section_body = content[section_start + match.end():section_end - 1]
+        
+        # Find mkOption/mkEnableOption calls within this section
         for nested_match in re.finditer(option_pattern, section_body, re.MULTILINE | re.DOTALL):
             nested_option_name = nested_match.group(1)
             nested_option_body = nested_match.group(2)
             full_name = f"{section_name}.{nested_option_name}"
             
-            # Extract type
-            type_match = re.search(r'type\s*=\s*types\.(\w+)', nested_option_body)
-            opt_type = type_match.group(1) if type_match else None
+            # Skip if already found
+            if any(opt["name"] == full_name for opt in options):
+                continue
             
-            # Extract default
-            default_match = re.search(r'default\s*=\s*([^;]+);', nested_option_body)
-            default_val = default_match.group(1).strip() if default_match else None
-            if default_val:
-                default_val = default_val.replace('\n', ' ').strip()
-                default_val = re.sub(r'\s+', ' ', default_val)
-                if len(default_val) > 50:
-                    default_val = default_val[:47] + "..."
+            info = extract_from_body(nested_option_body)
+            options.append({
+                "name": full_name,
+                **info
+            })
+        
+        # Also check for mkEnableOption in nested sections
+        for nested_match in re.finditer(enable_option_pattern, section_body, re.MULTILINE):
+            nested_option_name = nested_match.group(1)
+            description = nested_match.group(2).strip()
+            full_name = f"{section_name}.{nested_option_name}"
             
-            # Extract description
-            desc_match = re.search(r'description\s*=\s*["\']([^"\']+)["\']', nested_option_body)
-            description = desc_match.group(1).strip() if desc_match else None
+            # Skip if already found
+            if any(opt["name"] == full_name for opt in options):
+                continue
+            
+            # Look for default
+            after_match = section_body[nested_match.end():nested_match.end()+300]
+            default_match = re.search(r'//\s*\{\s*default\s*=\s*([^;]+);', after_match, re.MULTILINE)
+            default_val = default_match.group(1).strip() if default_match else "false"
             
             options.append({
                 "name": full_name,
-                "type": opt_type,
+                "type": "bool",
                 "default": default_val,
                 "description": description,
             })
+        
+        pos = section_end
+    
+    # Handle deeply nested options (like openssh.authorizedKeys.keys)
+    # Pattern: section.subsection.option = mkOption { ... }
+    deep_nested_pattern = r'(\w+)\.(\w+)\.(\w+)\s*=\s*(?:lib\.)?mkOption\s*\{([^}]+)\}'
+    for match in re.finditer(deep_nested_pattern, content, re.MULTILINE | re.DOTALL):
+        section = match.group(1)
+        subsection = match.group(2)
+        option = match.group(3)
+        option_body = match.group(4)
+        full_name = f"{section}.{subsection}.{option}"
+        
+        # Skip if already found
+        if any(opt["name"] == full_name for opt in options):
+            continue
+        
+        info = extract_from_body(option_body)
+        options.append({
+            "name": full_name,
+            **info
+        })
     
     return options
 

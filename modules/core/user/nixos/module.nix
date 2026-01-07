@@ -1,7 +1,7 @@
 { lib, config, ... }:
 
 let
-  cfg = config.qnix.user;
+  cfg = config.qnix.core.user;
   
   # Convert qnix.user.users to users.users format
   # Simple attrset construction with cleanup
@@ -21,12 +21,15 @@ let
       else
         { isNormalUser = true; };  # Default to normal user
       
+      # Merge default extra groups with user-specific extra groups
+      allExtraGroups = lib.unique (cfg.defaultExtraGroups ++ userCfg.extraGroups);
+      
       # Build config with all fields, then filter out null/empty
       fullConfig = {
         group = userGroup;
         home = userCfg.home;
         description = userCfg.description;
-        extraGroups = userCfg.extraGroups;
+        extraGroups = allExtraGroups;
         initialHashedPassword = userCfg.initialHashedPassword;
         ignoreShellProgramCheck = userCfg.ignoreShellProgramCheck;
         openssh.authorizedKeys.keys = userCfg.openssh.authorizedKeys.keys;
@@ -57,15 +60,20 @@ let
     };
   };
   
-  # Groups to create (when group name matches username)
+  # Groups to create (all groups referenced by users)
+  # Collect all unique group names from all users
+  allGroupNames = lib.unique (
+    lib.mapAttrsToList (username: userCfg:
+      if userCfg.group != null && userCfg.group != "" then 
+        userCfg.group 
+      else 
+        username
+    ) cfg.users
+  );
+  
+  # Create groups for all referenced group names
   userGroups = lib.listToAttrs (
-    lib.concatMap (username:
-      let
-        userCfg = cfg.users.${username};
-        userGroup = if userCfg.group != null && userCfg.group != "" then userCfg.group else username;
-      in
-      lib.optional (userGroup == username) (lib.nameValuePair userGroup {})
-    ) (lib.attrNames cfg.users)
+    lib.map (groupName: lib.nameValuePair groupName {}) allGroupNames
   );
 in
 {

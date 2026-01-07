@@ -40,7 +40,9 @@ These modules define the core QNix configuration options.
 
 #### Options
 
-- `qnix.boot.enable` (bool, default: `false`) - Enable this module
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `qnix.boot.enable` | `bool` | `false` | boot |
 
 ### `user`
 
@@ -48,7 +50,34 @@ These modules define the core QNix configuration options.
 
 #### Options
 
-- `qnix.user.enable` (bool, default: `false`) - Enable this module
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `qnix.user.enable` | `bool` | `false` | user |
+| `qnix.user.enable` | `bool` | `false` | root user |
+| `qnix.user.password` | `str` | `""` | The password for the root user |
+| `qnix.user.defaultExtraGroups` | `listOf` | `[]` | Groups to add to all users by default (e.g., [ \ |
+| `qnix.user.users` | `attrsOf` | `true` | Whether this is a normal user (exactly one of isNormalUser or isSystemUser must be set) |
+| `qnix.user.isSystemUser` | `bool` | `false` | Whether this is a system user (exactly one of isNormalUser or isSystemUser must be set) |
+| `qnix.user.group` | `str` | `none` | Primary group for the user (required) |
+| `qnix.user.home` | `nullOr` | `null` | Home directory path |
+| `qnix.user.description` | `nullOr` | `null` | User description/comment |
+| `qnix.user.extraGroups` | `listOf` | `[]` | Additional groups for the user |
+| `qnix.user.initialHashedPassword` | `nullOr` | `null` | Initial hashed password |
+| `qnix.user.keys` | `listOf` | `[]` | SSH authorized keys |
+| `qnix.user.ignoreShellProgramCheck` | `bool` | `true` | Ignore shell program check |
+| `qnix.user.user.password` | `str` | `""` | The password for the root user |
+| `qnix.user.user.defaultExtraGroups` | `listOf` | `[]` | Groups to add to all users by default (e.g., [ \ |
+| `qnix.user.user.users` | `attrsOf` | `true` | Whether this is a normal user (exactly one of isNormalUser or isSystemUser must be set) |
+| `qnix.user.user.isSystemUser` | `bool` | `false` | Whether this is a system user (exactly one of isNormalUser or isSystemUser must be set) |
+| `qnix.user.user.group` | `str` | `none` | Primary group for the user (required) |
+| `qnix.user.user.home` | `nullOr` | `null` | Home directory path |
+| `qnix.user.user.description` | `nullOr` | `null` | User description/comment |
+| `qnix.user.user.extraGroups` | `listOf` | `[]` | Additional groups for the user |
+| `qnix.user.user.initialHashedPassword` | `nullOr` | `null` | Initial hashed password |
+| `qnix.user.user.keys` | `listOf` | `[]` | SSH authorized keys |
+| `qnix.user.user.ignoreShellProgramCheck` | `bool` | `true` | Ignore shell program check |
+| `qnix.user.user.enable` | `bool` | `false` | root user |
+| `qnix.user.openssh.authorizedKeys.keys` | `listOf` | `[]` | SSH authorized keys |
 
 
 ---
