@@ -1,8 +1,8 @@
 { lib, ... }:
 
 {
-  options.qnix.boot = {
-    enable = lib.mkEnableOption "boot" // {
+  options.qnix.core.boot = {
+    grub.enable = lib.mkEnableOption "grub bootloader" // {
       default = false;
     };
   };

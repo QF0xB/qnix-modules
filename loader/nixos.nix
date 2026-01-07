@@ -1,4 +1,4 @@
-{ lib, categories ? null, ... }:
+{ lib, categories ? null, loadOptions ? false, ... }:
 let
   # Import module index
   moduleIndex = import ../module-index.nix;
@@ -54,11 +54,18 @@ let
   qnixNixosModule = if builtins.pathExists ./../modules/qnix/nixos/module.nix
     then [ ./../modules/qnix/nixos/module.nix ]
     else [];
+  
+  # Conditionally include options based on loadOptions flag
+  # When loadOptions = true: options are loaded into NixOS (for servers without home-manager)
+  # When loadOptions = false: options are only in home-manager, accessed via config.hm.qnix.*
+  # Modules should check both: config.qnix.* or config.hm.qnix.* for maximum flexibility
+  optionImports = if loadOptions then (qnixOptions ++ allOptionModules) else [];
 in
 lib.traceSeqN 1
-  ">>> [qnix/nixos] Categories: ${builtins.toString validCategories}"
+  ">>> [qnix/nixos] Categories: ${builtins.toString validCategories}, loadOptions: ${builtins.toString loadOptions}"
   {
-    # Import qnix options first, then other options, then modules
-    imports = qnixOptions ++ allOptionModules ++ qnixNixosModule ++ allNixosModules;
+    # Import options first (if loadOptions=true), then NixOS modules
+    # Modules should check config.qnix.* first, fallback to config.hm.qnix.*
+    imports = optionImports ++ allNixosModules;
   }
 

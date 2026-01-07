@@ -1,7 +1,9 @@
 { lib, config, ... }:
 
 let
-  cfg = config.qnix.core.user;
+  # Options can be in NixOS (system-wide, if loadOptions=true) or home-manager (via config.hm.qnix.*)
+  # Check system-wide first, fallback to home-manager for flexibility (e.g., servers without home-manager)
+  cfg = config.qnix.core.user or config.hm.qnix.core.user;
   
   # Convert qnix.user.users to users.users format
   # Simple attrset construction with cleanup
