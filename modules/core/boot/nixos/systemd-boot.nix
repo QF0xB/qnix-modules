@@ -6,13 +6,10 @@ let
   cfg = config.qnix.core.boot or config.hm.qnix.core.boot;
 in
 {
-  config = lib.mkIf cfg.grub.enable {
-    boot.loader.grub = {
+  config = lib.mkIf cfg."systemd-boot".enable {
+    boot.loader.systemd-boot = {
       enable = true;
-      device = cfg.grub.device;
-      efiSupport = cfg.efiSupport;
-      zfsSupport = cfg.zfsSupport;
-      enableCryptodisk = cfg.encrypted;
     };
   };
 }
+
