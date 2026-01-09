@@ -23,7 +23,7 @@ in
       initrd = lib.mkIf cfg.encrypted {
         luks.devices.cryptroot = {
           preLVM = lib.mkDefault true;
-          crypttabExtraOpts = lib.mkDefault [ "fido-device=auto" ];
+          crypttabExtraOpts = lib.mkDefault [ "fido2-device=auto" ];
           keyFile = lib.mkForce null;  # force prompt path instead of using keyFile
         };
         systemd.enable = true;
