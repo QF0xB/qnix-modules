@@ -21,7 +21,6 @@ in
       };
 
       initrd = {
-        availableKernelModules = [ "zfs" ];
         systemd.enable = true;
       };
 
