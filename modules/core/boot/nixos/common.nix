@@ -20,31 +20,31 @@ in
         };
       };
 
-      initrd = lib.mkIf cfg.encrypted {
-        luks.devices.cryptroot = {
-          preLVM = lib.mkDefault true;
-          # crypttabExtraOpts = lib.mkDefault [ "fido2-device=auto" ];
-          keyFile = lib.mkForce null;  # force prompt path instead of using keyFile
-          fallbackToPassword = lib.mkForce true;
-        };
-        systemd.enable = true;
-        # Add ZFS support to initrd so it can import after LUKS unlock
+      initrd = {
         availableKernelModules = [ "zfs" ];
-        
-        # Configure ZFS import services to wait for LUKS unlock
-        systemd.services."zfs-import-cache" = {
-          after = [ "systemd-cryptsetup@cryptroot.service" ];
-          requires = [ "systemd-cryptsetup@cryptroot.service" ];
-        };
-        systemd.services."zfs-import-scan" = {
-          after = [ "systemd-cryptsetup@cryptroot.service" ];
-          requires = [ "systemd-cryptsetup@cryptroot.service" ];
-        };
+        systemd.enable = true;
       };
 
-      # ZFS configuration - don't force import, wait for LUKS device
-      zfs.forceImportRoot = false;
-
+      # initrd = lib.mkIf (!cfg.encrypted) {
+      #  luks.devices.cryptroot = {
+          # crypttabExtraOpts = lib.mkDefault [ "fido2-device=auto" ];
+      #    keyFile = lib.mkForce null;  # force prompt path instead of using keyFile
+      #    fallbackToPassword = lib.mkForce true;
+      #  };
+      #  systemd.enable = true;
+        # Add ZFS support to initrd so it can import after LUKS unlock
+        # availableKernelModules = [ "zfs" ];
+        
+        # Configure ZFS import services to wait for LUKS unlock
+      #   systemd.services."zfs-import-cache" = {
+      #    after = [ "systemd-cryptsetup@cryptroot.service" ];
+      #    requires = [ "systemd-cryptsetup@cryptroot.service" ];
+      #  };
+      #  systemd.services."zfs-import-scan" = {
+      #    after = [ "systemd-cryptsetup@cryptroot.service" ];
+      #    requires = [ "systemd-cryptsetup@cryptroot.service" ];
+      #  };
+      #};
       loader.timeout = cfg.timeout;
     };
   };
