@@ -22,7 +22,6 @@ in
 
       initrd = lib.mkIf cfg.encrypted {
         luks.devices.cryptroot = {
-          device = cfg.encryptedDevice;
           preLVM = true;
           crypttabExtraOpts = [ "fido-device=auto" ];
         };
