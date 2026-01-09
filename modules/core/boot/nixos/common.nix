@@ -25,6 +25,7 @@ in
           preLVM = lib.mkDefault true;
           # crypttabExtraOpts = lib.mkDefault [ "fido2-device=auto" ];
           keyFile = lib.mkForce null;  # force prompt path instead of using keyFile
+          fallbackToPassword = lib.mkForce true;
         };
         systemd.enable = true;
         # Add ZFS support to initrd so it can import after LUKS unlock
