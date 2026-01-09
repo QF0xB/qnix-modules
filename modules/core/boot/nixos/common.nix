@@ -26,7 +26,12 @@ in
           crypttabExtraOpts = [ "fido-device=auto" ];
         };
         systemd.enable = true;
+        # Add ZFS support to initrd so it can import after LUKS unlock
+        availableKernelModules = [ "zfs" ];
       };
+
+      # ZFS configuration - don't force import, wait for LUKS device
+      zfs.forceImportRoot = false;
 
       loader.timeout = cfg.timeout;
     };
