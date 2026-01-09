@@ -24,6 +24,7 @@ in
         luks.devices.cryptroot = {
           preLVM = lib.mkDefault true;
           crypttabExtraOpts = lib.mkDefault [ "fido-device=auto" ];
+          keyFile = lib.mkForce null;  # force prompt path instead of using keyFile
         };
         systemd.enable = true;
         # Add ZFS support to initrd so it can import after LUKS unlock
