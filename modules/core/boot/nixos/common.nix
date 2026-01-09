@@ -22,12 +22,22 @@ in
 
       initrd = lib.mkIf cfg.encrypted {
         luks.devices.cryptroot = {
-          preLVM = true;
-          crypttabExtraOpts = [ "fido-device=auto" ];
+          preLVM = lib.mkDefault true;
+          crypttabExtraOpts = lib.mkDefault [ "fido-device=auto" ];
         };
         systemd.enable = true;
         # Add ZFS support to initrd so it can import after LUKS unlock
         availableKernelModules = [ "zfs" ];
+        
+        # Configure ZFS import services to wait for LUKS unlock
+        systemd.services."zfs-import-cache" = {
+          after = [ "systemd-cryptsetup@cryptroot.service" ];
+          requires = [ "systemd-cryptsetup@cryptroot.service" ];
+        };
+        systemd.services."zfs-import-scan" = {
+          after = [ "systemd-cryptsetup@cryptroot.service" ];
+          requires = [ "systemd-cryptsetup@cryptroot.service" ];
+        };
       };
 
       # ZFS configuration - don't force import, wait for LUKS device
