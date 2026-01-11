@@ -1,4 +1,4 @@
-{ lib, pkgs, config, ... }:
+{ lib, pkgs, config, user, ... }:
 
 let
   cfg = config.qnix.core.impermanence;
