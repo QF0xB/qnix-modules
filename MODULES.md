@@ -42,14 +42,11 @@ These modules define the core QNix configuration options.
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `qnix.boot.encrypted` | `bool` | `!config.qnix.server` | encrypted boot |
+| `qnix.boot.encrypted` | `bool` | `if config != null then !config.qnix.server else true` | encrypted boot |
 | `qnix.boot.timeout` | `int` | `3` | Timeout for Boot |
 | `qnix.boot.encryptedDevice` | `str` | `"/dev/disk/by-label/NIXBOOT"` | Device to use for encrypted boot |
 | `qnix.boot.zfsSupport` | `bool` | `true` | Enable ZFS support |
 | `qnix.boot.efiSupport` | `bool` | `true` | Enable EFI support |
-| `qnix.boot.boot.encryptedDevice` | `str` | `"/dev/disk/by-label/NIXBOOT"` | Device to use for encrypted boot |
-| `qnix.boot.boot.zfsSupport` | `bool` | `true` | Enable ZFS support |
-| `qnix.boot.boot.efiSupport` | `bool` | `true` | Enable EFI support |
 
 ### `impermanence`
 
@@ -60,6 +57,13 @@ These modules define the core QNix configuration options.
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `qnix.impermanence.enable` | `bool` | `false` | impermanence |
+| `qnix.impermanence.defaultFolders` | `bool` | `true` | default folders |
+| `qnix.impermanence.defaultFolders` | `bool` | `true` | default folders |
+| `qnix.impermanence.directories` | `listOf` | `[ "/var/log" "/var/lib/nixos" ]` | Directories to persist in root filesystem |
+| `qnix.impermanence.files` | `listOf` | `[ ]` | Files to persist in root filesystem |
+| `qnix.impermanence.cache.directories` | `listOf` | `[ ]` | Directories to persist in home filesystem |
+| `qnix.impermanence.cache.files` | `listOf` | `[ ]` | Files to cache in home filesystem |
+| `qnix.impermanence.cache.defaultFolders` | `bool` | `true` | default folders |
 
 ### `user`
 
@@ -95,6 +99,20 @@ These modules define the core QNix configuration options.
 | `qnix.user.user.ignoreShellProgramCheck` | `bool` | `true` | Ignore shell program check |
 | `qnix.user.user.enable` | `bool` | `false` | root user |
 | `qnix.user.openssh.authorizedKeys.keys` | `listOf` | `[]` | SSH authorized keys |
+
+### `zfs`
+
+**Type**: NixOS
+
+#### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `qnix.zfs.enable` | `bool` | `true` | zfs |
+| `qnix.zfs.enable` | `bool` | `true` | zfs scrub |
+| `qnix.zfs.interval` | `int` | `12` | Interval for ZFS scrub |
+| `qnix.zfs.zfs.interval` | `int` | `12` | Interval for ZFS scrub |
+| `qnix.zfs.zfs.enable` | `bool` | `true` | zfs scrub |
 
 
 ---

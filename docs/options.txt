@@ -112,11 +112,63 @@ __Default:__ ``{zwsp}+<+{zwsp}derivation kitty-0{zwsp}.45{zwsp}.0{gt}``
 
 
 
-== boot{zwsp}.enable
+== core{zwsp}.boot{zwsp}.efiSupport
 
 
 
-Whether to enable boot{zwsp}.
+Enable EFI support
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``true``
+
+
+
+== core{zwsp}.boot{zwsp}.encrypted
+
+
+
+Whether to enable encrypted boot{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``true``
+
+
+
+__Example:__ ``true``
+
+
+
+== core{zwsp}.boot{zwsp}.encryptedDevice
+
+
+
+Device to use for encrypted boot
+
+
+
+__Type:__ string
+
+
+
+__Default:__ ``{quot}/dev/disk/by-label/NIXBOOT{quot}``
+
+
+
+== core{zwsp}.boot{zwsp}.grub{zwsp}.enable
+
+
+
+Whether to enable grub bootloader{zwsp}.
 
 
 
@@ -129,6 +181,265 @@ __Default:__ ``false``
 
 
 __Example:__ ``true``
+
+__Declared by:__
+
+* link:file:///nix/store/lcwq5g2wyzfrzbbrgy976jh86r2ammfj-source/modules/core/boot/options/grub-options.nix[/nix/store/lcwq5g2wyzfrzbbrgy976jh86r2ammfj-source/modules/core/boot/options/grub-options{zwsp}.nix]
+
+
+
+== core{zwsp}.boot{zwsp}.grub{zwsp}.device
+
+
+
+Device to use for GRUB
+
+
+
+__Type:__ string
+
+
+
+__Default:__ ``{quot}nodev{quot}``
+
+__Declared by:__
+
+* link:file:///nix/store/lcwq5g2wyzfrzbbrgy976jh86r2ammfj-source/modules/core/boot/options/grub-options.nix[/nix/store/lcwq5g2wyzfrzbbrgy976jh86r2ammfj-source/modules/core/boot/options/grub-options{zwsp}.nix]
+
+
+
+== core{zwsp}.boot{zwsp}.systemd-boot{zwsp}.enable
+
+
+
+Whether to enable systemd-boot bootloader{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``false``
+
+
+
+__Example:__ ``true``
+
+__Declared by:__
+
+* link:file:///nix/store/lcwq5g2wyzfrzbbrgy976jh86r2ammfj-source/modules/core/boot/options/systemd-boot-options.nix[/nix/store/lcwq5g2wyzfrzbbrgy976jh86r2ammfj-source/modules/core/boot/options/systemd-boot-options{zwsp}.nix]
+
+
+
+== core{zwsp}.boot{zwsp}.timeout
+
+
+
+Timeout for Boot
+
+
+
+__Type:__ signed integer
+
+
+
+__Default:__ ``3``
+
+
+
+== core{zwsp}.boot{zwsp}.zfsSupport
+
+
+
+Enable ZFS support
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``true``
+
+
+
+== core{zwsp}.impermanence{zwsp}.enable
+
+
+
+Whether to enable impermanence{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``false``
+
+
+
+__Example:__ ``true``
+
+
+
+== core{zwsp}.impermanence{zwsp}.persist{zwsp}.home{zwsp}.cache{zwsp}.directories
+
+
+
+Directories to cache in home filesystem
+
+
+
+__Type:__ list of string
+
+
+
+__Default:__ ``{startsb} {endsb}``
+
+
+
+== core{zwsp}.impermanence{zwsp}.persist{zwsp}.home{zwsp}.cache{zwsp}.files
+
+
+
+Files to cache in home filesystem
+
+
+
+__Type:__ list of string
+
+
+
+__Default:__ ``{startsb} {endsb}``
+
+
+
+== core{zwsp}.impermanence{zwsp}.persist{zwsp}.home{zwsp}.defaultFolders
+
+
+
+Whether to enable default folders{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``true``
+
+
+
+__Example:__ ``true``
+
+
+
+== core{zwsp}.impermanence{zwsp}.persist{zwsp}.home{zwsp}.directories
+
+
+
+Directories to persist in home filesystem
+
+
+
+__Type:__ list of string
+
+
+
+__Default:__ ``{startsb} {endsb}``
+
+
+
+== core{zwsp}.impermanence{zwsp}.persist{zwsp}.root{zwsp}.cache{zwsp}.directories
+
+
+
+Directories to cache in root filesystem
+
+
+
+__Type:__ list of string
+
+
+
+__Default:__ ``{startsb} {endsb}``
+
+
+
+== core{zwsp}.impermanence{zwsp}.persist{zwsp}.root{zwsp}.cache{zwsp}.files
+
+
+
+Files to cache in root filesystem
+
+
+
+__Type:__ list of string
+
+
+
+__Default:__ ``{startsb} {endsb}``
+
+
+
+== core{zwsp}.impermanence{zwsp}.persist{zwsp}.root{zwsp}.defaultFolders
+
+
+
+Whether to enable default folders{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``true``
+
+
+
+__Example:__ ``true``
+
+
+
+== core{zwsp}.impermanence{zwsp}.persist{zwsp}.root{zwsp}.directories
+
+
+
+Directories to persist in root filesystem
+
+
+
+__Type:__ list of string
+
+
+
+__Default:__
+
+----
+[
+  "/var/log"
+  "/var/lib/nixos"
+]
+----
+
+
+
+== core{zwsp}.impermanence{zwsp}.persist{zwsp}.root{zwsp}.files
+
+
+
+Files to persist in root filesystem
+
+
+
+__Type:__ list of string
+
+
+
+__Default:__ ``{startsb} {endsb}``
 
 
 
@@ -368,6 +679,62 @@ __Type:__ list of string
 
 
 __Default:__ ``{startsb} {endsb}``
+
+
+
+== core{zwsp}.zfs{zwsp}.enable
+
+
+
+Whether to enable zfs{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``true``
+
+
+
+__Example:__ ``true``
+
+
+
+== core{zwsp}.zfs{zwsp}.scrub{zwsp}.enable
+
+
+
+Whether to enable zfs scrub{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``true``
+
+
+
+__Example:__ ``true``
+
+
+
+== core{zwsp}.zfs{zwsp}.scrub{zwsp}.interval
+
+
+
+Interval for ZFS scrub
+
+
+
+__Type:__ signed integer
+
+
+
+__Default:__ ``12``
 
 
 

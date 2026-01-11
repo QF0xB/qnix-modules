@@ -133,11 +133,70 @@ package
 
 
 
-## boot\.enable
+## core\.boot\.efiSupport
 
 
 
-Whether to enable boot\.
+Enable EFI support
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` true `
+
+
+
+## core\.boot\.encrypted
+
+
+
+Whether to enable encrypted boot\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` true `
+
+
+
+*Example:*
+` true `
+
+
+
+## core\.boot\.encryptedDevice
+
+
+
+Device to use for encrypted boot
+
+
+
+*Type:*
+string
+
+
+
+*Default:*
+` "/dev/disk/by-label/NIXBOOT" `
+
+
+
+## core\.boot\.grub\.enable
+
+
+
+Whether to enable grub bootloader\.
 
 
 
@@ -153,6 +212,293 @@ boolean
 
 *Example:*
 ` true `
+
+*Declared by:*
+ - [/nix/store/lcwq5g2wyzfrzbbrgy976jh86r2ammfj-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/lcwq5g2wyzfrzbbrgy976jh86r2ammfj-source/modules/core/boot/options/grub-options.nix)
+
+
+
+## core\.boot\.grub\.device
+
+
+
+Device to use for GRUB
+
+
+
+*Type:*
+string
+
+
+
+*Default:*
+` "nodev" `
+
+*Declared by:*
+ - [/nix/store/lcwq5g2wyzfrzbbrgy976jh86r2ammfj-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/lcwq5g2wyzfrzbbrgy976jh86r2ammfj-source/modules/core/boot/options/grub-options.nix)
+
+
+
+## core\.boot\.systemd-boot\.enable
+
+
+
+Whether to enable systemd-boot bootloader\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` false `
+
+
+
+*Example:*
+` true `
+
+*Declared by:*
+ - [/nix/store/lcwq5g2wyzfrzbbrgy976jh86r2ammfj-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/lcwq5g2wyzfrzbbrgy976jh86r2ammfj-source/modules/core/boot/options/systemd-boot-options.nix)
+
+
+
+## core\.boot\.timeout
+
+
+
+Timeout for Boot
+
+
+
+*Type:*
+signed integer
+
+
+
+*Default:*
+` 3 `
+
+
+
+## core\.boot\.zfsSupport
+
+
+
+Enable ZFS support
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` true `
+
+
+
+## core\.impermanence\.enable
+
+
+
+Whether to enable impermanence\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` false `
+
+
+
+*Example:*
+` true `
+
+
+
+## core\.impermanence\.persist\.home\.cache\.directories
+
+
+
+Directories to cache in home filesystem
+
+
+
+*Type:*
+list of string
+
+
+
+*Default:*
+` [ ] `
+
+
+
+## core\.impermanence\.persist\.home\.cache\.files
+
+
+
+Files to cache in home filesystem
+
+
+
+*Type:*
+list of string
+
+
+
+*Default:*
+` [ ] `
+
+
+
+## core\.impermanence\.persist\.home\.defaultFolders
+
+
+
+Whether to enable default folders\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` true `
+
+
+
+*Example:*
+` true `
+
+
+
+## core\.impermanence\.persist\.home\.directories
+
+
+
+Directories to persist in home filesystem
+
+
+
+*Type:*
+list of string
+
+
+
+*Default:*
+` [ ] `
+
+
+
+## core\.impermanence\.persist\.root\.cache\.directories
+
+
+
+Directories to cache in root filesystem
+
+
+
+*Type:*
+list of string
+
+
+
+*Default:*
+` [ ] `
+
+
+
+## core\.impermanence\.persist\.root\.cache\.files
+
+
+
+Files to cache in root filesystem
+
+
+
+*Type:*
+list of string
+
+
+
+*Default:*
+` [ ] `
+
+
+
+## core\.impermanence\.persist\.root\.defaultFolders
+
+
+
+Whether to enable default folders\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` true `
+
+
+
+*Example:*
+` true `
+
+
+
+## core\.impermanence\.persist\.root\.directories
+
+
+
+Directories to persist in root filesystem
+
+
+
+*Type:*
+list of string
+
+
+
+*Default:*
+
+```
+[
+  "/var/log"
+  "/var/lib/nixos"
+]
+```
+
+
+
+## core\.impermanence\.persist\.root\.files
+
+
+
+Files to persist in root filesystem
+
+
+
+*Type:*
+list of string
+
+
+
+*Default:*
+` [ ] `
 
 
 
@@ -421,6 +767,70 @@ list of string
 
 *Default:*
 ` [ ] `
+
+
+
+## core\.zfs\.enable
+
+
+
+Whether to enable zfs\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` true `
+
+
+
+*Example:*
+` true `
+
+
+
+## core\.zfs\.scrub\.enable
+
+
+
+Whether to enable zfs scrub\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` true `
+
+
+
+*Example:*
+` true `
+
+
+
+## core\.zfs\.scrub\.interval
+
+
+
+Interval for ZFS scrub
+
+
+
+*Type:*
+signed integer
+
+
+
+*Default:*
+` 12 `
 
 
 

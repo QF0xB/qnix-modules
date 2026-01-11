@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, config ? null, ... }:
 
 {
   imports = [
@@ -8,7 +8,7 @@
 
   options.qnix.core.boot = {
     encrypted = lib.mkEnableOption "encrypted boot" // {
-      default = !config.qnix.server;
+      default = if config != null then !config.qnix.server else true;
     };  
 
     timeout = lib.mkOption {

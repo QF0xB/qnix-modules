@@ -16,6 +16,10 @@
       nixos = true;
       home = false;
     };
+    zfs = {
+      nixos = true;
+      home = false;
+    };
   };
 
   desktop = {
