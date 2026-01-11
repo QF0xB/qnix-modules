@@ -2,6 +2,7 @@
 
 let
   cfg = config.hm.qnix.core.impermanence;
+  persist = config.hm.qnix.persist;
 in
 {
   config = lib.mkIf cfg.enable {
@@ -14,7 +15,7 @@ in
             [ "/var/log" "/var/lib/nixos" ]
           else
             [ ]
-          ++ cfg.persist.root.directories
+          ++ persist.root.directories
         );
 
         users.${user} = {
@@ -24,7 +25,7 @@ in
               [ "projects" ".cache/dconf" ".config/dconf" ]
             else
               [ ]
-            ++ cfg.persist.home.directories
+            ++ persist.home.directories
           );
         };
       };
@@ -32,12 +33,12 @@ in
       # Not backed up; Still persisted
       "/cache" = {
         hideMounts = true;
-        files = lib.unique cfg.persist.root.cache.files;
-        directories = lib.unique cfg.persist.root.cache.directories;
+        files = lib.unique persist.root.cache.files;
+        directories = lib.unique persist.root.cache.directories;
 
         users.${user} = {
-          files = lib.unique cfg.persist.home.cache.files;
-          directories = lib.unique cfg.persist.home.cache.directories;
+          files = lib.unique persist.home.cache.files;
+          directories = lib.unique persist.home.cache.directories;
         };
       };
     };
