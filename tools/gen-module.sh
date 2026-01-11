@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [ "$#" -lt 3 ]; then
   echo 'Usage: gen-module <moduletype> <module-name> <module-category>'

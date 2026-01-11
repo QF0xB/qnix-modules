@@ -8,6 +8,10 @@
       nixos = true;
       home = false;
     };
+    impermanence = {
+      nixos = true;
+      home = false;
+    };
     user = {
       nixos = true;
       home = false;

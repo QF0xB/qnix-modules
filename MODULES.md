@@ -42,7 +42,24 @@ These modules define the core QNix configuration options.
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `qnix.boot.enable` | `bool` | `false` | boot |
+| `qnix.boot.encrypted` | `bool` | `!config.qnix.server` | encrypted boot |
+| `qnix.boot.timeout` | `int` | `3` | Timeout for Boot |
+| `qnix.boot.encryptedDevice` | `str` | `"/dev/disk/by-label/NIXBOOT"` | Device to use for encrypted boot |
+| `qnix.boot.zfsSupport` | `bool` | `true` | Enable ZFS support |
+| `qnix.boot.efiSupport` | `bool` | `true` | Enable EFI support |
+| `qnix.boot.boot.encryptedDevice` | `str` | `"/dev/disk/by-label/NIXBOOT"` | Device to use for encrypted boot |
+| `qnix.boot.boot.zfsSupport` | `bool` | `true` | Enable ZFS support |
+| `qnix.boot.boot.efiSupport` | `bool` | `true` | Enable EFI support |
+
+### `impermanence`
+
+**Type**: NixOS
+
+#### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `qnix.impermanence.enable` | `bool` | `false` | impermanence |
 
 ### `user`
 
