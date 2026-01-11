@@ -2,7 +2,7 @@
 
 let
   cfg = config.hm.qnix.core.impermanence;
-  persist = config.hm.qnix.persist;
+  persist = config.hm.qnix.core.persist;
 in
 {
   config = lib.mkIf cfg.enable {
