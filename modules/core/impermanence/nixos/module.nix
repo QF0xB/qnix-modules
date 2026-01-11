@@ -9,9 +9,9 @@ in
     environment.persistence = {
       "/persist" = {
         hideMounts = true;
-        files = lib.unique cfg.persist.root.files;
+        files = lib.unique persist.root.files;
         directories = lib.unique (
-          if cfg.persist.root.defaultFolders then
+          if persist.root.defaultFolders then
             [ "/var/log" "/var/lib/nixos" ]
           else
             [ ]
@@ -19,9 +19,9 @@ in
         );
 
         users.${user} = {
-          files = lib.unique cfg.persist.home.files;
+          files = lib.unique persist.home.files;
           directories = lib.unique (
-            if cfg.persist.home.defaultFolders then
+            if persist.home.defaultFolders then
               [ "projects" ".cache/dconf" ".config/dconf" ]
             else
               [ ]
