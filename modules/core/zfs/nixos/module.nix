@@ -11,7 +11,7 @@ in
       trim.enable = true;
     };
 
-    boot.initrd.systemd.services.postResume = lib.mkIf config.qnix.core.impermanence.enable {
+    boot.initrd.systemd.services.postResume = lib.mkIf config.hm.qnix.core.impermanence.enable {
       description = "Run commands after decrypt";
       wantedBy = [ "initrd.target" ];
       after = [
