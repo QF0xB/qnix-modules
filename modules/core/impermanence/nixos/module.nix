@@ -2,19 +2,6 @@
 
 let
   cfg = config.hm.qnix.core.impermanence;
-
-  impermanenceJson = pkgs.writeText "impermanence.json" (
-    lib.strings.toJSON {
-      directories = lib.unique (
-        config.environment.persistence."/persist".directories
-        ++ config.environment.persistence."/cache".directories
-      );
-      files = lib.unique (
-        config.environment.persistence."/persist".files 
-        ++ config.environment.persistence."/cache".files
-      );
-    }
-  );
 in
 {
   config = lib.mkIf cfg.enable {
@@ -53,8 +40,22 @@ in
           directories = lib.unique cfg.persist.home.cache.directories;
         };
       };
-
-    environment.etc."impermanence.json".text = "${impermanenceJson}";
     };
+
+    # Create impermanence.json after environment.persistence is merged
+    environment.etc."impermanence.json".text = lib.mkIf cfg.enable (
+      pkgs.writeText "impermanence.json" (
+        lib.strings.toJSON {
+          directories = lib.unique (
+            config.environment.persistence."/persist".directories
+            ++ config.environment.persistence."/cache".directories
+          );
+          files = lib.unique (
+            config.environment.persistence."/persist".files 
+            ++ config.environment.persistence."/cache".files
+          );
+        }
+      )
+    );
   };
 }
