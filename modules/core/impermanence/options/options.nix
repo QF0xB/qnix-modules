@@ -62,6 +62,12 @@ in
           description = "Directories to persist in home filesystem";
         };
 
+        files = lib.mkOption {
+          type = lib.types.listOf lib.types.str;
+          default = [ ];
+          description = "Files to persist in home filesystem";
+        };
+
         cache = {
           directories = lib.mkOption {
             type = lib.types.listOf lib.types.str;
