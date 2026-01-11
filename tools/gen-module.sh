@@ -38,7 +38,7 @@ create_nixos_module() {
 { lib, config, ... }:
 
 let
-  cfg = config.qnix.${MODULE_CATEGORY}.${MODULE_NAME};
+  cfg = config.hm.qnix.${MODULE_CATEGORY}.${MODULE_NAME};
 in
 {
   config = lib.mkIf cfg.enable {

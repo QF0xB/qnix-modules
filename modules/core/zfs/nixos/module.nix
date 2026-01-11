@@ -1,7 +1,7 @@
 { lib, config, pkgs, ... }:
 
 let
-  cfg = config.qnix.core.zfs;
+  cfg = config.hm.qnix.core.zfs;
 in
 {
   config = lib.mkIf cfg.enable {
