@@ -3,6 +3,20 @@
 let
   cfg = config.hm.qnix.core.impermanence;
   persist = config.hm.qnix.core.persist;
+
+  # Create impermanence.json after environment.persistence is merged
+  impermanenceJson = pkgs.writeText "impermanence.json" (
+    lib.strings.toJSON {
+      directories = lib.unique (
+        config.environment.persistence."/persist".directories
+        ++ config.environment.persistence."/cache".directories
+      );
+      files = lib.unique (
+        config.environment.persistence."/persist".files 
+        ++ config.environment.persistence."/cache".files
+      );
+    }
+  );
 in
 {
   config = lib.mkIf cfg.enable {
@@ -46,20 +60,7 @@ in
       };
     };
 
-    # Create impermanence.json after environment.persistence is merged
-    environment.etc."impermanence.json".text = lib.mkIf cfg.enable (
-      pkgs.writeText "impermanence.json" (
-        lib.strings.toJSON {
-          directories = lib.unique (
-            config.environment.persistence."/persist".directories
-            ++ config.environment.persistence."/cache".directories
-          );
-          files = lib.unique (
-            config.environment.persistence."/persist".files 
-            ++ config.environment.persistence."/cache".files
-          );
-        }
-      )
-    );
+    # Use string interpolation to convert derivation to path string
+    environment.etc."impermanence.json".text = "${impermanenceJson}";
   };
 }
