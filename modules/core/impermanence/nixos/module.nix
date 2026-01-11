@@ -6,6 +6,9 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
+    fileSystems."/persist".neededForBoot = true;
+    fileSystems."/cache".neededForBoot = true;
+
     environment.persistence = {
       "/persist" = {
         hideMounts = true;
