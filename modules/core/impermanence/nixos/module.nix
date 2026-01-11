@@ -1,7 +1,7 @@
 { lib, pkgs, config, user, ... }:
 
 let
-  cfg = config.qnix.core.impermanence;
+  cfg = config.hm.qnix.core.impermanence;
 
   impermanenceJson = pkgs.writeText "impermanence.json" (
     lib.strings.toJSON {
