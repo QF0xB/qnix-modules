@@ -12,8 +12,8 @@
       };
 
       interval = lib.mkOption {
-        type = lib.types.int;
-        default = 12;
+        type = lib.types.str;
+        default = "12";
         description = "Interval for ZFS scrub";
       };
     };
