@@ -1,13 +1,14 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 let
-  cfg = config.qnix.core.fish;
+  cfg = config.qnix.core.shell.fish;
 in
 {
-  imports = [
-    ./aliases.nix
-  ];
-
   config = lib.mkIf cfg.enable {
     programs.fish = {
       enable = true;

@@ -8,10 +8,6 @@
       nixos = true;
       home = false;
     };
-    fish = {
-      nixos = true;
-      home = true;
-    };
     impermanence = {
       nixos = true;
       home = false;
@@ -27,6 +23,10 @@
     polkit = {
       nixos = true;
       home = false;
+    };
+    shell = {
+      nixos = true;
+      home = true;
     };
     starship = {
       nixos = false;

@@ -184,7 +184,7 @@ __Example:__ ``true``
 
 __Declared by:__
 
-* link:file:///nix/store/5ql4gq04k3356b3yjb3w05j1hx21iksx-source/modules/core/boot/options/grub-options.nix[/nix/store/5ql4gq04k3356b3yjb3w05j1hx21iksx-source/modules/core/boot/options/grub-options{zwsp}.nix]
+* link:file:///nix/store/vcgl3ihazsl60rs919v2crwvh7lq6znm-source/modules/core/boot/options/grub-options.nix[/nix/store/vcgl3ihazsl60rs919v2crwvh7lq6znm-source/modules/core/boot/options/grub-options{zwsp}.nix]
 
 
 
@@ -204,7 +204,7 @@ __Default:__ ``{quot}nodev{quot}``
 
 __Declared by:__
 
-* link:file:///nix/store/5ql4gq04k3356b3yjb3w05j1hx21iksx-source/modules/core/boot/options/grub-options.nix[/nix/store/5ql4gq04k3356b3yjb3w05j1hx21iksx-source/modules/core/boot/options/grub-options{zwsp}.nix]
+* link:file:///nix/store/vcgl3ihazsl60rs919v2crwvh7lq6znm-source/modules/core/boot/options/grub-options.nix[/nix/store/vcgl3ihazsl60rs919v2crwvh7lq6znm-source/modules/core/boot/options/grub-options{zwsp}.nix]
 
 
 
@@ -228,7 +228,7 @@ __Example:__ ``true``
 
 __Declared by:__
 
-* link:file:///nix/store/5ql4gq04k3356b3yjb3w05j1hx21iksx-source/modules/core/boot/options/systemd-boot-options.nix[/nix/store/5ql4gq04k3356b3yjb3w05j1hx21iksx-source/modules/core/boot/options/systemd-boot-options{zwsp}.nix]
+* link:file:///nix/store/vcgl3ihazsl60rs919v2crwvh7lq6znm-source/modules/core/boot/options/systemd-boot-options.nix[/nix/store/vcgl3ihazsl60rs919v2crwvh7lq6znm-source/modules/core/boot/options/systemd-boot-options{zwsp}.nix]
 
 
 
@@ -261,86 +261,6 @@ __Type:__ boolean
 
 
 __Default:__ ``true``
-
-
-
-== core{zwsp}.fish{zwsp}.enable
-
-
-
-Whether to enable fish{zwsp}.
-
-
-
-__Type:__ boolean
-
-
-
-__Default:__ ``true``
-
-
-
-__Example:__ ``true``
-
-
-
-== core{zwsp}.fish{zwsp}.aliases
-
-
-
-Whether to enable aliases{zwsp}.
-
-
-
-__Type:__ boolean
-
-
-
-__Default:__ ``true``
-
-
-
-__Example:__ ``true``
-
-
-
-== core{zwsp}.fish{zwsp}.defaultShell
-
-
-
-Whether to enable default shell{zwsp}.
-
-
-
-__Type:__ boolean
-
-
-
-__Default:__ ``true``
-
-
-
-__Example:__ ``true``
-
-
-
-== core{zwsp}.fish{zwsp}.qnix-aliases
-
-
-
-Whether to enable aliases for qnix-system{zwsp}.
-
-
-
-__Type:__ boolean
-
-
-
-__Default:__ ``true``
-
-
-
-__Example:__ ``true``
 
 
 
@@ -543,6 +463,106 @@ __Example:__ ``true``
 
 
 Whether to allow user to execute power commands
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``true``
+
+
+
+__Example:__ ``true``
+
+
+
+== core{zwsp}.shell{zwsp}.enable
+
+
+
+Whether to enable shell managerment
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``true``
+
+
+
+__Example:__ ``true``
+
+
+
+== core{zwsp}.shell{zwsp}.aliases
+
+
+
+Whether to enable aliases
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``true``
+
+
+
+__Example:__ ``true``
+
+
+
+== core{zwsp}.shell{zwsp}.defaultShell
+
+
+
+Whether to enable default shell
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``true``
+
+
+
+__Example:__ ``true``
+
+
+
+== core{zwsp}.shell{zwsp}.fish{zwsp}.enable
+
+
+
+Whether to enable fish
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``true``
+
+
+
+__Example:__ ``true``
+
+
+
+== core{zwsp}.shell{zwsp}.qnix-aliases
+
+
+
+Whether to enable aliases for qnix-system
 
 
 

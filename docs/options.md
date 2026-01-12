@@ -214,7 +214,7 @@ boolean
 ` true `
 
 *Declared by:*
- - [/nix/store/5ql4gq04k3356b3yjb3w05j1hx21iksx-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/5ql4gq04k3356b3yjb3w05j1hx21iksx-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/vcgl3ihazsl60rs919v2crwvh7lq6znm-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/vcgl3ihazsl60rs919v2crwvh7lq6znm-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -235,7 +235,7 @@ string
 ` "nodev" `
 
 *Declared by:*
- - [/nix/store/5ql4gq04k3356b3yjb3w05j1hx21iksx-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/5ql4gq04k3356b3yjb3w05j1hx21iksx-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/vcgl3ihazsl60rs919v2crwvh7lq6znm-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/vcgl3ihazsl60rs919v2crwvh7lq6znm-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -261,7 +261,7 @@ boolean
 ` true `
 
 *Declared by:*
- - [/nix/store/5ql4gq04k3356b3yjb3w05j1hx21iksx-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/5ql4gq04k3356b3yjb3w05j1hx21iksx-source/modules/core/boot/options/systemd-boot-options.nix)
+ - [/nix/store/vcgl3ihazsl60rs919v2crwvh7lq6znm-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/vcgl3ihazsl60rs919v2crwvh7lq6znm-source/modules/core/boot/options/systemd-boot-options.nix)
 
 
 
@@ -297,98 +297,6 @@ boolean
 
 
 *Default:*
-` true `
-
-
-
-## core\.fish\.enable
-
-
-
-Whether to enable fish\.
-
-
-
-*Type:*
-boolean
-
-
-
-*Default:*
-` true `
-
-
-
-*Example:*
-` true `
-
-
-
-## core\.fish\.aliases
-
-
-
-Whether to enable aliases\.
-
-
-
-*Type:*
-boolean
-
-
-
-*Default:*
-` true `
-
-
-
-*Example:*
-` true `
-
-
-
-## core\.fish\.defaultShell
-
-
-
-Whether to enable default shell\.
-
-
-
-*Type:*
-boolean
-
-
-
-*Default:*
-` true `
-
-
-
-*Example:*
-` true `
-
-
-
-## core\.fish\.qnix-aliases
-
-
-
-Whether to enable aliases for qnix-system\.
-
-
-
-*Type:*
-boolean
-
-
-
-*Default:*
-` true `
-
-
-
-*Example:*
 ` true `
 
 
@@ -614,6 +522,121 @@ boolean
 
 
 Whether to allow user to execute power commands
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` true `
+
+
+
+*Example:*
+` true `
+
+
+
+## core\.shell\.enable
+
+
+
+Whether to enable shell managerment
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` true `
+
+
+
+*Example:*
+` true `
+
+
+
+## core\.shell\.aliases
+
+
+
+Whether to enable aliases
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` true `
+
+
+
+*Example:*
+` true `
+
+
+
+## core\.shell\.defaultShell
+
+
+
+Whether to enable default shell
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` true `
+
+
+
+*Example:*
+` true `
+
+
+
+## core\.shell\.fish\.enable
+
+
+
+Whether to enable fish
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` true `
+
+
+
+*Example:*
+` true `
+
+
+
+## core\.shell\.qnix-aliases
+
+
+
+Whether to enable aliases for qnix-system
 
 
 

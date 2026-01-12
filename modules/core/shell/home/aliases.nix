@@ -1,14 +1,19 @@
-{ dots, config, lib, ... }:
+{
+  dots,
+  config,
+  lib,
+  ...
+}:
 
 let
-  cfg = config.qnix.core.fish;
+  cfg = config.qnix.core.shell;
 in
 {
   config = lib.mkIf (cfg.enable && cfg.aliases) {
     home.shellAliases = {
       c = "clear";
       dots = "cd ${dots}";
-      qnix = if cfg.qnix-aliases then "cd ~/projects/qnix" else "";
+      qnix = if cfg.qnixAliases then "cd ~/projects/qnix" else "";
       ls = "clear && lsd -l";
       lss = "lsd -la";
       lsa = "clear && lsd -la";

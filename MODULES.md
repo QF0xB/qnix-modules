@@ -48,21 +48,6 @@ These modules define the core QNix configuration options.
 | `qnix.boot.zfsSupport` | `bool` | `true` | Enable ZFS support |
 | `qnix.boot.efiSupport` | `bool` | `true` | Enable EFI support |
 
-### `fish`
-
-**Type**: NixOS, Home Manager
-
-#### Options
-
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `qnix.fish.enable` | `bool` | `true` | fish |
-| `qnix.fish.defaultShell` | `bool` | `true` | default shell |
-| `qnix.fish.aliases` | `bool` | `true` | aliases |
-| `qnix.fish.aliases` | `bool` | `true` | aliases for qnix-system |
-| `qnix.fish.fish.defaultShell` | `bool` | `true` | default shell |
-| `qnix.fish.fish.aliases` | `bool` | `true` | aliases |
-
 ### `impermanence`
 
 **Type**: NixOS
@@ -123,6 +108,23 @@ These modules define the core QNix configuration options.
 | `qnix.polkit.enable` | `bool` | `true` | polkit |
 | `qnix.polkit.allowUserPowerCommands` | `bool` | `true` | allow user to execute power commands |
 | `qnix.polkit.polkit.allowUserPowerCommands` | `bool` | `true` | allow user to execute power commands |
+
+### `shell`
+
+**Type**: NixOS, Home Manager
+
+#### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `qnix.shell.enable` | `bool` | `true` | shell managerment |
+| `qnix.shell.enable` | `bool` | `true` | fish |
+| `qnix.shell.defaultShell` | `bool` | `true` | default shell |
+| `qnix.shell.aliases` | `bool` | `true` | aliases |
+| `qnix.shell.aliases` | `bool` | `true` | aliases for qnix-system |
+| `qnix.shell.shell.enable` | `bool` | `true` | fish |
+| `qnix.shell.shell.defaultShell` | `bool` | `true` | default shell |
+| `qnix.shell.shell.aliases` | `bool` | `true` | aliases |
 
 ### `starship`
 
