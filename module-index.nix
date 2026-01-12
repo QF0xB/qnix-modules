@@ -24,6 +24,10 @@
       nixos = false;
       home = true;
     };
+    polkit = {
+      nixos = true;
+      home = false;
+    };
     starship = {
       nixos = false;
       home = true;

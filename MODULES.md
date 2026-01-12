@@ -112,6 +112,18 @@ These modules define the core QNix configuration options.
 |--------|------|---------|-------------|
 | `qnix.lsd.enable` | `bool` | `true` | lsd |
 
+### `polkit`
+
+**Type**: NixOS
+
+#### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `qnix.polkit.enable` | `bool` | `true` | polkit |
+| `qnix.polkit.allowUserPowerCommands` | `bool` | `true` | allow user to execute power commands |
+| `qnix.polkit.polkit.allowUserPowerCommands` | `bool` | `true` | allow user to execute power commands |
+
 ### `starship`
 
 **Type**: Home Manager

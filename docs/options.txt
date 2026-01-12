@@ -184,7 +184,7 @@ __Example:__ ``true``
 
 __Declared by:__
 
-* link:file:///nix/store/f2kjx9kkhgp9yhja4k621mf5vpimkpcm-source/modules/core/boot/options/grub-options.nix[/nix/store/f2kjx9kkhgp9yhja4k621mf5vpimkpcm-source/modules/core/boot/options/grub-options{zwsp}.nix]
+* link:file:///nix/store/5ql4gq04k3356b3yjb3w05j1hx21iksx-source/modules/core/boot/options/grub-options.nix[/nix/store/5ql4gq04k3356b3yjb3w05j1hx21iksx-source/modules/core/boot/options/grub-options{zwsp}.nix]
 
 
 
@@ -204,7 +204,7 @@ __Default:__ ``{quot}nodev{quot}``
 
 __Declared by:__
 
-* link:file:///nix/store/f2kjx9kkhgp9yhja4k621mf5vpimkpcm-source/modules/core/boot/options/grub-options.nix[/nix/store/f2kjx9kkhgp9yhja4k621mf5vpimkpcm-source/modules/core/boot/options/grub-options{zwsp}.nix]
+* link:file:///nix/store/5ql4gq04k3356b3yjb3w05j1hx21iksx-source/modules/core/boot/options/grub-options.nix[/nix/store/5ql4gq04k3356b3yjb3w05j1hx21iksx-source/modules/core/boot/options/grub-options{zwsp}.nix]
 
 
 
@@ -228,7 +228,7 @@ __Example:__ ``true``
 
 __Declared by:__
 
-* link:file:///nix/store/f2kjx9kkhgp9yhja4k621mf5vpimkpcm-source/modules/core/boot/options/systemd-boot-options.nix[/nix/store/f2kjx9kkhgp9yhja4k621mf5vpimkpcm-source/modules/core/boot/options/systemd-boot-options{zwsp}.nix]
+* link:file:///nix/store/5ql4gq04k3356b3yjb3w05j1hx21iksx-source/modules/core/boot/options/systemd-boot-options.nix[/nix/store/5ql4gq04k3356b3yjb3w05j1hx21iksx-source/modules/core/boot/options/systemd-boot-options{zwsp}.nix]
 
 
 
@@ -503,6 +503,46 @@ __Default:__ ``{quot}koy, ,{quot}``
 
 
 Whether to enable lsd{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``true``
+
+
+
+__Example:__ ``true``
+
+
+
+== core{zwsp}.polkit{zwsp}.enable
+
+
+
+Whether to enable polkit{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``true``
+
+
+
+__Example:__ ``true``
+
+
+
+== core{zwsp}.polkit{zwsp}.allowUserPowerCommands
+
+
+
+Whether to allow user to execute power commands
 
 
 

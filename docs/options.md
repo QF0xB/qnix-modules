@@ -214,7 +214,7 @@ boolean
 ` true `
 
 *Declared by:*
- - [/nix/store/f2kjx9kkhgp9yhja4k621mf5vpimkpcm-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/f2kjx9kkhgp9yhja4k621mf5vpimkpcm-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/5ql4gq04k3356b3yjb3w05j1hx21iksx-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/5ql4gq04k3356b3yjb3w05j1hx21iksx-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -235,7 +235,7 @@ string
 ` "nodev" `
 
 *Declared by:*
- - [/nix/store/f2kjx9kkhgp9yhja4k621mf5vpimkpcm-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/f2kjx9kkhgp9yhja4k621mf5vpimkpcm-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/5ql4gq04k3356b3yjb3w05j1hx21iksx-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/5ql4gq04k3356b3yjb3w05j1hx21iksx-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -261,7 +261,7 @@ boolean
 ` true `
 
 *Declared by:*
- - [/nix/store/f2kjx9kkhgp9yhja4k621mf5vpimkpcm-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/f2kjx9kkhgp9yhja4k621mf5vpimkpcm-source/modules/core/boot/options/systemd-boot-options.nix)
+ - [/nix/store/5ql4gq04k3356b3yjb3w05j1hx21iksx-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/5ql4gq04k3356b3yjb3w05j1hx21iksx-source/modules/core/boot/options/systemd-boot-options.nix)
 
 
 
@@ -568,6 +568,52 @@ string
 
 
 Whether to enable lsd\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` true `
+
+
+
+*Example:*
+` true `
+
+
+
+## core\.polkit\.enable
+
+
+
+Whether to enable polkit\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` true `
+
+
+
+*Example:*
+` true `
+
+
+
+## core\.polkit\.allowUserPowerCommands
+
+
+
+Whether to allow user to execute power commands
 
 
 
