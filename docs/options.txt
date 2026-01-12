@@ -184,7 +184,7 @@ __Example:__ ``true``
 
 __Declared by:__
 
-* link:file:///nix/store/pi10sdjvbcbkf7978wy9l764dfza1h40-source/modules/core/boot/options/grub-options.nix[/nix/store/pi10sdjvbcbkf7978wy9l764dfza1h40-source/modules/core/boot/options/grub-options{zwsp}.nix]
+* link:file:///nix/store/ha6bb5f8awgj0g24v3h60fbz151r0sm9-source/modules/core/boot/options/grub-options.nix[/nix/store/ha6bb5f8awgj0g24v3h60fbz151r0sm9-source/modules/core/boot/options/grub-options{zwsp}.nix]
 
 
 
@@ -204,7 +204,7 @@ __Default:__ ``{quot}nodev{quot}``
 
 __Declared by:__
 
-* link:file:///nix/store/pi10sdjvbcbkf7978wy9l764dfza1h40-source/modules/core/boot/options/grub-options.nix[/nix/store/pi10sdjvbcbkf7978wy9l764dfza1h40-source/modules/core/boot/options/grub-options{zwsp}.nix]
+* link:file:///nix/store/ha6bb5f8awgj0g24v3h60fbz151r0sm9-source/modules/core/boot/options/grub-options.nix[/nix/store/ha6bb5f8awgj0g24v3h60fbz151r0sm9-source/modules/core/boot/options/grub-options{zwsp}.nix]
 
 
 
@@ -228,7 +228,7 @@ __Example:__ ``true``
 
 __Declared by:__
 
-* link:file:///nix/store/pi10sdjvbcbkf7978wy9l764dfza1h40-source/modules/core/boot/options/systemd-boot-options.nix[/nix/store/pi10sdjvbcbkf7978wy9l764dfza1h40-source/modules/core/boot/options/systemd-boot-options{zwsp}.nix]
+* link:file:///nix/store/ha6bb5f8awgj0g24v3h60fbz151r0sm9-source/modules/core/boot/options/systemd-boot-options.nix[/nix/store/ha6bb5f8awgj0g24v3h60fbz151r0sm9-source/modules/core/boot/options/systemd-boot-options{zwsp}.nix]
 
 
 
@@ -276,7 +276,67 @@ __Type:__ boolean
 
 
 
-__Default:__ ``false``
+__Default:__ ``true``
+
+
+
+__Example:__ ``true``
+
+
+
+== core{zwsp}.fish{zwsp}.aliases
+
+
+
+Whether to enable aliases{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``true``
+
+
+
+__Example:__ ``true``
+
+
+
+== core{zwsp}.fish{zwsp}.defaultShell
+
+
+
+Whether to enable default shell{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``true``
+
+
+
+__Example:__ ``true``
+
+
+
+== core{zwsp}.fish{zwsp}.qnix-aliases
+
+
+
+Whether to enable aliases for qnix-system{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``true``
 
 
 
@@ -304,43 +364,11 @@ __Example:__ ``true``
 
 
 
-== core{zwsp}.persist{zwsp}.home{zwsp}.cache{zwsp}.directories
+== core{zwsp}.lsd{zwsp}.enable
 
 
 
-Directories to cache in home filesystem
-
-
-
-__Type:__ list of string
-
-
-
-__Default:__ ``{startsb} {endsb}``
-
-
-
-== core{zwsp}.persist{zwsp}.home{zwsp}.cache{zwsp}.files
-
-
-
-Files to cache in home filesystem
-
-
-
-__Type:__ list of string
-
-
-
-__Default:__ ``{startsb} {endsb}``
-
-
-
-== core{zwsp}.persist{zwsp}.home{zwsp}.defaultFolders
-
-
-
-Whether to enable default folders{zwsp}.
+Whether to enable lsd{zwsp}.
 
 
 
@@ -348,7 +376,7 @@ __Type:__ boolean
 
 
 
-__Default:__ ``true``
+__Default:__ ``false``
 
 
 
@@ -356,75 +384,11 @@ __Example:__ ``true``
 
 
 
-== core{zwsp}.persist{zwsp}.home{zwsp}.directories
+== core{zwsp}.starship{zwsp}.enable
 
 
 
-Directories to persist in home filesystem
-
-
-
-__Type:__ list of string
-
-
-
-__Default:__ ``{startsb} {endsb}``
-
-
-
-== core{zwsp}.persist{zwsp}.home{zwsp}.files
-
-
-
-Files to persist in home filesystem
-
-
-
-__Type:__ list of string
-
-
-
-__Default:__ ``{startsb} {endsb}``
-
-
-
-== core{zwsp}.persist{zwsp}.root{zwsp}.cache{zwsp}.directories
-
-
-
-Directories to cache in root filesystem
-
-
-
-__Type:__ list of string
-
-
-
-__Default:__ ``{startsb} {endsb}``
-
-
-
-== core{zwsp}.persist{zwsp}.root{zwsp}.cache{zwsp}.files
-
-
-
-Files to cache in root filesystem
-
-
-
-__Type:__ list of string
-
-
-
-__Default:__ ``{startsb} {endsb}``
-
-
-
-== core{zwsp}.persist{zwsp}.root{zwsp}.defaultFolders
-
-
-
-Whether to enable default folders{zwsp}.
+Whether to enable starship{zwsp}.
 
 
 
@@ -432,50 +396,11 @@ __Type:__ boolean
 
 
 
-__Default:__ ``true``
+__Default:__ ``false``
 
 
 
 __Example:__ ``true``
-
-
-
-== core{zwsp}.persist{zwsp}.root{zwsp}.directories
-
-
-
-Directories to persist in root filesystem
-
-
-
-__Type:__ list of string
-
-
-
-__Default:__
-
-----
-[
-  "/var/log"
-  "/var/lib/nixos"
-]
-----
-
-
-
-== core{zwsp}.persist{zwsp}.root{zwsp}.files
-
-
-
-Files to persist in root filesystem
-
-
-
-__Type:__ list of string
-
-
-
-__Default:__ ``{startsb} {endsb}``
 
 
 
@@ -726,6 +651,22 @@ __Type:__ floating point number
 
 
 __Default:__ ``0{zwsp}.5``
+
+
+
+== core{zwsp}.stylix{zwsp}.solarizedColors
+
+
+
+Colors converted from stylix base16 to solarized naming scheme (base03, base02, base01, base00, base0, base1, base2, base3, red, orange, yellow, green, cyan, blue, violet, magenta)
+
+
+
+__Type:__ attribute set of string __(read only)__
+
+
+
+__Default:__ ``{ }``
 
 
 
@@ -1053,6 +994,181 @@ __Type:__ boolean
 
 
 __Default:__ ``false``
+
+
+
+== persist{zwsp}.home{zwsp}.cache{zwsp}.directories
+
+
+
+Directories to cache in home filesystem
+
+
+
+__Type:__ list of string
+
+
+
+__Default:__ ``{startsb} {endsb}``
+
+
+
+== persist{zwsp}.home{zwsp}.cache{zwsp}.files
+
+
+
+Files to cache in home filesystem
+
+
+
+__Type:__ list of string
+
+
+
+__Default:__ ``{startsb} {endsb}``
+
+
+
+== persist{zwsp}.home{zwsp}.defaultFolders
+
+
+
+Whether to enable default folders{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``true``
+
+
+
+__Example:__ ``true``
+
+
+
+== persist{zwsp}.home{zwsp}.directories
+
+
+
+Directories to persist in home filesystem
+
+
+
+__Type:__ list of string
+
+
+
+__Default:__ ``{startsb} {endsb}``
+
+
+
+== persist{zwsp}.home{zwsp}.files
+
+
+
+Files to persist in home filesystem
+
+
+
+__Type:__ list of string
+
+
+
+__Default:__ ``{startsb} {endsb}``
+
+
+
+== persist{zwsp}.root{zwsp}.cache{zwsp}.directories
+
+
+
+Directories to cache in root filesystem
+
+
+
+__Type:__ list of string
+
+
+
+__Default:__ ``{startsb} {endsb}``
+
+
+
+== persist{zwsp}.root{zwsp}.cache{zwsp}.files
+
+
+
+Files to cache in root filesystem
+
+
+
+__Type:__ list of string
+
+
+
+__Default:__ ``{startsb} {endsb}``
+
+
+
+== persist{zwsp}.root{zwsp}.defaultFolders
+
+
+
+Whether to enable default folders{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``true``
+
+
+
+__Example:__ ``true``
+
+
+
+== persist{zwsp}.root{zwsp}.directories
+
+
+
+Directories to persist in root filesystem
+
+
+
+__Type:__ list of string
+
+
+
+__Default:__
+
+----
+[
+  "/var/log"
+  "/var/lib/nixos"
+]
+----
+
+
+
+== persist{zwsp}.root{zwsp}.files
+
+
+
+Files to persist in root filesystem
+
+
+
+__Type:__ list of string
+
+
+
+__Default:__ ``{startsb} {endsb}``
 
 
 

@@ -1,5 +1,32 @@
 { lib, pkgs ? null, isLaptop ? false, ... }:
 
+let
+  # Convert stylix base16 colors to solarized naming scheme
+  # Takes config.stylix.base16 (from stylix) and returns colors in solarized format
+  stylixToSolarized = base16: {
+    # Base colors (direct mapping)
+    base03 = base16.base03 or "";
+    base02 = base16.base02 or "";
+    base01 = base16.base01 or "";
+    base00 = base16.base00 or "";
+    
+    # Light colors (base16 -> solarized mapping)
+    base0 = base16.base04 or "";
+    base1 = base16.base05 or "";
+    base2 = base16.base06 or "";
+    base3 = base16.base07 or "";
+    
+    # Accent colors (base16 -> solarized mapping)
+    red = base16.base08 or "";
+    orange = base16.base09 or "";
+    yellow = base16.base0A or "";
+    green = base16.base0B or "";
+    cyan = base16.base0C or "";
+    blue = base16.base0D or "";
+    violet = base16.base0E or "";
+    magenta = base16.base0F or "";
+  };
+in
 {
   options.qnix.core.stylix = {
     enable = lib.mkEnableOption "stylix" // {
@@ -99,6 +126,15 @@
           terminal = (if isLaptop then 12 else 16);
         };
       };
+    };
+
+    # Solarized colors converted from stylix base16 colors
+    # Automatically computed when stylix is enabled
+    solarizedColors = lib.mkOption {
+      type = lib.types.attrsOf lib.types.str;
+      description = "Colors converted from stylix base16 to solarized naming scheme (base03, base02, base01, base00, base0, base1, base2, base3, red, orange, yellow, green, cyan, blue, violet, magenta)";
+      default = {};
+      readOnly = true;
     };
   };
 }

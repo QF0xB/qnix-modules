@@ -16,6 +16,14 @@
       nixos = true;
       home = false;
     };
+    lsd = {
+      nixos = false;
+      home = true;
+    };
+    starship = {
+      nixos = false;
+      home = true;
+    };
     stylix = {
       nixos = true;
       home = false;

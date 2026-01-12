@@ -56,7 +56,12 @@ These modules define the core QNix configuration options.
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `qnix.fish.enable` | `bool` | `false` | fish |
+| `qnix.fish.enable` | `bool` | `true` | fish |
+| `qnix.fish.defaultShell` | `bool` | `true` | default shell |
+| `qnix.fish.aliases` | `bool` | `true` | aliases |
+| `qnix.fish.aliases` | `bool` | `true` | aliases for qnix-system |
+| `qnix.fish.fish.defaultShell` | `bool` | `true` | default shell |
+| `qnix.fish.fish.aliases` | `bool` | `true` | aliases |
 
 ### `impermanence`
 
@@ -71,11 +76,31 @@ These modules define the core QNix configuration options.
 | `qnix.impermanence.defaultFolders` | `bool` | `true` | default folders |
 | `qnix.impermanence.directories` | `listOf` | `[ "/var/log" "/var/lib/nixos" ]` | Directories to persist in root filesystem |
 | `qnix.impermanence.files` | `listOf` | `[ ]` | Files to persist in root filesystem |
-| `qnix.impermanence.core.directories` | `listOf` | `[ "/var/log" "/var/lib/nixos" ]` | Directories to persist in root filesystem |
-| `qnix.impermanence.core.files` | `listOf` | `[ ]` | Files to persist in root filesystem |
+| `qnix.impermanence.qnix.directories` | `listOf` | `[ "/var/log" "/var/lib/nixos" ]` | Directories to persist in root filesystem |
+| `qnix.impermanence.qnix.files` | `listOf` | `[ ]` | Files to persist in root filesystem |
 | `qnix.impermanence.home.directories` | `listOf` | `[ ]` | Directories to persist in home filesystem |
 | `qnix.impermanence.home.files` | `listOf` | `[ ]` | Files to persist in home filesystem |
 | `qnix.impermanence.home.defaultFolders` | `bool` | `true` | default folders |
+
+### `lsd`
+
+**Type**: Home Manager
+
+#### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `qnix.lsd.enable` | `bool` | `false` | lsd |
+
+### `starship`
+
+**Type**: Home Manager
+
+#### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `qnix.starship.enable` | `bool` | `false` | starship |
 
 ### `stylix`
 
@@ -97,9 +122,11 @@ These modules define the core QNix configuration options.
 | `qnix.stylix.monospace` | `attrs` | `{ package = if pkgs != null then pkgs.nerd-font...` | The monospace font to use |
 | `qnix.stylix.emoji` | `attrs` | `{ package = if pkgs != null then pkgs.noto-font...` | The emoji font to use |
 | `qnix.stylix.sizes` | `attrs` | `{ applications = (if isLaptop then 12 else 16)` | The sizes of the fonts |
-| `qnix.stylix.default.ospace` | `attrs` | `{ package = if pkgs != null then pkgs.nerd-font...` | The monospace font to use |
-| `qnix.stylix.default.emoji` | `attrs` | `{ package = if pkgs != null then pkgs.noto-font...` | The emoji font to use |
-| `qnix.stylix.default.sizes` | `attrs` | `{ applications = (if isLaptop then 12 else 16)` | The sizes of the fonts |
+| `qnix.stylix.solarizedColors` | `attrsOf` | `none` | Colors converted from stylix base16 to solarized naming scheme (base03, base02, base01, base00, base0, base1, base2, base3, red, orange, yellow, green, cyan, blue, violet, magenta) |
+| `qnix.stylix.fonts.sansSerif` | `attrs` | `{ package = if pkgs != null then pkgs.fira-sans...` | The sans-serif font to use |
+| `qnix.stylix.fonts.monospace` | `attrs` | `{ package = if pkgs != null then pkgs.nerd-font...` | The monospace font to use |
+| `qnix.stylix.fonts.emoji` | `attrs` | `{ package = if pkgs != null then pkgs.noto-font...` | The emoji font to use |
+| `qnix.stylix.fonts.sizes` | `attrs` | `{ applications = (if isLaptop then 12 else 16)` | The sizes of the fonts |
 
 ### `user`
 

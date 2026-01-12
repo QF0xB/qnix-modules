@@ -214,7 +214,7 @@ boolean
 ` true `
 
 *Declared by:*
- - [/nix/store/pi10sdjvbcbkf7978wy9l764dfza1h40-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/pi10sdjvbcbkf7978wy9l764dfza1h40-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/ha6bb5f8awgj0g24v3h60fbz151r0sm9-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/ha6bb5f8awgj0g24v3h60fbz151r0sm9-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -235,7 +235,7 @@ string
 ` "nodev" `
 
 *Declared by:*
- - [/nix/store/pi10sdjvbcbkf7978wy9l764dfza1h40-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/pi10sdjvbcbkf7978wy9l764dfza1h40-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/ha6bb5f8awgj0g24v3h60fbz151r0sm9-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/ha6bb5f8awgj0g24v3h60fbz151r0sm9-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -261,7 +261,7 @@ boolean
 ` true `
 
 *Declared by:*
- - [/nix/store/pi10sdjvbcbkf7978wy9l764dfza1h40-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/pi10sdjvbcbkf7978wy9l764dfza1h40-source/modules/core/boot/options/systemd-boot-options.nix)
+ - [/nix/store/ha6bb5f8awgj0g24v3h60fbz151r0sm9-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/ha6bb5f8awgj0g24v3h60fbz151r0sm9-source/modules/core/boot/options/systemd-boot-options.nix)
 
 
 
@@ -315,7 +315,76 @@ boolean
 
 
 *Default:*
-` false `
+` true `
+
+
+
+*Example:*
+` true `
+
+
+
+## core\.fish\.aliases
+
+
+
+Whether to enable aliases\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` true `
+
+
+
+*Example:*
+` true `
+
+
+
+## core\.fish\.defaultShell
+
+
+
+Whether to enable default shell\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` true `
+
+
+
+*Example:*
+` true `
+
+
+
+## core\.fish\.qnix-aliases
+
+
+
+Whether to enable aliases for qnix-system\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` true `
 
 
 
@@ -347,47 +416,11 @@ boolean
 
 
 
-## core\.persist\.home\.cache\.directories
+## core\.lsd\.enable
 
 
 
-Directories to cache in home filesystem
-
-
-
-*Type:*
-list of string
-
-
-
-*Default:*
-` [ ] `
-
-
-
-## core\.persist\.home\.cache\.files
-
-
-
-Files to cache in home filesystem
-
-
-
-*Type:*
-list of string
-
-
-
-*Default:*
-` [ ] `
-
-
-
-## core\.persist\.home\.defaultFolders
-
-
-
-Whether to enable default folders\.
+Whether to enable lsd\.
 
 
 
@@ -397,7 +430,7 @@ boolean
 
 
 *Default:*
-` true `
+` false `
 
 
 
@@ -406,83 +439,11 @@ boolean
 
 
 
-## core\.persist\.home\.directories
+## core\.starship\.enable
 
 
 
-Directories to persist in home filesystem
-
-
-
-*Type:*
-list of string
-
-
-
-*Default:*
-` [ ] `
-
-
-
-## core\.persist\.home\.files
-
-
-
-Files to persist in home filesystem
-
-
-
-*Type:*
-list of string
-
-
-
-*Default:*
-` [ ] `
-
-
-
-## core\.persist\.root\.cache\.directories
-
-
-
-Directories to cache in root filesystem
-
-
-
-*Type:*
-list of string
-
-
-
-*Default:*
-` [ ] `
-
-
-
-## core\.persist\.root\.cache\.files
-
-
-
-Files to cache in root filesystem
-
-
-
-*Type:*
-list of string
-
-
-
-*Default:*
-` [ ] `
-
-
-
-## core\.persist\.root\.defaultFolders
-
-
-
-Whether to enable default folders\.
+Whether to enable starship\.
 
 
 
@@ -492,54 +453,12 @@ boolean
 
 
 *Default:*
-` true `
+` false `
 
 
 
 *Example:*
 ` true `
-
-
-
-## core\.persist\.root\.directories
-
-
-
-Directories to persist in root filesystem
-
-
-
-*Type:*
-list of string
-
-
-
-*Default:*
-
-```
-[
-  "/var/log"
-  "/var/lib/nixos"
-]
-```
-
-
-
-## core\.persist\.root\.files
-
-
-
-Files to persist in root filesystem
-
-
-
-*Type:*
-list of string
-
-
-
-*Default:*
-` [ ] `
 
 
 
@@ -808,6 +727,24 @@ floating point number
 
 *Default:*
 ` 0.5 `
+
+
+
+## core\.stylix\.solarizedColors
+
+
+
+Colors converted from stylix base16 to solarized naming scheme (base03, base02, base01, base00, base0, base1, base2, base3, red, orange, yellow, green, cyan, blue, violet, magenta)
+
+
+
+*Type:*
+attribute set of string *(read only)*
+
+
+
+*Default:*
+` { } `
 
 
 
@@ -1176,6 +1113,202 @@ boolean
 
 *Default:*
 ` false `
+
+
+
+## persist\.home\.cache\.directories
+
+
+
+Directories to cache in home filesystem
+
+
+
+*Type:*
+list of string
+
+
+
+*Default:*
+` [ ] `
+
+
+
+## persist\.home\.cache\.files
+
+
+
+Files to cache in home filesystem
+
+
+
+*Type:*
+list of string
+
+
+
+*Default:*
+` [ ] `
+
+
+
+## persist\.home\.defaultFolders
+
+
+
+Whether to enable default folders\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` true `
+
+
+
+*Example:*
+` true `
+
+
+
+## persist\.home\.directories
+
+
+
+Directories to persist in home filesystem
+
+
+
+*Type:*
+list of string
+
+
+
+*Default:*
+` [ ] `
+
+
+
+## persist\.home\.files
+
+
+
+Files to persist in home filesystem
+
+
+
+*Type:*
+list of string
+
+
+
+*Default:*
+` [ ] `
+
+
+
+## persist\.root\.cache\.directories
+
+
+
+Directories to cache in root filesystem
+
+
+
+*Type:*
+list of string
+
+
+
+*Default:*
+` [ ] `
+
+
+
+## persist\.root\.cache\.files
+
+
+
+Files to cache in root filesystem
+
+
+
+*Type:*
+list of string
+
+
+
+*Default:*
+` [ ] `
+
+
+
+## persist\.root\.defaultFolders
+
+
+
+Whether to enable default folders\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` true `
+
+
+
+*Example:*
+` true `
+
+
+
+## persist\.root\.directories
+
+
+
+Directories to persist in root filesystem
+
+
+
+*Type:*
+list of string
+
+
+
+*Default:*
+
+```
+[
+  "/var/log"
+  "/var/lib/nixos"
+]
+```
+
+
+
+## persist\.root\.files
+
+
+
+Files to persist in root filesystem
+
+
+
+*Type:*
+list of string
+
+
+
+*Default:*
+` [ ] `
 
 
 
