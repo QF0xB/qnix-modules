@@ -110,10 +110,10 @@
         type = lib.types.attrs;
         description = "The sizes of the fonts";
         default = {
-          applications = config.qnix.isLaptop ? 12 : 16;
-          desktop = config.qnix.isLaptop ? 12 : 16;
-          popups = config.qnix.isLaptop ? 12 : 16;
-          terminal = config.qnix.isLaptop ? 12 : 16;
+          applications = config.qnix.isLaptop ? "12" : "16";
+          desktop = config.qnix.isLaptop ? "12" : "16";
+          popups = config.qnix.isLaptop ? "12" : "16";
+          terminal = config.qnix.isLaptop ? "12" : "16";
         };
       };
     };
