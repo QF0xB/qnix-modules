@@ -1,9 +1,14 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 let
   # Read from NixOS-level options (always available since stylix options are loaded in NixOS loader)
   cfg = config.qnix.core.stylix;
-  
+
   # Convert stylix base16 colors to solarized naming scheme
   # Takes config.stylix.base16 (from stylix) and returns colors in solarized format
   stylixToSolarized = base16: {
@@ -12,13 +17,13 @@ let
     base02 = base16.base02 or "";
     base01 = base16.base01 or "";
     base00 = base16.base00 or "";
-    
+
     # Light colors (base16 -> solarized mapping)
     base0 = base16.base04 or "";
     base1 = base16.base05 or "";
     base2 = base16.base06 or "";
     base3 = base16.base07 or "";
-    
+
     # Accent colors (base16 -> solarized mapping)
     red = base16.base08 or "";
     orange = base16.base09 or "";
@@ -50,7 +55,7 @@ in
           applications = cfg.opacity.applications;
           terminal = cfg.opacity.terminal;
         };
-        
+
         icons = {
           enable = true;
 
@@ -92,7 +97,7 @@ in
     # Expose computed solarized colors from stylix
     {
       qnix.core.stylix.solarizedColors = lib.mkIf (config.stylix.enable or false) (
-        stylixToSolarized (config.stylix.base16 or {})
+        stylixToSolarized (config.stylix.base16 or { })
       );
     }
   ];

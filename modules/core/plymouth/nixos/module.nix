@@ -10,6 +10,7 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
+    stylix.targets.plymouth.enable = false;
     boot = {
       plymouth = {
         enable = true;
