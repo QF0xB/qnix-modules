@@ -86,13 +86,13 @@ These modules define the core QNix configuration options.
 | `qnix.stylix.sansSerif` | `attrs` | `{ package = if pkgs != null then pkgs.fira-sans...` | The sans-serif font to use |
 | `qnix.stylix.monospace` | `attrs` | `{ package = if pkgs != null then pkgs.nerd-font...` | The monospace font to use |
 | `qnix.stylix.emoji` | `attrs` | `{ package = if pkgs != null then pkgs.noto-font...` | The emoji font to use |
-| `qnix.stylix.sizes` | `attrs` | `{ applications = (if config != null && config.q...` | The sizes of the fonts |
+| `qnix.stylix.sizes` | `attrs` | `{ applications = (if isLaptop then "12" else "16")` | The sizes of the fonts |
 | `qnix.stylix.opacity.tions` | `float` | `0.5` | The opacity of the applications |
 | `qnix.stylix.opacity.terminal` | `float` | `0.5` | The opacity of the terminal |
 | `qnix.stylix.fonts.sansSerif` | `attrs` | `{ package = if pkgs != null then pkgs.fira-sans...` | The sans-serif font to use |
 | `qnix.stylix.fonts.monospace` | `attrs` | `{ package = if pkgs != null then pkgs.nerd-font...` | The monospace font to use |
 | `qnix.stylix.fonts.emoji` | `attrs` | `{ package = if pkgs != null then pkgs.noto-font...` | The emoji font to use |
-| `qnix.stylix.fonts.sizes` | `attrs` | `{ applications = (if config != null && config.q...` | The sizes of the fonts |
+| `qnix.stylix.fonts.sizes` | `attrs` | `{ applications = (if isLaptop then "12" else "16")` | The sizes of the fonts |
 
 ### `user`
 

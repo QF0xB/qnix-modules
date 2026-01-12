@@ -214,7 +214,7 @@ boolean
 ` true `
 
 *Declared by:*
- - [/nix/store/7mnhx68jjwlwn5qmhfb9872gwa9miq0w-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/7mnhx68jjwlwn5qmhfb9872gwa9miq0w-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/52k9ghlmpr40vidrn1zi1nz5xgzh1mgs-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/52k9ghlmpr40vidrn1zi1nz5xgzh1mgs-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -235,7 +235,7 @@ string
 ` "nodev" `
 
 *Declared by:*
- - [/nix/store/7mnhx68jjwlwn5qmhfb9872gwa9miq0w-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/7mnhx68jjwlwn5qmhfb9872gwa9miq0w-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/52k9ghlmpr40vidrn1zi1nz5xgzh1mgs-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/52k9ghlmpr40vidrn1zi1nz5xgzh1mgs-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -261,7 +261,7 @@ boolean
 ` true `
 
 *Declared by:*
- - [/nix/store/7mnhx68jjwlwn5qmhfb9872gwa9miq0w-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/7mnhx68jjwlwn5qmhfb9872gwa9miq0w-source/modules/core/boot/options/systemd-boot-options.nix)
+ - [/nix/store/52k9ghlmpr40vidrn1zi1nz5xgzh1mgs-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/52k9ghlmpr40vidrn1zi1nz5xgzh1mgs-source/modules/core/boot/options/systemd-boot-options.nix)
 
 
 

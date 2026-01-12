@@ -1,4 +1,4 @@
-{ lib, pkgs ? null, config ? null, ... }:
+{ lib, pkgs ? null, isLaptop ? false, ... }:
 
 {
   options.qnix.core.stylix = {
@@ -110,10 +110,10 @@
         type = lib.types.attrs;
         description = "The sizes of the fonts";
         default = {
-          applications = (if config != null && config.qnix.isLaptop then "12" else "16");
-          desktop = (if config != null && config.qnix.isLaptop then "12" else "16");
-          popups = (if config != null && config.qnix.isLaptop then "12" else "16");
-          terminal = (if config != null && config.qnix.isLaptop then "12" else "16");
+          applications = (if isLaptop then "12" else "16");
+          desktop = (if isLaptop then "12" else "16");
+          popups = (if isLaptop then "12" else "16");
+          terminal = (if isLaptop then "12" else "16");
         };
       };
     };

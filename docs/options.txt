@@ -184,7 +184,7 @@ __Example:__ ``true``
 
 __Declared by:__
 
-* link:file:///nix/store/7mnhx68jjwlwn5qmhfb9872gwa9miq0w-source/modules/core/boot/options/grub-options.nix[/nix/store/7mnhx68jjwlwn5qmhfb9872gwa9miq0w-source/modules/core/boot/options/grub-options{zwsp}.nix]
+* link:file:///nix/store/52k9ghlmpr40vidrn1zi1nz5xgzh1mgs-source/modules/core/boot/options/grub-options.nix[/nix/store/52k9ghlmpr40vidrn1zi1nz5xgzh1mgs-source/modules/core/boot/options/grub-options{zwsp}.nix]
 
 
 
@@ -204,7 +204,7 @@ __Default:__ ``{quot}nodev{quot}``
 
 __Declared by:__
 
-* link:file:///nix/store/7mnhx68jjwlwn5qmhfb9872gwa9miq0w-source/modules/core/boot/options/grub-options.nix[/nix/store/7mnhx68jjwlwn5qmhfb9872gwa9miq0w-source/modules/core/boot/options/grub-options{zwsp}.nix]
+* link:file:///nix/store/52k9ghlmpr40vidrn1zi1nz5xgzh1mgs-source/modules/core/boot/options/grub-options.nix[/nix/store/52k9ghlmpr40vidrn1zi1nz5xgzh1mgs-source/modules/core/boot/options/grub-options{zwsp}.nix]
 
 
 
@@ -228,7 +228,7 @@ __Example:__ ``true``
 
 __Declared by:__
 
-* link:file:///nix/store/7mnhx68jjwlwn5qmhfb9872gwa9miq0w-source/modules/core/boot/options/systemd-boot-options.nix[/nix/store/7mnhx68jjwlwn5qmhfb9872gwa9miq0w-source/modules/core/boot/options/systemd-boot-options{zwsp}.nix]
+* link:file:///nix/store/52k9ghlmpr40vidrn1zi1nz5xgzh1mgs-source/modules/core/boot/options/systemd-boot-options.nix[/nix/store/52k9ghlmpr40vidrn1zi1nz5xgzh1mgs-source/modules/core/boot/options/systemd-boot-options{zwsp}.nix]
 
 
 
