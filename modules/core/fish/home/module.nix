@@ -39,6 +39,10 @@ in
           name = "done";
           src = done.src;
         }
+        {
+          name = "sudope";
+          src = plugin-sudope.src;
+        }
       ];
     };
 

@@ -16,6 +16,10 @@
       nixos = true;
       home = false;
     };
+    localisation = {
+      nixos = true;
+      home = false;
+    };
     lsd = {
       nixos = false;
       home = true;

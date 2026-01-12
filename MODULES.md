@@ -82,6 +82,26 @@ These modules define the core QNix configuration options.
 | `qnix.impermanence.home.files` | `listOf` | `[ ]` | Files to persist in home filesystem |
 | `qnix.impermanence.home.defaultFolders` | `bool` | `true` | default folders |
 
+### `localisation`
+
+**Type**: NixOS
+
+#### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `qnix.localisation.enable` | `bool` | `true` | localisation |
+| `qnix.localisation.bridge` | `bool` | `true` | xkb-console-bridge |
+| `qnix.localisation.timezone` | `str` | `"Europe/Berlin"` | The timezone to use |
+| `qnix.localisation.layout` | `str` | `"de,de,us"` | The keyboard layout to use |
+| `qnix.localisation.variant` | `str` | `"koy, ,"` | The keyboard variant to use |
+| `qnix.localisation.localeSettings` | `attrsOf` | `{ LANG = "en_US.UTF-8"` | Locale environment variables (LANG, LC_*) |
+| `qnix.localisation.localisation.timezone` | `str` | `"Europe/Berlin"` | The timezone to use |
+| `qnix.localisation.localisation.layout` | `str` | `"de,de,us"` | The keyboard layout to use |
+| `qnix.localisation.localisation.variant` | `str` | `"koy, ,"` | The keyboard variant to use |
+| `qnix.localisation.localisation.localeSettings` | `attrsOf` | `{ LANG = "en_US.UTF-8"` | Locale environment variables (LANG, LC_*) |
+| `qnix.localisation.localisation.bridge` | `bool` | `true` | xkb-console-bridge |
+
 ### `lsd`
 
 **Type**: Home Manager
@@ -90,7 +110,7 @@ These modules define the core QNix configuration options.
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `qnix.lsd.enable` | `bool` | `false` | lsd |
+| `qnix.lsd.enable` | `bool` | `true` | lsd |
 
 ### `starship`
 
@@ -100,7 +120,9 @@ These modules define the core QNix configuration options.
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `qnix.starship.enable` | `bool` | `false` | starship |
+| `qnix.starship.enable` | `bool` | `true` | starship |
+| `qnix.starship.qnixFormat` | `bool` | `true` | qnix format |
+| `qnix.starship.starship.qnixFormat` | `bool` | `true` | qnix format |
 
 ### `stylix`
 

@@ -214,7 +214,7 @@ boolean
 ` true `
 
 *Declared by:*
- - [/nix/store/ha6bb5f8awgj0g24v3h60fbz151r0sm9-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/ha6bb5f8awgj0g24v3h60fbz151r0sm9-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/f2kjx9kkhgp9yhja4k621mf5vpimkpcm-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/f2kjx9kkhgp9yhja4k621mf5vpimkpcm-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -235,7 +235,7 @@ string
 ` "nodev" `
 
 *Declared by:*
- - [/nix/store/ha6bb5f8awgj0g24v3h60fbz151r0sm9-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/ha6bb5f8awgj0g24v3h60fbz151r0sm9-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/f2kjx9kkhgp9yhja4k621mf5vpimkpcm-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/f2kjx9kkhgp9yhja4k621mf5vpimkpcm-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -261,7 +261,7 @@ boolean
 ` true `
 
 *Declared by:*
- - [/nix/store/ha6bb5f8awgj0g24v3h60fbz151r0sm9-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/ha6bb5f8awgj0g24v3h60fbz151r0sm9-source/modules/core/boot/options/systemd-boot-options.nix)
+ - [/nix/store/f2kjx9kkhgp9yhja4k621mf5vpimkpcm-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/f2kjx9kkhgp9yhja4k621mf5vpimkpcm-source/modules/core/boot/options/systemd-boot-options.nix)
 
 
 
@@ -416,6 +416,153 @@ boolean
 
 
 
+## core\.localisation\.enable
+
+
+
+Whether to enable localisation\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` true `
+
+
+
+*Example:*
+` true `
+
+
+
+## core\.localisation\.localeSettings
+
+
+
+Locale environment variables (LANG, LC_\*)
+
+
+
+*Type:*
+attribute set of string
+
+
+
+*Default:*
+
+```
+{
+  LANG = "en_US.UTF-8";
+  LC_ADDRESS = "de_DE.UTF-8";
+  LC_COLLATE = "en_US.UTF-8";
+  LC_CTYPE = "en_US.UTF-8";
+  LC_IDENTIFICATION = "en_US.UTF-8";
+  LC_MEASUREMENT = "de_DE.UTF-8";
+  LC_MESSAGES = "en_US.UTF-8";
+  LC_MONETARY = "de_DE.UTF-8";
+  LC_NAME = "en_US.UTF-8";
+  LC_NUMERIC = "de_DE.UTF-8";
+  LC_PAPER = "en_US.UTF-8";
+  LC_TELEPHONE = "en_US.UTF-8";
+  LC_TIME = "de_DE.UTF-8";
+}
+```
+
+
+
+*Example:*
+
+```
+{
+  LANG = "en_US.UTF-8";
+  LC_MONETARY = "de_DE.UTF-8";
+  LC_TIME = "de_DE.UTF-8";
+}
+```
+
+
+
+## core\.localisation\.timezone
+
+
+
+The timezone to use
+
+
+
+*Type:*
+string
+
+
+
+*Default:*
+` "Europe/Berlin" `
+
+
+
+## core\.localisation\.xkb\.console-bridge
+
+
+
+Whether to use the xkb-console-bridge
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` true `
+
+
+
+*Example:*
+` true `
+
+
+
+## core\.localisation\.xkb\.layout
+
+
+
+The keyboard layout to use
+
+
+
+*Type:*
+string
+
+
+
+*Default:*
+` "de,de,us" `
+
+
+
+## core\.localisation\.xkb\.variant
+
+
+
+The keyboard variant to use
+
+
+
+*Type:*
+string
+
+
+
+*Default:*
+` "koy, ," `
+
+
+
 ## core\.lsd\.enable
 
 
@@ -430,7 +577,7 @@ boolean
 
 
 *Default:*
-` false `
+` true `
 
 
 
@@ -453,7 +600,30 @@ boolean
 
 
 *Default:*
-` false `
+` true `
+
+
+
+*Example:*
+` true `
+
+
+
+## core\.starship\.qnixFormat
+
+
+
+Whether to enable qnix format\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` true `
 
 
 

@@ -184,7 +184,7 @@ __Example:__ ``true``
 
 __Declared by:__
 
-* link:file:///nix/store/ha6bb5f8awgj0g24v3h60fbz151r0sm9-source/modules/core/boot/options/grub-options.nix[/nix/store/ha6bb5f8awgj0g24v3h60fbz151r0sm9-source/modules/core/boot/options/grub-options{zwsp}.nix]
+* link:file:///nix/store/f2kjx9kkhgp9yhja4k621mf5vpimkpcm-source/modules/core/boot/options/grub-options.nix[/nix/store/f2kjx9kkhgp9yhja4k621mf5vpimkpcm-source/modules/core/boot/options/grub-options{zwsp}.nix]
 
 
 
@@ -204,7 +204,7 @@ __Default:__ ``{quot}nodev{quot}``
 
 __Declared by:__
 
-* link:file:///nix/store/ha6bb5f8awgj0g24v3h60fbz151r0sm9-source/modules/core/boot/options/grub-options.nix[/nix/store/ha6bb5f8awgj0g24v3h60fbz151r0sm9-source/modules/core/boot/options/grub-options{zwsp}.nix]
+* link:file:///nix/store/f2kjx9kkhgp9yhja4k621mf5vpimkpcm-source/modules/core/boot/options/grub-options.nix[/nix/store/f2kjx9kkhgp9yhja4k621mf5vpimkpcm-source/modules/core/boot/options/grub-options{zwsp}.nix]
 
 
 
@@ -228,7 +228,7 @@ __Example:__ ``true``
 
 __Declared by:__
 
-* link:file:///nix/store/ha6bb5f8awgj0g24v3h60fbz151r0sm9-source/modules/core/boot/options/systemd-boot-options.nix[/nix/store/ha6bb5f8awgj0g24v3h60fbz151r0sm9-source/modules/core/boot/options/systemd-boot-options{zwsp}.nix]
+* link:file:///nix/store/f2kjx9kkhgp9yhja4k621mf5vpimkpcm-source/modules/core/boot/options/systemd-boot-options.nix[/nix/store/f2kjx9kkhgp9yhja4k621mf5vpimkpcm-source/modules/core/boot/options/systemd-boot-options{zwsp}.nix]
 
 
 
@@ -364,6 +364,140 @@ __Example:__ ``true``
 
 
 
+== core{zwsp}.localisation{zwsp}.enable
+
+
+
+Whether to enable localisation{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``true``
+
+
+
+__Example:__ ``true``
+
+
+
+== core{zwsp}.localisation{zwsp}.localeSettings
+
+
+
+Locale environment variables (LANG, LC_{asterisk})
+
+
+
+__Type:__ attribute set of string
+
+
+
+__Default:__
+
+----
+{
+  LANG = "en_US.UTF-8";
+  LC_ADDRESS = "de_DE.UTF-8";
+  LC_COLLATE = "en_US.UTF-8";
+  LC_CTYPE = "en_US.UTF-8";
+  LC_IDENTIFICATION = "en_US.UTF-8";
+  LC_MEASUREMENT = "de_DE.UTF-8";
+  LC_MESSAGES = "en_US.UTF-8";
+  LC_MONETARY = "de_DE.UTF-8";
+  LC_NAME = "en_US.UTF-8";
+  LC_NUMERIC = "de_DE.UTF-8";
+  LC_PAPER = "en_US.UTF-8";
+  LC_TELEPHONE = "en_US.UTF-8";
+  LC_TIME = "de_DE.UTF-8";
+}
+----
+
+
+
+__Example:__
+
+----
+{
+  LANG = "en_US.UTF-8";
+  LC_MONETARY = "de_DE.UTF-8";
+  LC_TIME = "de_DE.UTF-8";
+}
+----
+
+
+
+== core{zwsp}.localisation{zwsp}.timezone
+
+
+
+The timezone to use
+
+
+
+__Type:__ string
+
+
+
+__Default:__ ``{quot}Europe/Berlin{quot}``
+
+
+
+== core{zwsp}.localisation{zwsp}.xkb{zwsp}.console-bridge
+
+
+
+Whether to use the xkb-console-bridge
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``true``
+
+
+
+__Example:__ ``true``
+
+
+
+== core{zwsp}.localisation{zwsp}.xkb{zwsp}.layout
+
+
+
+The keyboard layout to use
+
+
+
+__Type:__ string
+
+
+
+__Default:__ ``{quot}de,de,us{quot}``
+
+
+
+== core{zwsp}.localisation{zwsp}.xkb{zwsp}.variant
+
+
+
+The keyboard variant to use
+
+
+
+__Type:__ string
+
+
+
+__Default:__ ``{quot}koy, ,{quot}``
+
+
+
 == core{zwsp}.lsd{zwsp}.enable
 
 
@@ -376,7 +510,7 @@ __Type:__ boolean
 
 
 
-__Default:__ ``false``
+__Default:__ ``true``
 
 
 
@@ -396,7 +530,27 @@ __Type:__ boolean
 
 
 
-__Default:__ ``false``
+__Default:__ ``true``
+
+
+
+__Example:__ ``true``
+
+
+
+== core{zwsp}.starship{zwsp}.qnixFormat
+
+
+
+Whether to enable qnix format{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``true``
 
 
 
