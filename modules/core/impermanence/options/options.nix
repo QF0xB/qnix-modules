@@ -7,8 +7,8 @@ let
     paths;
 in
 {
-  options.qnix.core = {
-    impermanence = {
+  options.qnix = {
+    core.impermanence = {
       enable = lib.mkEnableOption "impermanence" // {
         default = false;
       };
