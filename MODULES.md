@@ -122,6 +122,8 @@ These modules define the core QNix configuration options.
 | `qnix.shell.defaultShell` | `bool` | `true` | default shell |
 | `qnix.shell.aliases` | `bool` | `true` | aliases |
 | `qnix.shell.aliases` | `bool` | `true` | aliases for qnix-system |
+| `qnix.shell.packages` | `attrsOf` | `none` | No description |
+| `qnix.shell.shell.packages` | `attrsOf` | `none` | No description |
 | `qnix.shell.shell.enable` | `bool` | `true` | fish |
 | `qnix.shell.shell.defaultShell` | `bool` | `true` | default shell |
 | `qnix.shell.shell.aliases` | `bool` | `true` | aliases |

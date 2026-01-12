@@ -184,7 +184,7 @@ __Example:__ ``true``
 
 __Declared by:__
 
-* link:file:///nix/store/vcgl3ihazsl60rs919v2crwvh7lq6znm-source/modules/core/boot/options/grub-options.nix[/nix/store/vcgl3ihazsl60rs919v2crwvh7lq6znm-source/modules/core/boot/options/grub-options{zwsp}.nix]
+* link:file:///nix/store/b2ir1pf87llnxxn319k834i3cm5sjsx8-source/modules/core/boot/options/grub-options.nix[/nix/store/b2ir1pf87llnxxn319k834i3cm5sjsx8-source/modules/core/boot/options/grub-options{zwsp}.nix]
 
 
 
@@ -204,7 +204,7 @@ __Default:__ ``{quot}nodev{quot}``
 
 __Declared by:__
 
-* link:file:///nix/store/vcgl3ihazsl60rs919v2crwvh7lq6znm-source/modules/core/boot/options/grub-options.nix[/nix/store/vcgl3ihazsl60rs919v2crwvh7lq6znm-source/modules/core/boot/options/grub-options{zwsp}.nix]
+* link:file:///nix/store/b2ir1pf87llnxxn319k834i3cm5sjsx8-source/modules/core/boot/options/grub-options.nix[/nix/store/b2ir1pf87llnxxn319k834i3cm5sjsx8-source/modules/core/boot/options/grub-options{zwsp}.nix]
 
 
 
@@ -228,7 +228,7 @@ __Example:__ ``true``
 
 __Declared by:__
 
-* link:file:///nix/store/vcgl3ihazsl60rs919v2crwvh7lq6znm-source/modules/core/boot/options/systemd-boot-options.nix[/nix/store/vcgl3ihazsl60rs919v2crwvh7lq6znm-source/modules/core/boot/options/systemd-boot-options{zwsp}.nix]
+* link:file:///nix/store/b2ir1pf87llnxxn319k834i3cm5sjsx8-source/modules/core/boot/options/systemd-boot-options.nix[/nix/store/b2ir1pf87llnxxn319k834i3cm5sjsx8-source/modules/core/boot/options/systemd-boot-options{zwsp}.nix]
 
 
 
@@ -495,6 +495,38 @@ __Default:__ ``true``
 
 
 __Example:__ ``true``
+
+
+
+== core{zwsp}.shell{zwsp}.packages
+
+
+
+Attrset of shell packages to install and add to pkgs{zwsp}.custom overlay (for compatibility across multiple shells){zwsp}. Both string and attr values will be passed as arguments to writeShellApplicationCompletions
+
+
+
+__Type:__ attribute set of (string or (attribute set) or package)
+
+
+
+__Default:__ ``{ }``
+
+
+
+__Example:__
+
+----
+''
+  shell.packages = {
+    myPackage1 = "echo 'Hello, World!'";
+    myPackage2 = {
+      runtimeInputs = [ pkgs.hello ];
+      text = "hello --greeting 'Hi'";
+    };
+  };
+''
+----
 
 
 

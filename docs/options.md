@@ -214,7 +214,7 @@ boolean
 ` true `
 
 *Declared by:*
- - [/nix/store/vcgl3ihazsl60rs919v2crwvh7lq6znm-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/vcgl3ihazsl60rs919v2crwvh7lq6znm-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/b2ir1pf87llnxxn319k834i3cm5sjsx8-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/b2ir1pf87llnxxn319k834i3cm5sjsx8-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -235,7 +235,7 @@ string
 ` "nodev" `
 
 *Declared by:*
- - [/nix/store/vcgl3ihazsl60rs919v2crwvh7lq6znm-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/vcgl3ihazsl60rs919v2crwvh7lq6znm-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/b2ir1pf87llnxxn319k834i3cm5sjsx8-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/b2ir1pf87llnxxn319k834i3cm5sjsx8-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -261,7 +261,7 @@ boolean
 ` true `
 
 *Declared by:*
- - [/nix/store/vcgl3ihazsl60rs919v2crwvh7lq6znm-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/vcgl3ihazsl60rs919v2crwvh7lq6znm-source/modules/core/boot/options/systemd-boot-options.nix)
+ - [/nix/store/b2ir1pf87llnxxn319k834i3cm5sjsx8-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/b2ir1pf87llnxxn319k834i3cm5sjsx8-source/modules/core/boot/options/systemd-boot-options.nix)
 
 
 
@@ -560,6 +560,41 @@ boolean
 
 *Example:*
 ` true `
+
+
+
+## core\.shell\.packages
+
+
+
+Attrset of shell packages to install and add to pkgs\.custom overlay (for compatibility across multiple shells)\.
+Both string and attr values will be passed as arguments to writeShellApplicationCompletions
+
+
+
+*Type:*
+attribute set of (string or (attribute set) or package)
+
+
+
+*Default:*
+` { } `
+
+
+
+*Example:*
+
+```
+''
+  shell.packages = {
+    myPackage1 = "echo 'Hello, World!'";
+    myPackage2 = {
+      runtimeInputs = [ pkgs.hello ];
+      text = "hello --greeting 'Hi'";
+    };
+  };
+''
+```
 
 
 
