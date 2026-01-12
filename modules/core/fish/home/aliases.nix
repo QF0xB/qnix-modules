@@ -1,4 +1,4 @@
-{ dots, config , ... }:
+{ dots, config, lib, ... }:
 
 let
   cfg = config.qnix.core.fish;
