@@ -60,7 +60,7 @@ __Type:__ package
 
 
 
-__Default:__ ``{zwsp}+<+{zwsp}derivation brave-1{zwsp}.85{zwsp}.118{gt}``
+__Default:__ ``{zwsp}+<+{zwsp}derivation brave-1{zwsp}.85{zwsp}.120{gt}``
 
 
 
@@ -76,7 +76,7 @@ __Type:__ package
 
 
 
-__Default:__ ``{zwsp}+<+{zwsp}derivation nemo-6{zwsp}.6{zwsp}.2{gt}``
+__Default:__ ``{zwsp}+<+{zwsp}derivation nemo-6{zwsp}.6{zwsp}.3{gt}``
 
 
 
@@ -184,7 +184,7 @@ __Example:__ ``true``
 
 __Declared by:__
 
-* link:file:///nix/store/lcwq5g2wyzfrzbbrgy976jh86r2ammfj-source/modules/core/boot/options/grub-options.nix[/nix/store/lcwq5g2wyzfrzbbrgy976jh86r2ammfj-source/modules/core/boot/options/grub-options{zwsp}.nix]
+* link:file:///nix/store/s4i31mkv2vsd5flz3anhxv2bsww59pk8-source/modules/core/boot/options/grub-options.nix[/nix/store/s4i31mkv2vsd5flz3anhxv2bsww59pk8-source/modules/core/boot/options/grub-options{zwsp}.nix]
 
 
 
@@ -204,7 +204,7 @@ __Default:__ ``{quot}nodev{quot}``
 
 __Declared by:__
 
-* link:file:///nix/store/lcwq5g2wyzfrzbbrgy976jh86r2ammfj-source/modules/core/boot/options/grub-options.nix[/nix/store/lcwq5g2wyzfrzbbrgy976jh86r2ammfj-source/modules/core/boot/options/grub-options{zwsp}.nix]
+* link:file:///nix/store/s4i31mkv2vsd5flz3anhxv2bsww59pk8-source/modules/core/boot/options/grub-options.nix[/nix/store/s4i31mkv2vsd5flz3anhxv2bsww59pk8-source/modules/core/boot/options/grub-options{zwsp}.nix]
 
 
 
@@ -228,7 +228,7 @@ __Example:__ ``true``
 
 __Declared by:__
 
-* link:file:///nix/store/lcwq5g2wyzfrzbbrgy976jh86r2ammfj-source/modules/core/boot/options/systemd-boot-options.nix[/nix/store/lcwq5g2wyzfrzbbrgy976jh86r2ammfj-source/modules/core/boot/options/systemd-boot-options{zwsp}.nix]
+* link:file:///nix/store/s4i31mkv2vsd5flz3anhxv2bsww59pk8-source/modules/core/boot/options/systemd-boot-options.nix[/nix/store/s4i31mkv2vsd5flz3anhxv2bsww59pk8-source/modules/core/boot/options/systemd-boot-options{zwsp}.nix]
 
 
 
@@ -284,7 +284,7 @@ __Example:__ ``true``
 
 
 
-== core{zwsp}.impermanence{zwsp}.persist{zwsp}.home{zwsp}.cache{zwsp}.directories
+== core{zwsp}.persist{zwsp}.home{zwsp}.cache{zwsp}.directories
 
 
 
@@ -300,7 +300,7 @@ __Default:__ ``{startsb} {endsb}``
 
 
 
-== core{zwsp}.impermanence{zwsp}.persist{zwsp}.home{zwsp}.cache{zwsp}.files
+== core{zwsp}.persist{zwsp}.home{zwsp}.cache{zwsp}.files
 
 
 
@@ -316,7 +316,7 @@ __Default:__ ``{startsb} {endsb}``
 
 
 
-== core{zwsp}.impermanence{zwsp}.persist{zwsp}.home{zwsp}.defaultFolders
+== core{zwsp}.persist{zwsp}.home{zwsp}.defaultFolders
 
 
 
@@ -336,7 +336,7 @@ __Example:__ ``true``
 
 
 
-== core{zwsp}.impermanence{zwsp}.persist{zwsp}.home{zwsp}.directories
+== core{zwsp}.persist{zwsp}.home{zwsp}.directories
 
 
 
@@ -352,7 +352,23 @@ __Default:__ ``{startsb} {endsb}``
 
 
 
-== core{zwsp}.impermanence{zwsp}.persist{zwsp}.root{zwsp}.cache{zwsp}.directories
+== core{zwsp}.persist{zwsp}.home{zwsp}.files
+
+
+
+Files to persist in home filesystem
+
+
+
+__Type:__ list of string
+
+
+
+__Default:__ ``{startsb} {endsb}``
+
+
+
+== core{zwsp}.persist{zwsp}.root{zwsp}.cache{zwsp}.directories
 
 
 
@@ -368,7 +384,7 @@ __Default:__ ``{startsb} {endsb}``
 
 
 
-== core{zwsp}.impermanence{zwsp}.persist{zwsp}.root{zwsp}.cache{zwsp}.files
+== core{zwsp}.persist{zwsp}.root{zwsp}.cache{zwsp}.files
 
 
 
@@ -384,7 +400,7 @@ __Default:__ ``{startsb} {endsb}``
 
 
 
-== core{zwsp}.impermanence{zwsp}.persist{zwsp}.root{zwsp}.defaultFolders
+== core{zwsp}.persist{zwsp}.root{zwsp}.defaultFolders
 
 
 
@@ -404,7 +420,7 @@ __Example:__ ``true``
 
 
 
-== core{zwsp}.impermanence{zwsp}.persist{zwsp}.root{zwsp}.directories
+== core{zwsp}.persist{zwsp}.root{zwsp}.directories
 
 
 
@@ -427,7 +443,7 @@ __Default:__
 
 
 
-== core{zwsp}.impermanence{zwsp}.persist{zwsp}.root{zwsp}.files
+== core{zwsp}.persist{zwsp}.root{zwsp}.files
 
 
 
@@ -440,6 +456,26 @@ __Type:__ list of string
 
 
 __Default:__ ``{startsb} {endsb}``
+
+
+
+== core{zwsp}.stylix{zwsp}.enable
+
+
+
+Whether to enable stylix{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``false``
+
+
+
+__Example:__ ``true``
 
 
 
@@ -730,11 +766,11 @@ Interval for ZFS scrub
 
 
 
-__Type:__ signed integer
+__Type:__ string
 
 
 
-__Default:__ ``12``
+__Default:__ ``{quot}12{quot}``
 
 
 

@@ -61,9 +61,21 @@ These modules define the core QNix configuration options.
 | `qnix.impermanence.defaultFolders` | `bool` | `true` | default folders |
 | `qnix.impermanence.directories` | `listOf` | `[ "/var/log" "/var/lib/nixos" ]` | Directories to persist in root filesystem |
 | `qnix.impermanence.files` | `listOf` | `[ ]` | Files to persist in root filesystem |
-| `qnix.impermanence.cache.directories` | `listOf` | `[ ]` | Directories to persist in home filesystem |
-| `qnix.impermanence.cache.files` | `listOf` | `[ ]` | Files to cache in home filesystem |
-| `qnix.impermanence.cache.defaultFolders` | `bool` | `true` | default folders |
+| `qnix.impermanence.core.directories` | `listOf` | `[ "/var/log" "/var/lib/nixos" ]` | Directories to persist in root filesystem |
+| `qnix.impermanence.core.files` | `listOf` | `[ ]` | Files to persist in root filesystem |
+| `qnix.impermanence.home.directories` | `listOf` | `[ ]` | Directories to persist in home filesystem |
+| `qnix.impermanence.home.files` | `listOf` | `[ ]` | Files to persist in home filesystem |
+| `qnix.impermanence.home.defaultFolders` | `bool` | `true` | default folders |
+
+### `stylix`
+
+**Type**: NixOS
+
+#### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `qnix.stylix.enable` | `bool` | `false` | stylix |
 
 ### `user`
 
@@ -110,8 +122,8 @@ These modules define the core QNix configuration options.
 |--------|------|---------|-------------|
 | `qnix.zfs.enable` | `bool` | `true` | zfs |
 | `qnix.zfs.enable` | `bool` | `true` | zfs scrub |
-| `qnix.zfs.interval` | `int` | `12` | Interval for ZFS scrub |
-| `qnix.zfs.zfs.interval` | `int` | `12` | Interval for ZFS scrub |
+| `qnix.zfs.interval` | `str` | `"12"` | Interval for ZFS scrub |
+| `qnix.zfs.zfs.interval` | `str` | `"12"` | Interval for ZFS scrub |
 | `qnix.zfs.zfs.enable` | `bool` | `true` | zfs scrub |
 
 

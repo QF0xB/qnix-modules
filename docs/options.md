@@ -75,7 +75,7 @@ package
 
 
 *Default:*
-` <derivation brave-1.85.118> `
+` <derivation brave-1.85.120> `
 
 
 
@@ -93,7 +93,7 @@ package
 
 
 *Default:*
-` <derivation nemo-6.6.2> `
+` <derivation nemo-6.6.3> `
 
 
 
@@ -214,7 +214,7 @@ boolean
 ` true `
 
 *Declared by:*
- - [/nix/store/lcwq5g2wyzfrzbbrgy976jh86r2ammfj-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/lcwq5g2wyzfrzbbrgy976jh86r2ammfj-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/s4i31mkv2vsd5flz3anhxv2bsww59pk8-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/s4i31mkv2vsd5flz3anhxv2bsww59pk8-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -235,7 +235,7 @@ string
 ` "nodev" `
 
 *Declared by:*
- - [/nix/store/lcwq5g2wyzfrzbbrgy976jh86r2ammfj-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/lcwq5g2wyzfrzbbrgy976jh86r2ammfj-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/s4i31mkv2vsd5flz3anhxv2bsww59pk8-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/s4i31mkv2vsd5flz3anhxv2bsww59pk8-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -261,7 +261,7 @@ boolean
 ` true `
 
 *Declared by:*
- - [/nix/store/lcwq5g2wyzfrzbbrgy976jh86r2ammfj-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/lcwq5g2wyzfrzbbrgy976jh86r2ammfj-source/modules/core/boot/options/systemd-boot-options.nix)
+ - [/nix/store/s4i31mkv2vsd5flz3anhxv2bsww59pk8-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/s4i31mkv2vsd5flz3anhxv2bsww59pk8-source/modules/core/boot/options/systemd-boot-options.nix)
 
 
 
@@ -324,7 +324,7 @@ boolean
 
 
 
-## core\.impermanence\.persist\.home\.cache\.directories
+## core\.persist\.home\.cache\.directories
 
 
 
@@ -342,7 +342,7 @@ list of string
 
 
 
-## core\.impermanence\.persist\.home\.cache\.files
+## core\.persist\.home\.cache\.files
 
 
 
@@ -360,7 +360,7 @@ list of string
 
 
 
-## core\.impermanence\.persist\.home\.defaultFolders
+## core\.persist\.home\.defaultFolders
 
 
 
@@ -383,7 +383,7 @@ boolean
 
 
 
-## core\.impermanence\.persist\.home\.directories
+## core\.persist\.home\.directories
 
 
 
@@ -401,7 +401,25 @@ list of string
 
 
 
-## core\.impermanence\.persist\.root\.cache\.directories
+## core\.persist\.home\.files
+
+
+
+Files to persist in home filesystem
+
+
+
+*Type:*
+list of string
+
+
+
+*Default:*
+` [ ] `
+
+
+
+## core\.persist\.root\.cache\.directories
 
 
 
@@ -419,7 +437,7 @@ list of string
 
 
 
-## core\.impermanence\.persist\.root\.cache\.files
+## core\.persist\.root\.cache\.files
 
 
 
@@ -437,7 +455,7 @@ list of string
 
 
 
-## core\.impermanence\.persist\.root\.defaultFolders
+## core\.persist\.root\.defaultFolders
 
 
 
@@ -460,7 +478,7 @@ boolean
 
 
 
-## core\.impermanence\.persist\.root\.directories
+## core\.persist\.root\.directories
 
 
 
@@ -484,7 +502,7 @@ list of string
 
 
 
-## core\.impermanence\.persist\.root\.files
+## core\.persist\.root\.files
 
 
 
@@ -499,6 +517,29 @@ list of string
 
 *Default:*
 ` [ ] `
+
+
+
+## core\.stylix\.enable
+
+
+
+Whether to enable stylix\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` false `
+
+
+
+*Example:*
+` true `
 
 
 
@@ -825,12 +866,12 @@ Interval for ZFS scrub
 
 
 *Type:*
-signed integer
+string
 
 
 
 *Default:*
-` 12 `
+` "12" `
 
 
 

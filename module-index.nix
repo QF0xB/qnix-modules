@@ -12,6 +12,10 @@
       nixos = true;
       home = false;
     };
+    stylix = {
+      nixos = true;
+      home = false;
+    };
     user = {
       nixos = true;
       home = false;

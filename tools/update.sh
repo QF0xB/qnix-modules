@@ -11,6 +11,8 @@ cd "$REPO_ROOT"
 
 echo "Updating generated files..."
 
+git add .
+
 # Regenerate module-index.nix and MODULES.md
 echo "Regenerating module-index.nix and MODULES.md..."
 nix-shell -p python3 --run "python3 '$REPO_ROOT/tools/module-update.py' --root '$REPO_ROOT'" || {
