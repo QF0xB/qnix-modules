@@ -3,7 +3,7 @@
 {
   options.qnix.core.starship = {
     enable = lib.mkEnableOption "starship" // {
-      default = false;
+      default = true;
     };
   };
 }
