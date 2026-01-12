@@ -14,14 +14,17 @@ let
   validCategories = builtins.filter (cat: builtins.hasAttr cat moduleIndex) categoriesList;
   
   # Collect all option modules from selected categories
+  # Exclude stylix as it's always loaded separately
   collectOptions = category:
     let
       catModules = moduleIndex.${category} or {};
       moduleNames = builtins.attrNames catModules;
+      # Filter out stylix (loaded separately)
+      filteredNames = builtins.filter (name: name != "stylix") moduleNames;
       # Build paths using string concatenation - Nix will resolve relative to this file
       optionPaths = builtins.map (name: 
         (toString ./../modules) + "/${category}/${name}/options/options.nix"
-      ) moduleNames;
+      ) filteredNames;
     in
     optionPaths;
   
@@ -55,11 +58,18 @@ let
     then [ ./../modules/qnix/nixos/module.nix ]
     else [];
   
+  # Collect stylix options specifically (always loaded, not dependent on loadOptions)
+  stylixOptions = if builtins.hasAttr "core" moduleIndex && builtins.hasAttr "stylix" (moduleIndex.core or {}) then
+    [ (toString ./../modules) + "/core/stylix/options/options.nix" ]
+  else
+    [];
+  
   # Conditionally include options based on loadOptions flag
   # When loadOptions = true: options are loaded into NixOS (for servers without home-manager)
   # When loadOptions = false: options are only in home-manager, accessed via config.hm.qnix.*
   # Modules should check both: config.qnix.* or config.hm.qnix.* for maximum flexibility
-  optionImports = if loadOptions then (qnixOptions ++ allOptionModules) else [];
+  # Exception: stylix options are always loaded in NixOS
+  optionImports = stylixOptions ++ (if loadOptions then (qnixOptions ++ allOptionModules) else []);
 in
 lib.traceSeqN 1
   ">>> [qnix/nixos] Categories: ${builtins.toString validCategories}, loadOptions: ${builtins.toString loadOptions}"

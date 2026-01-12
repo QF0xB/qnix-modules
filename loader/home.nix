@@ -14,14 +14,17 @@ let
   validCategories = builtins.filter (cat: builtins.hasAttr cat moduleIndex) categoriesList;
   
   # Collect all option modules from selected categories
+  # Exclude stylix as it's only loaded in NixOS loader
   collectOptions = category:
     let
       catModules = moduleIndex.${category} or {};
       moduleNames = builtins.attrNames catModules;
+      # Filter out stylix (only exception - loaded in NixOS loader)
+      filteredNames = builtins.filter (name: name != "stylix") moduleNames;
       # Build paths using string concatenation - Nix will resolve relative to this file
       optionPaths = builtins.map (name: 
         (toString ./../modules) + "/${category}/${name}/options/options.nix"
-      ) moduleNames;
+      ) filteredNames;
     in
     optionPaths;
   
