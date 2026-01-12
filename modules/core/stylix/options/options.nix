@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, pkgs ? null, ... }:
 
 {
   options.qnix.core.stylix = {
@@ -39,7 +39,7 @@
       type = lib.types.attrs;
       description = "The cursor to use";
       default = {
-        package = pkgs.simp1e-cursors;
+        package = if pkgs != null then pkgs.simp1e-cursors else null;
         name = "Simp1e-Solarized-Dark";
         size = 24;
       };
@@ -63,7 +63,7 @@
       description = "The icons to use";
       default = {
         enable = true;
-        package = pkgs.fluent-icon-theme;
+        package = if pkgs != null then pkgs.fluent-icon-theme else null;
         dark = "Fluent-dark";
         light = "Fluent-light";
       };
@@ -74,7 +74,7 @@
         type = lib.types.attrs;
         description = "The serif font to use";
         default = {
-          package = pkgs.fira-sans;
+          package = if pkgs != null then pkgs.fira-sans else null;
           name = "Fira Sans";
         };
       };
@@ -83,7 +83,7 @@
         type = lib.types.attrs;
         description = "The sans-serif font to use";
         default = {
-          package = pkgs.fira-sans;
+          package = if pkgs != null then pkgs.fira-sans else null;
           name = "Fira Sans";
         };
       };
@@ -92,7 +92,7 @@
         type = lib.types.attrs;
         description = "The monospace font to use";
         default = {
-          package = pkgs.nerd-fonts.jetbrains-mono;
+          package = if pkgs != null then pkgs.nerd-fonts.jetbrains-mono else null;
           name = "JetBrains Mono Nerd Font";
         };
       };
@@ -101,7 +101,7 @@
         type = lib.types.attrs;
         description = "The emoji font to use";
         default = {
-          package = pkgs.noto-fonts-color-emoji;
+          package = if pkgs != null then pkgs.noto-fonts-color-emoji else null;
           name = "Noto Color Emoji";
         };
       };
