@@ -214,7 +214,7 @@ boolean
 ` true `
 
 *Declared by:*
- - [/nix/store/52k9ghlmpr40vidrn1zi1nz5xgzh1mgs-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/52k9ghlmpr40vidrn1zi1nz5xgzh1mgs-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/pi10sdjvbcbkf7978wy9l764dfza1h40-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/pi10sdjvbcbkf7978wy9l764dfza1h40-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -235,7 +235,7 @@ string
 ` "nodev" `
 
 *Declared by:*
- - [/nix/store/52k9ghlmpr40vidrn1zi1nz5xgzh1mgs-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/52k9ghlmpr40vidrn1zi1nz5xgzh1mgs-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/pi10sdjvbcbkf7978wy9l764dfza1h40-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/pi10sdjvbcbkf7978wy9l764dfza1h40-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -261,7 +261,7 @@ boolean
 ` true `
 
 *Declared by:*
- - [/nix/store/52k9ghlmpr40vidrn1zi1nz5xgzh1mgs-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/52k9ghlmpr40vidrn1zi1nz5xgzh1mgs-source/modules/core/boot/options/systemd-boot-options.nix)
+ - [/nix/store/pi10sdjvbcbkf7978wy9l764dfza1h40-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/pi10sdjvbcbkf7978wy9l764dfza1h40-source/modules/core/boot/options/systemd-boot-options.nix)
 
 
 
@@ -297,6 +297,29 @@ boolean
 
 
 *Default:*
+` true `
+
+
+
+## core\.fish\.enable
+
+
+
+Whether to enable fish\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` false `
+
+
+
+*Example:*
 ` true `
 
 
@@ -575,27 +598,7 @@ attribute set
 
 
 *Default:*
-
-```
-{
-  base00 = "#001e26";
-  base01 = "#002731";
-  base02 = "#006388";
-  base03 = "#3a8298";
-  base04 = "#74a2a9";
-  base05 = "#aec2ba";
-  base06 = "#e9e2cb";
-  base07 = "#fcf4dc";
-  base08 = "#d01b24";
-  base09 = "#a57705";
-  base0A = "#178dc7";
-  base0B = "#6bbe6c";
-  base0C = "#259185";
-  base0D = "#2075c7";
-  base0E = "#c61b6e";
-  base0F = "#680d12";
-}
-```
+` { } `
 
 
 
@@ -737,10 +740,10 @@ attribute set
 
 ```
 {
-  applications = "16";
-  desktop = "16";
-  popups = "16";
-  terminal = "16";
+  applications = 16;
+  desktop = 16;
+  popups = 16;
+  terminal = 16;
 }
 ```
 

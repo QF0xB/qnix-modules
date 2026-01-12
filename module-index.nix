@@ -8,6 +8,10 @@
       nixos = true;
       home = false;
     };
+    fish = {
+      nixos = true;
+      home = true;
+    };
     impermanence = {
       nixos = true;
       home = false;

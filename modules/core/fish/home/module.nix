@@ -1,0 +1,49 @@
+{ lib, config, ... }:
+
+let
+  cfg = config.qnix.core.fish;
+in
+{
+  imports = [
+    ./aliases.nix
+  ];
+
+  config = lib.mkIf cfg.enable {
+    programs.fish = {
+      enable = true;
+      preferAbbrs = true;
+      shellAbbrs = lib.mkForce config.home.shellAliases;
+      shellInit = ''
+        # shut up welcoming
+        set fish_greeting
+      '';
+
+      plugins = with pkgs.fishPlugins; [
+        {
+          name = "sponge";
+          src = sponge.src;
+        }
+        {
+          name = "forgit";
+          src = forgit.src;
+        }
+        {
+          name = "fzf";
+          src = fzf.src;
+        }
+        {
+          name = "autopair";
+          src = autopair.src;
+        }
+        {
+          name = "done";
+          src = done.src;
+        }
+      ];
+    };
+
+    qnix.persist.home.cache.directories = [
+      ".local/share/fish"
+    ];
+  };
+}
