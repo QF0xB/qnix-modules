@@ -214,7 +214,7 @@ boolean
 ` true `
 
 *Declared by:*
- - [/nix/store/s4i31mkv2vsd5flz3anhxv2bsww59pk8-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/s4i31mkv2vsd5flz3anhxv2bsww59pk8-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/7mnhx68jjwlwn5qmhfb9872gwa9miq0w-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/7mnhx68jjwlwn5qmhfb9872gwa9miq0w-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -235,7 +235,7 @@ string
 ` "nodev" `
 
 *Declared by:*
- - [/nix/store/s4i31mkv2vsd5flz3anhxv2bsww59pk8-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/s4i31mkv2vsd5flz3anhxv2bsww59pk8-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/7mnhx68jjwlwn5qmhfb9872gwa9miq0w-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/7mnhx68jjwlwn5qmhfb9872gwa9miq0w-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -261,7 +261,7 @@ boolean
 ` true `
 
 *Declared by:*
- - [/nix/store/s4i31mkv2vsd5flz3anhxv2bsww59pk8-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/s4i31mkv2vsd5flz3anhxv2bsww59pk8-source/modules/core/boot/options/systemd-boot-options.nix)
+ - [/nix/store/7mnhx68jjwlwn5qmhfb9872gwa9miq0w-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/7mnhx68jjwlwn5qmhfb9872gwa9miq0w-source/modules/core/boot/options/systemd-boot-options.nix)
 
 
 
@@ -534,12 +534,277 @@ boolean
 
 
 *Default:*
-` false `
+` true `
 
 
 
 *Example:*
 ` true `
+
+
+
+## core\.stylix\.colorScheme
+
+
+
+The color scheme to use, must be in base16scheme repo
+
+
+
+*Type:*
+string
+
+
+
+*Default:*
+` "solarized-dark" `
+
+
+
+## core\.stylix\.colorSchemeOverrides
+
+
+
+Override the color scheme with custom colors
+
+
+
+*Type:*
+attribute set
+
+
+
+*Default:*
+
+```
+{
+  base00 = "#001e26";
+  base01 = "#002731";
+  base02 = "#006388";
+  base03 = "#3a8298";
+  base04 = "#74a2a9";
+  base05 = "#aec2ba";
+  base06 = "#e9e2cb";
+  base07 = "#fcf4dc";
+  base08 = "#d01b24";
+  base09 = "#a57705";
+  base0A = "#178dc7";
+  base0B = "#6bbe6c";
+  base0C = "#259185";
+  base0D = "#2075c7";
+  base0E = "#c61b6e";
+  base0F = "#680d12";
+}
+```
+
+
+
+## core\.stylix\.cursor
+
+
+
+The cursor to use
+
+
+
+*Type:*
+attribute set
+
+
+
+*Default:*
+
+```
+{
+  name = "Simp1e-Solarized-Dark";
+  package = <derivation simp1e-cursors-20250223>;
+  size = 24;
+}
+```
+
+
+
+## core\.stylix\.fonts\.emoji
+
+
+
+The emoji font to use
+
+
+
+*Type:*
+attribute set
+
+
+
+*Default:*
+
+```
+{
+  name = "Noto Color Emoji";
+  package = <derivation noto-fonts-color-emoji-2.051>;
+}
+```
+
+
+
+## core\.stylix\.fonts\.monospace
+
+
+
+The monospace font to use
+
+
+
+*Type:*
+attribute set
+
+
+
+*Default:*
+
+```
+{
+  name = "JetBrains Mono Nerd Font";
+  package = <derivation nerd-fonts-jetbrains-mono-3.4.0+2.304>;
+}
+```
+
+
+
+## core\.stylix\.fonts\.sansSerif
+
+
+
+The sans-serif font to use
+
+
+
+*Type:*
+attribute set
+
+
+
+*Default:*
+
+```
+{
+  name = "Fira Sans";
+  package = <derivation fira-sans-4.301>;
+}
+```
+
+
+
+## core\.stylix\.fonts\.serif
+
+
+
+The serif font to use
+
+
+
+*Type:*
+attribute set
+
+
+
+*Default:*
+
+```
+{
+  name = "Fira Sans";
+  package = <derivation fira-sans-4.301>;
+}
+```
+
+
+
+## core\.stylix\.fonts\.sizes
+
+
+
+The sizes of the fonts
+
+
+
+*Type:*
+attribute set
+
+
+
+*Default:*
+
+```
+{
+  applications = "16";
+  desktop = "16";
+  popups = "16";
+  terminal = "16";
+}
+```
+
+
+
+## core\.stylix\.icons
+
+
+
+The icons to use
+
+
+
+*Type:*
+attribute set
+
+
+
+*Default:*
+
+```
+{
+  dark = "Fluent-dark";
+  enable = true;
+  light = "Fluent-light";
+  package = <derivation Fluent-icon-theme-2025-08-21>;
+}
+```
+
+
+
+## core\.stylix\.opacity\.applications
+
+
+
+The opacity of the applications
+
+
+
+*Type:*
+floating point number
+
+
+
+*Default:*
+` 0.5 `
+
+
+
+## core\.stylix\.opacity\.terminal
+
+
+
+The opacity of the terminal
+
+
+
+*Type:*
+floating point number
+
+
+
+*Default:*
+` 0.5 `
 
 
 

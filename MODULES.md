@@ -75,7 +75,24 @@ These modules define the core QNix configuration options.
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `qnix.stylix.enable` | `bool` | `false` | stylix |
+| `qnix.stylix.enable` | `bool` | `true` | stylix |
+| `qnix.stylix.colorScheme` | `str` | `"solarized-dark"` | The color scheme to use, must be in base16scheme repo |
+| `qnix.stylix.colorSchemeOverrides` | `attrs` | `{ base00 = "#001e26"` | Override the color scheme with custom colors |
+| `qnix.stylix.cursor` | `attrs` | `{ package = if pkgs != null then pkgs.simp1e-cu...` | The cursor to use |
+| `qnix.stylix.applications` | `float` | `0.5` | The opacity of the applications |
+| `qnix.stylix.terminal` | `float` | `0.5` | The opacity of the terminal |
+| `qnix.stylix.icons` | `attrs` | `{ enable = true` | The icons to use |
+| `qnix.stylix.serif` | `attrs` | `{ package = if pkgs != null then pkgs.fira-sans...` | The serif font to use |
+| `qnix.stylix.sansSerif` | `attrs` | `{ package = if pkgs != null then pkgs.fira-sans...` | The sans-serif font to use |
+| `qnix.stylix.monospace` | `attrs` | `{ package = if pkgs != null then pkgs.nerd-font...` | The monospace font to use |
+| `qnix.stylix.emoji` | `attrs` | `{ package = if pkgs != null then pkgs.noto-font...` | The emoji font to use |
+| `qnix.stylix.sizes` | `attrs` | `{ applications = (if config != null && config.q...` | The sizes of the fonts |
+| `qnix.stylix.opacity.tions` | `float` | `0.5` | The opacity of the applications |
+| `qnix.stylix.opacity.terminal` | `float` | `0.5` | The opacity of the terminal |
+| `qnix.stylix.fonts.sansSerif` | `attrs` | `{ package = if pkgs != null then pkgs.fira-sans...` | The sans-serif font to use |
+| `qnix.stylix.fonts.monospace` | `attrs` | `{ package = if pkgs != null then pkgs.nerd-font...` | The monospace font to use |
+| `qnix.stylix.fonts.emoji` | `attrs` | `{ package = if pkgs != null then pkgs.noto-font...` | The emoji font to use |
+| `qnix.stylix.fonts.sizes` | `attrs` | `{ applications = (if config != null && config.q...` | The sizes of the fonts |
 
 ### `user`
 

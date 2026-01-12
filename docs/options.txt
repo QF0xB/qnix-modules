@@ -184,7 +184,7 @@ __Example:__ ``true``
 
 __Declared by:__
 
-* link:file:///nix/store/s4i31mkv2vsd5flz3anhxv2bsww59pk8-source/modules/core/boot/options/grub-options.nix[/nix/store/s4i31mkv2vsd5flz3anhxv2bsww59pk8-source/modules/core/boot/options/grub-options{zwsp}.nix]
+* link:file:///nix/store/7mnhx68jjwlwn5qmhfb9872gwa9miq0w-source/modules/core/boot/options/grub-options.nix[/nix/store/7mnhx68jjwlwn5qmhfb9872gwa9miq0w-source/modules/core/boot/options/grub-options{zwsp}.nix]
 
 
 
@@ -204,7 +204,7 @@ __Default:__ ``{quot}nodev{quot}``
 
 __Declared by:__
 
-* link:file:///nix/store/s4i31mkv2vsd5flz3anhxv2bsww59pk8-source/modules/core/boot/options/grub-options.nix[/nix/store/s4i31mkv2vsd5flz3anhxv2bsww59pk8-source/modules/core/boot/options/grub-options{zwsp}.nix]
+* link:file:///nix/store/7mnhx68jjwlwn5qmhfb9872gwa9miq0w-source/modules/core/boot/options/grub-options.nix[/nix/store/7mnhx68jjwlwn5qmhfb9872gwa9miq0w-source/modules/core/boot/options/grub-options{zwsp}.nix]
 
 
 
@@ -228,7 +228,7 @@ __Example:__ ``true``
 
 __Declared by:__
 
-* link:file:///nix/store/s4i31mkv2vsd5flz3anhxv2bsww59pk8-source/modules/core/boot/options/systemd-boot-options.nix[/nix/store/s4i31mkv2vsd5flz3anhxv2bsww59pk8-source/modules/core/boot/options/systemd-boot-options{zwsp}.nix]
+* link:file:///nix/store/7mnhx68jjwlwn5qmhfb9872gwa9miq0w-source/modules/core/boot/options/systemd-boot-options.nix[/nix/store/7mnhx68jjwlwn5qmhfb9872gwa9miq0w-source/modules/core/boot/options/systemd-boot-options{zwsp}.nix]
 
 
 
@@ -471,11 +471,262 @@ __Type:__ boolean
 
 
 
-__Default:__ ``false``
+__Default:__ ``true``
 
 
 
 __Example:__ ``true``
+
+
+
+== core{zwsp}.stylix{zwsp}.colorScheme
+
+
+
+The color scheme to use, must be in base16scheme repo
+
+
+
+__Type:__ string
+
+
+
+__Default:__ ``{quot}solarized-dark{quot}``
+
+
+
+== core{zwsp}.stylix{zwsp}.colorSchemeOverrides
+
+
+
+Override the color scheme with custom colors
+
+
+
+__Type:__ attribute set
+
+
+
+__Default:__
+
+----
+{
+  base00 = "#001e26";
+  base01 = "#002731";
+  base02 = "#006388";
+  base03 = "#3a8298";
+  base04 = "#74a2a9";
+  base05 = "#aec2ba";
+  base06 = "#e9e2cb";
+  base07 = "#fcf4dc";
+  base08 = "#d01b24";
+  base09 = "#a57705";
+  base0A = "#178dc7";
+  base0B = "#6bbe6c";
+  base0C = "#259185";
+  base0D = "#2075c7";
+  base0E = "#c61b6e";
+  base0F = "#680d12";
+}
+----
+
+
+
+== core{zwsp}.stylix{zwsp}.cursor
+
+
+
+The cursor to use
+
+
+
+__Type:__ attribute set
+
+
+
+__Default:__
+
+----
+{
+  name = "Simp1e-Solarized-Dark";
+  package = <derivation simp1e-cursors-20250223>;
+  size = 24;
+}
+----
+
+
+
+== core{zwsp}.stylix{zwsp}.fonts{zwsp}.emoji
+
+
+
+The emoji font to use
+
+
+
+__Type:__ attribute set
+
+
+
+__Default:__
+
+----
+{
+  name = "Noto Color Emoji";
+  package = <derivation noto-fonts-color-emoji-2.051>;
+}
+----
+
+
+
+== core{zwsp}.stylix{zwsp}.fonts{zwsp}.monospace
+
+
+
+The monospace font to use
+
+
+
+__Type:__ attribute set
+
+
+
+__Default:__
+
+----
+{
+  name = "JetBrains Mono Nerd Font";
+  package = <derivation nerd-fonts-jetbrains-mono-3.4.0+2.304>;
+}
+----
+
+
+
+== core{zwsp}.stylix{zwsp}.fonts{zwsp}.sansSerif
+
+
+
+The sans-serif font to use
+
+
+
+__Type:__ attribute set
+
+
+
+__Default:__
+
+----
+{
+  name = "Fira Sans";
+  package = <derivation fira-sans-4.301>;
+}
+----
+
+
+
+== core{zwsp}.stylix{zwsp}.fonts{zwsp}.serif
+
+
+
+The serif font to use
+
+
+
+__Type:__ attribute set
+
+
+
+__Default:__
+
+----
+{
+  name = "Fira Sans";
+  package = <derivation fira-sans-4.301>;
+}
+----
+
+
+
+== core{zwsp}.stylix{zwsp}.fonts{zwsp}.sizes
+
+
+
+The sizes of the fonts
+
+
+
+__Type:__ attribute set
+
+
+
+__Default:__
+
+----
+{
+  applications = "16";
+  desktop = "16";
+  popups = "16";
+  terminal = "16";
+}
+----
+
+
+
+== core{zwsp}.stylix{zwsp}.icons
+
+
+
+The icons to use
+
+
+
+__Type:__ attribute set
+
+
+
+__Default:__
+
+----
+{
+  dark = "Fluent-dark";
+  enable = true;
+  light = "Fluent-light";
+  package = <derivation Fluent-icon-theme-2025-08-21>;
+}
+----
+
+
+
+== core{zwsp}.stylix{zwsp}.opacity{zwsp}.applications
+
+
+
+The opacity of the applications
+
+
+
+__Type:__ floating point number
+
+
+
+__Default:__ ``0{zwsp}.5``
+
+
+
+== core{zwsp}.stylix{zwsp}.opacity{zwsp}.terminal
+
+
+
+The opacity of the terminal
+
+
+
+__Type:__ floating point number
+
+
+
+__Default:__ ``0{zwsp}.5``
 
 
 
