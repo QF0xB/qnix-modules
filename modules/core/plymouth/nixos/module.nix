@@ -14,7 +14,7 @@ in
       plymouth = {
         enable = true;
         theme = "nixos-blur";
-        themePackages = [ pkgs.nixos-plymouth ];
+        themePackages = [ pkgs.qnix-pkgs.nixos-plymouth ];
       };
 
       # Enable "Silent boot"
