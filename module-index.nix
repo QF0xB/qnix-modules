@@ -20,6 +20,10 @@
       nixos = false;
       home = true;
     };
+    plymouth = {
+      nixos = true;
+      home = false;
+    };
     polkit = {
       nixos = true;
       home = false;

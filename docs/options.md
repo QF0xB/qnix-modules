@@ -214,7 +214,7 @@ boolean
 ` true `
 
 *Declared by:*
- - [/nix/store/b2ir1pf87llnxxn319k834i3cm5sjsx8-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/b2ir1pf87llnxxn319k834i3cm5sjsx8-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/kzz27mqhl91j0q5l7al7nhkwk950ba49-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/kzz27mqhl91j0q5l7al7nhkwk950ba49-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -235,7 +235,7 @@ string
 ` "nodev" `
 
 *Declared by:*
- - [/nix/store/b2ir1pf87llnxxn319k834i3cm5sjsx8-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/b2ir1pf87llnxxn319k834i3cm5sjsx8-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/kzz27mqhl91j0q5l7al7nhkwk950ba49-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/kzz27mqhl91j0q5l7al7nhkwk950ba49-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -261,7 +261,7 @@ boolean
 ` true `
 
 *Declared by:*
- - [/nix/store/b2ir1pf87llnxxn319k834i3cm5sjsx8-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/b2ir1pf87llnxxn319k834i3cm5sjsx8-source/modules/core/boot/options/systemd-boot-options.nix)
+ - [/nix/store/kzz27mqhl91j0q5l7al7nhkwk950ba49-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/kzz27mqhl91j0q5l7al7nhkwk950ba49-source/modules/core/boot/options/systemd-boot-options.nix)
 
 
 
@@ -494,6 +494,29 @@ boolean
 
 
 
+## core\.plymouth\.enable
+
+
+
+Whether to enable plymouth\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` true `
+
+
+
+*Example:*
+` true `
+
+
+
 ## core\.polkit\.enable
 
 
@@ -667,7 +690,7 @@ boolean
 
 
 
-## core\.shell\.qnix-aliases
+## core\.shell\.qnixAliases
 
 
 
