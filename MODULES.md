@@ -97,6 +97,16 @@ These modules define the core QNix configuration options.
 |--------|------|---------|-------------|
 | `qnix.lsd.enable` | `bool` | `true` | lsd |
 
+### `nvf`
+
+**Type**: Home Manager
+
+#### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `qnix.nvf.enable` | `bool` | `false` | nvf |
+
 ### `plymouth`
 
 **Type**: NixOS

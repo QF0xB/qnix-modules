@@ -214,7 +214,7 @@ boolean
 ` true `
 
 *Declared by:*
- - [/nix/store/kzz27mqhl91j0q5l7al7nhkwk950ba49-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/kzz27mqhl91j0q5l7al7nhkwk950ba49-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/b8n3zd5hpa3rz22jn3hjri7x6sk074lg-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/b8n3zd5hpa3rz22jn3hjri7x6sk074lg-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -235,7 +235,7 @@ string
 ` "nodev" `
 
 *Declared by:*
- - [/nix/store/kzz27mqhl91j0q5l7al7nhkwk950ba49-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/kzz27mqhl91j0q5l7al7nhkwk950ba49-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/b8n3zd5hpa3rz22jn3hjri7x6sk074lg-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/b8n3zd5hpa3rz22jn3hjri7x6sk074lg-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -261,7 +261,7 @@ boolean
 ` true `
 
 *Declared by:*
- - [/nix/store/kzz27mqhl91j0q5l7al7nhkwk950ba49-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/kzz27mqhl91j0q5l7al7nhkwk950ba49-source/modules/core/boot/options/systemd-boot-options.nix)
+ - [/nix/store/b8n3zd5hpa3rz22jn3hjri7x6sk074lg-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/b8n3zd5hpa3rz22jn3hjri7x6sk074lg-source/modules/core/boot/options/systemd-boot-options.nix)
 
 
 
@@ -486,6 +486,29 @@ boolean
 
 *Default:*
 ` true `
+
+
+
+*Example:*
+` true `
+
+
+
+## core\.nvf\.enable
+
+
+
+Whether to enable nvf\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` false `
 
 
 

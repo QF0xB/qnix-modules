@@ -20,6 +20,10 @@
       nixos = false;
       home = true;
     };
+    nvf = {
+      nixos = false;
+      home = true;
+    };
     plymouth = {
       nixos = true;
       home = false;
