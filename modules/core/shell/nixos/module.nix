@@ -1,7 +1,12 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 let
-  cfg = config.hm.qnix.core.fish;
+  cfg = config.hm.qnix.core.shell;
 in
 {
   config = lib.mkIf (cfg.enable && cfg.defaultShell) {
