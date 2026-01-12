@@ -60,7 +60,7 @@ let
   
   # Collect stylix options specifically (always loaded, not dependent on loadOptions)
   stylixOptions = if builtins.hasAttr "core" moduleIndex && builtins.hasAttr "stylix" (moduleIndex.core or {}) then
-    [ (toString ./../modules) + "/core/stylix/options/options.nix" ]
+    [ ./../modules/core/stylix/options/options.nix ]
   else
     [];
   
