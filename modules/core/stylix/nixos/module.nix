@@ -1,66 +1,74 @@
 { lib, config, pkgs, ... }:
 
+let
+  # Try to get user from home-manager config
+  # This avoids using the alias which might not be set up yet
+  homeManagerUsers = config.home-manager.users or {};
+  # Get the first (and typically only) user
+  userKeys = lib.attrNames homeManagerUsers;
+  firstUser = if userKeys != [] then lib.head userKeys else null;
+  
+  # Safely access stylix config
+  stylixCfg = if firstUser != null && lib.hasAttr "qnix" (homeManagerUsers.${firstUser} or {}) then
+    (homeManagerUsers.${firstUser}.qnix.core.stylix or { enable = false; })
+  else
+    { enable = false; };
+in
 {
   config = lib.mkMerge [
-    # Only access config.hm after checking if home-manager is configured
-    # This delays evaluation until config is computed
-    (lib.mkIf (
-      (lib.hasAttr "home-manager" config) &&
-      (lib.hasAttr "users" config.home-manager) &&
-      (config.hm.qnix.core.stylix.enable or false)
-    ) {
-      stylix = let cfg = config.hm.qnix.core.stylix; in {
+    (lib.mkIf stylixCfg.enable {
+      stylix = {
         enable = true;
 
-        base16Scheme = "${pkgs.base16-schemes}/share/themes/${cfg.colorScheme}.yaml";
+        base16Scheme = "${pkgs.base16-schemes}/share/themes/${stylixCfg.colorScheme}.yaml";
 
-        override = cfg.colorSchemeOverrides;
+        override = stylixCfg.colorSchemeOverrides or {};
 
         cursor = {
-          package = cfg.cursor.package;
-          name = cfg.cursor.name;
-          size = cfg.cursor.size;
+          package = stylixCfg.cursor.package or null;
+          name = stylixCfg.cursor.name or null;
+          size = stylixCfg.cursor.size or null;
         };
 
         opacity = {
-          applications = cfg.opacity.applications;
-          terminal = cfg.opacity.terminal;
+          applications = stylixCfg.opacity.applications or null;
+          terminal = stylixCfg.opacity.terminal or null;
         };
         
         icons = {
           enable = true;
 
-          package = cfg.icons.package;
-          dark = cfg.icons.dark;
-          light = cfg.icons.light;
+          package = stylixCfg.icons.package or null;
+          dark = stylixCfg.icons.dark or null;
+          light = stylixCfg.icons.light or null;
         };
 
         fonts = {
           serif = {
-            package = cfg.fonts.serif.package;
-            name = cfg.fonts.serif.name;
+            package = stylixCfg.fonts.serif.package or null;
+            name = stylixCfg.fonts.serif.name or null;
           };
 
           sansSerif = {
-            package = cfg.fonts.sansSerif.package;
-            name = cfg.fonts.sansSerif.name;
+            package = stylixCfg.fonts.sansSerif.package or null;
+            name = stylixCfg.fonts.sansSerif.name or null;
           };
 
           monospace = {
-            package = cfg.fonts.monospace.package;
-            name = cfg.fonts.monospace.name;
+            package = stylixCfg.fonts.monospace.package or null;
+            name = stylixCfg.fonts.monospace.name or null;
           };
 
           emoji = {
-            package = cfg.fonts.emoji.package;
-            name = cfg.fonts.emoji.name;
+            package = stylixCfg.fonts.emoji.package or null;
+            name = stylixCfg.fonts.emoji.name or null;
           };
 
           sizes = {
-            applications = cfg.fonts.sizes.applications;
-            desktop = cfg.fonts.sizes.desktop;
-            popups = cfg.fonts.sizes.popups;
-            terminal = cfg.fonts.sizes.terminal;
+            applications = stylixCfg.fonts.sizes.applications or null;
+            desktop = stylixCfg.fonts.sizes.desktop or null;
+            popups = stylixCfg.fonts.sizes.popups or null;
+            terminal = stylixCfg.fonts.sizes.terminal or null;
           };
         };
       };
