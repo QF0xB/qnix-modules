@@ -60,6 +60,6 @@ in
           terminal = cfg.fonts.sizes.terminal;
         };
       };
-    }
+    };
   };
 }
