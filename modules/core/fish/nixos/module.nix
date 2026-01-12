@@ -4,7 +4,7 @@ let
   cfg = config.hm.qnix.core.fish;
 in
 {
-  config = lib.mkIf cfg.enable && cfg.defaultShell {
+  config = lib.mkIf (cfg.enable && cfg.defaultShell) {
     programs.bash = {
       interactiveShellInit = ''
         if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
