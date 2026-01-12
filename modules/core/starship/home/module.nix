@@ -35,8 +35,8 @@ in
   config = lib.mkIf cfg.enable {
     programs = { 
       starship = let
-          text = "fg:${colors.base03}";
-        in{
+        text = "fg:${colors.base03}";
+      in {
         enable = true;
         enableBashIntegration = true;
         enableFishIntegration = true;
@@ -63,62 +63,62 @@ in
             "$nix_shell"
             "[](${colors.green})"
           ];
-        };
 
-        # modules
-        character = {
-          error_symbol = "[ ](bold red)";
-          success_symbol = "[](purple)";
-          vimcmd_symbol = "[](green)";
-        };
-        username = {
-          style_root = "bg:${colors.violet} fg:bold ${colors.base03}";
-          style_user = "bg:${colors.violet} fg:bold ${colors.base03}";
-          format = lib.concatStrings [
-            "[ $user@ ]($style)"
-          ];
-          show_always = true;
-        };
-        hostname = {
-          style = "bg:${colors.cyan} ${text}";
-          ssh_symbol = "󰣀 ";
-          ssh_only = false;
-          format = "[ $ssh_symbol$hostname ]($style)";
-        };
-        directory = {
-          format = "[ $path ]($style)";
-          truncation_length = 1;
-          style = "bg:${colors.blue} ${text}";
-        };
-        git_branch = {
-          symbol = "";
-          format = "[ $symbol $branch ]($style)";
-          style = "bg:${colors.green} ${text}";
-        };
-        git_state = {
-          format = "( [$state( $progress_current/$progress_total)]($style))";
-          style = "bg:${colors.green} ${text}";
-        };
-        git_status = {
-          format = "[($all_status$ahead_behind)]($style)";
-          style = "bg:${colors.green} ${text}";
-        };
-        nix_shell = {
-          format = "[ $symbol ]($style)";
-          symbol = "";
-          style = "bg:${colors.green} fg:bold ${colors.base03}";
-        };
-        fill = {
-          symbol = " ";
-        };
-        line_break = {
-          disabled = false;
-        };
-        time = {
-          format = "[ $time ]($style)";
-          disabled = false;
-          time_format = " %H:%M";
-          style = "bg:${colors.violet} ${text}";
+          # modules
+          character = {
+            error_symbol = "[ ](bold red)";
+            success_symbol = "[](purple)";
+            vimcmd_symbol = "[](green)";
+          };
+          username = {
+            style_root = "bg:${colors.violet} fg:bold ${colors.base03}";
+            style_user = "bg:${colors.violet} fg:bold ${colors.base03}";
+            format = lib.concatStrings [
+              "[ $user@ ]($style)"
+            ];
+            show_always = true;
+          };
+          hostname = {
+            style = "bg:${colors.cyan} ${text}";
+            ssh_symbol = "󰣀 ";
+            ssh_only = false;
+            format = "[ $ssh_symbol$hostname ]($style)";
+          };
+          directory = {
+            format = "[ $path ]($style)";
+            truncation_length = 1;
+            style = "bg:${colors.blue} ${text}";
+          };
+          git_branch = {
+            symbol = "";
+            format = "[ $symbol $branch ]($style)";
+            style = "bg:${colors.green} ${text}";
+          };
+          git_state = {
+            format = "( [$state( $progress_current/$progress_total)]($style))";
+            style = "bg:${colors.green} ${text}";
+          };
+          git_status = {
+            format = "[($all_status$ahead_behind)]($style)";
+            style = "bg:${colors.green} ${text}";
+          };
+          nix_shell = {
+            format = "[ $symbol ]($style)";
+            symbol = "";
+            style = "bg:${colors.green} fg:bold ${colors.base03}";
+          };
+          fill = {
+            symbol = " ";
+          };
+          line_break = {
+            disabled = false;
+          };
+          time = {
+            format = "[ $time ]($style)";
+            disabled = false;
+            time_format = " %H:%M";
+            style = "bg:${colors.violet} ${text}";
+          };
         };
       };
 
