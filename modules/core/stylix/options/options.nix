@@ -15,24 +15,7 @@
     colorSchemeOverrides = lib.mkOption {
       type = lib.types.attrs;
       description = "Override the color scheme with custom colors";
-      default = {
-        base00 = "#001e26";
-        base01 = "#002731";
-        base02 = "#006388";
-        base03 = "#3a8298";
-        base04 = "#74a2a9";
-        base05 = "#aec2ba";
-        base06 = "#e9e2cb";
-        base07 = "#fcf4dc";
-        base08 = "#d01b24";
-        base09 = "#a57705";
-        base0A = "#178dc7";
-        base0B = "#6bbe6c";
-        base0C = "#259185";
-        base0D = "#2075c7";
-        base0E = "#c61b6e";
-        base0F = "#680d12";
-      };
+      default = {};
     };
 
     cursor = lib.mkOption {
