@@ -33,8 +33,7 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
-    programs = { 
-      starship = {
+    programs.starship = {
       enable = true;
       enableBashIntegration = true;
       enableFishIntegration = true;
@@ -140,7 +139,7 @@ in
           '';
         interactiveShellInit =
           # fish
-          mkAfter ''
+          lib.mkAfter ''
             function starship_transient_prompt_func
               starship module character
             end
