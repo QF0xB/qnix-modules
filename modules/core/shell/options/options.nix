@@ -24,7 +24,7 @@
       description = "Whether to enable aliases";
     };
 
-    qnix-aliases = lib.mkEnableOption "aliases for qnix-system" // {
+    qnixAliases = lib.mkEnableOption "aliases for qnix-system" // {
       default = true;
       description = "Whether to enable aliases for qnix-system";
     };
