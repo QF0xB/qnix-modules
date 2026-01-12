@@ -42,7 +42,7 @@ in
         enableFishIntegration = true;
         enableTransience = true;
 
-        settings = {
+        settings = lib.mkIf cfg.qnixFormat {
           add_newline = false;
           format = lib.concatStrings [
             "$username"
