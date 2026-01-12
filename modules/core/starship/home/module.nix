@@ -33,43 +33,37 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
-    programs.starship = {
-      enable = true;
-      enableBashIntegration = true;
-      enableFishIntegration = true;
-      enableTransience = true;
+    programs = { 
+      starship = let
+          text = "fg:${colors.base03}";
+        in{
+        enable = true;
+        enableBashIntegration = true;
+        enableFishIntegration = true;
+        enableTransience = true;
 
-      settings = let
-        text = "fg:${colors.base03}";
-      in {
-        add_newline = false;
-        format = lib.concatStrings [
-          "$username"
-          "[](${colors.violet})"
+        settings = {
+          add_newline = false;
+          format = lib.concatStrings [
+            "$username"
+            "[](${colors.violet})"
 
-          "[](${colors.cyan})"
-          "$hostname"
-          "[](${colors.cyan})"
+            "[](${colors.cyan})"
+            "$hostname"
+            "[](${colors.cyan})"
 
-          "[](${colors.blue})"
-          "$directory"
-          "[](${colors.blue})"
+            "[](${colors.blue})"
+            "$directory"
+            "[](${colors.blue})"
 
-          "[](${colors.green})"
-          "$git_branch"
-          "$git_state"
-          "$git_status"
-          "$nix_shell"
-          "[](${colors.green})"
-          # end left format
-          "$fill"
-          # begin right format
-          "[](${colors.violet})"
-          "$time"
-          # end right format
-          "$line_break"
-          "$character"
-        ];
+            "[](${colors.green})"
+            "$git_branch"
+            "$git_state"
+            "$git_status"
+            "$nix_shell"
+            "[](${colors.green})"
+          ];
+        };
 
         # modules
         character = {
