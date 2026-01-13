@@ -82,5 +82,9 @@ in
         lib.filterAttrs (_: v: v != null) sopsSecret
       ) cfg.secrets;
     };
+
+    hm.qnix.persist.directories = [
+      ".config/sops/age"
+    ];
   };
 }
