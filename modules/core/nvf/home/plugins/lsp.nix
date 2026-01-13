@@ -25,9 +25,6 @@
         lightbulb = {
           enable = false;
         };
-        none-ls = {
-          enable = true;
-        };
       };
 
       ui.borders.plugins.lspsaga = {
