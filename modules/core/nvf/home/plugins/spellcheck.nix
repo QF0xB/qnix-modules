@@ -10,7 +10,9 @@
       vim-dirtytalk.enable = true;
       programmingWordlist.enable = true;
 
-      extraSpellWords = config.qnix.core.nvf.spellcheck.additionalWords;
+      extraSpellWords = {
+        "en.utf-8" = config.qnix.core.nvf.spellcheck.additionalWords;
+      };
     };
   };
 }
