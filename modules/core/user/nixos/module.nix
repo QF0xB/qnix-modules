@@ -126,8 +126,9 @@ let
     }) cfg.users
   );
 in
-{
-  config = lib.mkIf cfg.enable {
+lib.mkMerge [
+  # Configuration (only when module is enabled)
+  (lib.mkIf cfg.enable {
     # Direct attrset merge
     users = {
       mutableUsers = false;
@@ -136,8 +137,9 @@ in
 
     # Groups
     users.groups = userGroups;
-  };
-
-  # Assertions at top level (only evaluated when module is enabled)
-  assertions = assertion;
-}
+  })
+  # Assertions (only when module is enabled)
+  {
+    assertions = assertion;
+  }
+]
