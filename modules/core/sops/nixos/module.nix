@@ -6,13 +6,15 @@
 }:
 
 let
-  cfg = config.hm.qnix.core.sops;
+  # Options can be in NixOS (system-wide) or home-manager (via config.hm.qnix.*)
+  # Check system-wide first, fallback to home-manager for flexibility
+  cfg = config.qnix.core.sops or config.hm.qnix.core.sops;
 in
 {
   config = lib.mkIf cfg.enable {
     sops = {
-      # Set defaultSopsFile if provided
-      defaultSopsFile = lib.mkIf (cfg.defaultSopsFile != null) cfg.defaultSopsFile;
+      # Set defaultSopsFile if provided (sops-nix requires this when secrets are defined)
+      defaultSopsFile = cfg.defaultSopsFile;
 
       age = {
         generateKey = cfg.age.generateKey;
@@ -27,6 +29,7 @@ in
       };
 
       # Map qnix.core.sops.secrets.* to sops.secrets.*
+      # sops-nix automatically creates the service when secrets are defined
       secrets = lib.mapAttrs (
         name: secretCfg:
         let
