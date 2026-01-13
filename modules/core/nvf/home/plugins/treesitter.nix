@@ -29,26 +29,28 @@ let
 in
 {
   config = lib.mkIf config.qnix.core.nvf.enable {
-    programs.nvf.settings.vim.treesitter = {
-      enable = true;
-      fold = true;
-
-      highlight = {
+    programs.nvf.settings.vim = {
+      treesitter = {
         enable = true;
-      };
+        fold = true;
 
-      indent = {
-        enable = true;
-      };
+        highlight = {
+          enable = true;
+        };
 
-      addDefaultGrammars = true;
+        indent = {
+          enable = true;
+        };
 
-      autotagHtml = true;
+        addDefaultGrammars = true;
 
-      context = {
-        enable = true;
-        setupOpts = {
-          line_numbers = true;
+        autotagHtml = true;
+
+        context = {
+          enable = true;
+          setupOpts = {
+            line_numbers = true;
+          };
         };
       };
 
