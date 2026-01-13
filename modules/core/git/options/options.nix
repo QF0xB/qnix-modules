@@ -29,4 +29,5 @@
       description = "The key to use for git signing";
       default = "";
     };
+  };
 }
