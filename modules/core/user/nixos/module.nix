@@ -83,28 +83,21 @@ let
     };
   };
 
-  # Groups to create (all groups referenced by users)
-  # Collect all unique group names from all users (primary groups)
-  primaryGroupNames = lib.unique (
+  # Groups to create (all groups referenced by users as primary groups)
+  # Note: Standard system groups like "users", "audio", "video", "wheel" should already exist
+  # We only create primary groups here
+  allGroupNames = lib.unique (
     lib.mapAttrsToList (
       username: userCfg: if userCfg.group != null && userCfg.group != "" then userCfg.group else username
     ) cfg.users
   );
 
-  # Collect all groups referenced in extraGroups (from defaultExtraGroups and user-specific)
-  extraGroupNames = lib.unique (
-    lib.flatten (
-      lib.mapAttrsToList (
-        username: userCfg: lib.unique (cfg.defaultExtraGroups ++ userCfg.extraGroups)
-      ) cfg.users
-    )
+  # Create groups for all referenced group names (primary groups only)
+  # Also ensure the "users" group exists if it's in defaultExtraGroups
+  userGroups = lib.listToAttrs (
+    (lib.map (groupName: lib.nameValuePair groupName { }) allGroupNames)
+    ++ lib.optional (lib.elem "users" cfg.defaultExtraGroups) (lib.nameValuePair "users" { })
   );
-
-  # Combine all group names that need to be created
-  allGroupNames = lib.unique (primaryGroupNames ++ extraGroupNames);
-
-  # Create groups for all referenced group names
-  userGroups = lib.listToAttrs (lib.map (groupName: lib.nameValuePair groupName { }) allGroupNames);
   # Helper function to check if sops secret exists
   sopsSecretExists = secretName: lib.hasAttr secretName (config.sops.secrets or { });
 
