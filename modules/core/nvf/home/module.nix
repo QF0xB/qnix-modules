@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }:
 
@@ -16,10 +17,13 @@ in
     ./utility
   ];
 
-  config = {
-    programs.nvf = lib.mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
+    programs.nvf = {
       enable = true;
       defaultEditor = true;
     };
+
+    # Ensure ripgrep (rg) is available for NVF completion and search features
+    home.packages = [ pkgs.ripgrep ];
   };
 }

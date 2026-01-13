@@ -70,6 +70,9 @@ in
           }
           // lib.optionalAttrs (secretCfg.wantedBy != [ ]) {
             wantedBy = secretCfg.wantedBy;
+          }
+          // lib.optionalAttrs (secretCfg.neededForUsers == true) {
+            neededForUsers = true;
           };
         in
         # Filter out null values from the final config

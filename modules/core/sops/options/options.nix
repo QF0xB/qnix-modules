@@ -100,6 +100,12 @@
               default = [ ];
               description = "List of systemd units that want this secret.";
             };
+
+            neededForUsers = lib.mkOption {
+              type = lib.types.bool;
+              default = false;
+              description = "Whether this secret is needed for user creation. Automatically set to true if referenced via passwordFromSops.";
+            };
           };
         }
       );
