@@ -21,6 +21,19 @@
         lsp.enable = true;
       };
 
+      css = {
+        enable = true;
+        format.enable = true;
+        lsp.enable = true;
+      };
+
+      go = {
+        enable = true;
+        format.enable = true;
+        lsp.enable = true;
+        dap.enable = true;
+      };
+
       html = {
         enable = true;
         treesitter.autotagHtml = true;
@@ -41,9 +54,9 @@
       nix = {
         enable = true;
         format.enable = true;
-        format.type = "nixfmt";
+        format.type = [ "nixfmt" ];
         lsp.enable = true;
-        lsp.server = "nixd";
+        lsp.servers = [ "nixd" ];
 
         extraDiagnostics.enable = true;
         extraDiagnostics.types = [
@@ -62,13 +75,14 @@
 
       python = {
         enable = true;
-        format.type = "black";
+        format.enable = true;
+        format.type = [ "black" ];
       };
 
       rust = {
         enable = true;
         format.enable = true;
-        format.type = "rustfmt";
+        format.type = [ "rustfmt" ];
         lsp.enable = true;
       };
 

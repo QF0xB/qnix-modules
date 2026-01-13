@@ -15,7 +15,6 @@ let
     "rust"
     "sql"
     "yaml"
-    "zig"
   ];
 
   treeSitterEnables = builtins.listToAttrs (

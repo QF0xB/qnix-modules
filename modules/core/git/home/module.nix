@@ -7,14 +7,16 @@ in
   config = lib.mkIf cfg.enable {
     programs.git = {
       enable = true;
-      userName = cfg.userName;
-      userEmail = cfg.userEmail;
+      settings.user = {
+        name = cfg.userName;
+        email = cfg.userEmail;
+      };
       signing = lib.mkIf cfg.signing {
         key = cfg.signingKey;
         signByDefault = true;
       };
 
-      extraConfig = {
+      settings = {
         core = {
           editor = "nvim";
         };
