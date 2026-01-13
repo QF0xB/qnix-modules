@@ -93,28 +93,38 @@ let
   # Helper function to check if sops secret exists
   sopsSecretExists = secretName: lib.hasAttr secretName (config.sops.secrets or { });
 
-  # Assertions for password configuration
-  assertions = [
-    # Root user password validation
-    {
-      assertion = !cfg.root.enable || cfg.root.password == null || cfg.root.passwordFromSops == null;
-      message = "qnix.core.user.root: Cannot set both 'password' and 'passwordFromSops'";
-    }
-    # Root user sops secret must exist if passwordFromSops is set
-    {
-      assertion =
-        !cfg.root.enable || cfg.root.passwordFromSops == null || sopsSecretExists cfg.root.passwordFromSops;
-      message = "qnix.core.user.root: sops secret '${cfg.root.passwordFromSops}' does not exist. Make sure it's defined in qnix.core.sops.secrets";
-    }
-  ]
-  ++ lib.mapAttrsToList (username: userCfg: {
-    assertion = userCfg.initialHashedPassword == null || userCfg.passwordFromSops == null;
-    message = "qnix.core.user.users.${username}: Cannot set both 'initialHashedPassword' and 'passwordFromSops'";
-  }) cfg.users
-  ++ lib.mapAttrsToList (username: userCfg: {
-    assertion = userCfg.passwordFromSops == null || sopsSecretExists userCfg.passwordFromSops;
-    message = "qnix.core.user.users.${username}: sops secret '${userCfg.passwordFromSops}' does not exist. Make sure it's defined in qnix.core.sops.secrets";
-  }) cfg.users;
+  # Assertions for password configuration (only when module is enabled)
+  assertion = lib.optionals cfg.enable (
+    [
+      # Root user password validation
+      {
+        assertion = !cfg.root.enable || cfg.root.password == null || cfg.root.passwordFromSops == null;
+        message = "qnix.core.user.root: Cannot set both 'password' and 'passwordFromSops'";
+      }
+      # Root user sops secret must exist if passwordFromSops is set
+      {
+        assertion =
+          !cfg.root.enable || cfg.root.passwordFromSops == null || sopsSecretExists cfg.root.passwordFromSops;
+        message =
+          if cfg.root.passwordFromSops != null then
+            "qnix.core.user.root: sops secret '${cfg.root.passwordFromSops}' does not exist. Make sure it's defined in qnix.core.sops.secrets"
+          else
+            "";
+      }
+    ]
+    ++ lib.mapAttrsToList (username: userCfg: {
+      assertion = userCfg.initialHashedPassword == null || userCfg.passwordFromSops == null;
+      message = "qnix.core.user.users.${username}: Cannot set both 'initialHashedPassword' and 'passwordFromSops'";
+    }) cfg.users
+    ++ lib.mapAttrsToList (username: userCfg: {
+      assertion = userCfg.passwordFromSops == null || sopsSecretExists userCfg.passwordFromSops;
+      message =
+        if userCfg.passwordFromSops != null then
+          "qnix.core.user.users.${username}: sops secret '${userCfg.passwordFromSops}' does not exist. Make sure it's defined in qnix.core.sops.secrets"
+        else
+          "";
+    }) cfg.users
+  );
 in
 {
   config = lib.mkIf cfg.enable {
@@ -126,8 +136,8 @@ in
 
     # Groups
     users.groups = userGroups;
-
-    # Assertions for password configuration validation
-    _module.assertions = assertions;
   };
+
+  # Assertions at top level (only evaluated when module is enabled)
+  assertions = assertion;
 }
