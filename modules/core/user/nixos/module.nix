@@ -41,7 +41,9 @@ let
         description = userCfg.description;
         extraGroups = allExtraGroups;
         # Set initialHashedPassword to the file path when using sops, or direct password otherwise
-        initialHashedPassword = passwordValue;
+        hashedPasswordFile = if userCfg.passwordFromSops != null then passwordValue else null;
+        initialHashedPassword =
+          if userCfg.initialHashedPassword != null then userCfg.initialHashedPassword else null;
         ignoreShellProgramCheck = userCfg.ignoreShellProgramCheck;
         openssh.authorizedKeys.keys = userCfg.openssh.authorizedKeys.keys;
       }
