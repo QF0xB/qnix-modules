@@ -85,7 +85,7 @@ let
 
   # Groups to create (all groups referenced by users as primary groups)
   # Note: Standard system groups like "users", "audio", "video", "wheel" should already exist
-  # We only create primary groups here
+  # We only create primary groups here - extraGroups should reference existing system groups
   allGroupNames = lib.unique (
     lib.mapAttrsToList (
       username: userCfg: if userCfg.group != null && userCfg.group != "" then userCfg.group else username
@@ -93,11 +93,7 @@ let
   );
 
   # Create groups for all referenced group names (primary groups only)
-  # Also ensure the "users" group exists if it's in defaultExtraGroups
-  userGroups = lib.listToAttrs (
-    (lib.map (groupName: lib.nameValuePair groupName { }) allGroupNames)
-    ++ lib.optional (lib.elem "users" cfg.defaultExtraGroups) (lib.nameValuePair "users" { })
-  );
+  userGroups = lib.listToAttrs (lib.map (groupName: lib.nameValuePair groupName { }) allGroupNames);
   # Helper function to check if sops secret exists
   sopsSecretExists = secretName: lib.hasAttr secretName (config.sops.secrets or { });
 
@@ -144,7 +140,11 @@ lib.mkMerge [
     };
 
     # Groups
-    users.groups = userGroups;
+    # Ensure standard system groups exist (users, audio, video, wheel are standard but ensure they exist)
+    users.groups = userGroups // {
+      # Ensure users group exists (standard system group, but ensure it's created)
+      users = { };
+    };
   })
   # Assertions (only when module is enabled)
   {
