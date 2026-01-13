@@ -84,12 +84,24 @@ let
   };
 
   # Groups to create (all groups referenced by users)
-  # Collect all unique group names from all users
-  allGroupNames = lib.unique (
+  # Collect all unique group names from all users (primary groups)
+  primaryGroupNames = lib.unique (
     lib.mapAttrsToList (
       username: userCfg: if userCfg.group != null && userCfg.group != "" then userCfg.group else username
     ) cfg.users
   );
+
+  # Collect all groups referenced in extraGroups (from defaultExtraGroups and user-specific)
+  extraGroupNames = lib.unique (
+    lib.flatten (
+      lib.mapAttrsToList (
+        username: userCfg: lib.unique (cfg.defaultExtraGroups ++ userCfg.extraGroups)
+      ) cfg.users
+    )
+  );
+
+  # Combine all group names that need to be created
+  allGroupNames = lib.unique (primaryGroupNames ++ extraGroupNames);
 
   # Create groups for all referenced group names
   userGroups = lib.listToAttrs (lib.map (groupName: lib.nameValuePair groupName { }) allGroupNames);
