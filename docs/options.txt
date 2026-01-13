@@ -184,7 +184,7 @@ __Example:__ ``true``
 
 __Declared by:__
 
-* link:file:///nix/store/wd9pnng78vinmbbjj48a9fmjxbmycg57-source/modules/core/boot/options/grub-options.nix[/nix/store/wd9pnng78vinmbbjj48a9fmjxbmycg57-source/modules/core/boot/options/grub-options{zwsp}.nix]
+* link:file:///nix/store/35nz4jy2ajc66q7q6ds2h7lm4ngii9si-source/modules/core/boot/options/grub-options.nix[/nix/store/35nz4jy2ajc66q7q6ds2h7lm4ngii9si-source/modules/core/boot/options/grub-options{zwsp}.nix]
 
 
 
@@ -204,7 +204,7 @@ __Default:__ ``{quot}nodev{quot}``
 
 __Declared by:__
 
-* link:file:///nix/store/wd9pnng78vinmbbjj48a9fmjxbmycg57-source/modules/core/boot/options/grub-options.nix[/nix/store/wd9pnng78vinmbbjj48a9fmjxbmycg57-source/modules/core/boot/options/grub-options{zwsp}.nix]
+* link:file:///nix/store/35nz4jy2ajc66q7q6ds2h7lm4ngii9si-source/modules/core/boot/options/grub-options.nix[/nix/store/35nz4jy2ajc66q7q6ds2h7lm4ngii9si-source/modules/core/boot/options/grub-options{zwsp}.nix]
 
 
 
@@ -228,7 +228,7 @@ __Example:__ ``true``
 
 __Declared by:__
 
-* link:file:///nix/store/wd9pnng78vinmbbjj48a9fmjxbmycg57-source/modules/core/boot/options/systemd-boot-options.nix[/nix/store/wd9pnng78vinmbbjj48a9fmjxbmycg57-source/modules/core/boot/options/systemd-boot-options{zwsp}.nix]
+* link:file:///nix/store/35nz4jy2ajc66q7q6ds2h7lm4ngii9si-source/modules/core/boot/options/systemd-boot-options.nix[/nix/store/35nz4jy2ajc66q7q6ds2h7lm4ngii9si-source/modules/core/boot/options/systemd-boot-options{zwsp}.nix]
 
 
 
@@ -968,6 +968,22 @@ __Default:__ ``{startsb} {endsb}``
 
 
 
+== core{zwsp}.sops{zwsp}.secrets{zwsp}.{zwsp}+<+{zwsp}name{gt}{zwsp}.neededForUsers
+
+
+
+Whether this secret is needed for user creation{zwsp}. Automatically set to true if referenced via passwordFromSops{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``false``
+
+
+
 == core{zwsp}.sops{zwsp}.secrets{zwsp}.{zwsp}+<+{zwsp}name{gt}{zwsp}.owner
 
 
@@ -1412,6 +1428,7 @@ __Example:__
 [
   "video"
   "audio"
+  "users"
 ]
 ----
 
@@ -1441,15 +1458,31 @@ __Example:__ ``true``
 
 
 
-The password for the root user
+The hashed password for the root user (mutually exclusive with passwordFromSops)
 
 
 
-__Type:__ string
+__Type:__ null or string
 
 
 
-__Default:__ ``{quot}{quot}``
+__Default:__ ``null``
+
+
+
+== core{zwsp}.user{zwsp}.root{zwsp}.passwordFromSops
+
+
+
+Name of the sops secret containing the root user’s hashed password (mutually exclusive with password)
+
+
+
+__Type:__ null or string
+
+
+
+__Default:__ ``null``
 
 
 
@@ -1549,7 +1582,7 @@ __Default:__ ``true``
 
 
 
-Initial hashed password
+Initial hashed password (mutually exclusive with passwordFromSops)
 
 
 
@@ -1606,6 +1639,122 @@ __Type:__ list of string
 
 
 __Default:__ ``{startsb} {endsb}``
+
+
+
+== core{zwsp}.user{zwsp}.users{zwsp}.{zwsp}+<+{zwsp}name{gt}{zwsp}.passwordFromSops
+
+
+
+Name of the sops secret containing this user’s hashed password (mutually exclusive with initialHashedPassword)
+
+
+
+__Type:__ null or string
+
+
+
+__Default:__ ``null``
+
+
+
+== core{zwsp}.yubikey{zwsp}.enable
+
+
+
+Whether to enable yubikey integration{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``true``
+
+
+
+__Example:__ ``true``
+
+
+
+== core{zwsp}.yubikey{zwsp}.autolock
+
+
+
+Whether to enable autolock on yubikey removal{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``false``
+
+
+
+__Example:__ ``true``
+
+
+
+== core{zwsp}.yubikey{zwsp}.gui
+
+
+
+Whether to enable yubikey management guis{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``true``
+
+
+
+__Example:__ ``true``
+
+
+
+== core{zwsp}.yubikey{zwsp}.login
+
+
+
+Whether to enable login with yubikey{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``false``
+
+
+
+__Example:__ ``true``
+
+
+
+== core{zwsp}.yubikey{zwsp}.sudo
+
+
+
+Whether to enable sudo with yubikey{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``true``
+
+
+
+__Example:__ ``true``
 
 
 
@@ -1751,8 +1900,6 @@ __Example:__ ``true``
 
 == persist{zwsp}.home{zwsp}.directories
 
-
-
 Directories to persist in home filesystem
 
 
@@ -1889,6 +2036,8 @@ __Default:__ ``false``
 
 
 == wayland
+
+
 
 Is wayland running?
 

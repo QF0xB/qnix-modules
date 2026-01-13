@@ -56,6 +56,10 @@
       nixos = true;
       home = false;
     };
+    yubikey = {
+      nixos = true;
+      home = false;
+    };
     zfs = {
       nixos = true;
       home = false;

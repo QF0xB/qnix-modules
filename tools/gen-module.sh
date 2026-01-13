@@ -38,7 +38,7 @@ create_nixos_module() {
 { lib, config, ... }:
 
 let
-  cfg = config.hm.qnix.${MODULE_CATEGORY}.${MODULE_NAME};
+  cfg = config.qnix.${MODULE_CATEGORY}.${MODULE_NAME};
 in
 {
   config = lib.mkIf cfg.enable {
@@ -54,10 +54,10 @@ create_home_module() {
   mkdir -p "$(dirname "$module_file")"
   
   cat > "$module_file" <<EOF
-{ lib, config, ... }:
+{ lib, osConfig, ... }:
 
 let
-  cfg = config.qnix.${MODULE_CATEGORY}.${MODULE_NAME};
+  cfg = osConfig.qnix.${MODULE_CATEGORY}.${MODULE_NAME};
 in
 {
   config = lib.mkIf cfg.enable {

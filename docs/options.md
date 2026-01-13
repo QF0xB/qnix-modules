@@ -214,7 +214,7 @@ boolean
 ` true `
 
 *Declared by:*
- - [/nix/store/wd9pnng78vinmbbjj48a9fmjxbmycg57-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/wd9pnng78vinmbbjj48a9fmjxbmycg57-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/35nz4jy2ajc66q7q6ds2h7lm4ngii9si-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/35nz4jy2ajc66q7q6ds2h7lm4ngii9si-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -235,7 +235,7 @@ string
 ` "nodev" `
 
 *Declared by:*
- - [/nix/store/wd9pnng78vinmbbjj48a9fmjxbmycg57-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/wd9pnng78vinmbbjj48a9fmjxbmycg57-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/35nz4jy2ajc66q7q6ds2h7lm4ngii9si-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/35nz4jy2ajc66q7q6ds2h7lm4ngii9si-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -261,7 +261,7 @@ boolean
 ` true `
 
 *Declared by:*
- - [/nix/store/wd9pnng78vinmbbjj48a9fmjxbmycg57-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/wd9pnng78vinmbbjj48a9fmjxbmycg57-source/modules/core/boot/options/systemd-boot-options.nix)
+ - [/nix/store/35nz4jy2ajc66q7q6ds2h7lm4ngii9si-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/35nz4jy2ajc66q7q6ds2h7lm4ngii9si-source/modules/core/boot/options/systemd-boot-options.nix)
 
 
 
@@ -1091,6 +1091,24 @@ list of string
 
 
 
+## core\.sops\.secrets\.\<name>\.neededForUsers
+
+
+
+Whether this secret is needed for user creation\. Automatically set to true if referenced via passwordFromSops\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` false `
+
+
+
 ## core\.sops\.secrets\.\<name>\.owner
 
 
@@ -1578,6 +1596,7 @@ list of string
 [
   "video"
   "audio"
+  "users"
 ]
 ```
 
@@ -1610,17 +1629,35 @@ boolean
 
 
 
-The password for the root user
+The hashed password for the root user (mutually exclusive with passwordFromSops)
 
 
 
 *Type:*
-string
+null or string
 
 
 
 *Default:*
-` "" `
+` null `
+
+
+
+## core\.user\.root\.passwordFromSops
+
+
+
+Name of the sops secret containing the root user’s hashed password (mutually exclusive with password)
+
+
+
+*Type:*
+null or string
+
+
+
+*Default:*
+` null `
 
 
 
@@ -1731,7 +1768,7 @@ boolean
 
 
 
-Initial hashed password
+Initial hashed password (mutually exclusive with passwordFromSops)
 
 
 
@@ -1796,6 +1833,139 @@ list of string
 
 *Default:*
 ` [ ] `
+
+
+
+## core\.user\.users\.\<name>\.passwordFromSops
+
+
+
+Name of the sops secret containing this user’s hashed password (mutually exclusive with initialHashedPassword)
+
+
+
+*Type:*
+null or string
+
+
+
+*Default:*
+` null `
+
+
+
+## core\.yubikey\.enable
+
+
+
+Whether to enable yubikey integration\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` true `
+
+
+
+*Example:*
+` true `
+
+
+
+## core\.yubikey\.autolock
+
+
+
+Whether to enable autolock on yubikey removal\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` false `
+
+
+
+*Example:*
+` true `
+
+
+
+## core\.yubikey\.gui
+
+
+
+Whether to enable yubikey management guis\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` true `
+
+
+
+*Example:*
+` true `
+
+
+
+## core\.yubikey\.login
+
+
+
+Whether to enable login with yubikey\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` false `
+
+
+
+*Example:*
+` true `
+
+
+
+## core\.yubikey\.sudo
+
+
+
+Whether to enable sudo with yubikey\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` true `
+
+
+
+*Example:*
+` true `
 
 
 
@@ -1960,8 +2130,6 @@ boolean
 
 ## persist\.home\.directories
 
-
-
 Directories to persist in home filesystem
 
 
@@ -2114,6 +2282,8 @@ boolean
 
 
 ## wayland
+
+
 
 Is wayland running?
 

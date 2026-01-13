@@ -196,6 +196,7 @@ These modules define the core QNix configuration options.
 | `qnix.sops.format` | `nullOr` | `null` | Format of the secret. |
 | `qnix.sops.neededBy` | `listOf` | `[ ]` | List of systemd units that need this secret. |
 | `qnix.sops.wantedBy` | `listOf` | `[ ]` | List of systemd units that want this secret. |
+| `qnix.sops.neededForUsers` | `bool` | `false` | Whether this secret is needed for user creation. Automatically set to true if referenced via passwordFromSops. |
 | `qnix.sops.sops.defaultSopsFile` | `nullOr` | `null` | Default Sops File to decrypt and use. Can be overridden per-secret with sopsFile. |
 | `qnix.sops.sops.generateKey` | `bool` | `false` | Whether to generate an age key automatically. |
 | `qnix.sops.sops.keyFile` | `nullOr` | `null` | Path to the age key file. Defaults to /persist/home/<user>/.config/age/keys.txt if user is available. |
@@ -210,6 +211,7 @@ These modules define the core QNix configuration options.
 | `qnix.sops.sops.format` | `nullOr` | `null` | Format of the secret. |
 | `qnix.sops.sops.neededBy` | `listOf` | `[ ]` | List of systemd units that need this secret. |
 | `qnix.sops.sops.wantedBy` | `listOf` | `[ ]` | List of systemd units that want this secret. |
+| `qnix.sops.sops.neededForUsers` | `bool` | `false` | Whether this secret is needed for user creation. Automatically set to true if referenced via passwordFromSops. |
 
 ### `starship`
 
@@ -259,30 +261,50 @@ These modules define the core QNix configuration options.
 |--------|------|---------|-------------|
 | `qnix.user.enable` | `bool` | `false` | user |
 | `qnix.user.enable` | `bool` | `false` | root user |
-| `qnix.user.password` | `str` | `""` | The password for the root user |
-| `qnix.user.defaultExtraGroups` | `listOf` | `[]` | Groups to add to all users by default (e.g., [ \ |
+| `qnix.user.password` | `nullOr` | `null` | The hashed password for the root user (mutually exclusive with passwordFromSops) |
+| `qnix.user.passwordFromSops` | `nullOr` | `null` | Name of the sops secret containing the root user |
+| `qnix.user.defaultExtraGroups` | `listOf` | `[ ]` | Groups to add to all users by default (e.g., [ \ |
 | `qnix.user.users` | `attrsOf` | `true` | Whether this is a normal user (exactly one of isNormalUser or isSystemUser must be set) |
 | `qnix.user.isSystemUser` | `bool` | `false` | Whether this is a system user (exactly one of isNormalUser or isSystemUser must be set) |
 | `qnix.user.group` | `str` | `none` | Primary group for the user (required) |
 | `qnix.user.home` | `nullOr` | `null` | Home directory path |
 | `qnix.user.description` | `nullOr` | `null` | User description/comment |
-| `qnix.user.extraGroups` | `listOf` | `[]` | Additional groups for the user |
-| `qnix.user.initialHashedPassword` | `nullOr` | `null` | Initial hashed password |
-| `qnix.user.keys` | `listOf` | `[]` | SSH authorized keys |
+| `qnix.user.extraGroups` | `listOf` | `[ ]` | Additional groups for the user |
+| `qnix.user.initialHashedPassword` | `nullOr` | `null` | Initial hashed password (mutually exclusive with passwordFromSops) |
+| `qnix.user.keys` | `listOf` | `[ ]` | SSH authorized keys |
 | `qnix.user.ignoreShellProgramCheck` | `bool` | `true` | Ignore shell program check |
-| `qnix.user.user.password` | `str` | `""` | The password for the root user |
-| `qnix.user.user.defaultExtraGroups` | `listOf` | `[]` | Groups to add to all users by default (e.g., [ \ |
+| `qnix.user.user.password` | `nullOr` | `null` | The hashed password for the root user (mutually exclusive with passwordFromSops) |
+| `qnix.user.user.passwordFromSops` | `nullOr` | `null` | Name of the sops secret containing the root user |
+| `qnix.user.user.defaultExtraGroups` | `listOf` | `[ ]` | Groups to add to all users by default (e.g., [ \ |
 | `qnix.user.user.users` | `attrsOf` | `true` | Whether this is a normal user (exactly one of isNormalUser or isSystemUser must be set) |
 | `qnix.user.user.isSystemUser` | `bool` | `false` | Whether this is a system user (exactly one of isNormalUser or isSystemUser must be set) |
 | `qnix.user.user.group` | `str` | `none` | Primary group for the user (required) |
 | `qnix.user.user.home` | `nullOr` | `null` | Home directory path |
 | `qnix.user.user.description` | `nullOr` | `null` | User description/comment |
-| `qnix.user.user.extraGroups` | `listOf` | `[]` | Additional groups for the user |
-| `qnix.user.user.initialHashedPassword` | `nullOr` | `null` | Initial hashed password |
-| `qnix.user.user.keys` | `listOf` | `[]` | SSH authorized keys |
+| `qnix.user.user.extraGroups` | `listOf` | `[ ]` | Additional groups for the user |
+| `qnix.user.user.initialHashedPassword` | `nullOr` | `null` | Initial hashed password (mutually exclusive with passwordFromSops) |
+| `qnix.user.user.keys` | `listOf` | `[ ]` | SSH authorized keys |
 | `qnix.user.user.ignoreShellProgramCheck` | `bool` | `true` | Ignore shell program check |
 | `qnix.user.user.enable` | `bool` | `false` | root user |
-| `qnix.user.openssh.authorizedKeys.keys` | `listOf` | `[]` | SSH authorized keys |
+| `qnix.user.openssh.authorizedKeys.keys` | `listOf` | `[ ]` | SSH authorized keys |
+
+### `yubikey`
+
+**Type**: NixOS
+
+#### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `qnix.yubikey.enable` | `bool` | `true` | yubikey integration |
+| `qnix.yubikey.gui` | `bool` | `!(if (config != null) then config.qnix.headless else false)` | yubikey management guis |
+| `qnix.yubikey.login` | `bool` | `false` | login with yubikey |
+| `qnix.yubikey.sudo` | `bool` | `true` | sudo with yubikey |
+| `qnix.yubikey.autolock` | `bool` | `if (config != null) then config.qnix.isLaptop else false` | autolock on yubikey removal |
+| `qnix.yubikey.yubikey.gui` | `bool` | `!(if (config != null) then config.qnix.headless else false)` | yubikey management guis |
+| `qnix.yubikey.yubikey.login` | `bool` | `false` | login with yubikey |
+| `qnix.yubikey.yubikey.sudo` | `bool` | `true` | sudo with yubikey |
+| `qnix.yubikey.yubikey.autolock` | `bool` | `if (config != null) then config.qnix.isLaptop else false` | autolock on yubikey removal |
 
 ### `zfs`
 
