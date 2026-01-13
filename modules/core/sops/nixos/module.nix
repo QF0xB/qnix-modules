@@ -6,7 +6,7 @@
 }:
 
 let
-  cfg = config.qnix.core.sops;
+  cfg = config.hm.qnix.core.sops;
 in
 {
   config = lib.mkIf cfg.enable {
