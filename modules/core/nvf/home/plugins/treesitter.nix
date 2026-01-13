@@ -26,6 +26,7 @@ let
       };
     }) treesitterLanguages
   );
+in
 {
   config = lib.mkIf config.qnix.core.nvf.enable {
     programs.nvf.settings.vim.treesitter = {
@@ -51,11 +52,12 @@ let
         };
       };
 
-      languages = { 
+      languages = {
         enableFormat = true;
         enableTreesitter = true;
         enableExtraDiagnostics = true;
-      } // treeSitterEnables;
+      }
+      // treeSitterEnables;
     };
   };
 }
