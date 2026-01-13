@@ -48,6 +48,16 @@ These modules define the core QNix configuration options.
 | `qnix.boot.zfsSupport` | `bool` | `true` | Enable ZFS support |
 | `qnix.boot.efiSupport` | `bool` | `true` | Enable EFI support |
 
+### `git`
+
+**Type**: Home Manager
+
+#### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `qnix.git.enable` | `bool` | `false` | git |
+
 ### `impermanence`
 
 **Type**: NixOS
@@ -105,7 +115,13 @@ These modules define the core QNix configuration options.
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `qnix.nvf.enable` | `bool` | `false` | nvf |
+| `qnix.nvf.enable` | `bool` | `true` | nvf |
+| `qnix.nvf.enable` | `bool` | `true` | spellcheck |
+| `qnix.nvf.languages` | `listOf` | `[ "en" "de" ]` | Languages to add to the spellcheck dictionary |
+| `qnix.nvf.additionalWords` | `listOf` | `[ "nvf" "qnix" "qf0xb" "QPC" "QConfigVM" "QFram...]` | Additional words to add to the spellcheck dictionary |
+| `qnix.nvf.nvf.languages` | `listOf` | `[ "en" "de" ]` | Languages to add to the spellcheck dictionary |
+| `qnix.nvf.nvf.additionalWords` | `listOf` | `[ "nvf" "qnix" "qf0xb" "QPC" "QConfigVM" "QFram...]` | Additional words to add to the spellcheck dictionary |
+| `qnix.nvf.nvf.enable` | `bool` | `true` | spellcheck |
 
 ### `plymouth`
 

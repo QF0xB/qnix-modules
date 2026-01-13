@@ -8,6 +8,10 @@
       nixos = true;
       home = false;
     };
+    git = {
+      nixos = false;
+      home = true;
+    };
     impermanence = {
       nixos = true;
       home = false;

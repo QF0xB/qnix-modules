@@ -214,7 +214,7 @@ boolean
 ` true `
 
 *Declared by:*
- - [/nix/store/b8n3zd5hpa3rz22jn3hjri7x6sk074lg-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/b8n3zd5hpa3rz22jn3hjri7x6sk074lg-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/rfj7pmgrk3d4hqdfn4620cp1bpc6dvd4-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/rfj7pmgrk3d4hqdfn4620cp1bpc6dvd4-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -235,7 +235,7 @@ string
 ` "nodev" `
 
 *Declared by:*
- - [/nix/store/b8n3zd5hpa3rz22jn3hjri7x6sk074lg-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/b8n3zd5hpa3rz22jn3hjri7x6sk074lg-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/rfj7pmgrk3d4hqdfn4620cp1bpc6dvd4-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/rfj7pmgrk3d4hqdfn4620cp1bpc6dvd4-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -261,7 +261,7 @@ boolean
 ` true `
 
 *Declared by:*
- - [/nix/store/b8n3zd5hpa3rz22jn3hjri7x6sk074lg-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/b8n3zd5hpa3rz22jn3hjri7x6sk074lg-source/modules/core/boot/options/systemd-boot-options.nix)
+ - [/nix/store/rfj7pmgrk3d4hqdfn4620cp1bpc6dvd4-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/rfj7pmgrk3d4hqdfn4620cp1bpc6dvd4-source/modules/core/boot/options/systemd-boot-options.nix)
 
 
 
@@ -297,6 +297,29 @@ boolean
 
 
 *Default:*
+` true `
+
+
+
+## core\.git\.enable
+
+
+
+Whether to enable git\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` false `
+
+
+
+*Example:*
 ` true `
 
 
@@ -508,12 +531,87 @@ boolean
 
 
 *Default:*
-` false `
+` true `
 
 
 
 *Example:*
 ` true `
+
+
+
+## core\.nvf\.spellcheck\.enable
+
+
+
+Whether to enable spellcheck\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` true `
+
+
+
+*Example:*
+` true `
+
+
+
+## core\.nvf\.spellcheck\.additionalWords
+
+
+
+Additional words to add to the spellcheck dictionary
+
+
+
+*Type:*
+list of string
+
+
+
+*Default:*
+
+```
+[
+  "nvf"
+  "qnix"
+  "qf0xb"
+  "QPC"
+  "QConfigVM"
+  "QFrame13"
+]
+```
+
+
+
+## core\.nvf\.spellcheck\.languages
+
+
+
+Languages to add to the spellcheck dictionary
+
+
+
+*Type:*
+list of string
+
+
+
+*Default:*
+
+```
+[
+  "en"
+  "de"
+]
+```
 
 
 

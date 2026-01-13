@@ -184,7 +184,7 @@ __Example:__ ``true``
 
 __Declared by:__
 
-* link:file:///nix/store/b8n3zd5hpa3rz22jn3hjri7x6sk074lg-source/modules/core/boot/options/grub-options.nix[/nix/store/b8n3zd5hpa3rz22jn3hjri7x6sk074lg-source/modules/core/boot/options/grub-options{zwsp}.nix]
+* link:file:///nix/store/w8ax0jx1b4zvcbx3sasb3lbmarylq5lz-source/modules/core/boot/options/grub-options.nix[/nix/store/w8ax0jx1b4zvcbx3sasb3lbmarylq5lz-source/modules/core/boot/options/grub-options{zwsp}.nix]
 
 
 
@@ -204,7 +204,7 @@ __Default:__ ``{quot}nodev{quot}``
 
 __Declared by:__
 
-* link:file:///nix/store/b8n3zd5hpa3rz22jn3hjri7x6sk074lg-source/modules/core/boot/options/grub-options.nix[/nix/store/b8n3zd5hpa3rz22jn3hjri7x6sk074lg-source/modules/core/boot/options/grub-options{zwsp}.nix]
+* link:file:///nix/store/w8ax0jx1b4zvcbx3sasb3lbmarylq5lz-source/modules/core/boot/options/grub-options.nix[/nix/store/w8ax0jx1b4zvcbx3sasb3lbmarylq5lz-source/modules/core/boot/options/grub-options{zwsp}.nix]
 
 
 
@@ -228,7 +228,7 @@ __Example:__ ``true``
 
 __Declared by:__
 
-* link:file:///nix/store/b8n3zd5hpa3rz22jn3hjri7x6sk074lg-source/modules/core/boot/options/systemd-boot-options.nix[/nix/store/b8n3zd5hpa3rz22jn3hjri7x6sk074lg-source/modules/core/boot/options/systemd-boot-options{zwsp}.nix]
+* link:file:///nix/store/w8ax0jx1b4zvcbx3sasb3lbmarylq5lz-source/modules/core/boot/options/systemd-boot-options.nix[/nix/store/w8ax0jx1b4zvcbx3sasb3lbmarylq5lz-source/modules/core/boot/options/systemd-boot-options{zwsp}.nix]
 
 
 
@@ -261,6 +261,26 @@ __Type:__ boolean
 
 
 __Default:__ ``true``
+
+
+
+== core{zwsp}.git{zwsp}.enable
+
+
+
+Whether to enable git{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``false``
+
+
+
+__Example:__ ``true``
 
 
 
@@ -450,11 +470,81 @@ __Type:__ boolean
 
 
 
-__Default:__ ``false``
+__Default:__ ``true``
 
 
 
 __Example:__ ``true``
+
+
+
+== core{zwsp}.nvf{zwsp}.spellcheck{zwsp}.enable
+
+
+
+Whether to enable spellcheck{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``true``
+
+
+
+__Example:__ ``true``
+
+
+
+== core{zwsp}.nvf{zwsp}.spellcheck{zwsp}.additionalWords
+
+
+
+Additional words to add to the spellcheck dictionary
+
+
+
+__Type:__ list of string
+
+
+
+__Default:__
+
+----
+[
+  "nvf"
+  "qnix"
+  "qf0xb"
+  "QPC"
+  "QConfigVM"
+  "QFrame13"
+]
+----
+
+
+
+== core{zwsp}.nvf{zwsp}.spellcheck{zwsp}.languages
+
+
+
+Languages to add to the spellcheck dictionary
+
+
+
+__Type:__ list of string
+
+
+
+__Default:__
+
+----
+[
+  "en"
+  "de"
+]
+----
 
 
 
