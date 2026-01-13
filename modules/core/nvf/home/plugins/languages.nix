@@ -76,7 +76,6 @@
         format.enable = true;
         format.type = "rustfmt";
         lsp.enable = true;
-        lsp.server = "rust-analyzer";
       };
 
       sql = {
