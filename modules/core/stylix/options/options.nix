@@ -1,4 +1,9 @@
-{ lib, pkgs ? null, isLaptop ? false, ... }:
+{
+  lib,
+  pkgs ? null,
+  isLaptop ? false,
+  ...
+}:
 
 let
   # Convert stylix base16 colors to solarized naming scheme
@@ -9,13 +14,13 @@ let
     base02 = base16.base02 or "";
     base01 = base16.base01 or "";
     base00 = base16.base00 or "";
-    
+
     # Light colors (base16 -> solarized mapping)
     base0 = base16.base04 or "";
     base1 = base16.base05 or "";
     base2 = base16.base06 or "";
     base3 = base16.base07 or "";
-    
+
     # Accent colors (base16 -> solarized mapping)
     red = base16.base08 or "";
     orange = base16.base09 or "";
@@ -42,7 +47,7 @@ in
     colorSchemeOverrides = lib.mkOption {
       type = lib.types.attrs;
       description = "Override the color scheme with custom colors";
-      default = {};
+      default = { };
     };
 
     cursor = lib.mkOption {
@@ -133,7 +138,6 @@ in
     solarizedColors = lib.mkOption {
       type = lib.types.attrsOf lib.types.str;
       description = "Colors converted from stylix base16 to solarized naming scheme (base03, base02, base01, base00, base0, base1, base2, base3, red, orange, yellow, green, cyan, blue, violet, magenta)";
-      default = {};
       readOnly = true;
     };
   };
