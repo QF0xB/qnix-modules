@@ -8,7 +8,7 @@
       languages = config.qnix.core.nvf.spellcheck.languages;
 
       vim-dirtytalk.enable = true;
-      programmingWordlist.enable = true;
+      programmingWordlist.enable = true; # :DirtytalkUpdate
 
       extraSpellWords = {
         "en.utf-8" = config.qnix.core.nvf.spellcheck.additionalWords;
