@@ -44,11 +44,7 @@
         format.type = "nixfmt";
         lsp.enable = true;
         lsp.server = "nixd";
-        lsp.options = {
-          nixpkgs = {
-            expr = "import <nixpkgs> { }";
-          };
-        };
+
         extraDiagnostics.enable = true;
         extraDiagnostics.types = [
           "statix"
