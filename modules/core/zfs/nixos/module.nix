@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.hm.qnix.core.zfs;
@@ -23,12 +28,16 @@ in
       path = with pkgs; [ zfs ]; # Add any necessary packages here
       unitConfig.DefaultDependencies = "no";
       serviceConfig.Type = "oneshot";
+      serviceConfig.StandardOutput = "journal+console";
+      serviceConfig.StandardError = "journal+console";
       script = ''
-        # Your commands here
-        zfs list -t snapshot
-        echo "Rollback zroot"
+        echo "postResume service started at $(date)"
+        echo "Listing snapshots before rollback:"
+        zfs list -t snapshot zroot/root || true
+        echo "Rollback zroot/root@blank"
         zfs rollback -r zroot/root@blank
+        echo "postResume service completed at $(date)"
       '';
-    };  
+    };
   };
 }
