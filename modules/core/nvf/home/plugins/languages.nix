@@ -67,8 +67,6 @@
 
       rust = {
         enable = true;
-        crates.enable = true;
-        crates.codeActions = true;
         format.enable = true;
         format.type = "rustfmt";
         lsp.enable = true;
