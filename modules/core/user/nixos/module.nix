@@ -126,7 +126,8 @@ in
 
     # Groups
     users.groups = userGroups;
-  };
 
-  assertions = assertions;
+    # Assertions for password configuration validation
+    _module.assertions = assertions;
+  };
 }
