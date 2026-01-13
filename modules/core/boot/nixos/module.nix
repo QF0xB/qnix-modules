@@ -1,8 +1,11 @@
-{ lib, config, ... }:
+{
+  lib,
+  config,
+  ...
+}:
 
 let
-  # Options can be in NixOS (system-wide, if loadOptions=true) or home-manager (via config.hm.qnix.*)
-  cfg = config.qnix.core.boot or config.hm.qnix.core.boot;
+  cfg = config.qnix.core.boot;
 in
 {
   imports = [

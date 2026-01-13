@@ -1,12 +1,13 @@
 {
   lib,
+  osConfig,
   config,
   pkgs,
   ...
 }:
 
 let
-  cfg = config.qnix.core.shell.fish;
+  cfg = osConfig.qnix.core.shell.fish;
 in
 {
   config = lib.mkIf cfg.enable {
@@ -46,9 +47,9 @@ in
         }
       ];
     };
-
-    qnix.persist.home.cache.directories = [
-      ".local/share/fish"
-    ];
   };
+
+  #  osConfig.qnix.persist.home.cache.directories = lib.mkIf cfg.enable [
+  #   ".local/share/fish"
+  # ];
 }

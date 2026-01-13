@@ -1,7 +1,11 @@
-{ lib, config, ... }:
+{
+  lib,
+  config,
+  ...
+}:
 
 let
-  cfg = config.qnix.core.localisation or config.hm.qnix.core.localisation;
+  cfg = config.qnix.core.localisation;
 
   # Extract all unique locales from localeSettings values
   # Convert "de_DE.UTF-8" to "de_DE.UTF-8/UTF-8" format for supportedLocales

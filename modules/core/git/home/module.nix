@@ -1,7 +1,12 @@
-{ lib, config, ... }:
+{
+  lib,
+  config,
+  osConfig,
+  ...
+}:
 
 let
-  cfg = config.qnix.core.git;
+  cfg = osConfig.qnix.core.git;
 in
 {
   config = lib.mkIf cfg.enable {

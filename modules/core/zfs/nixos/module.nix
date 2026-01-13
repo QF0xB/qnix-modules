@@ -6,7 +6,7 @@
 }:
 
 let
-  cfg = config.hm.qnix.core.zfs;
+  cfg = config.qnix.core.zfs;
 in
 {
   config = lib.mkIf cfg.enable {
@@ -16,7 +16,7 @@ in
       trim.enable = true;
     };
 
-    boot.initrd.systemd.services.postResume = lib.mkIf config.hm.qnix.core.impermanence.enable {
+    boot.initrd.systemd.services.postResume = lib.mkIf config.qnix.core.impermanence.enable {
       description = "Run commands after decrypt";
       wantedBy = [ "initrd.target" ];
       after = [

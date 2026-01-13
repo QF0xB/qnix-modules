@@ -7,8 +7,8 @@
 }:
 
 let
-  cfg = config.hm.qnix.core.impermanence;
-  persist = config.hm.qnix.core.persist;
+  cfg = config.qnix.core.impermanence;
+  persist = config.qnix.persist;
 
   # Create impermanence.json after environment.persistence is merged
   impermanenceJson = pkgs.writeText "impermanence.json" (

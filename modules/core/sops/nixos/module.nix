@@ -6,9 +6,7 @@
 }:
 
 let
-  # Options can be in NixOS (system-wide) or home-manager (via config.hm.qnix.*)
-  # Check system-wide first, fallback to home-manager for flexibility
-  cfg = config.qnix.core.sops or config.hm.qnix.core.sops;
+  cfg = config.qnix.core.sops;
 in
 {
   config = lib.mkIf cfg.enable {
@@ -83,7 +81,7 @@ in
       ) cfg.secrets;
     };
 
-    hm.qnix.persist.directories = [
+    qnix.persist.root.directories = [
       ".config/sops/age"
     ];
   };

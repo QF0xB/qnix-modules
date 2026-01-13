@@ -1,7 +1,7 @@
-{ lib, config, ... }:
+{ lib, osConfig, ... }:
 
 {
-  config = lib.mkIf config.qnix.core.nvf.enable {
+  config = lib.mkIf osConfig.qnix.core.nvf.enable {
     programs.nvf.settings.vim.options = {
       # Numbering
       number = true;

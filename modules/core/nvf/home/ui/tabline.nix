@@ -1,7 +1,7 @@
-{ config, lib, ... }:
+{ lib, osConfig, ... }:
 
 {
-  config = lib.mkIf config.qnix.core.nvf.enable {
+  config = lib.mkIf osConfig.qnix.core.nvf.enable {
     # SchroVimger-style tabline: thin separators, minimal indicators
     programs.nvf.settings.vim.tabline.nvimBufferline = {
       enable = true;
@@ -38,5 +38,3 @@
     };
   };
 }
-
-

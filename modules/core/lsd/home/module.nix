@@ -1,7 +1,7 @@
-{ lib, config, ... }:
+{ lib, osConfig, ... }:
 
 let
-  cfg = config.qnix.core.lsd;
+  cfg = osConfig.qnix.core.lsd;
 in
 {
   config = lib.mkIf cfg.enable {

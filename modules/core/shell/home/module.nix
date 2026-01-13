@@ -1,12 +1,12 @@
 {
   lib,
-  config,
+  osConfig,
   pkgs,
   ...
 }:
 
 let
-  cfg = config.qnix.core.shell;
+  cfg = osConfig.qnix.core.shell;
 in
 {
   imports = [

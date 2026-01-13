@@ -22,7 +22,10 @@ in
 
         directories = lib.mkOption {
           type = lib.types.listOf lib.types.str;
-          default = [ "/var/log" "/var/lib/nixos" ];
+          default = [
+            "/var/log"
+            "/var/lib/nixos"
+          ];
           apply = assertNoHomeDirs;
           description = "Directories to persist in root filesystem";
         };

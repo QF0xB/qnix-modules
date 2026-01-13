@@ -1,7 +1,12 @@
-{ config, lib, pkgs, ... }:
+{
+  osConfig,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
-  config = lib.mkIf config.qnix.core.nvf.enable {
+  config = lib.mkIf osConfig.qnix.core.nvf.enable {
     programs.nvf.settings.vim = {
       startPlugins = with pkgs.vimPlugins; [
         barbecue-nvim
@@ -21,5 +26,3 @@
     };
   };
 }
-
-

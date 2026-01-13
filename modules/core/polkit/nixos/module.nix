@@ -1,7 +1,7 @@
 { lib, config, ... }:
 
 let
-  cfg = config.hm.qnix.core.polkit;
+  cfg = config.qnix.core.polkit;
 in
 {
   config = lib.mkIf cfg.enable {

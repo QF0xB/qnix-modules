@@ -6,7 +6,7 @@
 }:
 
 let
-  cfg = config.hm.qnix.core.shell;
+  cfg = config.qnix.core.shell;
 in
 {
   config = lib.mkIf (cfg.enable && cfg.defaultShell) {

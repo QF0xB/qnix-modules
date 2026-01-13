@@ -1,12 +1,12 @@
 {
+  osConfig,
   dots,
-  config,
   lib,
   ...
 }:
 
 let
-  cfg = config.qnix.core.shell;
+  cfg = osConfig.qnix.core.shell;
 in
 {
   config = lib.mkIf (cfg.enable && cfg.aliases) {

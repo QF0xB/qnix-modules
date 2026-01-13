@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ osConfig, lib, ... }:
 
 let
   treesitterLanguages = [
@@ -27,7 +27,7 @@ let
   );
 in
 {
-  config = lib.mkIf config.qnix.core.nvf.enable {
+  config = lib.mkIf osConfig.qnix.core.nvf.enable {
     programs.nvf.settings.vim = {
       treesitter = {
         enable = true;
