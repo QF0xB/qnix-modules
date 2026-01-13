@@ -12,7 +12,7 @@ in
       signing = lib.mkIf cfg.signing {
         key = cfg.signingKey;
         signByDefault = true;
-      } else null;
+      };
 
       extraConfig = {
         core = {
