@@ -86,10 +86,6 @@
             enable = true;
           };
         };
-        extraDiagnostics.enable = true;
-        extraDiagnostics.types = [
-          "clippy"
-        ];
       };
 
       sql = {
