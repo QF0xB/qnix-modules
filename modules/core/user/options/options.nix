@@ -24,12 +24,13 @@
 
     defaultExtraGroups = lib.mkOption {
       type = lib.types.listOf lib.types.str;
-      default = [
+      default = [ ];
+      description = "Groups to add to all users by default (e.g., [ \"video\" \"audio\" ])";
+      example = [
         "video"
         "audio"
         "users"
       ];
-      description = "Groups to add to all users by default (e.g., [ \"video\" \"audio\" ])";
     };
 
     # Users as an attribute set: username -> user config

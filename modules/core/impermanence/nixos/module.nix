@@ -1,4 +1,10 @@
-{ lib, pkgs, config, user, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  user,
+  ...
+}:
 
 let
   cfg = config.hm.qnix.core.impermanence;
@@ -12,8 +18,7 @@ let
         ++ config.environment.persistence."/cache".directories
       );
       files = lib.unique (
-        config.environment.persistence."/persist".files 
-        ++ config.environment.persistence."/cache".files
+        config.environment.persistence."/persist".files ++ config.environment.persistence."/cache".files
       );
     }
   );
@@ -29,20 +34,26 @@ in
         files = lib.unique persist.root.files;
         directories = lib.unique (
           if persist.root.defaultFolders then
-            [ "/var/log" "/var/lib/nixos" ]
+            [
+              "/var/log"
+              "/var/lib/nixos"
+            ]
           else
-            [ ]
-          ++ persist.root.directories
+            [ ] ++ persist.root.directories
         );
 
         users.${user} = {
           files = lib.unique persist.home.files;
           directories = lib.unique (
             if persist.home.defaultFolders then
-              [ "projects" ".cache/dconf" ".config/dconf" ]
+              [
+                "projects"
+                ".cache/dconf"
+                ".config/dconf"
+                ".ssh"
+              ]
             else
-              [ ]
-            ++ persist.home.directories
+              [ ] ++ persist.home.directories
           );
         };
       };
