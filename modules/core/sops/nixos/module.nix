@@ -13,7 +13,6 @@ in
 {
   config = lib.mkIf cfg.enable {
     sops = {
-      enable = true;
       # Set defaultSopsFile if provided (sops-nix requires this when secrets are defined)
       defaultSopsFile = cfg.defaultSopsFile;
 
