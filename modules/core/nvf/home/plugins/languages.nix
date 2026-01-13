@@ -77,15 +77,6 @@
         format.type = "rustfmt";
         lsp.enable = true;
         lsp.server = "rust-analyzer";
-        lsp.options = {
-          cargo = {
-            allFeature = true;
-          };
-          checkOnSave = true;
-          procMacro = {
-            enable = true;
-          };
-        };
       };
 
       sql = {
