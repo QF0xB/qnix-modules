@@ -1,4 +1,7 @@
-{ lib, user, ... }:
+{
+  lib,
+  ...
+}:
 
 {
   options.qnix.core.git = {

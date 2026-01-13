@@ -40,6 +40,10 @@
       nixos = true;
       home = true;
     };
+    sops = {
+      nixos = true;
+      home = false;
+    };
     starship = {
       nixos = false;
       home = true;

@@ -184,7 +184,7 @@ __Example:__ ``true``
 
 __Declared by:__
 
-* link:file:///nix/store/w8ax0jx1b4zvcbx3sasb3lbmarylq5lz-source/modules/core/boot/options/grub-options.nix[/nix/store/w8ax0jx1b4zvcbx3sasb3lbmarylq5lz-source/modules/core/boot/options/grub-options{zwsp}.nix]
+* link:file:///nix/store/wd9pnng78vinmbbjj48a9fmjxbmycg57-source/modules/core/boot/options/grub-options.nix[/nix/store/wd9pnng78vinmbbjj48a9fmjxbmycg57-source/modules/core/boot/options/grub-options{zwsp}.nix]
 
 
 
@@ -204,7 +204,7 @@ __Default:__ ``{quot}nodev{quot}``
 
 __Declared by:__
 
-* link:file:///nix/store/w8ax0jx1b4zvcbx3sasb3lbmarylq5lz-source/modules/core/boot/options/grub-options.nix[/nix/store/w8ax0jx1b4zvcbx3sasb3lbmarylq5lz-source/modules/core/boot/options/grub-options{zwsp}.nix]
+* link:file:///nix/store/wd9pnng78vinmbbjj48a9fmjxbmycg57-source/modules/core/boot/options/grub-options.nix[/nix/store/wd9pnng78vinmbbjj48a9fmjxbmycg57-source/modules/core/boot/options/grub-options{zwsp}.nix]
 
 
 
@@ -228,7 +228,7 @@ __Example:__ ``true``
 
 __Declared by:__
 
-* link:file:///nix/store/w8ax0jx1b4zvcbx3sasb3lbmarylq5lz-source/modules/core/boot/options/systemd-boot-options.nix[/nix/store/w8ax0jx1b4zvcbx3sasb3lbmarylq5lz-source/modules/core/boot/options/systemd-boot-options{zwsp}.nix]
+* link:file:///nix/store/wd9pnng78vinmbbjj48a9fmjxbmycg57-source/modules/core/boot/options/systemd-boot-options.nix[/nix/store/wd9pnng78vinmbbjj48a9fmjxbmycg57-source/modules/core/boot/options/systemd-boot-options{zwsp}.nix]
 
 
 
@@ -276,11 +276,75 @@ __Type:__ boolean
 
 
 
-__Default:__ ``false``
+__Default:__ ``true``
 
 
 
 __Example:__ ``true``
+
+
+
+== core{zwsp}.git{zwsp}.signing
+
+
+
+Whether to enable git signing
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``false``
+
+
+
+== core{zwsp}.git{zwsp}.signingKey
+
+
+
+The key to use for git signing
+
+
+
+__Type:__ string
+
+
+
+__Default:__ ``{quot}{quot}``
+
+
+
+== core{zwsp}.git{zwsp}.userEmail
+
+
+
+The email to use for git commits
+
+
+
+__Type:__ string
+
+
+
+__Default:__ ``{quot}{quot}``
+
+
+
+== core{zwsp}.git{zwsp}.userName
+
+
+
+The name to use for git commits
+
+
+
+__Type:__ string
+
+
+
+__Default:__ ``{quot}{quot}``
 
 
 
@@ -737,6 +801,266 @@ __Default:__ ``true``
 
 
 __Example:__ ``true``
+
+
+
+== core{zwsp}.sops{zwsp}.enable
+
+
+
+Whether to enable sops{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``false``
+
+
+
+__Example:__ ``true``
+
+
+
+== core{zwsp}.sops{zwsp}.age{zwsp}.generateKey
+
+
+
+Whether to generate an age key automatically{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``false``
+
+
+
+== core{zwsp}.sops{zwsp}.age{zwsp}.keyFile
+
+
+
+Path to the age key file{zwsp}. Defaults to /persist/home/{zwsp}+<+{zwsp}user{gt}/{zwsp}.config/age/keys{zwsp}.txt if user is available{zwsp}.
+
+
+
+__Type:__ null or string
+
+
+
+__Default:__ ``null``
+
+
+
+== core{zwsp}.sops{zwsp}.defaultSopsFile
+
+
+
+Default Sops File to decrypt and use{zwsp}. Can be overridden per-secret with sopsFile{zwsp}.
+
+
+
+__Type:__ null or absolute path
+
+
+
+__Default:__ ``null``
+
+
+
+== core{zwsp}.sops{zwsp}.secrets
+
+
+
+Secrets to decrypt and provision{zwsp}. Each secret maps to sops{zwsp}.secrets{zwsp}.{asterisk}
+
+
+
+__Type:__ attribute set of (submodule)
+
+
+
+__Default:__ ``{ }``
+
+
+
+== core{zwsp}.sops{zwsp}.secrets{zwsp}.{zwsp}+<+{zwsp}name{gt}{zwsp}.format
+
+
+
+Format of the secret{zwsp}. ‘binary’ for raw bytes, ‘yaml’ for YAML parsing{zwsp}.
+
+
+
+__Type:__ null or one of “binary”, “yaml”
+
+
+
+__Default:__ ``null``
+
+
+
+== core{zwsp}.sops{zwsp}.secrets{zwsp}.{zwsp}+<+{zwsp}name{gt}{zwsp}.group
+
+
+
+Group of the decrypted secret file{zwsp}.
+
+
+
+__Type:__ null or string
+
+
+
+__Default:__ ``null``
+
+
+
+== core{zwsp}.sops{zwsp}.secrets{zwsp}.{zwsp}+<+{zwsp}name{gt}{zwsp}.key
+
+
+
+Key name in the sops file{zwsp}. Defaults to the secret name{zwsp}.
+
+
+
+__Type:__ null or string
+
+
+
+__Default:__ ``null``
+
+
+
+== core{zwsp}.sops{zwsp}.secrets{zwsp}.{zwsp}+<+{zwsp}name{gt}{zwsp}.mode
+
+
+
+File mode (permissions) for the decrypted secret file{zwsp}.
+
+
+
+__Type:__ string
+
+
+
+__Default:__ ``{quot}0400{quot}``
+
+
+
+== core{zwsp}.sops{zwsp}.secrets{zwsp}.{zwsp}+<+{zwsp}name{gt}{zwsp}.neededBy
+
+
+
+List of systemd units that need this secret{zwsp}.
+
+
+
+__Type:__ list of string
+
+
+
+__Default:__ ``{startsb} {endsb}``
+
+
+
+== core{zwsp}.sops{zwsp}.secrets{zwsp}.{zwsp}+<+{zwsp}name{gt}{zwsp}.owner
+
+
+
+Owner of the decrypted secret file{zwsp}.
+
+
+
+__Type:__ null or string
+
+
+
+__Default:__ ``null``
+
+
+
+== core{zwsp}.sops{zwsp}.secrets{zwsp}.{zwsp}+<+{zwsp}name{gt}{zwsp}.path
+
+
+
+Path where the decrypted secret will be placed{zwsp}. Defaults to /run/secrets/{zwsp}+<+{zwsp}name{gt}{zwsp}.
+
+
+
+__Type:__ null or string
+
+
+
+__Default:__ ``null``
+
+
+
+== core{zwsp}.sops{zwsp}.secrets{zwsp}.{zwsp}+<+{zwsp}name{gt}{zwsp}.reloadUnits
+
+
+
+List of systemd units to reload when this secret changes{zwsp}.
+
+
+
+__Type:__ list of string
+
+
+
+__Default:__ ``{startsb} {endsb}``
+
+
+
+== core{zwsp}.sops{zwsp}.secrets{zwsp}.{zwsp}+<+{zwsp}name{gt}{zwsp}.restartUnits
+
+
+
+List of systemd units to restart when this secret changes{zwsp}.
+
+
+
+__Type:__ list of string
+
+
+
+__Default:__ ``{startsb} {endsb}``
+
+
+
+== core{zwsp}.sops{zwsp}.secrets{zwsp}.{zwsp}+<+{zwsp}name{gt}{zwsp}.sopsFile
+
+
+
+Path to the sops file containing this secret{zwsp}. Defaults to defaultSopsFile{zwsp}.
+
+
+
+__Type:__ null or absolute path
+
+
+
+__Default:__ ``null``
+
+
+
+== core{zwsp}.sops{zwsp}.secrets{zwsp}.{zwsp}+<+{zwsp}name{gt}{zwsp}.wantedBy
+
+
+
+List of systemd units that want this secret{zwsp}.
+
+
+
+__Type:__ list of string
+
+
+
+__Default:__ ``{startsb} {endsb}``
 
 
 
@@ -1565,8 +1889,6 @@ __Default:__ ``false``
 
 
 == wayland
-
-
 
 Is wayland running?
 

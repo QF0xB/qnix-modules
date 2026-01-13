@@ -56,7 +56,15 @@ These modules define the core QNix configuration options.
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `qnix.git.enable` | `bool` | `false` | git |
+| `qnix.git.enable` | `bool` | `true` | git |
+| `qnix.git.userName` | `str` | `""` | The name to use for git commits |
+| `qnix.git.userEmail` | `str` | `""` | The email to use for git commits |
+| `qnix.git.signing` | `bool` | `false` | Whether to enable git signing |
+| `qnix.git.signingKey` | `str` | `""` | The key to use for git signing |
+| `qnix.git.git.userName` | `str` | `""` | The name to use for git commits |
+| `qnix.git.git.userEmail` | `str` | `""` | The email to use for git commits |
+| `qnix.git.git.signing` | `bool` | `false` | Whether to enable git signing |
+| `qnix.git.git.signingKey` | `str` | `""` | The key to use for git signing |
 
 ### `impermanence`
 
@@ -164,6 +172,44 @@ These modules define the core QNix configuration options.
 | `qnix.shell.shell.defaultShell` | `bool` | `true` | default shell |
 | `qnix.shell.shell.aliases` | `bool` | `true` | aliases |
 | `qnix.shell.shell.qnixAliases` | `bool` | `true` | aliases for qnix-system |
+
+### `sops`
+
+**Type**: NixOS
+
+#### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `qnix.sops.enable` | `bool` | `false` | sops |
+| `qnix.sops.defaultSopsFile` | `nullOr` | `null` | Default Sops File to decrypt and use. Can be overridden per-secret with sopsFile. |
+| `qnix.sops.generateKey` | `bool` | `false` | Whether to generate an age key automatically. |
+| `qnix.sops.keyFile` | `nullOr` | `null` | Path to the age key file. Defaults to /persist/home/<user>/.config/age/keys.txt if user is available. |
+| `qnix.sops.secrets` | `attrsOf` | `null` | Path to the sops file containing this secret. Defaults to defaultSopsFile. |
+| `qnix.sops.key` | `nullOr` | `null` | Key name in the sops file. Defaults to the secret name. |
+| `qnix.sops.owner` | `nullOr` | `null` | Owner of the decrypted secret file. |
+| `qnix.sops.group` | `nullOr` | `null` | Group of the decrypted secret file. |
+| `qnix.sops.mode` | `str` | `"0400"` | File mode (permissions) for the decrypted secret file. |
+| `qnix.sops.path` | `nullOr` | `null` | Path where the decrypted secret will be placed. Defaults to /run/secrets/<name>. |
+| `qnix.sops.restartUnits` | `listOf` | `[ ]` | List of systemd units to restart when this secret changes. |
+| `qnix.sops.reloadUnits` | `listOf` | `[ ]` | List of systemd units to reload when this secret changes. |
+| `qnix.sops.format` | `nullOr` | `null` | Format of the secret. |
+| `qnix.sops.neededBy` | `listOf` | `[ ]` | List of systemd units that need this secret. |
+| `qnix.sops.wantedBy` | `listOf` | `[ ]` | List of systemd units that want this secret. |
+| `qnix.sops.sops.defaultSopsFile` | `nullOr` | `null` | Default Sops File to decrypt and use. Can be overridden per-secret with sopsFile. |
+| `qnix.sops.sops.generateKey` | `bool` | `false` | Whether to generate an age key automatically. |
+| `qnix.sops.sops.keyFile` | `nullOr` | `null` | Path to the age key file. Defaults to /persist/home/<user>/.config/age/keys.txt if user is available. |
+| `qnix.sops.sops.secrets` | `attrsOf` | `null` | Path to the sops file containing this secret. Defaults to defaultSopsFile. |
+| `qnix.sops.sops.key` | `nullOr` | `null` | Key name in the sops file. Defaults to the secret name. |
+| `qnix.sops.sops.owner` | `nullOr` | `null` | Owner of the decrypted secret file. |
+| `qnix.sops.sops.group` | `nullOr` | `null` | Group of the decrypted secret file. |
+| `qnix.sops.sops.mode` | `str` | `"0400"` | File mode (permissions) for the decrypted secret file. |
+| `qnix.sops.sops.path` | `nullOr` | `null` | Path where the decrypted secret will be placed. Defaults to /run/secrets/<name>. |
+| `qnix.sops.sops.restartUnits` | `listOf` | `[ ]` | List of systemd units to restart when this secret changes. |
+| `qnix.sops.sops.reloadUnits` | `listOf` | `[ ]` | List of systemd units to reload when this secret changes. |
+| `qnix.sops.sops.format` | `nullOr` | `null` | Format of the secret. |
+| `qnix.sops.sops.neededBy` | `listOf` | `[ ]` | List of systemd units that need this secret. |
+| `qnix.sops.sops.wantedBy` | `listOf` | `[ ]` | List of systemd units that want this secret. |
 
 ### `starship`
 

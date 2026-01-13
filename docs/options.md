@@ -214,7 +214,7 @@ boolean
 ` true `
 
 *Declared by:*
- - [/nix/store/rfj7pmgrk3d4hqdfn4620cp1bpc6dvd4-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/rfj7pmgrk3d4hqdfn4620cp1bpc6dvd4-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/wd9pnng78vinmbbjj48a9fmjxbmycg57-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/wd9pnng78vinmbbjj48a9fmjxbmycg57-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -235,7 +235,7 @@ string
 ` "nodev" `
 
 *Declared by:*
- - [/nix/store/rfj7pmgrk3d4hqdfn4620cp1bpc6dvd4-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/rfj7pmgrk3d4hqdfn4620cp1bpc6dvd4-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/wd9pnng78vinmbbjj48a9fmjxbmycg57-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/wd9pnng78vinmbbjj48a9fmjxbmycg57-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -261,7 +261,7 @@ boolean
 ` true `
 
 *Declared by:*
- - [/nix/store/rfj7pmgrk3d4hqdfn4620cp1bpc6dvd4-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/rfj7pmgrk3d4hqdfn4620cp1bpc6dvd4-source/modules/core/boot/options/systemd-boot-options.nix)
+ - [/nix/store/wd9pnng78vinmbbjj48a9fmjxbmycg57-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/wd9pnng78vinmbbjj48a9fmjxbmycg57-source/modules/core/boot/options/systemd-boot-options.nix)
 
 
 
@@ -315,12 +315,84 @@ boolean
 
 
 *Default:*
-` false `
+` true `
 
 
 
 *Example:*
 ` true `
+
+
+
+## core\.git\.signing
+
+
+
+Whether to enable git signing
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` false `
+
+
+
+## core\.git\.signingKey
+
+
+
+The key to use for git signing
+
+
+
+*Type:*
+string
+
+
+
+*Default:*
+` "" `
+
+
+
+## core\.git\.userEmail
+
+
+
+The email to use for git commits
+
+
+
+*Type:*
+string
+
+
+
+*Default:*
+` "" `
+
+
+
+## core\.git\.userName
+
+
+
+The name to use for git commits
+
+
+
+*Type:*
+string
+
+
+
+*Default:*
+` "" `
 
 
 
@@ -831,6 +903,299 @@ boolean
 
 *Example:*
 ` true `
+
+
+
+## core\.sops\.enable
+
+
+
+Whether to enable sops\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` false `
+
+
+
+*Example:*
+` true `
+
+
+
+## core\.sops\.age\.generateKey
+
+
+
+Whether to generate an age key automatically\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` false `
+
+
+
+## core\.sops\.age\.keyFile
+
+
+
+Path to the age key file\. Defaults to /persist/home/\<user>/\.config/age/keys\.txt if user is available\.
+
+
+
+*Type:*
+null or string
+
+
+
+*Default:*
+` null `
+
+
+
+## core\.sops\.defaultSopsFile
+
+
+
+Default Sops File to decrypt and use\. Can be overridden per-secret with sopsFile\.
+
+
+
+*Type:*
+null or absolute path
+
+
+
+*Default:*
+` null `
+
+
+
+## core\.sops\.secrets
+
+
+
+Secrets to decrypt and provision\. Each secret maps to sops\.secrets\.\*
+
+
+
+*Type:*
+attribute set of (submodule)
+
+
+
+*Default:*
+` { } `
+
+
+
+## core\.sops\.secrets\.\<name>\.format
+
+
+
+Format of the secret\. ‘binary’ for raw bytes, ‘yaml’ for YAML parsing\.
+
+
+
+*Type:*
+null or one of “binary”, “yaml”
+
+
+
+*Default:*
+` null `
+
+
+
+## core\.sops\.secrets\.\<name>\.group
+
+
+
+Group of the decrypted secret file\.
+
+
+
+*Type:*
+null or string
+
+
+
+*Default:*
+` null `
+
+
+
+## core\.sops\.secrets\.\<name>\.key
+
+
+
+Key name in the sops file\. Defaults to the secret name\.
+
+
+
+*Type:*
+null or string
+
+
+
+*Default:*
+` null `
+
+
+
+## core\.sops\.secrets\.\<name>\.mode
+
+
+
+File mode (permissions) for the decrypted secret file\.
+
+
+
+*Type:*
+string
+
+
+
+*Default:*
+` "0400" `
+
+
+
+## core\.sops\.secrets\.\<name>\.neededBy
+
+
+
+List of systemd units that need this secret\.
+
+
+
+*Type:*
+list of string
+
+
+
+*Default:*
+` [ ] `
+
+
+
+## core\.sops\.secrets\.\<name>\.owner
+
+
+
+Owner of the decrypted secret file\.
+
+
+
+*Type:*
+null or string
+
+
+
+*Default:*
+` null `
+
+
+
+## core\.sops\.secrets\.\<name>\.path
+
+
+
+Path where the decrypted secret will be placed\. Defaults to /run/secrets/\<name>\.
+
+
+
+*Type:*
+null or string
+
+
+
+*Default:*
+` null `
+
+
+
+## core\.sops\.secrets\.\<name>\.reloadUnits
+
+
+
+List of systemd units to reload when this secret changes\.
+
+
+
+*Type:*
+list of string
+
+
+
+*Default:*
+` [ ] `
+
+
+
+## core\.sops\.secrets\.\<name>\.restartUnits
+
+
+
+List of systemd units to restart when this secret changes\.
+
+
+
+*Type:*
+list of string
+
+
+
+*Default:*
+` [ ] `
+
+
+
+## core\.sops\.secrets\.\<name>\.sopsFile
+
+
+
+Path to the sops file containing this secret\. Defaults to defaultSopsFile\.
+
+
+
+*Type:*
+null or absolute path
+
+
+
+*Default:*
+` null `
+
+
+
+## core\.sops\.secrets\.\<name>\.wantedBy
+
+
+
+List of systemd units that want this secret\.
+
+
+
+*Type:*
+list of string
+
+
+
+*Default:*
+` [ ] `
 
 
 
@@ -1749,8 +2114,6 @@ boolean
 
 
 ## wayland
-
-
 
 Is wayland running?
 
