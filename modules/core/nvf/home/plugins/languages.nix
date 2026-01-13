@@ -82,7 +82,6 @@
         enable = true;
         format.enable = true;
         lsp.enable = true;
-        extensions.sqls-nvim.enable = true;
       };
 
       yaml = {
