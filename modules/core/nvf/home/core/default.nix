@@ -6,6 +6,6 @@
     ./autocmp.nix
     ./clipboard.nix
     ./options.nix
-    ./whichKey.nix
+    ./whichkey.nix
   ];
 }
