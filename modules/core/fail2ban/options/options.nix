@@ -7,9 +7,9 @@
     };
 
     banTime = lib.mkOption {
-      type = lib.types.int;
-      default = 3600;
-      description = "Time to ban for, in seconds";
+      type = lib.types.str;
+      default = "1h";
+      description = "Time to ban for";
     };
 
     banTimeIncrement = lib.mkEnableOption "fail2ban ban time increment" // {
