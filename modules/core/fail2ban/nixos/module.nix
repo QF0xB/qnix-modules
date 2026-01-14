@@ -8,7 +8,7 @@ in
     services.fail2ban = {
       enable = true;
 
-      banTime = cfg.banTime;
+      banTime = cfg.bantime;
 
       bantime-increment = {
         enable = cfg.banTimeIncrement;
