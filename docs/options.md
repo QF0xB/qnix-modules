@@ -214,7 +214,7 @@ boolean
 ` true `
 
 *Declared by:*
- - [/nix/store/a5kcbx9z51rxinzyjppz6zg6x83hpnzv-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/a5kcbx9z51rxinzyjppz6zg6x83hpnzv-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/y3x1mamqxh078fs0lvjmy8jljhpd1n57-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/y3x1mamqxh078fs0lvjmy8jljhpd1n57-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -235,7 +235,7 @@ string
 ` "nodev" `
 
 *Declared by:*
- - [/nix/store/a5kcbx9z51rxinzyjppz6zg6x83hpnzv-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/a5kcbx9z51rxinzyjppz6zg6x83hpnzv-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/y3x1mamqxh078fs0lvjmy8jljhpd1n57-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/y3x1mamqxh078fs0lvjmy8jljhpd1n57-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -261,7 +261,7 @@ boolean
 ` true `
 
 *Declared by:*
- - [/nix/store/a5kcbx9z51rxinzyjppz6zg6x83hpnzv-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/a5kcbx9z51rxinzyjppz6zg6x83hpnzv-source/modules/core/boot/options/systemd-boot-options.nix)
+ - [/nix/store/y3x1mamqxh078fs0lvjmy8jljhpd1n57-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/y3x1mamqxh078fs0lvjmy8jljhpd1n57-source/modules/core/boot/options/systemd-boot-options.nix)
 
 
 
@@ -297,6 +297,29 @@ boolean
 
 
 *Default:*
+` true `
+
+
+
+## core\.fail2ban\.enable
+
+
+
+Whether to enable fail2ban\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` false `
+
+
+
+*Example:*
 ` true `
 
 
@@ -2107,8 +2130,6 @@ boolean
 
 ## core\.zfs\.scrub\.interval
 
-
-
 Interval for ZFS scrub
 
 
@@ -2124,6 +2145,8 @@ string
 
 
 ## development
+
+
 
 Enable development tools\.
 

@@ -184,7 +184,7 @@ __Example:__ ``true``
 
 __Declared by:__
 
-* link:file:///nix/store/a5kcbx9z51rxinzyjppz6zg6x83hpnzv-source/modules/core/boot/options/grub-options.nix[/nix/store/a5kcbx9z51rxinzyjppz6zg6x83hpnzv-source/modules/core/boot/options/grub-options{zwsp}.nix]
+* link:file:///nix/store/y3x1mamqxh078fs0lvjmy8jljhpd1n57-source/modules/core/boot/options/grub-options.nix[/nix/store/y3x1mamqxh078fs0lvjmy8jljhpd1n57-source/modules/core/boot/options/grub-options{zwsp}.nix]
 
 
 
@@ -204,7 +204,7 @@ __Default:__ ``{quot}nodev{quot}``
 
 __Declared by:__
 
-* link:file:///nix/store/a5kcbx9z51rxinzyjppz6zg6x83hpnzv-source/modules/core/boot/options/grub-options.nix[/nix/store/a5kcbx9z51rxinzyjppz6zg6x83hpnzv-source/modules/core/boot/options/grub-options{zwsp}.nix]
+* link:file:///nix/store/y3x1mamqxh078fs0lvjmy8jljhpd1n57-source/modules/core/boot/options/grub-options.nix[/nix/store/y3x1mamqxh078fs0lvjmy8jljhpd1n57-source/modules/core/boot/options/grub-options{zwsp}.nix]
 
 
 
@@ -228,7 +228,7 @@ __Example:__ ``true``
 
 __Declared by:__
 
-* link:file:///nix/store/a5kcbx9z51rxinzyjppz6zg6x83hpnzv-source/modules/core/boot/options/systemd-boot-options.nix[/nix/store/a5kcbx9z51rxinzyjppz6zg6x83hpnzv-source/modules/core/boot/options/systemd-boot-options{zwsp}.nix]
+* link:file:///nix/store/y3x1mamqxh078fs0lvjmy8jljhpd1n57-source/modules/core/boot/options/systemd-boot-options.nix[/nix/store/y3x1mamqxh078fs0lvjmy8jljhpd1n57-source/modules/core/boot/options/systemd-boot-options{zwsp}.nix]
 
 
 
@@ -261,6 +261,26 @@ __Type:__ boolean
 
 
 __Default:__ ``true``
+
+
+
+== core{zwsp}.fail2ban{zwsp}.enable
+
+
+
+Whether to enable fail2ban{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``false``
+
+
+
+__Example:__ ``true``
 
 
 
@@ -1880,8 +1900,6 @@ __Example:__ ``true``
 
 == core{zwsp}.zfs{zwsp}.scrub{zwsp}.interval
 
-
-
 Interval for ZFS scrub
 
 
@@ -1895,6 +1913,8 @@ __Default:__ ``{quot}12{quot}``
 
 
 == development
+
+
 
 Enable development tools{zwsp}.
 

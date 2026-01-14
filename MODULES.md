@@ -48,6 +48,16 @@ These modules define the core QNix configuration options.
 | `qnix.boot.zfsSupport` | `bool` | `true` | Enable ZFS support |
 | `qnix.boot.efiSupport` | `bool` | `true` | Enable EFI support |
 
+### `fail2ban`
+
+**Type**: NixOS
+
+#### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `qnix.fail2ban.enable` | `bool` | `false` | fail2ban |
+
 ### `git`
 
 **Type**: Home Manager
