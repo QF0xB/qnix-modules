@@ -19,5 +19,9 @@ in
         fi
       '';
     };
+
+    qnix.persist.home.cache.directories = [
+      ".local/share/fish"
+    ];
   };
 }
