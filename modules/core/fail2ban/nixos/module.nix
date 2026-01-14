@@ -4,7 +4,7 @@ let
   cfg = config.qnix.core.fail2ban;
 in
 {
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf (cfg.enable or config.qnix.ssh-server.enable) {
     services.fail2ban = {
       enable = true;
 
