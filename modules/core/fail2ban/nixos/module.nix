@@ -12,7 +12,7 @@ in
 
       bantime-increment = {
         enable = cfg.banTimeIncrement;
-        factor = 24;
+        factor = "24";
         overalljails = true;
       };
     };
