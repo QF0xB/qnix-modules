@@ -184,7 +184,7 @@ __Example:__ ``true``
 
 __Declared by:__
 
-* link:file:///nix/store/35nz4jy2ajc66q7q6ds2h7lm4ngii9si-source/modules/core/boot/options/grub-options.nix[/nix/store/35nz4jy2ajc66q7q6ds2h7lm4ngii9si-source/modules/core/boot/options/grub-options{zwsp}.nix]
+* link:file:///nix/store/a5kcbx9z51rxinzyjppz6zg6x83hpnzv-source/modules/core/boot/options/grub-options.nix[/nix/store/a5kcbx9z51rxinzyjppz6zg6x83hpnzv-source/modules/core/boot/options/grub-options{zwsp}.nix]
 
 
 
@@ -204,7 +204,7 @@ __Default:__ ``{quot}nodev{quot}``
 
 __Declared by:__
 
-* link:file:///nix/store/35nz4jy2ajc66q7q6ds2h7lm4ngii9si-source/modules/core/boot/options/grub-options.nix[/nix/store/35nz4jy2ajc66q7q6ds2h7lm4ngii9si-source/modules/core/boot/options/grub-options{zwsp}.nix]
+* link:file:///nix/store/a5kcbx9z51rxinzyjppz6zg6x83hpnzv-source/modules/core/boot/options/grub-options.nix[/nix/store/a5kcbx9z51rxinzyjppz6zg6x83hpnzv-source/modules/core/boot/options/grub-options{zwsp}.nix]
 
 
 
@@ -228,7 +228,7 @@ __Example:__ ``true``
 
 __Declared by:__
 
-* link:file:///nix/store/35nz4jy2ajc66q7q6ds2h7lm4ngii9si-source/modules/core/boot/options/systemd-boot-options.nix[/nix/store/35nz4jy2ajc66q7q6ds2h7lm4ngii9si-source/modules/core/boot/options/systemd-boot-options{zwsp}.nix]
+* link:file:///nix/store/a5kcbx9z51rxinzyjppz6zg6x83hpnzv-source/modules/core/boot/options/systemd-boot-options.nix[/nix/store/a5kcbx9z51rxinzyjppz6zg6x83hpnzv-source/modules/core/boot/options/systemd-boot-options{zwsp}.nix]
 
 
 
@@ -1080,6 +1080,90 @@ __Default:__ ``{startsb} {endsb}``
 
 
 
+== core{zwsp}.ssh-server{zwsp}.enable
+
+
+
+Whether to enable ssh-server{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``false``
+
+
+
+__Example:__ ``true``
+
+
+
+== core{zwsp}.ssh-server{zwsp}.allowPasswordAuthentication
+
+
+
+Whether to allow password authentication
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``false``
+
+
+
+== core{zwsp}.ssh-server{zwsp}.allowRootLogin
+
+
+
+Whether to allow root login
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``false``
+
+
+
+== core{zwsp}.ssh-server{zwsp}.port
+
+
+
+Port to listen on for SSH connections
+
+
+
+__Type:__ signed integer
+
+
+
+__Default:__ ``22``
+
+
+
+== core{zwsp}.ssh-server{zwsp}.sshAgent
+
+
+
+Whether to start the ssh agent
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``true``
+
+
+
 == core{zwsp}.starship{zwsp}.enable
 
 
@@ -1379,10 +1463,6 @@ Colors converted from stylix base16 to solarized naming scheme (base03, base02, 
 
 
 __Type:__ attribute set of string __(read only)__
-
-
-
-__Default:__ ``{ }``
 
 
 
@@ -1816,8 +1896,6 @@ __Default:__ ``{quot}12{quot}``
 
 == development
 
-
-
 Enable development tools{zwsp}.
 
 
@@ -1899,6 +1977,8 @@ __Example:__ ``true``
 
 
 == persist{zwsp}.home{zwsp}.directories
+
+
 
 Directories to persist in home filesystem
 

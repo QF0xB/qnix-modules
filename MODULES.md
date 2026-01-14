@@ -213,6 +213,24 @@ These modules define the core QNix configuration options.
 | `qnix.sops.sops.wantedBy` | `listOf` | `[ ]` | List of systemd units that want this secret. |
 | `qnix.sops.sops.neededForUsers` | `bool` | `false` | Whether this secret is needed for user creation. Automatically set to true if referenced via passwordFromSops. |
 
+### `ssh-server`
+
+**Type**: NixOS
+
+#### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `qnix.ssh-server.enable` | `bool` | `false` | ssh-server |
+| `qnix.ssh-server.port` | `int` | `22` | Port to listen on for SSH connections |
+| `qnix.ssh-server.allowRootLogin` | `bool` | `false` | Whether to allow root login |
+| `qnix.ssh-server.allowPasswordAuthentication` | `bool` | `false` | Whether to allow password authentication |
+| `qnix.ssh-server.sshAgent` | `bool` | `true` | Whether to start the ssh agent |
+| `qnix.ssh-server.server.port` | `int` | `22` | Port to listen on for SSH connections |
+| `qnix.ssh-server.server.allowRootLogin` | `bool` | `false` | Whether to allow root login |
+| `qnix.ssh-server.server.allowPasswordAuthentication` | `bool` | `false` | Whether to allow password authentication |
+| `qnix.ssh-server.server.sshAgent` | `bool` | `true` | Whether to start the ssh agent |
+
 ### `starship`
 
 **Type**: Home Manager
@@ -300,11 +318,7 @@ These modules define the core QNix configuration options.
 | `qnix.yubikey.gui` | `bool` | `!(if (config != null) then config.qnix.headless else false)` | yubikey management guis |
 | `qnix.yubikey.login` | `bool` | `false` | login with yubikey |
 | `qnix.yubikey.sudo` | `bool` | `true` | sudo with yubikey |
-| `qnix.yubikey.autolock` | `bool` | `if (config != null) then config.qnix.isLaptop else false` | autolock on yubikey removal |
-| `qnix.yubikey.yubikey.gui` | `bool` | `!(if (config != null) then config.qnix.headless else false)` | yubikey management guis |
-| `qnix.yubikey.yubikey.login` | `bool` | `false` | login with yubikey |
-| `qnix.yubikey.yubikey.sudo` | `bool` | `true` | sudo with yubikey |
-| `qnix.yubikey.yubikey.autolock` | `bool` | `if (config != null) then config.qnix.isLaptop else false` | autolock on yubikey removal |
+| `qnix.yubikey.autolock` | `bool` | `isLaptop` | autolock on yubikey removal |
 
 ### `zfs`
 

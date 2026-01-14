@@ -44,6 +44,10 @@
       nixos = true;
       home = false;
     };
+    ssh-server = {
+      nixos = true;
+      home = false;
+    };
     starship = {
       nixos = false;
       home = true;

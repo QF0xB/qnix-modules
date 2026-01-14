@@ -214,7 +214,7 @@ boolean
 ` true `
 
 *Declared by:*
- - [/nix/store/35nz4jy2ajc66q7q6ds2h7lm4ngii9si-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/35nz4jy2ajc66q7q6ds2h7lm4ngii9si-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/a5kcbx9z51rxinzyjppz6zg6x83hpnzv-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/a5kcbx9z51rxinzyjppz6zg6x83hpnzv-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -235,7 +235,7 @@ string
 ` "nodev" `
 
 *Declared by:*
- - [/nix/store/35nz4jy2ajc66q7q6ds2h7lm4ngii9si-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/35nz4jy2ajc66q7q6ds2h7lm4ngii9si-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/a5kcbx9z51rxinzyjppz6zg6x83hpnzv-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/a5kcbx9z51rxinzyjppz6zg6x83hpnzv-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -261,7 +261,7 @@ boolean
 ` true `
 
 *Declared by:*
- - [/nix/store/35nz4jy2ajc66q7q6ds2h7lm4ngii9si-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/35nz4jy2ajc66q7q6ds2h7lm4ngii9si-source/modules/core/boot/options/systemd-boot-options.nix)
+ - [/nix/store/a5kcbx9z51rxinzyjppz6zg6x83hpnzv-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/a5kcbx9z51rxinzyjppz6zg6x83hpnzv-source/modules/core/boot/options/systemd-boot-options.nix)
 
 
 
@@ -1217,6 +1217,101 @@ list of string
 
 
 
+## core\.ssh-server\.enable
+
+
+
+Whether to enable ssh-server\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` false `
+
+
+
+*Example:*
+` true `
+
+
+
+## core\.ssh-server\.allowPasswordAuthentication
+
+
+
+Whether to allow password authentication
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` false `
+
+
+
+## core\.ssh-server\.allowRootLogin
+
+
+
+Whether to allow root login
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` false `
+
+
+
+## core\.ssh-server\.port
+
+
+
+Port to listen on for SSH connections
+
+
+
+*Type:*
+signed integer
+
+
+
+*Default:*
+` 22 `
+
+
+
+## core\.ssh-server\.sshAgent
+
+
+
+Whether to start the ssh agent
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` true `
+
+
+
 ## core\.starship\.enable
 
 
@@ -1541,11 +1636,6 @@ Colors converted from stylix base16 to solarized naming scheme (base03, base02, 
 
 *Type:*
 attribute set of string *(read only)*
-
-
-
-*Default:*
-` { } `
 
 
 
@@ -2035,8 +2125,6 @@ string
 
 ## development
 
-
-
 Enable development tools\.
 
 
@@ -2129,6 +2217,8 @@ boolean
 
 
 ## persist\.home\.directories
+
+
 
 Directories to persist in home filesystem
 
