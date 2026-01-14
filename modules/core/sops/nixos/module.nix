@@ -81,7 +81,7 @@ in
       ) cfg.secrets;
     };
 
-    qnix.persist.root.directories = [
+    qnix.persist.home.directories = [
       ".config/sops/age"
     ];
   };
