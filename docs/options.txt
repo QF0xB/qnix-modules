@@ -184,7 +184,7 @@ __Example:__ ``true``
 
 __Declared by:__
 
-* link:file:///nix/store/y3x1mamqxh078fs0lvjmy8jljhpd1n57-source/modules/core/boot/options/grub-options.nix[/nix/store/y3x1mamqxh078fs0lvjmy8jljhpd1n57-source/modules/core/boot/options/grub-options{zwsp}.nix]
+* link:file:///nix/store/fq23f1y5mqypd12v7w651ql7z1smmr49-source/modules/core/boot/options/grub-options.nix[/nix/store/fq23f1y5mqypd12v7w651ql7z1smmr49-source/modules/core/boot/options/grub-options{zwsp}.nix]
 
 
 
@@ -204,7 +204,7 @@ __Default:__ ``{quot}nodev{quot}``
 
 __Declared by:__
 
-* link:file:///nix/store/y3x1mamqxh078fs0lvjmy8jljhpd1n57-source/modules/core/boot/options/grub-options.nix[/nix/store/y3x1mamqxh078fs0lvjmy8jljhpd1n57-source/modules/core/boot/options/grub-options{zwsp}.nix]
+* link:file:///nix/store/fq23f1y5mqypd12v7w651ql7z1smmr49-source/modules/core/boot/options/grub-options.nix[/nix/store/fq23f1y5mqypd12v7w651ql7z1smmr49-source/modules/core/boot/options/grub-options{zwsp}.nix]
 
 
 
@@ -228,7 +228,7 @@ __Example:__ ``true``
 
 __Declared by:__
 
-* link:file:///nix/store/y3x1mamqxh078fs0lvjmy8jljhpd1n57-source/modules/core/boot/options/systemd-boot-options.nix[/nix/store/y3x1mamqxh078fs0lvjmy8jljhpd1n57-source/modules/core/boot/options/systemd-boot-options{zwsp}.nix]
+* link:file:///nix/store/fq23f1y5mqypd12v7w651ql7z1smmr49-source/modules/core/boot/options/systemd-boot-options.nix[/nix/store/fq23f1y5mqypd12v7w651ql7z1smmr49-source/modules/core/boot/options/systemd-boot-options{zwsp}.nix]
 
 
 
@@ -277,6 +277,42 @@ __Type:__ boolean
 
 
 __Default:__ ``false``
+
+
+
+__Example:__ ``true``
+
+
+
+== core{zwsp}.fail2ban{zwsp}.banTime
+
+
+
+Time to ban for
+
+
+
+__Type:__ string
+
+
+
+__Default:__ ``{quot}1h{quot}``
+
+
+
+== core{zwsp}.fail2ban{zwsp}.banTimeIncrement
+
+
+
+Whether to enable fail2ban ban time increment{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``true``
 
 
 
@@ -1860,8 +1896,6 @@ __Example:__ ``true``
 
 == core{zwsp}.zfs{zwsp}.enable
 
-
-
 Whether to enable zfs{zwsp}.
 
 
@@ -1900,6 +1934,8 @@ __Example:__ ``true``
 
 == core{zwsp}.zfs{zwsp}.scrub{zwsp}.interval
 
+
+
 Interval for ZFS scrub
 
 
@@ -1909,6 +1945,90 @@ __Type:__ string
 
 
 __Default:__ ``{quot}12{quot}``
+
+
+
+== desktop{zwsp}.hyprdesktop{zwsp}.enable
+
+
+
+Whether to enable hyprdesktop{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``false``
+
+
+
+__Example:__ ``true``
+
+
+
+== desktop{zwsp}.hyprdesktop{zwsp}.hyprsuite{zwsp}.hyprland{zwsp}.enable
+
+
+
+Whether to enable hyprland{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``true``
+
+
+
+__Example:__ ``true``
+
+__Declared by:__
+
+* link:file:///nix/store/fq23f1y5mqypd12v7w651ql7z1smmr49-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix[/nix/store/fq23f1y5mqypd12v7w651ql7z1smmr49-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland{zwsp}.nix]
+
+
+
+== desktop{zwsp}.terminal{zwsp}.enable
+
+
+
+Whether to enable terminal{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``false``
+
+
+
+__Example:__ ``true``
+
+
+
+== desktop{zwsp}.waypaper{zwsp}.enable
+
+
+
+Whether to enable waypaper{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__ ``false``
+
+
+
+__Example:__ ``true``
 
 
 

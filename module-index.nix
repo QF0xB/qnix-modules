@@ -75,6 +75,18 @@
   };
 
   desktop = {
+    hyprdesktop = {
+      nixos = true;
+      home = true;
+    };
+    terminal = {
+      nixos = true;
+      home = true;
+    };
+    wallpaper = {
+      nixos = true;
+      home = true;
+    };
   };
 
   server = {

@@ -57,6 +57,10 @@ These modules define the core QNix configuration options.
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `qnix.fail2ban.enable` | `bool` | `false` | fail2ban |
+| `qnix.fail2ban.banTimeIncrement` | `bool` | `true` | fail2ban ban time increment |
+| `qnix.fail2ban.banTime` | `str` | `"1h"` | Time to ban for |
+| `qnix.fail2ban.fail2ban.banTime` | `str` | `"1h"` | Time to ban for |
+| `qnix.fail2ban.fail2ban.banTimeIncrement` | `bool` | `true` | fail2ban ban time increment |
 
 ### `git`
 
@@ -343,6 +347,39 @@ These modules define the core QNix configuration options.
 | `qnix.zfs.interval` | `str` | `"12"` | Interval for ZFS scrub |
 | `qnix.zfs.zfs.interval` | `str` | `"12"` | Interval for ZFS scrub |
 | `qnix.zfs.zfs.enable` | `bool` | `true` | zfs scrub |
+
+
+## Desktop Modules
+
+### `hyprdesktop`
+
+**Type**: NixOS, Home Manager
+
+#### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `qnix.hyprdesktop.enable` | `bool` | `false` | hyprdesktop |
+
+### `terminal`
+
+**Type**: NixOS, Home Manager
+
+#### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `qnix.terminal.enable` | `bool` | `config != null && !config.qnix.headless` | terminal |
+
+### `wallpaper`
+
+**Type**: NixOS, Home Manager
+
+#### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `qnix.wallpaper.enable` | `bool` | `config != null && config.qnix.wayland && !config.qnix.headless` | waypaper |
 
 
 ---

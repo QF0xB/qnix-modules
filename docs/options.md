@@ -214,7 +214,7 @@ boolean
 ` true `
 
 *Declared by:*
- - [/nix/store/y3x1mamqxh078fs0lvjmy8jljhpd1n57-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/y3x1mamqxh078fs0lvjmy8jljhpd1n57-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/fq23f1y5mqypd12v7w651ql7z1smmr49-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/fq23f1y5mqypd12v7w651ql7z1smmr49-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -235,7 +235,7 @@ string
 ` "nodev" `
 
 *Declared by:*
- - [/nix/store/y3x1mamqxh078fs0lvjmy8jljhpd1n57-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/y3x1mamqxh078fs0lvjmy8jljhpd1n57-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/fq23f1y5mqypd12v7w651ql7z1smmr49-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/fq23f1y5mqypd12v7w651ql7z1smmr49-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -261,7 +261,7 @@ boolean
 ` true `
 
 *Declared by:*
- - [/nix/store/y3x1mamqxh078fs0lvjmy8jljhpd1n57-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/y3x1mamqxh078fs0lvjmy8jljhpd1n57-source/modules/core/boot/options/systemd-boot-options.nix)
+ - [/nix/store/fq23f1y5mqypd12v7w651ql7z1smmr49-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/fq23f1y5mqypd12v7w651ql7z1smmr49-source/modules/core/boot/options/systemd-boot-options.nix)
 
 
 
@@ -316,6 +316,47 @@ boolean
 
 *Default:*
 ` false `
+
+
+
+*Example:*
+` true `
+
+
+
+## core\.fail2ban\.banTime
+
+
+
+Time to ban for
+
+
+
+*Type:*
+string
+
+
+
+*Default:*
+` "1h" `
+
+
+
+## core\.fail2ban\.banTimeIncrement
+
+
+
+Whether to enable fail2ban ban time increment\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` true `
 
 
 
@@ -2084,8 +2125,6 @@ boolean
 
 ## core\.zfs\.enable
 
-
-
 Whether to enable zfs\.
 
 
@@ -2130,6 +2169,8 @@ boolean
 
 ## core\.zfs\.scrub\.interval
 
+
+
 Interval for ZFS scrub
 
 
@@ -2141,6 +2182,101 @@ string
 
 *Default:*
 ` "12" `
+
+
+
+## desktop\.hyprdesktop\.enable
+
+
+
+Whether to enable hyprdesktop\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` false `
+
+
+
+*Example:*
+` true `
+
+
+
+## desktop\.hyprdesktop\.hyprsuite\.hyprland\.enable
+
+
+
+Whether to enable hyprland\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` true `
+
+
+
+*Example:*
+` true `
+
+*Declared by:*
+ - [/nix/store/fq23f1y5mqypd12v7w651ql7z1smmr49-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland\.nix](file:///nix/store/fq23f1y5mqypd12v7w651ql7z1smmr49-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix)
+
+
+
+## desktop\.terminal\.enable
+
+
+
+Whether to enable terminal\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` false `
+
+
+
+*Example:*
+` true `
+
+
+
+## desktop\.waypaper\.enable
+
+
+
+Whether to enable waypaper\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+` false `
+
+
+
+*Example:*
+` true `
 
 
 

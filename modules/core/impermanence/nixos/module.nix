@@ -105,5 +105,19 @@ in
 
     # Use string interpolation to convert derivation to path string
     environment.etc."impermanence.json".text = "${impermanenceJson}";
+
+    qnix.core.shell.packages = {
+      show-root-files = {
+        runtimeInputs = [ pkgs.fd ];
+        text = ''
+          sudo fd --one-file-system --base-directory / --type f --hidden \
+            --exclude "/etc/{ssh,passwd,shadow}" \
+            --exclude "*.timer" \
+            --exclude "/var/lib/NetworkManager" \
+            --exclude "${config.hm.xdg.cacheHome}/{bat,fontconfig,fish,mpv,nvidia,nvim/catppuccin,pre-commit,swww,wallust,nix}" \
+            --exec ls -lS | sort -rn -k5 | awk '{print $5, $9}'
+        '';
+      };
+    };
   };
 }
