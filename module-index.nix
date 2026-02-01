@@ -75,6 +75,10 @@
   };
 
   desktop = {
+    displaymanager = {
+      nixos = true;
+      home = false;
+    };
     hyprdesktop = {
       nixos = true;
       home = true;

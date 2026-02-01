@@ -75,7 +75,10 @@ package
 
 
 *Default:*
-` <derivation brave-1.85.120> `
+
+```nix
+<derivation brave-1.86.142>
+```
 
 
 
@@ -93,7 +96,10 @@ package
 
 
 *Default:*
-` <derivation nemo-6.6.3> `
+
+```nix
+<derivation nemo-6.6.3>
+```
 
 
 
@@ -111,7 +117,10 @@ package
 
 
 *Default:*
-` <derivation obsidian-1.10.6> `
+
+```nix
+<derivation obsidian-1.11.5>
+```
 
 
 
@@ -129,7 +138,10 @@ package
 
 
 *Default:*
-` <derivation kitty-0.45.0> `
+
+```nix
+<derivation kitty-0.45.0>
+```
 
 
 
@@ -147,7 +159,10 @@ boolean
 
 
 *Default:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -165,12 +180,18 @@ boolean
 
 
 *Default:*
-` true `
+
+```nix
+true
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -188,7 +209,10 @@ string
 
 
 *Default:*
-` "/dev/disk/by-label/NIXBOOT" `
+
+```nix
+"/dev/disk/by-label/NIXBOOT"
+```
 
 
 
@@ -206,15 +230,21 @@ boolean
 
 
 *Default:*
-` false `
+
+```nix
+false
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
 
 *Declared by:*
- - [/nix/store/fq23f1y5mqypd12v7w651ql7z1smmr49-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/fq23f1y5mqypd12v7w651ql7z1smmr49-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -232,10 +262,13 @@ string
 
 
 *Default:*
-` "nodev" `
+
+```nix
+"nodev"
+```
 
 *Declared by:*
- - [/nix/store/fq23f1y5mqypd12v7w651ql7z1smmr49-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/fq23f1y5mqypd12v7w651ql7z1smmr49-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -253,15 +286,21 @@ boolean
 
 
 *Default:*
-` false `
+
+```nix
+false
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
 
 *Declared by:*
- - [/nix/store/fq23f1y5mqypd12v7w651ql7z1smmr49-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/fq23f1y5mqypd12v7w651ql7z1smmr49-source/modules/core/boot/options/systemd-boot-options.nix)
+ - [/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/core/boot/options/systemd-boot-options.nix)
 
 
 
@@ -279,7 +318,10 @@ signed integer
 
 
 *Default:*
-` 3 `
+
+```nix
+3
+```
 
 
 
@@ -297,7 +339,10 @@ boolean
 
 
 *Default:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -315,12 +360,18 @@ boolean
 
 
 *Default:*
-` false `
+
+```nix
+false
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -338,7 +389,10 @@ string
 
 
 *Default:*
-` "1h" `
+
+```nix
+"1h"
+```
 
 
 
@@ -356,12 +410,18 @@ boolean
 
 
 *Default:*
-` true `
+
+```nix
+true
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -379,12 +439,18 @@ boolean
 
 
 *Default:*
-` true `
+
+```nix
+true
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -402,7 +468,10 @@ boolean
 
 
 *Default:*
-` false `
+
+```nix
+false
+```
 
 
 
@@ -420,7 +489,10 @@ string
 
 
 *Default:*
-` "" `
+
+```nix
+""
+```
 
 
 
@@ -438,7 +510,10 @@ string
 
 
 *Default:*
-` "" `
+
+```nix
+""
+```
 
 
 
@@ -456,7 +531,10 @@ string
 
 
 *Default:*
-` "" `
+
+```nix
+""
+```
 
 
 
@@ -474,12 +552,18 @@ boolean
 
 
 *Default:*
-` false `
+
+```nix
+false
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -497,12 +581,18 @@ boolean
 
 
 *Default:*
-` true `
+
+```nix
+true
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -521,7 +611,7 @@ attribute set of string
 
 *Default:*
 
-```
+```nix
 {
   LANG = "en_US.UTF-8";
   LC_ADDRESS = "de_DE.UTF-8";
@@ -543,7 +633,7 @@ attribute set of string
 
 *Example:*
 
-```
+```nix
 {
   LANG = "en_US.UTF-8";
   LC_MONETARY = "de_DE.UTF-8";
@@ -567,7 +657,10 @@ string
 
 
 *Default:*
-` "Europe/Berlin" `
+
+```nix
+"Europe/Berlin"
+```
 
 
 
@@ -585,12 +678,18 @@ boolean
 
 
 *Default:*
-` true `
+
+```nix
+true
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -608,7 +707,10 @@ string
 
 
 *Default:*
-` "de,de,us" `
+
+```nix
+"de,de,us"
+```
 
 
 
@@ -626,7 +728,10 @@ string
 
 
 *Default:*
-` "koy, ," `
+
+```nix
+"koy, ,"
+```
 
 
 
@@ -644,12 +749,18 @@ boolean
 
 
 *Default:*
-` true `
+
+```nix
+true
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -667,12 +778,18 @@ boolean
 
 
 *Default:*
-` true `
+
+```nix
+true
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -690,12 +807,18 @@ boolean
 
 
 *Default:*
-` true `
+
+```nix
+true
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -714,7 +837,7 @@ list of string
 
 *Default:*
 
-```
+```nix
 [
   "nvf"
   "qnix"
@@ -742,7 +865,7 @@ list of string
 
 *Default:*
 
-```
+```nix
 [
   "en"
   "de"
@@ -765,12 +888,18 @@ boolean
 
 
 *Default:*
-` true `
+
+```nix
+true
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -788,12 +917,18 @@ boolean
 
 
 *Default:*
-` true `
+
+```nix
+true
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -811,12 +946,18 @@ boolean
 
 
 *Default:*
-` true `
+
+```nix
+true
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -834,12 +975,18 @@ boolean
 
 
 *Default:*
-` true `
+
+```nix
+true
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -858,13 +1005,16 @@ attribute set of (string or (attribute set) or package)
 
 
 *Default:*
-` { } `
+
+```nix
+{ }
+```
 
 
 
 *Example:*
 
-```
+```nix
 ''
   shell.packages = {
     myPackage1 = "echo 'Hello, World!'";
@@ -892,12 +1042,18 @@ boolean
 
 
 *Default:*
-` true `
+
+```nix
+true
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -915,12 +1071,18 @@ boolean
 
 
 *Default:*
-` true `
+
+```nix
+true
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -938,12 +1100,18 @@ boolean
 
 
 *Default:*
-` true `
+
+```nix
+true
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -961,12 +1129,18 @@ boolean
 
 
 *Default:*
-` true `
+
+```nix
+true
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -984,12 +1158,18 @@ boolean
 
 
 *Default:*
-` false `
+
+```nix
+false
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -1007,7 +1187,10 @@ boolean
 
 
 *Default:*
-` false `
+
+```nix
+false
+```
 
 
 
@@ -1025,7 +1208,10 @@ null or string
 
 
 *Default:*
-` null `
+
+```nix
+null
+```
 
 
 
@@ -1043,7 +1229,10 @@ null or absolute path
 
 
 *Default:*
-` null `
+
+```nix
+null
+```
 
 
 
@@ -1061,7 +1250,10 @@ attribute set of (submodule)
 
 
 *Default:*
-` { } `
+
+```nix
+{ }
+```
 
 
 
@@ -1079,7 +1271,10 @@ null or one of “binary”, “yaml”
 
 
 *Default:*
-` null `
+
+```nix
+null
+```
 
 
 
@@ -1097,7 +1292,10 @@ null or string
 
 
 *Default:*
-` null `
+
+```nix
+null
+```
 
 
 
@@ -1115,7 +1313,10 @@ null or string
 
 
 *Default:*
-` null `
+
+```nix
+null
+```
 
 
 
@@ -1133,7 +1334,10 @@ string
 
 
 *Default:*
-` "0400" `
+
+```nix
+"0400"
+```
 
 
 
@@ -1151,7 +1355,10 @@ list of string
 
 
 *Default:*
-` [ ] `
+
+```nix
+[ ]
+```
 
 
 
@@ -1169,7 +1376,10 @@ boolean
 
 
 *Default:*
-` false `
+
+```nix
+false
+```
 
 
 
@@ -1187,7 +1397,10 @@ null or string
 
 
 *Default:*
-` null `
+
+```nix
+null
+```
 
 
 
@@ -1205,7 +1418,10 @@ null or string
 
 
 *Default:*
-` null `
+
+```nix
+null
+```
 
 
 
@@ -1223,7 +1439,10 @@ list of string
 
 
 *Default:*
-` [ ] `
+
+```nix
+[ ]
+```
 
 
 
@@ -1241,7 +1460,10 @@ list of string
 
 
 *Default:*
-` [ ] `
+
+```nix
+[ ]
+```
 
 
 
@@ -1259,7 +1481,10 @@ null or absolute path
 
 
 *Default:*
-` null `
+
+```nix
+null
+```
 
 
 
@@ -1277,7 +1502,10 @@ list of string
 
 
 *Default:*
-` [ ] `
+
+```nix
+[ ]
+```
 
 
 
@@ -1295,12 +1523,18 @@ boolean
 
 
 *Default:*
-` false `
+
+```nix
+false
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -1318,7 +1552,10 @@ boolean
 
 
 *Default:*
-` false `
+
+```nix
+false
+```
 
 
 
@@ -1336,7 +1573,10 @@ boolean
 
 
 *Default:*
-` false `
+
+```nix
+false
+```
 
 
 
@@ -1354,7 +1594,10 @@ signed integer
 
 
 *Default:*
-` 22 `
+
+```nix
+22
+```
 
 
 
@@ -1372,7 +1615,10 @@ boolean
 
 
 *Default:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -1390,12 +1636,18 @@ boolean
 
 
 *Default:*
-` true `
+
+```nix
+true
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -1413,12 +1665,18 @@ boolean
 
 
 *Default:*
-` true `
+
+```nix
+true
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -1436,12 +1694,18 @@ boolean
 
 
 *Default:*
-` true `
+
+```nix
+true
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -1459,7 +1723,10 @@ string
 
 
 *Default:*
-` "solarized-dark" `
+
+```nix
+"solarized-dark"
+```
 
 
 
@@ -1477,7 +1744,10 @@ attribute set
 
 
 *Default:*
-` { } `
+
+```nix
+{ }
+```
 
 
 
@@ -1496,7 +1766,7 @@ attribute set
 
 *Default:*
 
-```
+```nix
 {
   name = "Simp1e-Solarized-Dark";
   package = <derivation simp1e-cursors-20250223>;
@@ -1521,7 +1791,7 @@ attribute set
 
 *Default:*
 
-```
+```nix
 {
   name = "Noto Color Emoji";
   package = <derivation noto-fonts-color-emoji-2.051>;
@@ -1545,7 +1815,7 @@ attribute set
 
 *Default:*
 
-```
+```nix
 {
   name = "JetBrains Mono Nerd Font";
   package = <derivation nerd-fonts-jetbrains-mono-3.4.0+2.304>;
@@ -1569,7 +1839,7 @@ attribute set
 
 *Default:*
 
-```
+```nix
 {
   name = "Fira Sans";
   package = <derivation fira-sans-4.301>;
@@ -1593,7 +1863,7 @@ attribute set
 
 *Default:*
 
-```
+```nix
 {
   name = "Fira Sans";
   package = <derivation fira-sans-4.301>;
@@ -1617,7 +1887,7 @@ attribute set
 
 *Default:*
 
-```
+```nix
 {
   applications = 16;
   desktop = 16;
@@ -1643,7 +1913,7 @@ attribute set
 
 *Default:*
 
-```
+```nix
 {
   dark = "Fluent-dark";
   enable = true;
@@ -1668,7 +1938,10 @@ floating point number
 
 
 *Default:*
-` 0.5 `
+
+```nix
+0.5
+```
 
 
 
@@ -1686,7 +1959,10 @@ floating point number
 
 
 *Default:*
-` 0.5 `
+
+```nix
+0.5
+```
 
 
 
@@ -1717,12 +1993,18 @@ boolean
 
 
 *Default:*
-` false `
+
+```nix
+false
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -1740,13 +2022,16 @@ list of string
 
 
 *Default:*
-` [ ] `
+
+```nix
+[ ]
+```
 
 
 
 *Example:*
 
-```
+```nix
 [
   "video"
   "audio"
@@ -1770,12 +2055,18 @@ boolean
 
 
 *Default:*
-` false `
+
+```nix
+false
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -1793,7 +2084,10 @@ null or string
 
 
 *Default:*
-` null `
+
+```nix
+null
+```
 
 
 
@@ -1811,7 +2105,10 @@ null or string
 
 
 *Default:*
-` null `
+
+```nix
+null
+```
 
 
 
@@ -1829,7 +2126,10 @@ attribute set of (submodule)
 
 
 *Default:*
-` { } `
+
+```nix
+{ }
+```
 
 
 
@@ -1847,7 +2147,10 @@ null or string
 
 
 *Default:*
-` null `
+
+```nix
+null
+```
 
 
 
@@ -1865,7 +2168,10 @@ list of string
 
 
 *Default:*
-` [ ] `
+
+```nix
+[ ]
+```
 
 
 
@@ -1896,7 +2202,10 @@ null or string
 
 
 *Default:*
-` null `
+
+```nix
+null
+```
 
 
 
@@ -1914,7 +2223,10 @@ boolean
 
 
 *Default:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -1932,7 +2244,10 @@ null or string
 
 
 *Default:*
-` null `
+
+```nix
+null
+```
 
 
 
@@ -1950,7 +2265,10 @@ boolean
 
 
 *Default:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -1968,7 +2286,10 @@ boolean
 
 
 *Default:*
-` false `
+
+```nix
+false
+```
 
 
 
@@ -1986,7 +2307,10 @@ list of string
 
 
 *Default:*
-` [ ] `
+
+```nix
+[ ]
+```
 
 
 
@@ -2004,7 +2328,10 @@ null or string
 
 
 *Default:*
-` null `
+
+```nix
+null
+```
 
 
 
@@ -2022,12 +2349,18 @@ boolean
 
 
 *Default:*
-` true `
+
+```nix
+true
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -2045,12 +2378,18 @@ boolean
 
 
 *Default:*
-` false `
+
+```nix
+false
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -2068,12 +2407,18 @@ boolean
 
 
 *Default:*
-` true `
+
+```nix
+true
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -2091,12 +2436,18 @@ boolean
 
 
 *Default:*
-` false `
+
+```nix
+false
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -2114,12 +2465,18 @@ boolean
 
 
 *Default:*
-` true `
+
+```nix
+true
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -2135,12 +2492,18 @@ boolean
 
 
 *Default:*
-` true `
+
+```nix
+true
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -2158,12 +2521,18 @@ boolean
 
 
 *Default:*
-` true `
+
+```nix
+true
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -2181,7 +2550,114 @@ string
 
 
 *Default:*
-` "12" `
+
+```nix
+"12"
+```
+
+
+
+## desktop\.displaymanager\.sddm\.enable
+
+
+
+Whether to enable SDDM display manager\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+
+```nix
+true
+```
+
+
+
+*Example:*
+
+```nix
+true
+```
+
+*Declared by:*
+ - [/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/displaymanager/options/sddm-options\.nix](file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/displaymanager/options/sddm-options.nix)
+
+
+
+## desktop\.displaymanager\.sddm\.theme\.package
+
+
+
+SDDM theme package
+
+
+
+*Type:*
+null or package
+
+
+
+*Default:*
+
+```nix
+<derivation sddm-astronaut-1.0-unstable-2025-01-05>
+```
+
+*Declared by:*
+ - [/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/displaymanager/options/sddm-options\.nix](file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/displaymanager/options/sddm-options.nix)
+
+
+
+## desktop\.displaymanager\.sddm\.theme\.embeddedTheme
+
+
+
+Embedded theme variant for the theme package
+
+
+
+*Type:*
+string
+
+
+
+*Default:*
+
+```nix
+"black_hole"
+```
+
+*Declared by:*
+ - [/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/displaymanager/options/sddm-options\.nix](file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/displaymanager/options/sddm-options.nix)
+
+
+
+## desktop\.displaymanager\.sddm\.theme\.name
+
+
+
+SDDM theme name
+
+
+
+*Type:*
+string
+
+
+
+*Default:*
+
+```nix
+"sddm-astronaut-theme"
+```
+
+*Declared by:*
+ - [/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/displaymanager/options/sddm-options\.nix](file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/displaymanager/options/sddm-options.nix)
 
 
 
@@ -2199,12 +2675,175 @@ boolean
 
 
 *Default:*
-` false `
+
+```nix
+false
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
+
+
+
+## desktop\.hyprdesktop\.hyprsuite\.ags\.enable
+
+
+
+Whether to enable ags\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+
+```nix
+false
+```
+
+
+
+*Example:*
+
+```nix
+true
+```
+
+*Declared by:*
+ - [/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags\.nix](file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix)
+
+
+
+## desktop\.hyprdesktop\.hyprsuite\.ags\.configDir
+
+
+
+Path to the AGS configuration (git checkout of qnix-ags or similar)\. If null, the qnix-ags flake’s configDir is used\.
+
+
+
+*Type:*
+null or absolute path
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+
+
+*Example:*
+
+```nix
+"/home/user/projects/qnix-ags"
+```
+
+*Declared by:*
+ - [/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags\.nix](file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix)
+
+
+
+## desktop\.hyprdesktop\.hyprsuite\.ags\.displays\.large
+
+
+
+Outputs that should use the wide AGS bar layout\.
+
+
+
+*Type:*
+list of string
+
+
+
+*Default:*
+
+```nix
+[ ]
+```
+
+
+
+*Example:*
+
+```nix
+[
+  "eDP-1"
+  "HDMI-A-1"
+]
+```
+
+*Declared by:*
+ - [/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags\.nix](file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix)
+
+
+
+## desktop\.hyprdesktop\.hyprsuite\.ags\.displays\.small
+
+
+
+Outputs that should use the condensed AGS bar layout\.
+
+
+
+*Type:*
+list of string
+
+
+
+*Default:*
+
+```nix
+[ ]
+```
+
+
+
+*Example:*
+
+```nix
+[
+  "DP-1"
+]
+```
+
+*Declared by:*
+ - [/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags\.nix](file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix)
+
+
+
+## desktop\.hyprdesktop\.hyprsuite\.ags\.extraPackages
+
+
+
+Extra packages to use when overriding ags in dev shells or elsewhere\. Note: hyprland, battery, notifd, tray, and wireplumber are always included\.
+
+
+
+*Type:*
+list of package
+
+
+
+*Default:*
+
+```nix
+[ ]
+```
+
+*Declared by:*
+ - [/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags\.nix](file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix)
 
 
 
@@ -2222,15 +2861,21 @@ boolean
 
 
 *Default:*
-` true `
+
+```nix
+false
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
 
 *Declared by:*
- - [/nix/store/fq23f1y5mqypd12v7w651ql7z1smmr49-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland\.nix](file:///nix/store/fq23f1y5mqypd12v7w651ql7z1smmr49-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix)
+ - [/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland\.nix](file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix)
 
 
 
@@ -2248,12 +2893,18 @@ boolean
 
 
 *Default:*
-` false `
+
+```nix
+false
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -2271,12 +2922,18 @@ boolean
 
 
 *Default:*
-` false `
+
+```nix
+false
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -2294,7 +2951,10 @@ boolean
 
 
 *Default:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -2312,7 +2972,10 @@ boolean
 
 
 *Default:*
-` false `
+
+```nix
+false
+```
 
 
 
@@ -2330,7 +2993,10 @@ list of string
 
 
 *Default:*
-` [ ] `
+
+```nix
+[ ]
+```
 
 
 
@@ -2348,7 +3014,10 @@ list of string
 
 
 *Default:*
-` [ ] `
+
+```nix
+[ ]
+```
 
 
 
@@ -2366,12 +3035,18 @@ boolean
 
 
 *Default:*
-` true `
+
+```nix
+true
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -2389,7 +3064,10 @@ list of string
 
 
 *Default:*
-` [ ] `
+
+```nix
+[ ]
+```
 
 
 
@@ -2407,7 +3085,10 @@ list of string
 
 
 *Default:*
-` [ ] `
+
+```nix
+[ ]
+```
 
 
 
@@ -2425,7 +3106,10 @@ list of string
 
 
 *Default:*
-` [ ] `
+
+```nix
+[ ]
+```
 
 
 
@@ -2443,7 +3127,10 @@ list of string
 
 
 *Default:*
-` [ ] `
+
+```nix
+[ ]
+```
 
 
 
@@ -2461,12 +3148,18 @@ boolean
 
 
 *Default:*
-` true `
+
+```nix
+true
+```
 
 
 
 *Example:*
-` true `
+
+```nix
+true
+```
 
 
 
@@ -2485,7 +3178,7 @@ list of string
 
 *Default:*
 
-```
+```nix
 [
   "/var/log"
   "/var/lib/nixos"
@@ -2508,7 +3201,10 @@ list of string
 
 
 *Default:*
-` [ ] `
+
+```nix
+[ ]
+```
 
 
 
@@ -2526,7 +3222,10 @@ boolean
 
 
 *Default:*
-` false `
+
+```nix
+false
+```
 
 
 
@@ -2544,7 +3243,10 @@ boolean
 
 
 *Default:*
-` false `
+
+```nix
+false
+```
 
 
 
@@ -2562,6 +3264,9 @@ boolean
 
 
 *Default:*
-` false `
+
+```nix
+false
+```
 
 

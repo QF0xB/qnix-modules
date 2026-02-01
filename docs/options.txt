@@ -60,7 +60,12 @@ __Type:__ package
 
 
 
-__Default:__ ``{zwsp}+<+{zwsp}derivation brave-1{zwsp}.85{zwsp}.120{gt}``
+__Default:__
+
+[source,nix]
+----
+<derivation brave-1.86.142>
+----
 
 
 
@@ -76,7 +81,12 @@ __Type:__ package
 
 
 
-__Default:__ ``{zwsp}+<+{zwsp}derivation nemo-6{zwsp}.6{zwsp}.3{gt}``
+__Default:__
+
+[source,nix]
+----
+<derivation nemo-6.6.3>
+----
 
 
 
@@ -92,7 +102,12 @@ __Type:__ package
 
 
 
-__Default:__ ``{zwsp}+<+{zwsp}derivation obsidian-1{zwsp}.10{zwsp}.6{gt}``
+__Default:__
+
+[source,nix]
+----
+<derivation obsidian-1.11.5>
+----
 
 
 
@@ -108,7 +123,12 @@ __Type:__ package
 
 
 
-__Default:__ ``{zwsp}+<+{zwsp}derivation kitty-0{zwsp}.45{zwsp}.0{gt}``
+__Default:__
+
+[source,nix]
+----
+<derivation kitty-0.45.0>
+----
 
 
 
@@ -124,7 +144,12 @@ __Type:__ boolean
 
 
 
-__Default:__ ``true``
+__Default:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -140,11 +165,21 @@ __Type:__ boolean
 
 
 
-__Default:__ ``true``
+__Default:__
+
+[source,nix]
+----
+true
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -160,7 +195,12 @@ __Type:__ string
 
 
 
-__Default:__ ``{quot}/dev/disk/by-label/NIXBOOT{quot}``
+__Default:__
+
+[source,nix]
+----
+"/dev/disk/by-label/NIXBOOT"
+----
 
 
 
@@ -176,15 +216,25 @@ __Type:__ boolean
 
 
 
-__Default:__ ``false``
+__Default:__
+
+[source,nix]
+----
+false
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
 
 __Declared by:__
 
-* link:file:///nix/store/fq23f1y5mqypd12v7w651ql7z1smmr49-source/modules/core/boot/options/grub-options.nix[/nix/store/fq23f1y5mqypd12v7w651ql7z1smmr49-source/modules/core/boot/options/grub-options{zwsp}.nix]
+* link:file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/core/boot/options/grub-options.nix[/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/core/boot/options/grub-options{zwsp}.nix]
 
 
 
@@ -200,11 +250,16 @@ __Type:__ string
 
 
 
-__Default:__ ``{quot}nodev{quot}``
+__Default:__
+
+[source,nix]
+----
+"nodev"
+----
 
 __Declared by:__
 
-* link:file:///nix/store/fq23f1y5mqypd12v7w651ql7z1smmr49-source/modules/core/boot/options/grub-options.nix[/nix/store/fq23f1y5mqypd12v7w651ql7z1smmr49-source/modules/core/boot/options/grub-options{zwsp}.nix]
+* link:file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/core/boot/options/grub-options.nix[/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/core/boot/options/grub-options{zwsp}.nix]
 
 
 
@@ -220,15 +275,25 @@ __Type:__ boolean
 
 
 
-__Default:__ ``false``
+__Default:__
+
+[source,nix]
+----
+false
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
 
 __Declared by:__
 
-* link:file:///nix/store/fq23f1y5mqypd12v7w651ql7z1smmr49-source/modules/core/boot/options/systemd-boot-options.nix[/nix/store/fq23f1y5mqypd12v7w651ql7z1smmr49-source/modules/core/boot/options/systemd-boot-options{zwsp}.nix]
+* link:file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/core/boot/options/systemd-boot-options.nix[/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/core/boot/options/systemd-boot-options{zwsp}.nix]
 
 
 
@@ -244,7 +309,12 @@ __Type:__ signed integer
 
 
 
-__Default:__ ``3``
+__Default:__
+
+[source,nix]
+----
+3
+----
 
 
 
@@ -260,7 +330,12 @@ __Type:__ boolean
 
 
 
-__Default:__ ``true``
+__Default:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -276,11 +351,21 @@ __Type:__ boolean
 
 
 
-__Default:__ ``false``
+__Default:__
+
+[source,nix]
+----
+false
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -296,7 +381,12 @@ __Type:__ string
 
 
 
-__Default:__ ``{quot}1h{quot}``
+__Default:__
+
+[source,nix]
+----
+"1h"
+----
 
 
 
@@ -312,11 +402,21 @@ __Type:__ boolean
 
 
 
-__Default:__ ``true``
+__Default:__
+
+[source,nix]
+----
+true
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -332,11 +432,21 @@ __Type:__ boolean
 
 
 
-__Default:__ ``true``
+__Default:__
+
+[source,nix]
+----
+true
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -352,7 +462,12 @@ __Type:__ boolean
 
 
 
-__Default:__ ``false``
+__Default:__
+
+[source,nix]
+----
+false
+----
 
 
 
@@ -368,7 +483,12 @@ __Type:__ string
 
 
 
-__Default:__ ``{quot}{quot}``
+__Default:__
+
+[source,nix]
+----
+""
+----
 
 
 
@@ -384,7 +504,12 @@ __Type:__ string
 
 
 
-__Default:__ ``{quot}{quot}``
+__Default:__
+
+[source,nix]
+----
+""
+----
 
 
 
@@ -400,7 +525,12 @@ __Type:__ string
 
 
 
-__Default:__ ``{quot}{quot}``
+__Default:__
+
+[source,nix]
+----
+""
+----
 
 
 
@@ -416,11 +546,21 @@ __Type:__ boolean
 
 
 
-__Default:__ ``false``
+__Default:__
+
+[source,nix]
+----
+false
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -436,11 +576,21 @@ __Type:__ boolean
 
 
 
-__Default:__ ``true``
+__Default:__
+
+[source,nix]
+----
+true
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -458,6 +608,7 @@ __Type:__ attribute set of string
 
 __Default:__
 
+[source,nix]
 ----
 {
   LANG = "en_US.UTF-8";
@@ -480,6 +631,7 @@ __Default:__
 
 __Example:__
 
+[source,nix]
 ----
 {
   LANG = "en_US.UTF-8";
@@ -502,7 +654,12 @@ __Type:__ string
 
 
 
-__Default:__ ``{quot}Europe/Berlin{quot}``
+__Default:__
+
+[source,nix]
+----
+"Europe/Berlin"
+----
 
 
 
@@ -518,11 +675,21 @@ __Type:__ boolean
 
 
 
-__Default:__ ``true``
+__Default:__
+
+[source,nix]
+----
+true
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -538,7 +705,12 @@ __Type:__ string
 
 
 
-__Default:__ ``{quot}de,de,us{quot}``
+__Default:__
+
+[source,nix]
+----
+"de,de,us"
+----
 
 
 
@@ -554,7 +726,12 @@ __Type:__ string
 
 
 
-__Default:__ ``{quot}koy, ,{quot}``
+__Default:__
+
+[source,nix]
+----
+"koy, ,"
+----
 
 
 
@@ -570,11 +747,21 @@ __Type:__ boolean
 
 
 
-__Default:__ ``true``
+__Default:__
+
+[source,nix]
+----
+true
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -590,11 +777,21 @@ __Type:__ boolean
 
 
 
-__Default:__ ``true``
+__Default:__
+
+[source,nix]
+----
+true
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -610,11 +807,21 @@ __Type:__ boolean
 
 
 
-__Default:__ ``true``
+__Default:__
+
+[source,nix]
+----
+true
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -632,6 +839,7 @@ __Type:__ list of string
 
 __Default:__
 
+[source,nix]
 ----
 [
   "nvf"
@@ -659,6 +867,7 @@ __Type:__ list of string
 
 __Default:__
 
+[source,nix]
 ----
 [
   "en"
@@ -680,11 +889,21 @@ __Type:__ boolean
 
 
 
-__Default:__ ``true``
+__Default:__
+
+[source,nix]
+----
+true
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -700,11 +919,21 @@ __Type:__ boolean
 
 
 
-__Default:__ ``true``
+__Default:__
+
+[source,nix]
+----
+true
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -720,11 +949,21 @@ __Type:__ boolean
 
 
 
-__Default:__ ``true``
+__Default:__
+
+[source,nix]
+----
+true
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -740,11 +979,21 @@ __Type:__ boolean
 
 
 
-__Default:__ ``true``
+__Default:__
+
+[source,nix]
+----
+true
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -760,12 +1009,18 @@ __Type:__ attribute set of (string or (attribute set) or package)
 
 
 
-__Default:__ ``{ }``
+__Default:__
+
+[source,nix]
+----
+{ }
+----
 
 
 
 __Example:__
 
+[source,nix]
 ----
 ''
   shell.packages = {
@@ -792,11 +1047,21 @@ __Type:__ boolean
 
 
 
-__Default:__ ``true``
+__Default:__
+
+[source,nix]
+----
+true
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -812,11 +1077,21 @@ __Type:__ boolean
 
 
 
-__Default:__ ``true``
+__Default:__
+
+[source,nix]
+----
+true
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -832,11 +1107,21 @@ __Type:__ boolean
 
 
 
-__Default:__ ``true``
+__Default:__
+
+[source,nix]
+----
+true
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -852,11 +1137,21 @@ __Type:__ boolean
 
 
 
-__Default:__ ``true``
+__Default:__
+
+[source,nix]
+----
+true
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -872,11 +1167,21 @@ __Type:__ boolean
 
 
 
-__Default:__ ``false``
+__Default:__
+
+[source,nix]
+----
+false
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -892,7 +1197,12 @@ __Type:__ boolean
 
 
 
-__Default:__ ``false``
+__Default:__
+
+[source,nix]
+----
+false
+----
 
 
 
@@ -908,7 +1218,12 @@ __Type:__ null or string
 
 
 
-__Default:__ ``null``
+__Default:__
+
+[source,nix]
+----
+null
+----
 
 
 
@@ -924,7 +1239,12 @@ __Type:__ null or absolute path
 
 
 
-__Default:__ ``null``
+__Default:__
+
+[source,nix]
+----
+null
+----
 
 
 
@@ -940,7 +1260,12 @@ __Type:__ attribute set of (submodule)
 
 
 
-__Default:__ ``{ }``
+__Default:__
+
+[source,nix]
+----
+{ }
+----
 
 
 
@@ -956,7 +1281,12 @@ __Type:__ null or one of “binary”, “yaml”
 
 
 
-__Default:__ ``null``
+__Default:__
+
+[source,nix]
+----
+null
+----
 
 
 
@@ -972,7 +1302,12 @@ __Type:__ null or string
 
 
 
-__Default:__ ``null``
+__Default:__
+
+[source,nix]
+----
+null
+----
 
 
 
@@ -988,7 +1323,12 @@ __Type:__ null or string
 
 
 
-__Default:__ ``null``
+__Default:__
+
+[source,nix]
+----
+null
+----
 
 
 
@@ -1004,7 +1344,12 @@ __Type:__ string
 
 
 
-__Default:__ ``{quot}0400{quot}``
+__Default:__
+
+[source,nix]
+----
+"0400"
+----
 
 
 
@@ -1020,7 +1365,12 @@ __Type:__ list of string
 
 
 
-__Default:__ ``{startsb} {endsb}``
+__Default:__
+
+[source,nix]
+----
+[ ]
+----
 
 
 
@@ -1036,7 +1386,12 @@ __Type:__ boolean
 
 
 
-__Default:__ ``false``
+__Default:__
+
+[source,nix]
+----
+false
+----
 
 
 
@@ -1052,7 +1407,12 @@ __Type:__ null or string
 
 
 
-__Default:__ ``null``
+__Default:__
+
+[source,nix]
+----
+null
+----
 
 
 
@@ -1068,7 +1428,12 @@ __Type:__ null or string
 
 
 
-__Default:__ ``null``
+__Default:__
+
+[source,nix]
+----
+null
+----
 
 
 
@@ -1084,7 +1449,12 @@ __Type:__ list of string
 
 
 
-__Default:__ ``{startsb} {endsb}``
+__Default:__
+
+[source,nix]
+----
+[ ]
+----
 
 
 
@@ -1100,7 +1470,12 @@ __Type:__ list of string
 
 
 
-__Default:__ ``{startsb} {endsb}``
+__Default:__
+
+[source,nix]
+----
+[ ]
+----
 
 
 
@@ -1116,7 +1491,12 @@ __Type:__ null or absolute path
 
 
 
-__Default:__ ``null``
+__Default:__
+
+[source,nix]
+----
+null
+----
 
 
 
@@ -1132,7 +1512,12 @@ __Type:__ list of string
 
 
 
-__Default:__ ``{startsb} {endsb}``
+__Default:__
+
+[source,nix]
+----
+[ ]
+----
 
 
 
@@ -1148,11 +1533,21 @@ __Type:__ boolean
 
 
 
-__Default:__ ``false``
+__Default:__
+
+[source,nix]
+----
+false
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -1168,7 +1563,12 @@ __Type:__ boolean
 
 
 
-__Default:__ ``false``
+__Default:__
+
+[source,nix]
+----
+false
+----
 
 
 
@@ -1184,7 +1584,12 @@ __Type:__ boolean
 
 
 
-__Default:__ ``false``
+__Default:__
+
+[source,nix]
+----
+false
+----
 
 
 
@@ -1200,7 +1605,12 @@ __Type:__ signed integer
 
 
 
-__Default:__ ``22``
+__Default:__
+
+[source,nix]
+----
+22
+----
 
 
 
@@ -1216,7 +1626,12 @@ __Type:__ boolean
 
 
 
-__Default:__ ``true``
+__Default:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -1232,11 +1647,21 @@ __Type:__ boolean
 
 
 
-__Default:__ ``true``
+__Default:__
+
+[source,nix]
+----
+true
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -1252,11 +1677,21 @@ __Type:__ boolean
 
 
 
-__Default:__ ``true``
+__Default:__
+
+[source,nix]
+----
+true
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -1272,11 +1707,21 @@ __Type:__ boolean
 
 
 
-__Default:__ ``true``
+__Default:__
+
+[source,nix]
+----
+true
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -1292,7 +1737,12 @@ __Type:__ string
 
 
 
-__Default:__ ``{quot}solarized-dark{quot}``
+__Default:__
+
+[source,nix]
+----
+"solarized-dark"
+----
 
 
 
@@ -1308,7 +1758,12 @@ __Type:__ attribute set
 
 
 
-__Default:__ ``{ }``
+__Default:__
+
+[source,nix]
+----
+{ }
+----
 
 
 
@@ -1326,6 +1781,7 @@ __Type:__ attribute set
 
 __Default:__
 
+[source,nix]
 ----
 {
   name = "Simp1e-Solarized-Dark";
@@ -1350,6 +1806,7 @@ __Type:__ attribute set
 
 __Default:__
 
+[source,nix]
 ----
 {
   name = "Noto Color Emoji";
@@ -1373,6 +1830,7 @@ __Type:__ attribute set
 
 __Default:__
 
+[source,nix]
 ----
 {
   name = "JetBrains Mono Nerd Font";
@@ -1396,6 +1854,7 @@ __Type:__ attribute set
 
 __Default:__
 
+[source,nix]
 ----
 {
   name = "Fira Sans";
@@ -1419,6 +1878,7 @@ __Type:__ attribute set
 
 __Default:__
 
+[source,nix]
 ----
 {
   name = "Fira Sans";
@@ -1442,6 +1902,7 @@ __Type:__ attribute set
 
 __Default:__
 
+[source,nix]
 ----
 {
   applications = 16;
@@ -1467,6 +1928,7 @@ __Type:__ attribute set
 
 __Default:__
 
+[source,nix]
 ----
 {
   dark = "Fluent-dark";
@@ -1490,7 +1952,12 @@ __Type:__ floating point number
 
 
 
-__Default:__ ``0{zwsp}.5``
+__Default:__
+
+[source,nix]
+----
+0.5
+----
 
 
 
@@ -1506,7 +1973,12 @@ __Type:__ floating point number
 
 
 
-__Default:__ ``0{zwsp}.5``
+__Default:__
+
+[source,nix]
+----
+0.5
+----
 
 
 
@@ -1534,11 +2006,21 @@ __Type:__ boolean
 
 
 
-__Default:__ ``false``
+__Default:__
+
+[source,nix]
+----
+false
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -1554,12 +2036,18 @@ __Type:__ list of string
 
 
 
-__Default:__ ``{startsb} {endsb}``
+__Default:__
+
+[source,nix]
+----
+[ ]
+----
 
 
 
 __Example:__
 
+[source,nix]
 ----
 [
   "video"
@@ -1582,11 +2070,21 @@ __Type:__ boolean
 
 
 
-__Default:__ ``false``
+__Default:__
+
+[source,nix]
+----
+false
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -1602,7 +2100,12 @@ __Type:__ null or string
 
 
 
-__Default:__ ``null``
+__Default:__
+
+[source,nix]
+----
+null
+----
 
 
 
@@ -1618,7 +2121,12 @@ __Type:__ null or string
 
 
 
-__Default:__ ``null``
+__Default:__
+
+[source,nix]
+----
+null
+----
 
 
 
@@ -1634,7 +2142,12 @@ __Type:__ attribute set of (submodule)
 
 
 
-__Default:__ ``{ }``
+__Default:__
+
+[source,nix]
+----
+{ }
+----
 
 
 
@@ -1650,7 +2163,12 @@ __Type:__ null or string
 
 
 
-__Default:__ ``null``
+__Default:__
+
+[source,nix]
+----
+null
+----
 
 
 
@@ -1666,7 +2184,12 @@ __Type:__ list of string
 
 
 
-__Default:__ ``{startsb} {endsb}``
+__Default:__
+
+[source,nix]
+----
+[ ]
+----
 
 
 
@@ -1694,7 +2217,12 @@ __Type:__ null or string
 
 
 
-__Default:__ ``null``
+__Default:__
+
+[source,nix]
+----
+null
+----
 
 
 
@@ -1710,7 +2238,12 @@ __Type:__ boolean
 
 
 
-__Default:__ ``true``
+__Default:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -1726,7 +2259,12 @@ __Type:__ null or string
 
 
 
-__Default:__ ``null``
+__Default:__
+
+[source,nix]
+----
+null
+----
 
 
 
@@ -1742,7 +2280,12 @@ __Type:__ boolean
 
 
 
-__Default:__ ``true``
+__Default:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -1758,7 +2301,12 @@ __Type:__ boolean
 
 
 
-__Default:__ ``false``
+__Default:__
+
+[source,nix]
+----
+false
+----
 
 
 
@@ -1774,7 +2322,12 @@ __Type:__ list of string
 
 
 
-__Default:__ ``{startsb} {endsb}``
+__Default:__
+
+[source,nix]
+----
+[ ]
+----
 
 
 
@@ -1790,7 +2343,12 @@ __Type:__ null or string
 
 
 
-__Default:__ ``null``
+__Default:__
+
+[source,nix]
+----
+null
+----
 
 
 
@@ -1806,11 +2364,21 @@ __Type:__ boolean
 
 
 
-__Default:__ ``true``
+__Default:__
+
+[source,nix]
+----
+true
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -1826,11 +2394,21 @@ __Type:__ boolean
 
 
 
-__Default:__ ``false``
+__Default:__
+
+[source,nix]
+----
+false
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -1846,11 +2424,21 @@ __Type:__ boolean
 
 
 
-__Default:__ ``true``
+__Default:__
+
+[source,nix]
+----
+true
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -1866,11 +2454,21 @@ __Type:__ boolean
 
 
 
-__Default:__ ``false``
+__Default:__
+
+[source,nix]
+----
+false
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -1886,11 +2484,21 @@ __Type:__ boolean
 
 
 
-__Default:__ ``true``
+__Default:__
+
+[source,nix]
+----
+true
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -1904,11 +2512,21 @@ __Type:__ boolean
 
 
 
-__Default:__ ``true``
+__Default:__
+
+[source,nix]
+----
+true
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -1924,11 +2542,21 @@ __Type:__ boolean
 
 
 
-__Default:__ ``true``
+__Default:__
+
+[source,nix]
+----
+true
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -1944,7 +2572,121 @@ __Type:__ string
 
 
 
-__Default:__ ``{quot}12{quot}``
+__Default:__
+
+[source,nix]
+----
+"12"
+----
+
+
+
+== desktop{zwsp}.displaymanager{zwsp}.sddm{zwsp}.enable
+
+
+
+Whether to enable SDDM display manager{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__
+
+[source,nix]
+----
+true
+----
+
+
+
+__Example:__
+
+[source,nix]
+----
+true
+----
+
+__Declared by:__
+
+* link:file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/displaymanager/options/sddm-options.nix[/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/displaymanager/options/sddm-options{zwsp}.nix]
+
+
+
+== desktop{zwsp}.displaymanager{zwsp}.sddm{zwsp}.theme{zwsp}.package
+
+
+
+SDDM theme package
+
+
+
+__Type:__ null or package
+
+
+
+__Default:__
+
+[source,nix]
+----
+<derivation sddm-astronaut-1.0-unstable-2025-01-05>
+----
+
+__Declared by:__
+
+* link:file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/displaymanager/options/sddm-options.nix[/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/displaymanager/options/sddm-options{zwsp}.nix]
+
+
+
+== desktop{zwsp}.displaymanager{zwsp}.sddm{zwsp}.theme{zwsp}.embeddedTheme
+
+
+
+Embedded theme variant for the theme package
+
+
+
+__Type:__ string
+
+
+
+__Default:__
+
+[source,nix]
+----
+"black_hole"
+----
+
+__Declared by:__
+
+* link:file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/displaymanager/options/sddm-options.nix[/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/displaymanager/options/sddm-options{zwsp}.nix]
+
+
+
+== desktop{zwsp}.displaymanager{zwsp}.sddm{zwsp}.theme{zwsp}.name
+
+
+
+SDDM theme name
+
+
+
+__Type:__ string
+
+
+
+__Default:__
+
+[source,nix]
+----
+"sddm-astronaut-theme"
+----
+
+__Declared by:__
+
+* link:file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/displaymanager/options/sddm-options.nix[/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/displaymanager/options/sddm-options{zwsp}.nix]
 
 
 
@@ -1960,11 +2702,187 @@ __Type:__ boolean
 
 
 
-__Default:__ ``false``
+__Default:__
+
+[source,nix]
+----
+false
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
+
+
+
+== desktop{zwsp}.hyprdesktop{zwsp}.hyprsuite{zwsp}.ags{zwsp}.enable
+
+
+
+Whether to enable ags{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__
+
+[source,nix]
+----
+false
+----
+
+
+
+__Example:__
+
+[source,nix]
+----
+true
+----
+
+__Declared by:__
+
+* link:file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix[/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags{zwsp}.nix]
+
+
+
+== desktop{zwsp}.hyprdesktop{zwsp}.hyprsuite{zwsp}.ags{zwsp}.configDir
+
+
+
+Path to the AGS configuration (git checkout of qnix-ags or similar){zwsp}. If null, the qnix-ags flake’s configDir is used{zwsp}.
+
+
+
+__Type:__ null or absolute path
+
+
+
+__Default:__
+
+[source,nix]
+----
+null
+----
+
+
+
+__Example:__
+
+[source,nix]
+----
+"/home/user/projects/qnix-ags"
+----
+
+__Declared by:__
+
+* link:file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix[/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags{zwsp}.nix]
+
+
+
+== desktop{zwsp}.hyprdesktop{zwsp}.hyprsuite{zwsp}.ags{zwsp}.displays{zwsp}.large
+
+
+
+Outputs that should use the wide AGS bar layout{zwsp}.
+
+
+
+__Type:__ list of string
+
+
+
+__Default:__
+
+[source,nix]
+----
+[ ]
+----
+
+
+
+__Example:__
+
+[source,nix]
+----
+[
+  "eDP-1"
+  "HDMI-A-1"
+]
+----
+
+__Declared by:__
+
+* link:file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix[/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags{zwsp}.nix]
+
+
+
+== desktop{zwsp}.hyprdesktop{zwsp}.hyprsuite{zwsp}.ags{zwsp}.displays{zwsp}.small
+
+
+
+Outputs that should use the condensed AGS bar layout{zwsp}.
+
+
+
+__Type:__ list of string
+
+
+
+__Default:__
+
+[source,nix]
+----
+[ ]
+----
+
+
+
+__Example:__
+
+[source,nix]
+----
+[
+  "DP-1"
+]
+----
+
+__Declared by:__
+
+* link:file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix[/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags{zwsp}.nix]
+
+
+
+== desktop{zwsp}.hyprdesktop{zwsp}.hyprsuite{zwsp}.ags{zwsp}.extraPackages
+
+
+
+Extra packages to use when overriding ags in dev shells or elsewhere{zwsp}. Note: hyprland, battery, notifd, tray, and wireplumber are always included{zwsp}.
+
+
+
+__Type:__ list of package
+
+
+
+__Default:__
+
+[source,nix]
+----
+[ ]
+----
+
+__Declared by:__
+
+* link:file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix[/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags{zwsp}.nix]
 
 
 
@@ -1980,15 +2898,25 @@ __Type:__ boolean
 
 
 
-__Default:__ ``true``
+__Default:__
+
+[source,nix]
+----
+false
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
 
 __Declared by:__
 
-* link:file:///nix/store/fq23f1y5mqypd12v7w651ql7z1smmr49-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix[/nix/store/fq23f1y5mqypd12v7w651ql7z1smmr49-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland{zwsp}.nix]
+* link:file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix[/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland{zwsp}.nix]
 
 
 
@@ -2004,11 +2932,21 @@ __Type:__ boolean
 
 
 
-__Default:__ ``false``
+__Default:__
+
+[source,nix]
+----
+false
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -2024,11 +2962,21 @@ __Type:__ boolean
 
 
 
-__Default:__ ``false``
+__Default:__
+
+[source,nix]
+----
+false
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -2044,7 +2992,12 @@ __Type:__ boolean
 
 
 
-__Default:__ ``true``
+__Default:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -2060,7 +3013,12 @@ __Type:__ boolean
 
 
 
-__Default:__ ``false``
+__Default:__
+
+[source,nix]
+----
+false
+----
 
 
 
@@ -2076,7 +3034,12 @@ __Type:__ list of string
 
 
 
-__Default:__ ``{startsb} {endsb}``
+__Default:__
+
+[source,nix]
+----
+[ ]
+----
 
 
 
@@ -2092,7 +3055,12 @@ __Type:__ list of string
 
 
 
-__Default:__ ``{startsb} {endsb}``
+__Default:__
+
+[source,nix]
+----
+[ ]
+----
 
 
 
@@ -2108,11 +3076,21 @@ __Type:__ boolean
 
 
 
-__Default:__ ``true``
+__Default:__
+
+[source,nix]
+----
+true
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -2128,7 +3106,12 @@ __Type:__ list of string
 
 
 
-__Default:__ ``{startsb} {endsb}``
+__Default:__
+
+[source,nix]
+----
+[ ]
+----
 
 
 
@@ -2144,7 +3127,12 @@ __Type:__ list of string
 
 
 
-__Default:__ ``{startsb} {endsb}``
+__Default:__
+
+[source,nix]
+----
+[ ]
+----
 
 
 
@@ -2160,7 +3148,12 @@ __Type:__ list of string
 
 
 
-__Default:__ ``{startsb} {endsb}``
+__Default:__
+
+[source,nix]
+----
+[ ]
+----
 
 
 
@@ -2176,7 +3169,12 @@ __Type:__ list of string
 
 
 
-__Default:__ ``{startsb} {endsb}``
+__Default:__
+
+[source,nix]
+----
+[ ]
+----
 
 
 
@@ -2192,11 +3190,21 @@ __Type:__ boolean
 
 
 
-__Default:__ ``true``
+__Default:__
+
+[source,nix]
+----
+true
+----
 
 
 
-__Example:__ ``true``
+__Example:__
+
+[source,nix]
+----
+true
+----
 
 
 
@@ -2214,6 +3222,7 @@ __Type:__ list of string
 
 __Default:__
 
+[source,nix]
 ----
 [
   "/var/log"
@@ -2235,7 +3244,12 @@ __Type:__ list of string
 
 
 
-__Default:__ ``{startsb} {endsb}``
+__Default:__
+
+[source,nix]
+----
+[ ]
+----
 
 
 
@@ -2251,7 +3265,12 @@ __Type:__ boolean
 
 
 
-__Default:__ ``false``
+__Default:__
+
+[source,nix]
+----
+false
+----
 
 
 
@@ -2267,7 +3286,12 @@ __Type:__ boolean
 
 
 
-__Default:__ ``false``
+__Default:__
+
+[source,nix]
+----
+false
+----
 
 
 
@@ -2283,6 +3307,11 @@ __Type:__ boolean
 
 
 
-__Default:__ ``false``
+__Default:__
+
+[source,nix]
+----
+false
+----
 
 

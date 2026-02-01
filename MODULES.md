@@ -351,6 +351,14 @@ These modules define the core QNix configuration options.
 
 ## Desktop Modules
 
+### `displaymanager`
+
+**Type**: NixOS
+
+#### Options
+
+- `qnix.displaymanager.enable` (bool, default: `false`) - Enable this module
+
 ### `hyprdesktop`
 
 **Type**: NixOS, Home Manager

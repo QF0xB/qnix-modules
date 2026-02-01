@@ -1,17 +1,27 @@
-{ lib, pkgs, qnixModules }:
+{
+  lib,
+  pkgs,
+  qnixModules,
+}:
 
 let
   eval = lib.evalModules {
     modules = qnixModules;
+    specialArgs = {
+      pkgs = pkgs;
+    };
   };
-  
+
   # nixosOptionsDoc is in pkgs directly, not pkgs.lib
   optionsDoc = pkgs.nixosOptionsDoc {
     options = eval.options;
-    transformOptions = opt: opt // {
-      # Optional: shorten the path in docs
-      name = lib.removePrefix "qnix." opt.name;
-    };
+    transformOptions =
+      opt:
+      opt
+      // {
+        # Optional: shorten the path in docs
+        name = lib.removePrefix "qnix." opt.name;
+      };
   };
 in
 {
