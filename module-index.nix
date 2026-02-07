@@ -75,6 +75,10 @@
   };
 
   desktop = {
+    browser = {
+      nixos = true;
+      home = true;
+    };
     displaymanager = {
       nixos = true;
       home = false;
@@ -87,8 +91,12 @@
       nixos = true;
       home = true;
     };
+    vscode = {
+      nixos = false;
+      home = true;
+    };
     wallpaper = {
-      nixos = true;
+      nixos = false;
       home = true;
     };
   };

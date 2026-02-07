@@ -7,18 +7,19 @@
 }:
 
 let
-  cfg = osConfig.qnix.desktop.hyprdesktop.hyprsuite.ags;
+  cfg = osConfig.qnix.desktop.hyprdesktop.ags;
 
   upstreamConfigDir = if cfg.configDir == null then inputs.qnix-ags.lib.configDir else cfg.configDir;
 
   # Required packages that must always be included
-  requiredPackages = with inputs.ags.packages.${pkgs.system}; [
+  requiredPackages = with inputs.ags.packages.${pkgs.stdenv.hostPlatform.system}; [
     hyprland
     battery
     wireplumber
     notifd
     tray
     mpris
+    apps
   ];
 
   # Base packages from qnix-ags (includes required packages + others)

@@ -3,6 +3,8 @@
 {
   imports = [
     ./hyprsuite/options.nix
+    ./ags.nix
+    ./dms.nix
   ];
 
   options.qnix.desktop.hyprdesktop = {

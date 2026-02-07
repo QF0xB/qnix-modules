@@ -351,13 +351,29 @@ These modules define the core QNix configuration options.
 
 ## Desktop Modules
 
+### `browser`
+
+**Type**: NixOS, Home Manager
+
+#### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `qnix.browser.enable` | `bool` | `config != null && !config.qnix.headless` | browser |
+| `qnix.browser.enable` | `bool` | `false` | Firefox browser |
+| `qnix.browser.enable` | `bool` | `config != null && !config.qnix.headless` | Brave browser (annoying features disabled via policy) |
+| `qnix.browser.firefox.enable` | `bool` | `false` | Firefox browser |
+| `qnix.browser.brave.enable` | `bool` | `config != null && !config.qnix.headless` | Brave browser (annoying features disabled via policy) |
+
 ### `displaymanager`
 
 **Type**: NixOS
 
 #### Options
 
-- `qnix.displaymanager.enable` (bool, default: `false`) - Enable this module
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `qnix.displaymanager.enable` | `bool` | `config != null && !config.qnix.headless` | displaymanager |
 
 ### `hyprdesktop`
 
@@ -379,15 +395,28 @@ These modules define the core QNix configuration options.
 |--------|------|---------|-------------|
 | `qnix.terminal.enable` | `bool` | `config != null && !config.qnix.headless` | terminal |
 
+### `vscode`
+
+**Type**: Home Manager
+
+#### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `qnix.vscode.enable` | `bool` | `config != null && !config.qnix.headless` | VS Code / Cursor |
+| `qnix.vscode.package` | `package` | `null` | No description |
+
 ### `wallpaper`
 
-**Type**: NixOS, Home Manager
+**Type**: Home Manager
 
 #### Options
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `qnix.wallpaper.enable` | `bool` | `config != null && config.qnix.wayland && !config.qnix.headless` | waypaper |
+| `qnix.wallpaper.wallpaperSource` | `nullOr` | `../assets` | Source directory containing wallpapers to copy to ~/Pictures/wallpaper |
+| `qnix.wallpaper.defaultWallpaper` | `nullOr` | `"solarized-dark.png"` | Default wallpaper filename to use (relative to ~/Pictures/wallpaper) |
 
 
 ---

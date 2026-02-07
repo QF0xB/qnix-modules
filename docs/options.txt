@@ -64,7 +64,7 @@ __Default:__
 
 [source,nix]
 ----
-<derivation brave-1.86.142>
+<derivation brave-1.86.146>
 ----
 
 
@@ -234,7 +234,7 @@ true
 
 __Declared by:__
 
-* link:file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/core/boot/options/grub-options.nix[/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/core/boot/options/grub-options{zwsp}.nix]
+* link:file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/core/boot/options/grub-options.nix[/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/core/boot/options/grub-options{zwsp}.nix]
 
 
 
@@ -259,7 +259,7 @@ __Default:__
 
 __Declared by:__
 
-* link:file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/core/boot/options/grub-options.nix[/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/core/boot/options/grub-options{zwsp}.nix]
+* link:file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/core/boot/options/grub-options.nix[/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/core/boot/options/grub-options{zwsp}.nix]
 
 
 
@@ -293,7 +293,7 @@ true
 
 __Declared by:__
 
-* link:file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/core/boot/options/systemd-boot-options.nix[/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/core/boot/options/systemd-boot-options{zwsp}.nix]
+* link:file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/core/boot/options/systemd-boot-options.nix[/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/core/boot/options/systemd-boot-options{zwsp}.nix]
 
 
 
@@ -2581,6 +2581,126 @@ __Default:__
 
 
 
+== desktop{zwsp}.browser{zwsp}.enable
+
+
+
+Whether to enable browser{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__
+
+[source,nix]
+----
+false
+----
+
+
+
+__Example:__
+
+[source,nix]
+----
+true
+----
+
+
+
+== desktop{zwsp}.browser{zwsp}.brave{zwsp}.enable
+
+
+
+Whether to enable Brave browser (annoying features disabled via policy){zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__
+
+[source,nix]
+----
+false
+----
+
+
+
+__Example:__
+
+[source,nix]
+----
+true
+----
+
+
+
+== desktop{zwsp}.browser{zwsp}.firefox{zwsp}.enable
+
+
+
+Whether to enable Firefox browser{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__
+
+[source,nix]
+----
+false
+----
+
+
+
+__Example:__
+
+[source,nix]
+----
+true
+----
+
+
+
+== desktop{zwsp}.displaymanager{zwsp}.enable
+
+
+
+Whether to enable displaymanager{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__
+
+[source,nix]
+----
+false
+----
+
+
+
+__Example:__
+
+[source,nix]
+----
+true
+----
+
+
+
 == desktop{zwsp}.displaymanager{zwsp}.sddm{zwsp}.enable
 
 
@@ -2611,7 +2731,7 @@ true
 
 __Declared by:__
 
-* link:file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/displaymanager/options/sddm-options.nix[/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/displaymanager/options/sddm-options{zwsp}.nix]
+* link:file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/displaymanager/options/sddm-options.nix[/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/displaymanager/options/sddm-options{zwsp}.nix]
 
 
 
@@ -2636,7 +2756,7 @@ __Default:__
 
 __Declared by:__
 
-* link:file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/displaymanager/options/sddm-options.nix[/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/displaymanager/options/sddm-options{zwsp}.nix]
+* link:file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/displaymanager/options/sddm-options.nix[/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/displaymanager/options/sddm-options{zwsp}.nix]
 
 
 
@@ -2661,7 +2781,7 @@ __Default:__
 
 __Declared by:__
 
-* link:file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/displaymanager/options/sddm-options.nix[/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/displaymanager/options/sddm-options{zwsp}.nix]
+* link:file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/displaymanager/options/sddm-options.nix[/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/displaymanager/options/sddm-options{zwsp}.nix]
 
 
 
@@ -2686,7 +2806,7 @@ __Default:__
 
 __Declared by:__
 
-* link:file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/displaymanager/options/sddm-options.nix[/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/displaymanager/options/sddm-options{zwsp}.nix]
+* link:file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/displaymanager/options/sddm-options.nix[/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/displaymanager/options/sddm-options{zwsp}.nix]
 
 
 
@@ -2750,7 +2870,7 @@ true
 
 __Declared by:__
 
-* link:file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix[/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags{zwsp}.nix]
+* link:file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix[/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags{zwsp}.nix]
 
 
 
@@ -2784,7 +2904,7 @@ __Example:__
 
 __Declared by:__
 
-* link:file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix[/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags{zwsp}.nix]
+* link:file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix[/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags{zwsp}.nix]
 
 
 
@@ -2821,7 +2941,7 @@ __Example:__
 
 __Declared by:__
 
-* link:file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix[/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags{zwsp}.nix]
+* link:file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix[/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags{zwsp}.nix]
 
 
 
@@ -2857,7 +2977,7 @@ __Example:__
 
 __Declared by:__
 
-* link:file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix[/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags{zwsp}.nix]
+* link:file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix[/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags{zwsp}.nix]
 
 
 
@@ -2882,7 +3002,7 @@ __Default:__
 
 __Declared by:__
 
-* link:file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix[/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags{zwsp}.nix]
+* link:file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix[/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags{zwsp}.nix]
 
 
 
@@ -2916,7 +3036,143 @@ true
 
 __Declared by:__
 
-* link:file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix[/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland{zwsp}.nix]
+* link:file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix[/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland{zwsp}.nix]
+
+
+
+== desktop{zwsp}.hyprdesktop{zwsp}.hyprsuite{zwsp}.hyprland{zwsp}.setDefaultAnimations
+
+
+
+Whether to enable set default animations{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__
+
+[source,nix]
+----
+true
+----
+
+
+
+__Example:__
+
+[source,nix]
+----
+true
+----
+
+__Declared by:__
+
+* link:file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix[/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland{zwsp}.nix]
+
+
+
+== desktop{zwsp}.hyprdesktop{zwsp}.hyprsuite{zwsp}.hyprland{zwsp}.setDefaultKeybinds
+
+
+
+Whether to enable set default keybinds{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__
+
+[source,nix]
+----
+true
+----
+
+
+
+__Example:__
+
+[source,nix]
+----
+true
+----
+
+__Declared by:__
+
+* link:file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix[/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland{zwsp}.nix]
+
+
+
+== desktop{zwsp}.hyprdesktop{zwsp}.hyprsuite{zwsp}.hyprland{zwsp}.setDefaultSpecialWorkspace
+
+
+
+Whether to enable set default special workspace settings{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__
+
+[source,nix]
+----
+true
+----
+
+
+
+__Example:__
+
+[source,nix]
+----
+true
+----
+
+__Declared by:__
+
+* link:file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix[/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland{zwsp}.nix]
+
+
+
+== desktop{zwsp}.hyprdesktop{zwsp}.hyprsuite{zwsp}.hyprland{zwsp}.setDefaultWindowRules
+
+
+
+Whether to enable set default window rules{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__
+
+[source,nix]
+----
+true
+----
+
+
+
+__Example:__
+
+[source,nix]
+----
+true
+----
+
+__Declared by:__
+
+* link:file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix[/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland{zwsp}.nix]
 
 
 
@@ -2976,6 +3232,48 @@ __Example:__
 [source,nix]
 ----
 true
+----
+
+
+
+== desktop{zwsp}.waypaper{zwsp}.defaultWallpaper
+
+
+
+Default wallpaper filename to use (relative to {tilde}/Pictures/wallpaper)
+
+
+
+__Type:__ null or string
+
+
+
+__Default:__
+
+[source,nix]
+----
+"solarized-dark.png"
+----
+
+
+
+== desktop{zwsp}.waypaper{zwsp}.wallpaperSource
+
+
+
+Source directory containing wallpapers to copy to {tilde}/Pictures/wallpaper
+
+
+
+__Type:__ null or absolute path
+
+
+
+__Default:__
+
+[source,nix]
+----
+/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/wallpaper/assets
 ----
 
 

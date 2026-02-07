@@ -1,4 +1,8 @@
-{ lib, ... }:
+{
+  lib,
+  config ? null,
+  ...
+}:
 
 {
   imports = [
@@ -7,7 +11,7 @@
 
   options.qnix.desktop.displaymanager = {
     enable = lib.mkEnableOption "displaymanager" // {
-      default = true;
+      default = config != null && !config.qnix.headless;
     };
   };
 }

@@ -1,7 +1,7 @@
 { lib, config, ... }:
 
 {
-  options.qnix.desktop.hyprdesktop.hyprsuite.ags = {
+  options.qnix.desktop.hyprdesktop.ags = {
     enable = lib.mkEnableOption "ags" // {
       default = config.qnix.desktop.hyprdesktop.enable;
     };

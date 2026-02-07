@@ -77,7 +77,7 @@ package
 *Default:*
 
 ```nix
-<derivation brave-1.86.142>
+<derivation brave-1.86.146>
 ```
 
 
@@ -244,7 +244,7 @@ true
 ```
 
 *Declared by:*
- - [/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -268,7 +268,7 @@ string
 ```
 
 *Declared by:*
- - [/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -300,7 +300,7 @@ true
 ```
 
 *Declared by:*
- - [/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/core/boot/options/systemd-boot-options.nix)
+ - [/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/core/boot/options/systemd-boot-options.nix)
 
 
 
@@ -2557,6 +2557,122 @@ string
 
 
 
+## desktop\.browser\.enable
+
+
+
+Whether to enable browser\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+
+```nix
+false
+```
+
+
+
+*Example:*
+
+```nix
+true
+```
+
+
+
+## desktop\.browser\.brave\.enable
+
+
+
+Whether to enable Brave browser (annoying features disabled via policy)\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+
+```nix
+false
+```
+
+
+
+*Example:*
+
+```nix
+true
+```
+
+
+
+## desktop\.browser\.firefox\.enable
+
+
+
+Whether to enable Firefox browser\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+
+```nix
+false
+```
+
+
+
+*Example:*
+
+```nix
+true
+```
+
+
+
+## desktop\.displaymanager\.enable
+
+
+
+Whether to enable displaymanager\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+
+```nix
+false
+```
+
+
+
+*Example:*
+
+```nix
+true
+```
+
+
+
 ## desktop\.displaymanager\.sddm\.enable
 
 
@@ -2585,7 +2701,7 @@ true
 ```
 
 *Declared by:*
- - [/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/displaymanager/options/sddm-options\.nix](file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/displaymanager/options/sddm-options.nix)
+ - [/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/displaymanager/options/sddm-options\.nix](file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/displaymanager/options/sddm-options.nix)
 
 
 
@@ -2609,7 +2725,7 @@ null or package
 ```
 
 *Declared by:*
- - [/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/displaymanager/options/sddm-options\.nix](file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/displaymanager/options/sddm-options.nix)
+ - [/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/displaymanager/options/sddm-options\.nix](file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/displaymanager/options/sddm-options.nix)
 
 
 
@@ -2633,7 +2749,7 @@ string
 ```
 
 *Declared by:*
- - [/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/displaymanager/options/sddm-options\.nix](file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/displaymanager/options/sddm-options.nix)
+ - [/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/displaymanager/options/sddm-options\.nix](file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/displaymanager/options/sddm-options.nix)
 
 
 
@@ -2657,7 +2773,7 @@ string
 ```
 
 *Declared by:*
- - [/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/displaymanager/options/sddm-options\.nix](file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/displaymanager/options/sddm-options.nix)
+ - [/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/displaymanager/options/sddm-options\.nix](file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/displaymanager/options/sddm-options.nix)
 
 
 
@@ -2718,7 +2834,7 @@ true
 ```
 
 *Declared by:*
- - [/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags\.nix](file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix)
+ - [/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags\.nix](file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix)
 
 
 
@@ -2750,7 +2866,7 @@ null
 ```
 
 *Declared by:*
- - [/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags\.nix](file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix)
+ - [/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags\.nix](file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix)
 
 
 
@@ -2785,7 +2901,7 @@ list of string
 ```
 
 *Declared by:*
- - [/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags\.nix](file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix)
+ - [/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags\.nix](file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix)
 
 
 
@@ -2819,7 +2935,7 @@ list of string
 ```
 
 *Declared by:*
- - [/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags\.nix](file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix)
+ - [/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags\.nix](file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix)
 
 
 
@@ -2843,7 +2959,7 @@ list of package
 ```
 
 *Declared by:*
- - [/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags\.nix](file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix)
+ - [/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags\.nix](file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix)
 
 
 
@@ -2875,7 +2991,135 @@ true
 ```
 
 *Declared by:*
- - [/nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland\.nix](file:///nix/store/g6c1h7r4v5l8da9x2jznwz09qy4cdbh0-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix)
+ - [/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland\.nix](file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix)
+
+
+
+## desktop\.hyprdesktop\.hyprsuite\.hyprland\.setDefaultAnimations
+
+
+
+Whether to enable set default animations\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+
+```nix
+true
+```
+
+
+
+*Example:*
+
+```nix
+true
+```
+
+*Declared by:*
+ - [/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland\.nix](file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix)
+
+
+
+## desktop\.hyprdesktop\.hyprsuite\.hyprland\.setDefaultKeybinds
+
+
+
+Whether to enable set default keybinds\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+
+```nix
+true
+```
+
+
+
+*Example:*
+
+```nix
+true
+```
+
+*Declared by:*
+ - [/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland\.nix](file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix)
+
+
+
+## desktop\.hyprdesktop\.hyprsuite\.hyprland\.setDefaultSpecialWorkspace
+
+
+
+Whether to enable set default special workspace settings\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+
+```nix
+true
+```
+
+
+
+*Example:*
+
+```nix
+true
+```
+
+*Declared by:*
+ - [/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland\.nix](file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix)
+
+
+
+## desktop\.hyprdesktop\.hyprsuite\.hyprland\.setDefaultWindowRules
+
+
+
+Whether to enable set default window rules\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+
+```nix
+true
+```
+
+
+
+*Example:*
+
+```nix
+true
+```
+
+*Declared by:*
+ - [/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland\.nix](file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix)
 
 
 
@@ -2933,6 +3177,48 @@ false
 
 ```nix
 true
+```
+
+
+
+## desktop\.waypaper\.defaultWallpaper
+
+
+
+Default wallpaper filename to use (relative to ~/Pictures/wallpaper)
+
+
+
+*Type:*
+null or string
+
+
+
+*Default:*
+
+```nix
+"solarized-dark.png"
+```
+
+
+
+## desktop\.waypaper\.wallpaperSource
+
+
+
+Source directory containing wallpapers to copy to ~/Pictures/wallpaper
+
+
+
+*Type:*
+null or absolute path
+
+
+
+*Default:*
+
+```nix
+/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/wallpaper/assets
 ```
 
 
