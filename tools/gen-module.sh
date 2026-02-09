@@ -11,7 +11,7 @@ fi
 MODULE_TYPE="$1"
 MODULE_NAME="$2"
 MODULE_CATEGORY="$3"
-DOTS_DIR="$HOME/projects/qnix/qnix-modules"
+DOTS_DIR="$HOME/projects/qnix/modules"
 
 if [[ ! "$MODULE_TYPE" =~ ^[nhb]$ ]]; then
   echo "Error: moduletype must be 'n' (nixos), 'h' (home), or 'b' (both)"
