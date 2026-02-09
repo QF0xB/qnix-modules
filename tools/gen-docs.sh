@@ -17,6 +17,7 @@ echo "Building documentation..."
 nix build .#docs.markdown --impure -o docs-result-markdown
 nix build .#docs.json --impure -o docs-result-json
 nix build .#docs.ascii --impure -o docs-result-ascii
+nix build .#docs.html --impure -o docs-result-html
 
 echo "Copying documentation to docs/ directory..."
 
@@ -24,6 +25,7 @@ echo "Copying documentation to docs/ directory..."
 [ -f "$DOCS_DIR/options.md" ] && chmod u+w "$DOCS_DIR/options.md" && rm -f "$DOCS_DIR/options.md"
 [ -f "$DOCS_DIR/options.json" ] && chmod u+w "$DOCS_DIR/options.json" && rm -f "$DOCS_DIR/options.json"
 [ -f "$DOCS_DIR/options.txt" ] && chmod u+w "$DOCS_DIR/options.txt" && rm -f "$DOCS_DIR/options.txt"
+[ -f "$DOCS_DIR/options.html" ] && chmod u+w "$DOCS_DIR/options.html" && rm -f "$DOCS_DIR/options.html"
 
 # The build results are symlinks to the actual files or directories
 # Copy the files directly (cat to avoid copying read-only permissions)
@@ -87,6 +89,24 @@ else
   echo "Warning: docs-result-ascii is not a symlink"
 fi
 
+if [ -L docs-result-html ]; then
+  HTML_SRC="$(readlink -f docs-result-html)"
+  if [ -d "$HTML_SRC" ]; then
+    HTML_FILE=$(find "$HTML_SRC" -name "*.html" -type f | head -1)
+    if [ -n "$HTML_FILE" ]; then
+      cat "$HTML_FILE" > "$DOCS_DIR/options.html"
+      echo "✓ Copied HTML to docs/options.html"
+    else
+      echo "Warning: Could not find HTML file in $HTML_SRC"
+    fi
+  else
+    cat "$HTML_SRC" > "$DOCS_DIR/options.html"
+    echo "✓ Copied HTML to docs/options.html"
+  fi
+else
+  echo "Warning: docs-result-html is not a symlink"
+fi
+
 # Clean up build results
 rm -f docs-result-*
 
@@ -95,4 +115,4 @@ echo "Documentation generated in docs/ directory:"
 echo "  - docs/options.md (markdown)"
 echo "  - docs/options.json (JSON)"
 echo "  - docs/options.txt (ASCII)"
-
+echo "  - docs/options.html (HTML)"

@@ -10,6 +10,8 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
+    qnix.core.boot.zfsSupport = true;
+
     services.zfs = {
       autoScrub.enable = cfg.scrub.enable;
       autoScrub.interval = "${cfg.scrub.interval}h";
