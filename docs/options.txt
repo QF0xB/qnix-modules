@@ -64,7 +64,7 @@ __Default:__
 
 [source,nix]
 ----
-<derivation brave-1.86.146>
+<derivation brave-1.86.148>
 ----
 
 
@@ -234,7 +234,7 @@ true
 
 __Declared by:__
 
-* link:file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/core/boot/options/grub-options.nix[/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/core/boot/options/grub-options{zwsp}.nix]
+* link:file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/boot/options/grub-options.nix[/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/boot/options/grub-options{zwsp}.nix]
 
 
 
@@ -259,7 +259,7 @@ __Default:__
 
 __Declared by:__
 
-* link:file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/core/boot/options/grub-options.nix[/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/core/boot/options/grub-options{zwsp}.nix]
+* link:file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/boot/options/grub-options.nix[/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/boot/options/grub-options{zwsp}.nix]
 
 
 
@@ -293,7 +293,7 @@ true
 
 __Declared by:__
 
-* link:file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/core/boot/options/systemd-boot-options.nix[/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/core/boot/options/systemd-boot-options{zwsp}.nix]
+* link:file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/boot/options/systemd-boot-options.nix[/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/boot/options/systemd-boot-options{zwsp}.nix]
 
 
 
@@ -446,6 +446,27 @@ __Example:__
 [source,nix]
 ----
 true
+----
+
+
+
+== core{zwsp}.git{zwsp}.lfs
+
+
+
+Whether to enable git lfs
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__
+
+[source,nix]
+----
+false
 ----
 
 
@@ -762,6 +783,287 @@ __Example:__
 ----
 true
 ----
+
+
+
+== core{zwsp}.network{zwsp}.firewall{zwsp}.enable
+
+
+
+Whether to enable firewall{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__
+
+[source,nix]
+----
+true
+----
+
+
+
+__Example:__
+
+[source,nix]
+----
+true
+----
+
+__Declared by:__
+
+* link:file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/firewall/options.nix[/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/firewall/options{zwsp}.nix]
+
+
+
+== core{zwsp}.network{zwsp}.firewall{zwsp}.allowPing
+
+
+
+Whether to allow ping
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__
+
+[source,nix]
+----
+true
+----
+
+__Declared by:__
+
+* link:file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/firewall/options.nix[/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/firewall/options{zwsp}.nix]
+
+
+
+== core{zwsp}.network{zwsp}.firewall{zwsp}.allowedTCPPortRanges
+
+
+
+List of TCP port ranges to allow
+
+
+
+__Type:__ list of string
+
+
+
+__Default:__
+
+[source,nix]
+----
+[ ]
+----
+
+__Declared by:__
+
+* link:file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/firewall/options.nix[/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/firewall/options{zwsp}.nix]
+
+
+
+== core{zwsp}.network{zwsp}.firewall{zwsp}.allowedTCPPorts
+
+
+
+List of TCP ports to allow
+
+
+
+__Type:__ list of signed integer
+
+
+
+__Default:__
+
+[source,nix]
+----
+[ ]
+----
+
+__Declared by:__
+
+* link:file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/firewall/options.nix[/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/firewall/options{zwsp}.nix]
+
+
+
+== core{zwsp}.network{zwsp}.firewall{zwsp}.allowedUDPPortRanges
+
+
+
+List of UDP port ranges to allow
+
+
+
+__Type:__ list of string
+
+
+
+__Default:__
+
+[source,nix]
+----
+[ ]
+----
+
+__Declared by:__
+
+* link:file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/firewall/options.nix[/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/firewall/options{zwsp}.nix]
+
+
+
+== core{zwsp}.network{zwsp}.firewall{zwsp}.allowedUDPPorts
+
+
+
+List of UDP ports to allow
+
+
+
+__Type:__ list of signed integer
+
+
+
+__Default:__
+
+[source,nix]
+----
+[ ]
+----
+
+__Declared by:__
+
+* link:file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/firewall/options.nix[/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/firewall/options{zwsp}.nix]
+
+
+
+== core{zwsp}.network{zwsp}.firewall{zwsp}.rejectPackets
+
+
+
+Whether to reject packets
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__
+
+[source,nix]
+----
+false
+----
+
+__Declared by:__
+
+* link:file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/firewall/options.nix[/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/firewall/options{zwsp}.nix]
+
+
+
+== core{zwsp}.network{zwsp}.nm{zwsp}.enable
+
+
+
+Whether to enable NetworkManager{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__
+
+[source,nix]
+----
+true
+----
+
+
+
+__Example:__
+
+[source,nix]
+----
+true
+----
+
+__Declared by:__
+
+* link:file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/nm/options.nix[/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/nm/options{zwsp}.nix]
+
+
+
+== core{zwsp}.network{zwsp}.nm{zwsp}.extraPlugins
+
+
+
+List of extra NetworkManager plugins to install
+
+
+
+__Type:__ list of string
+
+
+
+__Default:__
+
+[source,nix]
+----
+[ ]
+----
+
+
+
+__Example:__
+
+[source,nix]
+----
+[
+  "nm-openvpn"
+  "nm-openvpn-sniffer"
+  "nm-openvpn-sniffer"
+]
+----
+
+__Declared by:__
+
+* link:file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/nm/options.nix[/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/nm/options{zwsp}.nix]
+
+
+
+== core{zwsp}.network{zwsp}.nm{zwsp}.unmanaged
+
+
+
+List of network interfaces to not manage with NetworkManager
+
+
+
+__Type:__ list of string
+
+
+
+__Default:__
+
+[source,nix]
+----
+[ ]
+----
+
+__Declared by:__
+
+* link:file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/nm/options.nix[/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/nm/options{zwsp}.nix]
 
 
 
@@ -2228,8 +2530,6 @@ null
 
 == core{zwsp}.user{zwsp}.users{zwsp}.{zwsp}+<+{zwsp}name{gt}{zwsp}.ignoreShellProgramCheck
 
-
-
 Ignore shell program check
 
 
@@ -2504,6 +2804,8 @@ true
 
 == core{zwsp}.zfs{zwsp}.enable
 
+
+
 Whether to enable zfs{zwsp}.
 
 
@@ -2731,7 +3033,7 @@ true
 
 __Declared by:__
 
-* link:file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/displaymanager/options/sddm-options.nix[/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/displaymanager/options/sddm-options{zwsp}.nix]
+* link:file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/displaymanager/options/sddm-options.nix[/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/displaymanager/options/sddm-options{zwsp}.nix]
 
 
 
@@ -2756,7 +3058,7 @@ __Default:__
 
 __Declared by:__
 
-* link:file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/displaymanager/options/sddm-options.nix[/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/displaymanager/options/sddm-options{zwsp}.nix]
+* link:file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/displaymanager/options/sddm-options.nix[/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/displaymanager/options/sddm-options{zwsp}.nix]
 
 
 
@@ -2781,7 +3083,7 @@ __Default:__
 
 __Declared by:__
 
-* link:file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/displaymanager/options/sddm-options.nix[/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/displaymanager/options/sddm-options{zwsp}.nix]
+* link:file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/displaymanager/options/sddm-options.nix[/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/displaymanager/options/sddm-options{zwsp}.nix]
 
 
 
@@ -2806,7 +3108,7 @@ __Default:__
 
 __Declared by:__
 
-* link:file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/displaymanager/options/sddm-options.nix[/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/displaymanager/options/sddm-options{zwsp}.nix]
+* link:file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/displaymanager/options/sddm-options.nix[/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/displaymanager/options/sddm-options{zwsp}.nix]
 
 
 
@@ -2840,7 +3142,7 @@ true
 
 
 
-== desktop{zwsp}.hyprdesktop{zwsp}.hyprsuite{zwsp}.ags{zwsp}.enable
+== desktop{zwsp}.hyprdesktop{zwsp}.ags{zwsp}.enable
 
 
 
@@ -2870,11 +3172,11 @@ true
 
 __Declared by:__
 
-* link:file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix[/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags{zwsp}.nix]
+* link:file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/ags.nix[/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/ags{zwsp}.nix]
 
 
 
-== desktop{zwsp}.hyprdesktop{zwsp}.hyprsuite{zwsp}.ags{zwsp}.configDir
+== desktop{zwsp}.hyprdesktop{zwsp}.ags{zwsp}.configDir
 
 
 
@@ -2904,11 +3206,11 @@ __Example:__
 
 __Declared by:__
 
-* link:file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix[/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags{zwsp}.nix]
+* link:file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/ags.nix[/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/ags{zwsp}.nix]
 
 
 
-== desktop{zwsp}.hyprdesktop{zwsp}.hyprsuite{zwsp}.ags{zwsp}.displays{zwsp}.large
+== desktop{zwsp}.hyprdesktop{zwsp}.ags{zwsp}.displays{zwsp}.large
 
 
 
@@ -2941,11 +3243,11 @@ __Example:__
 
 __Declared by:__
 
-* link:file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix[/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags{zwsp}.nix]
+* link:file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/ags.nix[/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/ags{zwsp}.nix]
 
 
 
-== desktop{zwsp}.hyprdesktop{zwsp}.hyprsuite{zwsp}.ags{zwsp}.displays{zwsp}.small
+== desktop{zwsp}.hyprdesktop{zwsp}.ags{zwsp}.displays{zwsp}.small
 
 
 
@@ -2977,11 +3279,11 @@ __Example:__
 
 __Declared by:__
 
-* link:file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix[/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags{zwsp}.nix]
+* link:file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/ags.nix[/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/ags{zwsp}.nix]
 
 
 
-== desktop{zwsp}.hyprdesktop{zwsp}.hyprsuite{zwsp}.ags{zwsp}.extraPackages
+== desktop{zwsp}.hyprdesktop{zwsp}.ags{zwsp}.extraPackages
 
 
 
@@ -3002,7 +3304,7 @@ __Default:__
 
 __Declared by:__
 
-* link:file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix[/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags{zwsp}.nix]
+* link:file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/ags.nix[/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/ags{zwsp}.nix]
 
 
 
@@ -3036,7 +3338,7 @@ true
 
 __Declared by:__
 
-* link:file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix[/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland{zwsp}.nix]
+* link:file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix[/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland{zwsp}.nix]
 
 
 
@@ -3070,7 +3372,7 @@ true
 
 __Declared by:__
 
-* link:file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix[/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland{zwsp}.nix]
+* link:file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix[/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland{zwsp}.nix]
 
 
 
@@ -3104,7 +3406,7 @@ true
 
 __Declared by:__
 
-* link:file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix[/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland{zwsp}.nix]
+* link:file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix[/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland{zwsp}.nix]
 
 
 
@@ -3138,7 +3440,7 @@ true
 
 __Declared by:__
 
-* link:file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix[/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland{zwsp}.nix]
+* link:file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix[/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland{zwsp}.nix]
 
 
 
@@ -3172,7 +3474,41 @@ true
 
 __Declared by:__
 
-* link:file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix[/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland{zwsp}.nix]
+* link:file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix[/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland{zwsp}.nix]
+
+
+
+== desktop{zwsp}.hyprdesktop{zwsp}.noctalia{zwsp}.enable
+
+
+
+Whether to enable noctalia{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__
+
+[source,nix]
+----
+false
+----
+
+
+
+__Example:__
+
+[source,nix]
+----
+true
+----
+
+__Declared by:__
+
+* link:file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/noctalia.nix[/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/noctalia{zwsp}.nix]
 
 
 
@@ -3202,6 +3538,57 @@ __Example:__
 [source,nix]
 ----
 true
+----
+
+
+
+== desktop{zwsp}.vscode{zwsp}.enable
+
+
+
+Whether to enable VS Code / Cursor{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__
+
+[source,nix]
+----
+false
+----
+
+
+
+__Example:__
+
+[source,nix]
+----
+true
+----
+
+
+
+== desktop{zwsp}.vscode{zwsp}.package
+
+
+
+VS Code package to install via the Home Manager vscode module (for example, pkgs{zwsp}.vscode, pkgs{zwsp}.vscodium or pkgs{zwsp}.cursor){zwsp}. If not set, the default package will be pkgs{zwsp}.cursor{zwsp}.
+
+
+
+__Type:__ package
+
+
+
+__Default:__
+
+[source,nix]
+----
+<derivation cursor-2.4.28>
 ----
 
 
@@ -3273,7 +3660,7 @@ __Default:__
 
 [source,nix]
 ----
-/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/wallpaper/assets
+/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/wallpaper/assets
 ----
 
 

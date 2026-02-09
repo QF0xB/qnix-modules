@@ -28,6 +28,10 @@
       nixos = false;
       home = true;
     };
+    network = {
+      nixos = true;
+      home = false;
+    };
     nvf = {
       nixos = false;
       home = true;
@@ -92,7 +96,7 @@
       home = true;
     };
     vscode = {
-      nixos = false;
+      nixos = true;
       home = true;
     };
     wallpaper = {

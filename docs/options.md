@@ -77,7 +77,7 @@ package
 *Default:*
 
 ```nix
-<derivation brave-1.86.146>
+<derivation brave-1.86.148>
 ```
 
 
@@ -244,7 +244,7 @@ true
 ```
 
 *Declared by:*
- - [/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -268,7 +268,7 @@ string
 ```
 
 *Declared by:*
- - [/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -300,7 +300,7 @@ true
 ```
 
 *Declared by:*
- - [/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/core/boot/options/systemd-boot-options.nix)
+ - [/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/boot/options/systemd-boot-options.nix)
 
 
 
@@ -450,6 +450,27 @@ true
 
 ```nix
 true
+```
+
+
+
+## core\.git\.lfs
+
+
+
+Whether to enable git lfs
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+
+```nix
+false
 ```
 
 
@@ -761,6 +782,274 @@ true
 ```nix
 true
 ```
+
+
+
+## core\.network\.firewall\.enable
+
+
+
+Whether to enable firewall\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+
+```nix
+true
+```
+
+
+
+*Example:*
+
+```nix
+true
+```
+
+*Declared by:*
+ - [/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/firewall/options\.nix](file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/firewall/options.nix)
+
+
+
+## core\.network\.firewall\.allowPing
+
+
+
+Whether to allow ping
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+
+```nix
+true
+```
+
+*Declared by:*
+ - [/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/firewall/options\.nix](file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/firewall/options.nix)
+
+
+
+## core\.network\.firewall\.allowedTCPPortRanges
+
+
+
+List of TCP port ranges to allow
+
+
+
+*Type:*
+list of string
+
+
+
+*Default:*
+
+```nix
+[ ]
+```
+
+*Declared by:*
+ - [/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/firewall/options\.nix](file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/firewall/options.nix)
+
+
+
+## core\.network\.firewall\.allowedTCPPorts
+
+
+
+List of TCP ports to allow
+
+
+
+*Type:*
+list of signed integer
+
+
+
+*Default:*
+
+```nix
+[ ]
+```
+
+*Declared by:*
+ - [/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/firewall/options\.nix](file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/firewall/options.nix)
+
+
+
+## core\.network\.firewall\.allowedUDPPortRanges
+
+
+
+List of UDP port ranges to allow
+
+
+
+*Type:*
+list of string
+
+
+
+*Default:*
+
+```nix
+[ ]
+```
+
+*Declared by:*
+ - [/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/firewall/options\.nix](file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/firewall/options.nix)
+
+
+
+## core\.network\.firewall\.allowedUDPPorts
+
+
+
+List of UDP ports to allow
+
+
+
+*Type:*
+list of signed integer
+
+
+
+*Default:*
+
+```nix
+[ ]
+```
+
+*Declared by:*
+ - [/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/firewall/options\.nix](file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/firewall/options.nix)
+
+
+
+## core\.network\.firewall\.rejectPackets
+
+
+
+Whether to reject packets
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+
+```nix
+false
+```
+
+*Declared by:*
+ - [/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/firewall/options\.nix](file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/firewall/options.nix)
+
+
+
+## core\.network\.nm\.enable
+
+
+
+Whether to enable NetworkManager\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+
+```nix
+true
+```
+
+
+
+*Example:*
+
+```nix
+true
+```
+
+*Declared by:*
+ - [/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/nm/options\.nix](file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/nm/options.nix)
+
+
+
+## core\.network\.nm\.extraPlugins
+
+
+
+List of extra NetworkManager plugins to install
+
+
+
+*Type:*
+list of string
+
+
+
+*Default:*
+
+```nix
+[ ]
+```
+
+
+
+*Example:*
+
+```nix
+[
+  "nm-openvpn"
+  "nm-openvpn-sniffer"
+  "nm-openvpn-sniffer"
+]
+```
+
+*Declared by:*
+ - [/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/nm/options\.nix](file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/nm/options.nix)
+
+
+
+## core\.network\.nm\.unmanaged
+
+
+
+List of network interfaces to not manage with NetworkManager
+
+
+
+*Type:*
+list of string
+
+
+
+*Default:*
+
+```nix
+[ ]
+```
+
+*Declared by:*
+ - [/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/nm/options\.nix](file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/core/network/options/nm/options.nix)
 
 
 
@@ -2211,8 +2500,6 @@ null
 
 ## core\.user\.users\.\<name>\.ignoreShellProgramCheck
 
-
-
 Ignore shell program check
 
 
@@ -2482,6 +2769,8 @@ true
 
 ## core\.zfs\.enable
 
+
+
 Whether to enable zfs\.
 
 
@@ -2701,7 +2990,7 @@ true
 ```
 
 *Declared by:*
- - [/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/displaymanager/options/sddm-options\.nix](file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/displaymanager/options/sddm-options.nix)
+ - [/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/displaymanager/options/sddm-options\.nix](file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/displaymanager/options/sddm-options.nix)
 
 
 
@@ -2725,7 +3014,7 @@ null or package
 ```
 
 *Declared by:*
- - [/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/displaymanager/options/sddm-options\.nix](file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/displaymanager/options/sddm-options.nix)
+ - [/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/displaymanager/options/sddm-options\.nix](file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/displaymanager/options/sddm-options.nix)
 
 
 
@@ -2749,7 +3038,7 @@ string
 ```
 
 *Declared by:*
- - [/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/displaymanager/options/sddm-options\.nix](file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/displaymanager/options/sddm-options.nix)
+ - [/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/displaymanager/options/sddm-options\.nix](file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/displaymanager/options/sddm-options.nix)
 
 
 
@@ -2773,7 +3062,7 @@ string
 ```
 
 *Declared by:*
- - [/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/displaymanager/options/sddm-options\.nix](file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/displaymanager/options/sddm-options.nix)
+ - [/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/displaymanager/options/sddm-options\.nix](file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/displaymanager/options/sddm-options.nix)
 
 
 
@@ -2806,7 +3095,7 @@ true
 
 
 
-## desktop\.hyprdesktop\.hyprsuite\.ags\.enable
+## desktop\.hyprdesktop\.ags\.enable
 
 
 
@@ -2834,11 +3123,11 @@ true
 ```
 
 *Declared by:*
- - [/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags\.nix](file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix)
+ - [/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/ags\.nix](file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/ags.nix)
 
 
 
-## desktop\.hyprdesktop\.hyprsuite\.ags\.configDir
+## desktop\.hyprdesktop\.ags\.configDir
 
 
 
@@ -2866,11 +3155,11 @@ null
 ```
 
 *Declared by:*
- - [/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags\.nix](file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix)
+ - [/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/ags\.nix](file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/ags.nix)
 
 
 
-## desktop\.hyprdesktop\.hyprsuite\.ags\.displays\.large
+## desktop\.hyprdesktop\.ags\.displays\.large
 
 
 
@@ -2901,11 +3190,11 @@ list of string
 ```
 
 *Declared by:*
- - [/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags\.nix](file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix)
+ - [/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/ags\.nix](file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/ags.nix)
 
 
 
-## desktop\.hyprdesktop\.hyprsuite\.ags\.displays\.small
+## desktop\.hyprdesktop\.ags\.displays\.small
 
 
 
@@ -2935,11 +3224,11 @@ list of string
 ```
 
 *Declared by:*
- - [/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags\.nix](file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix)
+ - [/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/ags\.nix](file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/ags.nix)
 
 
 
-## desktop\.hyprdesktop\.hyprsuite\.ags\.extraPackages
+## desktop\.hyprdesktop\.ags\.extraPackages
 
 
 
@@ -2959,7 +3248,7 @@ list of package
 ```
 
 *Declared by:*
- - [/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags\.nix](file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/ags.nix)
+ - [/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/ags\.nix](file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/ags.nix)
 
 
 
@@ -2991,7 +3280,7 @@ true
 ```
 
 *Declared by:*
- - [/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland\.nix](file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix)
+ - [/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland\.nix](file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix)
 
 
 
@@ -3023,7 +3312,7 @@ true
 ```
 
 *Declared by:*
- - [/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland\.nix](file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix)
+ - [/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland\.nix](file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix)
 
 
 
@@ -3055,7 +3344,7 @@ true
 ```
 
 *Declared by:*
- - [/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland\.nix](file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix)
+ - [/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland\.nix](file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix)
 
 
 
@@ -3087,7 +3376,7 @@ true
 ```
 
 *Declared by:*
- - [/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland\.nix](file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix)
+ - [/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland\.nix](file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix)
 
 
 
@@ -3119,7 +3408,39 @@ true
 ```
 
 *Declared by:*
- - [/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland\.nix](file:///nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix)
+ - [/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland\.nix](file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix)
+
+
+
+## desktop\.hyprdesktop\.noctalia\.enable
+
+
+
+Whether to enable noctalia\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+
+```nix
+false
+```
+
+
+
+*Example:*
+
+```nix
+true
+```
+
+*Declared by:*
+ - [/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/noctalia\.nix](file:///nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/hyprdesktop/options/noctalia.nix)
 
 
 
@@ -3148,6 +3469,58 @@ false
 
 ```nix
 true
+```
+
+
+
+## desktop\.vscode\.enable
+
+
+
+Whether to enable VS Code / Cursor\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+
+```nix
+false
+```
+
+
+
+*Example:*
+
+```nix
+true
+```
+
+
+
+## desktop\.vscode\.package
+
+
+
+VS Code package to install via the Home Manager vscode module
+(for example, pkgs\.vscode, pkgs\.vscodium or pkgs\.cursor)\.
+If not set, the default package will be pkgs\.cursor\.
+
+
+
+*Type:*
+package
+
+
+
+*Default:*
+
+```nix
+<derivation cursor-2.4.28>
 ```
 
 
@@ -3218,7 +3591,7 @@ null or absolute path
 *Default:*
 
 ```nix
-/nix/store/wxfr36yv8msx21vlnvdi7lgymsi0rdib-source/modules/desktop/wallpaper/assets
+/nix/store/j7vi7q03fw2pc798yw6p67n9sg3si0bn-source/modules/desktop/wallpaper/assets
 ```
 
 

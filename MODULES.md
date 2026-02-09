@@ -75,10 +75,12 @@ These modules define the core QNix configuration options.
 | `qnix.git.userEmail` | `str` | `""` | The email to use for git commits |
 | `qnix.git.signing` | `bool` | `false` | Whether to enable git signing |
 | `qnix.git.signingKey` | `str` | `""` | The key to use for git signing |
+| `qnix.git.lfs` | `bool` | `false` | Whether to enable git lfs |
 | `qnix.git.git.userName` | `str` | `""` | The name to use for git commits |
 | `qnix.git.git.userEmail` | `str` | `""` | The email to use for git commits |
 | `qnix.git.git.signing` | `bool` | `false` | Whether to enable git signing |
 | `qnix.git.git.signingKey` | `str` | `""` | The key to use for git signing |
+| `qnix.git.git.lfs` | `bool` | `false` | Whether to enable git lfs |
 
 ### `impermanence`
 
@@ -128,6 +130,14 @@ These modules define the core QNix configuration options.
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `qnix.lsd.enable` | `bool` | `true` | lsd |
+
+### `network`
+
+**Type**: NixOS
+
+#### Options
+
+- `qnix.network.enable` (bool, default: `false`) - Enable this module
 
 ### `nvf`
 
@@ -397,14 +407,14 @@ These modules define the core QNix configuration options.
 
 ### `vscode`
 
-**Type**: Home Manager
+**Type**: NixOS, Home Manager
 
 #### Options
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `qnix.vscode.enable` | `bool` | `config != null && !config.qnix.headless` | VS Code / Cursor |
-| `qnix.vscode.package` | `package` | `null` | No description |
+| `qnix.vscode.package` | `package` | `if pkgs != null then pkgs.code-cursor else null` | No description |
 
 ### `wallpaper`
 
