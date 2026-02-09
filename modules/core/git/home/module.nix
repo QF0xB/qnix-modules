@@ -12,10 +12,9 @@ in
   config = lib.mkIf cfg.enable {
     programs.git = {
       enable = true;
-      settings.user = {
-        name = cfg.userName;
-        email = cfg.userEmail;
-      };
+
+      lfs.enable = cfg.lfs;
+
       signing = lib.mkIf cfg.signing {
         key = cfg.signingKey;
         signByDefault = true;
@@ -25,6 +24,13 @@ in
         core = {
           editor = "nvim";
         };
+
+        user = {
+          name = cfg.userName;
+          email = cfg.userEmail;
+        };
+
+        commit.gpgSign = cfg.signing;
       };
     };
   };

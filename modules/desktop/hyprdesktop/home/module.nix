@@ -2,7 +2,7 @@
 {
   imports = [
     ./ags/module.nix
-    ./dms/module.nix
+    ./noctalia/module.nix
     ./hyprsuite/module.nix
   ];
 }

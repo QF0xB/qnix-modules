@@ -32,5 +32,11 @@
       description = "The key to use for git signing";
       default = "";
     };
+
+    lfs = lib.mkOption {
+      type = lib.types.bool;
+      description = "Whether to enable git lfs";
+      default = false;
+    };
   };
 }

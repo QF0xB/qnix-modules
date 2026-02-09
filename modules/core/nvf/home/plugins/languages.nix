@@ -34,10 +34,10 @@
         dap.enable = true;
       };
 
-      html = {
-        enable = true;
-        treesitter.autotagHtml = true;
-      };
+      # html = {
+      #   enable = true;
+      #   treesitter.autotagHtml = true;
+      # };
 
       java = {
         enable = true;

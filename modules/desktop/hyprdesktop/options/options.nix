@@ -4,7 +4,7 @@
   imports = [
     ./hyprsuite/options.nix
     ./ags.nix
-    ./dms.nix
+    ./noctalia.nix
   ];
 
   options.qnix.desktop.hyprdesktop = {
