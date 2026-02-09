@@ -35,6 +35,11 @@ in
           # Cursor agent panel settings
           "cursor.windowSwitcher.sidebarHoverCollapsed" = false;
 
+          # Formatting
+          "editor.formatOnPaste" = true;
+          "editor.formatOnSave" = true;
+          "editor.formatOnSaveMode" = "file";
+
           # Git settings for auto-refresh and push behaviour
           "git.autorefresh" = true;
           "git.autoRepositoryDetection" = true;
