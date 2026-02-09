@@ -35,11 +35,13 @@ in
           # Cursor agent panel settings
           "cursor.windowSwitcher.sidebarHoverCollapsed" = false;
 
-          # Git settings for auto-refresh
+          # Git settings for auto-refresh and push behaviour
           "git.autorefresh" = true;
           "git.autoRepositoryDetection" = true;
           "git.enabled" = true;
           "git.path" = null; # Use system git
+          # Don't show "Publish" (avoids fork prompt); use ... → Push or set upstream
+          "git.showActionButton.publish" = false;
           
           # File watching settings (helps with git status updates)
           "files.watcherExclude" = {
