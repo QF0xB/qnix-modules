@@ -23,6 +23,23 @@ in
           "keyboard.dispatch" = "keyCode";
           "redhat.telemetry.enabled" = "false";
           "qt-qml.qmlls.useQmlImportPathEnvVar" = "true";
+
+          # Cursor specific settings
+          "cursor.composer.shouldChimeAfterChatFinishes" = true;
+          "cursor.composer.usageSummaryDisplay" = "always";
+
+          # Git settings for auto-refresh
+          "git.autorefresh" = true;
+          "git.autoRepositoryDetection" = true;
+          "git.enabled" = true;
+          "git.path" = null; # Use system git
+          
+          # File watching settings (helps with git status updates)
+          "files.watcherExclude" = {
+            "**/.git/objects/**" = true;
+            "**/.git/subtree-cache/**" = true;
+            "**/node_modules/**" = true;
+          };
         };
         extensions = with pkgs; [
           # Nix
@@ -34,9 +51,6 @@ in
 
           # CPP
           vscode-extensions.ms-vscode.cpptools-extension-pack
-
-          # VIM
-          vscode-extensions.vscodevim.vim
 
           # Java
           vscode-extensions.vscjava.vscode-java-pack

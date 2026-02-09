@@ -10,8 +10,6 @@ let
   cfg = osConfig.qnix.core.starship;
 
   # Convert stylix base16 colors to solarized naming scheme
-  # If inputs.qnix-modules is available, use lib.qnix-lib.stylixToSolarized
-  # Otherwise, define the function locally
   stylixToSolarized = base16: {
     base03 = base16.base03 or "";
     base02 = base16.base02 or "";
@@ -31,12 +29,43 @@ let
     magenta = base16.base0F or "";
   };
 
-  # Get colors from stylix if available
-  colors =
-    if (osConfig.stylix.enable or false) then
-      stylixToSolarized (osConfig.stylix.base16 or { })
-    else
-      { };
+  # Try to get colors from stylix
+  # First try the exposed solarizedColors, then try base16 directly
+  solarizedColors = osConfig.qnix.core.stylix.solarizedColors or null;
+  stylixBase16 = osConfig.stylix.base16 or { };
+  
+  # Convert base16 if we have it but not solarizedColors
+  convertedColors = if solarizedColors == null && stylixBase16 != { } then
+    stylixToSolarized stylixBase16
+  else if solarizedColors != null then
+    solarizedColors
+  else
+    { };
+  
+  # Check if colors are actually populated (not empty strings)
+  hasColors = (convertedColors.base03 or "") != "";
+  
+  # Fallback solarized-dark colors if stylix colors aren't available
+  fallbackColors = {
+    base03 = "#002b36";
+    base02 = "#073642";
+    base01 = "#586e75";
+    base00 = "#657b83";
+    base0 = "#839496";
+    base1 = "#93a1a1";
+    base2 = "#eee8d5";
+    base3 = "#fdf6e3";
+    red = "#dc322f";
+    orange = "#cb4b16";
+    yellow = "#b58900";
+    green = "#859900";
+    cyan = "#2aa198";
+    blue = "#268bd2";
+    violet = "#6c71c4";
+    magenta = "#d33682";
+  };
+  
+  colors = if hasColors then convertedColors else fallbackColors;
 in
 {
   config = lib.mkIf cfg.enable {
@@ -70,7 +99,7 @@ in
               "$git_state"
               "$git_status"
               "$nix_shell"
-              "[](${colors.green})"
+              "[](${colors.green}) "
             ];
 
             # modules
@@ -83,7 +112,7 @@ in
               style_root = "bg:${colors.violet} fg:bold ${colors.base03}";
               style_user = "bg:${colors.violet} fg:bold ${colors.base03}";
               format = lib.concatStrings [
-                "[ $user@ ]($style)"
+                "[ $user ]($style)"
               ];
               show_always = true;
             };
