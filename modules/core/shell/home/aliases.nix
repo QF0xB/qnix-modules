@@ -29,8 +29,9 @@ in
       gacp = "git add . && git commit && git push";
 
       # NIX
+      nuq = "nix flake update qnix-modules";
       nhs = "nh os switch ${dots}";
-      nbv = "nix build .#nixosConfigurations.QConfigVM.config.system.build.vm";
+      nbv = "nix build .#nixosConfigurations.QTestVM.config.system.build.vm";
 
       # cd aliases
       ".." = "cd ..";

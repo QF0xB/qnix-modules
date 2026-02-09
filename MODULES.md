@@ -155,6 +155,30 @@ These modules define the core QNix configuration options.
 
 - `qnix.network.enable` (bool, default: `false`) - Enable this module
 
+### `nix-helpers`
+
+**Type**: NixOS
+
+#### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `qnix.nix-helpers.enable` | `bool` | `false` | nix-helpers (nh, nixfmt, and related Nix CLI helpers) |
+| `qnix.nix-helpers.enable` | `bool` | `true` | nh |
+| `qnix.nix-helpers.enable` | `bool` | `true` | periodic nh clean user (garbage collection) |
+| `qnix.nix-helpers.enable` | `bool` | `false` | nixfmt |
+| `qnix.nix-helpers.flake` | `nullOr` | `null` | No description |
+| `qnix.nix-helpers.osFlake` | `nullOr` | `null` | Flake for nh os actions (NH_OS_FLAKE). Overrides flake for nh os. |
+| `qnix.nix-helpers.homeFlake` | `nullOr` | `null` | Flake for nh home actions (NH_HOME_FLAKE). Overrides flake for nh home. |
+| `qnix.nix-helpers.dates` | `singleLineStr` | `"weekly"` | How often to run nh clean (systemd timer calendar). |
+| `qnix.nix-helpers.extraArgs` | `singleLineStr` | `""` | Extra arguments passed to nh clean. |
+| `qnix.nix-helpers.helpers.flake` | `nullOr` | `null` | No description |
+| `qnix.nix-helpers.helpers.osFlake` | `nullOr` | `null` | Flake for nh os actions (NH_OS_FLAKE). Overrides flake for nh os. |
+| `qnix.nix-helpers.helpers.homeFlake` | `nullOr` | `null` | Flake for nh home actions (NH_HOME_FLAKE). Overrides flake for nh home. |
+| `qnix.nix-helpers.helpers.dates` | `singleLineStr` | `"weekly"` | How often to run nh clean (systemd timer calendar). |
+| `qnix.nix-helpers.helpers.extraArgs` | `singleLineStr` | `""` | Extra arguments passed to nh clean. |
+| `qnix.nix-helpers.helpers.enable` | `bool` | `true` | nh |
+
 ### `nvf`
 
 **Type**: Home Manager

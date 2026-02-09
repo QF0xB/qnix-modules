@@ -36,6 +36,10 @@
       nixos = true;
       home = false;
     };
+    nix-helpers = {
+      nixos = true;
+      home = false;
+    };
     nvf = {
       nixos = false;
       home = true;
