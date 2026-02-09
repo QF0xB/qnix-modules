@@ -16,22 +16,18 @@ This will create symlinks from `.git/hooks/` to the hooks in this directory.
 
 ### `pre-commit`
 
-Automatically regenerates generated files when relevant source files change:
+Runs before every commit:
 
-- **Triggers on changes to:**
-  - Module files (`modules/`)
-  - Documentation generation (`docs/generation/`)
-  - `module-index.nix`
-  - Generation tools (`tools/module-update.py`, `tools/gen-docs.sh`, `tools/update.sh`)
-
-- **Regenerates:**
+- **Runs** `tools/update.sh` to regenerate:
   - `module-index.nix`
   - `MODULES.md`
   - `docs/options.md`
   - `docs/options.json`
   - `docs/options.txt`
 
-- **Auto-stages** any regenerated files that changed
+- **Auto-stages** any regenerated files, shows a short summary, and asks for confirmation before proceeding.
+
+Run AI/code review separately when you need it (e.g. before a release).
 
 ## Manual Installation
 
