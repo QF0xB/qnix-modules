@@ -95,6 +95,10 @@
       nixos = true;
       home = true;
     };
+    periphery = {
+      nixos = true;
+      home = false;
+    };
     terminal = {
       nixos = true;
       home = true;

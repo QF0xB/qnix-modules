@@ -82,6 +82,22 @@ These modules define the core QNix configuration options.
 | `qnix.git.git.signingKey` | `str` | `""` | The key to use for git signing |
 | `qnix.git.git.lfs` | `bool` | `false` | Whether to enable git lfs |
 
+### `gpg`
+
+**Type**: NixOS, Home Manager
+
+#### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `qnix.gpg.enable` | `bool` | `false` | GPG with SSH agent support |
+| `qnix.gpg.enableSSH` | `bool` | `true` | Enable GPG as SSH agent |
+| `qnix.gpg.pinentryPackage` | `package` | `pkgs.pinentry-tty` | Pinentry package to use for password entry |
+| `qnix.gpg.publicKeys` | `listOf` | `[ ]` | List of public GPG keys to import. Can be key data (strings) or file paths. |
+| `qnix.gpg.gpg.enableSSH` | `bool` | `true` | Enable GPG as SSH agent |
+| `qnix.gpg.gpg.pinentryPackage` | `package` | `pkgs.pinentry-tty` | Pinentry package to use for password entry |
+| `qnix.gpg.gpg.publicKeys` | `listOf` | `[ ]` | List of public GPG keys to import. Can be key data (strings) or file paths. |
+
 ### `impermanence`
 
 **Type**: NixOS
@@ -395,6 +411,16 @@ These modules define the core QNix configuration options.
 |--------|------|---------|-------------|
 | `qnix.hyprdesktop.enable` | `bool` | `false` | hyprdesktop |
 
+### `periphery`
+
+**Type**: NixOS
+
+#### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `qnix.periphery.enable` | `bool` | `true` | thunderbolt |
+
 ### `terminal`
 
 **Type**: NixOS, Home Manager
@@ -415,6 +441,7 @@ These modules define the core QNix configuration options.
 |--------|------|---------|-------------|
 | `qnix.vscode.enable` | `bool` | `config != null && !config.qnix.headless` | VS Code / Cursor |
 | `qnix.vscode.package` | `package` | `if pkgs != null then pkgs.code-cursor else null` | No description |
+| `qnix.vscode.agentPanelSize` | `int` | `400` | Default width (in pixels) for the Cursor agent panel/sidebar |
 
 ### `wallpaper`
 

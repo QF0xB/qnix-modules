@@ -2,8 +2,10 @@
 
 {
   options.qnix.desktop.periphery = {
-    enable = lib.mkEnableOption "periphery" // {
-      default = false;
+    thunderbolt = {
+      enable = lib.mkEnableOption "thunderbolt" // {
+        default = true;
+      };
     };
   };
 }

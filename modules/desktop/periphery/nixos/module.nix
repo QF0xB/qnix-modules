@@ -4,7 +4,9 @@ let
   cfg = config.qnix.desktop.periphery;
 in
 {
-  config = lib.mkIf cfg.enable {
-    # NixOS configuration for periphery
+  config = {
+    services.hardware.bolt = lib.mkIf cfg.thunderbolt.enable {
+      enable = true;
+    };
   };
 }
