@@ -38,6 +38,7 @@ in
           # Formatting
           "editor.formatOnPaste" = true;
           "editor.formatOnSave" = true;
+          "editor.formatOnType" = true;
           "editor.formatOnSaveMode" = "file";
 
           # Git settings for auto-refresh and push behaviour
