@@ -27,6 +27,13 @@ in
           # Cursor specific settings
           "cursor.composer.shouldChimeAfterChatFinishes" = true;
           "cursor.composer.usageSummaryDisplay" = "always";
+          
+          # Workbench panel settings (affects agent window size)
+          "workbench.panel.defaultSize" = cfg.agentPanelSize;
+          "workbench.sideBar.location" = "left";
+          
+          # Cursor agent panel settings
+          "cursor.windowSwitcher.sidebarHoverCollapsed" = false;
 
           # Git settings for auto-refresh
           "git.autorefresh" = true;

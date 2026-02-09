@@ -20,5 +20,11 @@
       '';
       default = if pkgs != null then pkgs.code-cursor else null;
     };
+
+    agentPanelSize = lib.mkOption {
+      type = lib.types.int;
+      default = 400;
+      description = "Default width (in pixels) for the Cursor agent panel/sidebar";
+    };
   };
 }
