@@ -16,6 +16,10 @@
       nixos = false;
       home = true;
     };
+    gpg = {
+      nixos = true;
+      home = true;
+    };
     impermanence = {
       nixos = true;
       home = false;
