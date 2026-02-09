@@ -4,9 +4,7 @@ set -euo pipefail
 # Pre-commit hook to regenerate module-index.nix, MODULES.md, and documentation.
 # Run AI/code review separately when needed (e.g. before a release).
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
-
+REPO_ROOT="$(git rev-parse --show-toplevel)"
 cd "$REPO_ROOT"
 
 # Always run update.sh before commit
