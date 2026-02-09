@@ -42,6 +42,9 @@ in
           "git.path" = null; # Use system git
           # Don't show "Publish" (avoids fork prompt); use ... → Push or set upstream
           "git.showActionButton.publish" = false;
+          "git.showActionButton.fetch" = false;
+          "github.gitAuthentication" = false;
+          "github.gitProtocol" = "ssh";
           
           # File watching settings (helps with git status updates)
           "files.watcherExclude" = {
