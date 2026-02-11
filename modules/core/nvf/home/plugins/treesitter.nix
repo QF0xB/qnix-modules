@@ -1,4 +1,9 @@
-{ osConfig, lib, ... }:
+{
+  osConfig,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   treesitterLanguages = [
