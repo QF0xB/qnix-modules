@@ -154,7 +154,7 @@ lib.mkIf (cfg.enable && cfg.hyprsuite.hyprland.setDefaultKeybinds) {
       "$mod, code:48, fullscreen #ä"
       "$mod, code:38, killactive #a"
       "$mod SHIFT, code:48, togglefloating #f"
-      "$mod, return, ${default-app-uexec "terminal"}"
+      "$mod SHIFT, return, ${default-app-uexec "terminal"}"
       "$mod CTRL, return, ${default-app-uexec "terminal"} --class floating"
       "$mod, code:47, ${default-app-uexec "browser"} #Ö"
       "$mod SHIFT, code:47, ${default-app-uexec "browser"} --private-window #Ö"

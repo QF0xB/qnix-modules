@@ -36,8 +36,8 @@ let
 
     # --- Tags ---------------------------------------------
     "match:class ^(ghostty|footclient|kitty|Alacritty)$, tag +term"
-    "match:class ^(code|codium|jetbrains-.*)$, tag +code"
-    "match:class ^(brave|google-chrome)$, tag +browser"
+    "match:class ^(code|cursor|codium|jetbrains-.*)$, tag +code"
+    "match:class ^(brave-browser|google-chrome)$, tag +browser"
     "match:class ^(tidal-hifi)$, tag +music"
     "match:class ^(nemo|thunar)$, tag +files"
     "match:class ^(Bitwarden)$, tag +passwords"
@@ -59,7 +59,7 @@ let
     "match:tag messenger, workspace special:messenger"
     "match:tag notes, workspace special:notes"
     "match:tag obs, workspace special:obs"
-    "match:class ^(Bitwarden)$, workspace special:secrets"
+    "match:tag passwords, workspace special:secrets"
   ];
 in
 lib.mkIf (cfg.enable && cfg.hyprsuite.hyprland.setDefaultWindowRules) {
