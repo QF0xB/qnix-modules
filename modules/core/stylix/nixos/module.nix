@@ -42,7 +42,7 @@ in
         enable = true;
 
         base16Scheme = "${pkgs.base16-schemes}/share/themes/${cfg.colorScheme}.yaml";
-
+        polarity = "dark";
         override = cfg.colorSchemeOverrides;
 
         cursor = {
