@@ -107,7 +107,7 @@ in
                 labelMode = "index";
                 occupiedColor = "secondary";
                 pillSize = 0.6;
-                reverseScroll = false;
+                reverseScroll = true;
                 showApplications = false;
                 showBadge = true;
                 showLabelsOnlyWhenOccupied = true;

@@ -41,7 +41,7 @@
       home = false;
     };
     nvf = {
-      nixos = false;
+      nixos = true;
       home = true;
     };
     plymouth = {
@@ -98,6 +98,10 @@
     hyprdesktop = {
       nixos = true;
       home = true;
+    };
+    laptop-specifics = {
+      nixos = true;
+      home = false;
     };
     periphery = {
       nixos = true;

@@ -6,6 +6,7 @@ in
 {
   imports = [
     ./hyprsuite/module.nix
+    ./noctalia/module.nix
   ];
 
   config = lib.mkIf cfg.enable {

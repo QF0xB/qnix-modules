@@ -11,6 +11,7 @@
       ".config/VSCodium"
       ".vscode-oss"
       ".config/Cursor"
+      ".cursor"
     ];
   };
 }

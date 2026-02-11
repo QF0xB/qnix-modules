@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.qnix.core.gpg;
@@ -11,5 +16,9 @@ in
       enable = true;
       enableSSHSupport = cfg.enableSSH;
     };
+
+    qnix.persist.home.directories = [
+      ".gnupg"
+    ];
   };
 }

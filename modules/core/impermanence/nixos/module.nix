@@ -33,19 +33,51 @@ let
     else
       toString file;
 
+  # Build paths from our own persist options (lists), not from evaluated persistence config
+  rootDirs =
+    (
+      if persist.root.defaultFolders then
+        [
+          "/var/log"
+          "/var/lib/nixos"
+        ]
+      else
+        [ ]
+    )
+    ++ persist.root.directories
+    ++ persist.root.cache.directories;
+  rootFiles = persist.root.files ++ persist.root.cache.files;
+  homeDirs =
+    (
+      if persist.home.defaultFolders then
+        [
+          "projects"
+          ".cache/dconf"
+          ".config/dconf"
+          ".ssh"
+        ]
+      else
+        [ ]
+    )
+    ++ persist.home.directories
+    ++ persist.home.cache.directories;
+  homeFiles = persist.home.files ++ persist.home.cache.files;
+
+  homeDirPaths = lib.map (
+    d:
+    "/home/${user}/"
+    + (if lib.hasPrefix "/" (toString d) then lib.removePrefix "/" (toString d) else toString d)
+  ) homeDirs;
+  homeFilePaths = lib.map (
+    f:
+    "/home/${user}/"
+    + (if lib.hasPrefix "/" (toString f) then lib.removePrefix "/" (toString f) else toString f)
+  ) homeFiles;
+
   impermanenceJson = pkgs.writeText "impermanence.json" (
     lib.strings.toJSON {
-      directories = lib.unique (
-        lib.map getDirPath (
-          config.environment.persistence."/persist".directories
-          ++ config.environment.persistence."/cache".directories
-        )
-      );
-      files = lib.unique (
-        lib.map getFilePath (
-          config.environment.persistence."/persist".files ++ config.environment.persistence."/cache".files
-        )
-      );
+      directories = lib.unique (rootDirs ++ homeDirPaths);
+      files = lib.unique (rootFiles ++ homeFilePaths);
     }
   );
 in
@@ -103,18 +135,30 @@ in
       };
     };
 
-    # Use string interpolation to convert derivation to path string
-    environment.etc."impermanence.json".text = "${impermanenceJson}";
+    environment.etc."impermanence.json".source = impermanenceJson;
 
     qnix.core.shell.packages = {
       show-root-files = {
-        runtimeInputs = [ pkgs.fd ];
+        runtimeInputs = [
+          pkgs.fd
+          pkgs.jq
+        ];
         text = ''
+          # Exclude persisted dirs and files from impermanence.json so we only list ephemeral content
+          exclude_args=()
+          if [[ -f /etc/impermanence.json ]]; then
+            while IFS= read -r path; do
+              [[ -n "$path" ]] && exclude_args+=(--exclude "$path")
+            done < <(jq -r '.directories[], .files[]' /etc/impermanence.json 2>/dev/null)
+          fi
           sudo fd --one-file-system --base-directory / --type f --hidden \
+            "''${exclude_args[@]}" \
             --exclude "/etc/{ssh,passwd,shadow}" \
             --exclude "*.timer" \
             --exclude "/var/lib/NetworkManager" \
-            --exclude "${config.hm.xdg.cacheHome}/{bat,fontconfig,fish,mpv,nvidia,nvim/catppuccin,pre-commit,swww,wallust,nix}" \
+            --exclude "/var/lib/sddm/.cache/" \
+            --exclude "/root/.cache" \
+            --exclude "${config.hm.xdg.cacheHome}/{bat,fontconfig,mesa_shader_cache,mpv,nvim,pre-commit,radv_builtin_shaders,fish,nvf,nix}" \
             --exec ls -lS | sort -rn -k5 | awk '{print $5, $9}'
         '';
       };

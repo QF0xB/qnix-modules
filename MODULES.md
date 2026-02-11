@@ -166,16 +166,18 @@ These modules define the core QNix configuration options.
 | `qnix.nix-helpers.enable` | `bool` | `true` | nh |
 | `qnix.nix-helpers.enable` | `bool` | `true` | periodic nh clean user (garbage collection) |
 | `qnix.nix-helpers.enable` | `bool` | `true` | nixfmt |
+| `qnix.nix-helpers.enable` | `bool` | `true` | direnv |
 | `qnix.nix-helpers.dates` | `singleLineStr` | `"weekly"` | How often to run nh clean (systemd timer calendar). |
 | `qnix.nix-helpers.extraArgs` | `singleLineStr` | `""` | Extra arguments passed to nh clean. |
 | `qnix.nix-helpers.helpers.dates` | `singleLineStr` | `"weekly"` | How often to run nh clean (systemd timer calendar). |
 | `qnix.nix-helpers.helpers.extraArgs` | `singleLineStr` | `""` | Extra arguments passed to nh clean. |
 | `qnix.nix-helpers.helpers.enable` | `bool` | `true` | periodic nh clean user (garbage collection) |
 | `qnix.nix-helpers.nixfmt.enable` | `bool` | `true` | nixfmt |
+| `qnix.nix-helpers.direnv.enable` | `bool` | `true` | direnv |
 
 ### `nvf`
 
-**Type**: Home Manager
+**Type**: NixOS, Home Manager
 
 #### Options
 
@@ -428,6 +430,20 @@ These modules define the core QNix configuration options.
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `qnix.hyprdesktop.enable` | `bool` | `false` | hyprdesktop |
+
+### `laptop-specifics`
+
+**Type**: NixOS
+
+#### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `qnix.laptop-specifics.enable` | `bool` | `true` | laptop-specific services (Tuned, upower) |
+| `qnix.laptop-specifics.enable` | `bool` | `true` | TuneD for power/performance profiles (replaces power-profiles-daemon) |
+| `qnix.laptop-specifics.upower` | `bool` | `true` | upower (battery/power info; required by TuneD when using PPD compatibility) |
+| `qnix.laptop-specifics.profile` | `unknown` | `"balanced"` | No description |
+| `qnix.laptop-specifics.quietMaxPerfPct` | `ints` | `70` | No description |
 
 ### `periphery`
 

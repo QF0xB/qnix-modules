@@ -14,5 +14,9 @@ in
         plugins = cfg.extraPlugins;
       };
     };
+
+    qnix.persist.root.directories = [
+      "/etc/NetworkManager/system-connections/"
+    ];
   };
 }

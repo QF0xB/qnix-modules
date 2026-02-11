@@ -30,5 +30,12 @@
         description = "Whether to install nixfmt.";
       };
     };
+
+    direnv = {
+      enable = lib.mkEnableOption "direnv" // {
+        default = true;
+        description = "Whether to install direnv.";
+      };
+    };
   };
 }
