@@ -103,11 +103,23 @@
       nixos = true;
       home = false;
     };
+    obsidian = {
+      nixos = true;
+      home = true;
+    };
     periphery = {
       nixos = true;
       home = false;
     };
+    sound = {
+      nixos = true;
+      home = false;
+    };
     terminal = {
+      nixos = true;
+      home = true;
+    };
+    tidal-hifi = {
       nixos = true;
       home = true;
     };
@@ -117,6 +129,10 @@
     };
     wallpaper = {
       nixos = false;
+      home = true;
+    };
+    xdg-folders = {
+      nixos = true;
       home = true;
     };
   };

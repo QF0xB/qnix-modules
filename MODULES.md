@@ -445,6 +445,16 @@ These modules define the core QNix configuration options.
 | `qnix.laptop-specifics.profile` | `unknown` | `"balanced"` | No description |
 | `qnix.laptop-specifics.quietMaxPerfPct` | `ints` | `70` | No description |
 
+### `obsidian`
+
+**Type**: NixOS, Home Manager
+
+#### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `qnix.obsidian.enable` | `bool` | `false` | obsidian |
+
 ### `periphery`
 
 **Type**: NixOS
@@ -455,6 +465,18 @@ These modules define the core QNix configuration options.
 |--------|------|---------|-------------|
 | `qnix.periphery.enable` | `bool` | `true` | thunderbolt |
 
+### `sound`
+
+**Type**: NixOS
+
+#### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `qnix.sound.enable` | `bool` | `true` | sound |
+| `qnix.sound.enable` | `bool` | `true` | GUI sound applications |
+| `qnix.sound.sound.enable` | `bool` | `true` | GUI sound applications |
+
 ### `terminal`
 
 **Type**: NixOS, Home Manager
@@ -464,6 +486,16 @@ These modules define the core QNix configuration options.
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `qnix.terminal.enable` | `bool` | `config != null && !config.qnix.headless` | terminal |
+
+### `tidal-hifi`
+
+**Type**: NixOS, Home Manager
+
+#### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `qnix.tidal-hifi.enable` | `bool` | `false` | tidal-hifi |
 
 ### `vscode`
 
@@ -488,6 +520,16 @@ These modules define the core QNix configuration options.
 | `qnix.wallpaper.enable` | `bool` | `config != null && config.qnix.wayland && !config.qnix.headless` | waypaper |
 | `qnix.wallpaper.wallpaperSource` | `nullOr` | `../assets` | Source directory containing wallpapers to copy to ~/Pictures/wallpaper |
 | `qnix.wallpaper.defaultWallpaper` | `nullOr` | `"solarized-dark.png"` | Default wallpaper filename to use (relative to ~/Pictures/wallpaper) |
+
+### `xdg-folders`
+
+**Type**: NixOS, Home Manager
+
+#### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `qnix.xdg-folders.enable` | `bool` | `true` | xdg-folders |
 
 
 ---

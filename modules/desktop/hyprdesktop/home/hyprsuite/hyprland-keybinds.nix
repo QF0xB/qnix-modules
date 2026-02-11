@@ -37,9 +37,9 @@ let
 
       if [ "$exists" != "true" ]; then
         uwsm app -- "$@" >/dev/null 2>&1 &
+      else
+        hyprctl dispatch togglespecialworkspace "$ws" >/dev/null
       fi
-
-      hyprctl dispatch togglespecialworkspace "$ws" >/dev/null
     '';
   };
 
@@ -131,7 +131,7 @@ lib.mkIf (cfg.enable && cfg.hyprsuite.hyprland.setDefaultKeybinds) {
     "$mod" = if isVm then "ALT" else "super";
 
     bindl = [
-      ",switch:Lid Switch, ${uexec ''hyprlock''}"
+      ",switch:Lid Switch, ${uexec "hyprlock"}"
     ];
 
     bindm = [
@@ -154,20 +154,21 @@ lib.mkIf (cfg.enable && cfg.hyprsuite.hyprland.setDefaultKeybinds) {
       "$mod, code:48, fullscreen #ä"
       "$mod, code:38, killactive #a"
       "$mod SHIFT, code:48, togglefloating #f"
-      "$mod, return, ${default-app-uexec ''terminal''}"
-      "$mod CTRL, return, ${default-app-uexec ''terminal''} --class floating"
-      "$mod, code:47, ${default-app-uexec ''browser''} #Ö"
-      "$mod SHIFT, code:47, ${default-app-uexec ''browser''} --private-window #Ö"
-      "$mod, code:40, ${default-app-uexec ''file-manager''} #d"
+      "$mod, return, ${default-app-uexec "terminal"}"
+      "$mod CTRL, return, ${default-app-uexec "terminal"} --class floating"
+      "$mod, code:47, ${default-app-uexec "browser"} #Ö"
+      "$mod SHIFT, code:47, ${default-app-uexec "browser"} --private-window #Ö"
+      "$mod, code:40, ${default-app-uexec "file-manager"} #d"
+
       # Special workspaces (toggle; launch app if no matching window)
       "$mod, enter, ${
         hypr-special "scratch" "scratchpad" (lib.getExe apps.terminal + " --class scratchpad")
       } #scratchpad"
       "$mod, code:26, ${hypr-special "notes" "obsidian" (lib.getExe apps.notes)} #e notes"
-      "$mod, code:28, ${hypr-special "obs" "obs" "obs-studio"} #y obs"
+      "$mod, code:29, ${hypr-special "obs" "obs" "obs-studio"} #z obs"
       "$mod, code:57, ${hypr-special "secrets" "bitwarden" "bitwarden-desktop"} #n bitwarden"
-      ", xf86audioraisevolume, exec, pamixer -i 5 && dunstify -h int:value:'$(pamixer --get-volume)' -i ~/.config/dunst/assets/volume.svg -t 500 -r 2593 'Volume: $(pamixer --get-volume) %'"
-      ", xf86audiolowervolume, exec, pamixer -d 5 && dunstify -h int:value:'$(pamixer --get-volume)' -i ~/.config/dunst/assets/volume.svg -t 500 -r 2593 'Volume: $(pamixer --get-volume) %'"
+      "$mod, code:43, ${hypr-special "music" "tidal-hifi" "tidal-hifi"} #d tidal-hifi"
+
       ", xf86AudioMute, exec, pamixer -t && dunstify -i ~/.config/dunst/assets/$(pamixer --get-mute | grep -q 'true' && echo 'volume-mute.svg' || echo 'volume.svg') -t 500 -r 2593 'Toggle Mute'"
       ", XF86AudioPlay, exec, playerctl play-pause"
       ", XF86AudioNext, exec, playerctl next"
