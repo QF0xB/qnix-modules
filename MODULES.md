@@ -91,12 +91,14 @@ These modules define the core QNix configuration options.
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `qnix.gpg.enable` | `bool` | `false` | GPG with SSH agent support |
+| `qnix.gpg.url` | `nullOr` | `null` | URL to fetch the key from (e.g. keys.openpgp.org vks URL). Use together with sha256. |
+| `qnix.gpg.sha256` | `nullOr` | `null` | Hash of the key file. Run: nix-prefetch-url |
+| `qnix.gpg.source` | `nullOr` | `null` | Path to a key file (use this or url+sha256 or text). |
+| `qnix.gpg.text` | `nullOr` | `null` | Literal key block (use this or url+sha256 or source). |
+| `qnix.gpg.trust` | `nullOr` | `null` | Trust level: unknown, never, marginal, full, ultimate (or 1–5). |
 | `qnix.gpg.enableSSH` | `bool` | `true` | Enable GPG as SSH agent |
 | `qnix.gpg.pinentryPackage` | `package` | `pkgs.pinentry-tty` | Pinentry package to use for password entry |
-| `qnix.gpg.publicKeys` | `listOf` | `[ ]` | List of public GPG keys to import. Can be key data (strings) or file paths. |
-| `qnix.gpg.gpg.enableSSH` | `bool` | `true` | Enable GPG as SSH agent |
-| `qnix.gpg.gpg.pinentryPackage` | `package` | `pkgs.pinentry-tty` | Pinentry package to use for password entry |
-| `qnix.gpg.gpg.publicKeys` | `listOf` | `[ ]` | List of public GPG keys to import. Can be key data (strings) or file paths. |
+| `qnix.gpg.publicKeys` | `listOf` | `[ ]` | List of public GPG keys to import: URLs (with sha256), literal key data (strings), file paths, or attrsets with optional trust. |
 
 ### `impermanence`
 

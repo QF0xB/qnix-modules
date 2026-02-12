@@ -131,7 +131,7 @@ class="sourceCode nix"><code class="sourceCode nix"><span id="cb11-1"><a href="#
 <p><em>Declared by:</em></p>
 <ul>
 <li><a
-href="file:///nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/core/boot/options/grub-options.nix">/nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/core/boot/options/grub-options.nix</a></li>
+href="file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/boot/options/grub-options.nix">/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/boot/options/grub-options.nix</a></li>
 </ul>
 <h2>core.boot.grub.device</h2>
 <p>Device to use for GRUB</p>
@@ -142,7 +142,7 @@ class="sourceCode nix"><code class="sourceCode nix"><span id="cb12-1"><a href="#
 <p><em>Declared by:</em></p>
 <ul>
 <li><a
-href="file:///nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/core/boot/options/grub-options.nix">/nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/core/boot/options/grub-options.nix</a></li>
+href="file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/boot/options/grub-options.nix">/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/boot/options/grub-options.nix</a></li>
 </ul>
 <h2>core.boot.systemd-boot.enable</h2>
 <p>Whether to enable systemd-boot bootloader.</p>
@@ -156,7 +156,7 @@ class="sourceCode nix"><code class="sourceCode nix"><span id="cb14-1"><a href="#
 <p><em>Declared by:</em></p>
 <ul>
 <li><a
-href="file:///nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/core/boot/options/systemd-boot-options.nix">/nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/core/boot/options/systemd-boot-options.nix</a></li>
+href="file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/boot/options/systemd-boot-options.nix">/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/boot/options/systemd-boot-options.nix</a></li>
 </ul>
 <h2>core.boot.timeout</h2>
 <p>Timeout for Boot</p>
@@ -255,20 +255,28 @@ class="sourceCode nix"><code class="sourceCode nix"><span id="cb31-1"><a href="#
 <div class="sourceCode" id="cb32"><pre
 class="sourceCode nix"><code class="sourceCode nix"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="bu">derivation</span> pinentry<span class="op">-</span>tty<span class="dv">-1</span><span class="op">.</span>3.2&gt;</span></code></pre></div>
 <h2>core.gpg.publicKeys</h2>
-<p>List of public GPG keys to import. Can be key data (strings) or file
-paths.</p>
-<p><em>Type:</em> list of (string or absolute path)</p>
+<p>List of public GPG keys to import: URLs (with sha256), literal key
+data (strings), file paths, or attrsets with optional trust.</p>
+<p><em>Type:</em> list of (absolute path or string or (submodule))</p>
 <p><em>Default:</em></p>
 <div class="sourceCode" id="cb33"><pre
 class="sourceCode nix"><code class="sourceCode nix"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="op">[</span> <span class="op">]</span></span></code></pre></div>
 <p><em>Example:</em></p>
 <div class="sourceCode" id="cb34"><pre
 class="sourceCode nix"><code class="sourceCode nix"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="op">[</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&#39;&#39;</span></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="st">    -----BEGIN PGP PUBLIC KEY BLOCK-----</span></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="st">    ...&#39;&#39;</span></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;/path/to/public-key.asc&quot;</span></span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span></code></pre></div>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">{</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">sha256</span> <span class="op">=</span> <span class="st">&quot;0000000000000000000000000000000000000000000000000000000000000000&quot;</span><span class="op">;</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">trust</span> <span class="op">=</span> <span class="st">&quot;ultimate&quot;</span><span class="op">;</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">url</span> <span class="op">=</span> <span class="st">&quot;https://keys.openpgp.org/vks/v1/by-fingerprint/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA&quot;</span><span class="op">;</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  <span class="op">{</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>    <span class="va">source</span> <span class="op">=</span> <span class="ss">/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/gpg/options/pubkey.asc</span><span class="op">;</span></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>    <span class="va">trust</span> <span class="op">=</span> <span class="st">&quot;full&quot;</span><span class="op">;</span></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">&#39;&#39;</span></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a><span class="st">    -----BEGIN PGP PUBLIC KEY BLOCK-----</span></span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a><span class="st">    ...&#39;&#39;</span></span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span></code></pre></div>
 <h2>core.impermanence.enable</h2>
 <p>Whether to enable impermanence.</p>
 <p><em>Type:</em> boolean</p>
@@ -362,7 +370,7 @@ class="sourceCode nix"><code class="sourceCode nix"><span id="cb49-1"><a href="#
 <p><em>Declared by:</em></p>
 <ul>
 <li><a
-href="file:///nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/core/network/options/firewall/options.nix">/nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/core/network/options/firewall/options.nix</a></li>
+href="file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/firewall/options.nix">/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/firewall/options.nix</a></li>
 </ul>
 <h2>core.network.firewall.allowPing</h2>
 <p>Whether to allow ping</p>
@@ -373,7 +381,7 @@ class="sourceCode nix"><code class="sourceCode nix"><span id="cb50-1"><a href="#
 <p><em>Declared by:</em></p>
 <ul>
 <li><a
-href="file:///nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/core/network/options/firewall/options.nix">/nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/core/network/options/firewall/options.nix</a></li>
+href="file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/firewall/options.nix">/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/firewall/options.nix</a></li>
 </ul>
 <h2>core.network.firewall.allowedTCPPortRanges</h2>
 <p>List of TCP port ranges to allow</p>
@@ -384,7 +392,7 @@ class="sourceCode nix"><code class="sourceCode nix"><span id="cb51-1"><a href="#
 <p><em>Declared by:</em></p>
 <ul>
 <li><a
-href="file:///nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/core/network/options/firewall/options.nix">/nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/core/network/options/firewall/options.nix</a></li>
+href="file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/firewall/options.nix">/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/firewall/options.nix</a></li>
 </ul>
 <h2>core.network.firewall.allowedTCPPorts</h2>
 <p>List of TCP ports to allow</p>
@@ -395,7 +403,7 @@ class="sourceCode nix"><code class="sourceCode nix"><span id="cb52-1"><a href="#
 <p><em>Declared by:</em></p>
 <ul>
 <li><a
-href="file:///nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/core/network/options/firewall/options.nix">/nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/core/network/options/firewall/options.nix</a></li>
+href="file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/firewall/options.nix">/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/firewall/options.nix</a></li>
 </ul>
 <h2>core.network.firewall.allowedUDPPortRanges</h2>
 <p>List of UDP port ranges to allow</p>
@@ -406,7 +414,7 @@ class="sourceCode nix"><code class="sourceCode nix"><span id="cb53-1"><a href="#
 <p><em>Declared by:</em></p>
 <ul>
 <li><a
-href="file:///nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/core/network/options/firewall/options.nix">/nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/core/network/options/firewall/options.nix</a></li>
+href="file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/firewall/options.nix">/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/firewall/options.nix</a></li>
 </ul>
 <h2>core.network.firewall.allowedUDPPorts</h2>
 <p>List of UDP ports to allow</p>
@@ -417,7 +425,7 @@ class="sourceCode nix"><code class="sourceCode nix"><span id="cb54-1"><a href="#
 <p><em>Declared by:</em></p>
 <ul>
 <li><a
-href="file:///nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/core/network/options/firewall/options.nix">/nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/core/network/options/firewall/options.nix</a></li>
+href="file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/firewall/options.nix">/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/firewall/options.nix</a></li>
 </ul>
 <h2>core.network.firewall.rejectPackets</h2>
 <p>Whether to reject packets</p>
@@ -428,7 +436,7 @@ class="sourceCode nix"><code class="sourceCode nix"><span id="cb55-1"><a href="#
 <p><em>Declared by:</em></p>
 <ul>
 <li><a
-href="file:///nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/core/network/options/firewall/options.nix">/nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/core/network/options/firewall/options.nix</a></li>
+href="file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/firewall/options.nix">/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/firewall/options.nix</a></li>
 </ul>
 <h2>core.network.nm.enable</h2>
 <p>Whether to enable NetworkManager.</p>
@@ -442,7 +450,7 @@ class="sourceCode nix"><code class="sourceCode nix"><span id="cb57-1"><a href="#
 <p><em>Declared by:</em></p>
 <ul>
 <li><a
-href="file:///nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/core/network/options/nm/options.nix">/nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/core/network/options/nm/options.nix</a></li>
+href="file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/nm/options.nix">/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/nm/options.nix</a></li>
 </ul>
 <h2>core.network.nm.extraPlugins</h2>
 <p>List of extra NetworkManager plugins to install</p>
@@ -460,7 +468,7 @@ class="sourceCode nix"><code class="sourceCode nix"><span id="cb59-1"><a href="#
 <p><em>Declared by:</em></p>
 <ul>
 <li><a
-href="file:///nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/core/network/options/nm/options.nix">/nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/core/network/options/nm/options.nix</a></li>
+href="file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/nm/options.nix">/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/nm/options.nix</a></li>
 </ul>
 <h2>core.network.nm.unmanaged</h2>
 <p>List of network interfaces to not manage with NetworkManager</p>
@@ -471,7 +479,7 @@ class="sourceCode nix"><code class="sourceCode nix"><span id="cb60-1"><a href="#
 <p><em>Declared by:</em></p>
 <ul>
 <li><a
-href="file:///nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/core/network/options/nm/options.nix">/nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/core/network/options/nm/options.nix</a></li>
+href="file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/nm/options.nix">/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/nm/options.nix</a></li>
 </ul>
 <h2>core.nix-helpers.direnv.enable</h2>
 <p>Whether to install direnv.</p>
@@ -576,7 +584,7 @@ class="sourceCode nix"><code class="sourceCode nix"><span id="cb79-1"><a href="#
 <p><em>Declared by:</em></p>
 <ul>
 <li><a
-href="file:///nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/core/passwords/options/bitwarden/options.nix">/nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/core/passwords/options/bitwarden/options.nix</a></li>
+href="file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/passwords/options/bitwarden/options.nix">/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/passwords/options/bitwarden/options.nix</a></li>
 </ul>
 <h2>core.passwords.bitwarden.desktop.enable</h2>
 <p>Whether to enable bitwarden desktop.</p>
@@ -590,7 +598,7 @@ class="sourceCode nix"><code class="sourceCode nix"><span id="cb81-1"><a href="#
 <p><em>Declared by:</em></p>
 <ul>
 <li><a
-href="file:///nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/core/passwords/options/bitwarden/options.nix">/nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/core/passwords/options/bitwarden/options.nix</a></li>
+href="file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/passwords/options/bitwarden/options.nix">/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/passwords/options/bitwarden/options.nix</a></li>
 </ul>
 <h2>core.plymouth.enable</h2>
 <p>Whether to enable plymouth.</p>
@@ -1200,7 +1208,7 @@ class="sourceCode nix"><code class="sourceCode nix"><span id="cb186-1"><a href="
 <p><em>Declared by:</em></p>
 <ul>
 <li><a
-href="file:///nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/desktop/displaymanager/options/sddm-options.nix">/nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/desktop/displaymanager/options/sddm-options.nix</a></li>
+href="file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/displaymanager/options/sddm-options.nix">/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/displaymanager/options/sddm-options.nix</a></li>
 </ul>
 <h2>desktop.displaymanager.sddm.theme.package</h2>
 <p>SDDM theme package</p>
@@ -1211,7 +1219,7 @@ class="sourceCode nix"><code class="sourceCode nix"><span id="cb187-1"><a href="
 <p><em>Declared by:</em></p>
 <ul>
 <li><a
-href="file:///nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/desktop/displaymanager/options/sddm-options.nix">/nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/desktop/displaymanager/options/sddm-options.nix</a></li>
+href="file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/displaymanager/options/sddm-options.nix">/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/displaymanager/options/sddm-options.nix</a></li>
 </ul>
 <h2>desktop.displaymanager.sddm.theme.embeddedTheme</h2>
 <p>Embedded theme variant for the theme package</p>
@@ -1222,7 +1230,7 @@ class="sourceCode nix"><code class="sourceCode nix"><span id="cb188-1"><a href="
 <p><em>Declared by:</em></p>
 <ul>
 <li><a
-href="file:///nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/desktop/displaymanager/options/sddm-options.nix">/nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/desktop/displaymanager/options/sddm-options.nix</a></li>
+href="file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/displaymanager/options/sddm-options.nix">/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/displaymanager/options/sddm-options.nix</a></li>
 </ul>
 <h2>desktop.displaymanager.sddm.theme.name</h2>
 <p>SDDM theme name</p>
@@ -1233,7 +1241,7 @@ class="sourceCode nix"><code class="sourceCode nix"><span id="cb189-1"><a href="
 <p><em>Declared by:</em></p>
 <ul>
 <li><a
-href="file:///nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/desktop/displaymanager/options/sddm-options.nix">/nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/desktop/displaymanager/options/sddm-options.nix</a></li>
+href="file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/displaymanager/options/sddm-options.nix">/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/displaymanager/options/sddm-options.nix</a></li>
 </ul>
 <h2>desktop.hyprdesktop.enable</h2>
 <p>Whether to enable hyprdesktop.</p>
@@ -1256,7 +1264,7 @@ class="sourceCode nix"><code class="sourceCode nix"><span id="cb193-1"><a href="
 <p><em>Declared by:</em></p>
 <ul>
 <li><a
-href="file:///nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/desktop/hyprdesktop/options/ags.nix">/nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/desktop/hyprdesktop/options/ags.nix</a></li>
+href="file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/ags.nix">/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/ags.nix</a></li>
 </ul>
 <h2>desktop.hyprdesktop.ags.configDir</h2>
 <p>Path to the AGS configuration (git checkout of qnix-ags or similar).
@@ -1271,7 +1279,7 @@ class="sourceCode nix"><code class="sourceCode nix"><span id="cb195-1"><a href="
 <p><em>Declared by:</em></p>
 <ul>
 <li><a
-href="file:///nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/desktop/hyprdesktop/options/ags.nix">/nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/desktop/hyprdesktop/options/ags.nix</a></li>
+href="file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/ags.nix">/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/ags.nix</a></li>
 </ul>
 <h2>desktop.hyprdesktop.ags.displays.large</h2>
 <p>Outputs that should use the wide AGS bar layout.</p>
@@ -1288,7 +1296,7 @@ class="sourceCode nix"><code class="sourceCode nix"><span id="cb197-1"><a href="
 <p><em>Declared by:</em></p>
 <ul>
 <li><a
-href="file:///nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/desktop/hyprdesktop/options/ags.nix">/nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/desktop/hyprdesktop/options/ags.nix</a></li>
+href="file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/ags.nix">/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/ags.nix</a></li>
 </ul>
 <h2>desktop.hyprdesktop.ags.displays.small</h2>
 <p>Outputs that should use the condensed AGS bar layout.</p>
@@ -1304,7 +1312,7 @@ class="sourceCode nix"><code class="sourceCode nix"><span id="cb199-1"><a href="
 <p><em>Declared by:</em></p>
 <ul>
 <li><a
-href="file:///nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/desktop/hyprdesktop/options/ags.nix">/nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/desktop/hyprdesktop/options/ags.nix</a></li>
+href="file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/ags.nix">/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/ags.nix</a></li>
 </ul>
 <h2>desktop.hyprdesktop.ags.extraPackages</h2>
 <p>Extra packages to use when overriding ags in dev shells or elsewhere.
@@ -1317,7 +1325,7 @@ class="sourceCode nix"><code class="sourceCode nix"><span id="cb200-1"><a href="
 <p><em>Declared by:</em></p>
 <ul>
 <li><a
-href="file:///nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/desktop/hyprdesktop/options/ags.nix">/nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/desktop/hyprdesktop/options/ags.nix</a></li>
+href="file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/ags.nix">/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/ags.nix</a></li>
 </ul>
 <h2>desktop.hyprdesktop.hyprsuite.hyprland.enable</h2>
 <p>Whether to enable hyprland.</p>
@@ -1331,7 +1339,7 @@ class="sourceCode nix"><code class="sourceCode nix"><span id="cb202-1"><a href="
 <p><em>Declared by:</em></p>
 <ul>
 <li><a
-href="file:///nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix">/nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix</a></li>
+href="file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix">/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix</a></li>
 </ul>
 <h2>desktop.hyprdesktop.hyprsuite.hyprland.setDefaultAnimations</h2>
 <p>Whether to enable set default animations.</p>
@@ -1345,7 +1353,7 @@ class="sourceCode nix"><code class="sourceCode nix"><span id="cb204-1"><a href="
 <p><em>Declared by:</em></p>
 <ul>
 <li><a
-href="file:///nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix">/nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix</a></li>
+href="file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix">/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix</a></li>
 </ul>
 <h2>desktop.hyprdesktop.hyprsuite.hyprland.setDefaultKeybinds</h2>
 <p>Whether to enable set default keybinds.</p>
@@ -1359,7 +1367,7 @@ class="sourceCode nix"><code class="sourceCode nix"><span id="cb206-1"><a href="
 <p><em>Declared by:</em></p>
 <ul>
 <li><a
-href="file:///nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix">/nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix</a></li>
+href="file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix">/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix</a></li>
 </ul>
 <h2>desktop.hyprdesktop.hyprsuite.hyprland.setDefaultSpecialWorkspace</h2>
 <p>Whether to enable set default special workspace settings.</p>
@@ -1373,7 +1381,7 @@ class="sourceCode nix"><code class="sourceCode nix"><span id="cb208-1"><a href="
 <p><em>Declared by:</em></p>
 <ul>
 <li><a
-href="file:///nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix">/nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix</a></li>
+href="file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix">/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix</a></li>
 </ul>
 <h2>desktop.hyprdesktop.hyprsuite.hyprland.setDefaultWindowRules</h2>
 <p>Whether to enable set default window rules.</p>
@@ -1387,7 +1395,7 @@ class="sourceCode nix"><code class="sourceCode nix"><span id="cb210-1"><a href="
 <p><em>Declared by:</em></p>
 <ul>
 <li><a
-href="file:///nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix">/nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix</a></li>
+href="file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix">/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix</a></li>
 </ul>
 <h2>desktop.hyprdesktop.noctalia.enable</h2>
 <p>Whether to enable noctalia.</p>
@@ -1401,7 +1409,7 @@ class="sourceCode nix"><code class="sourceCode nix"><span id="cb212-1"><a href="
 <p><em>Declared by:</em></p>
 <ul>
 <li><a
-href="file:///nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/desktop/hyprdesktop/options/noctalia.nix">/nix/store/1p1ylwh9rp34l0msz8f5vmq4d43flcqh-source/modules/desktop/hyprdesktop/options/noctalia.nix</a></li>
+href="file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/noctalia.nix">/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/noctalia.nix</a></li>
 </ul>
 <h2>desktop.jetbrains.enable</h2>
 <p>Whether to enable jetbrains.</p>

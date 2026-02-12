@@ -9,13 +9,40 @@
 let
   cfg = osConfig.qnix.core.gpg;
   yubikeyEnabled = osConfig.qnix.core.yubikey.enable or false;
+
+  # Home Manager expects publicKeys to be a list of { source = path; } or { text = "key block"; }, with optional trust.
+  toHMPublicKey =
+    key:
+    let
+      withTrust =
+        attrs: attrs // lib.optionalAttrs (key ? trust && key.trust != null) { trust = key.trust; };
+    in
+    if key ? url && key ? sha256 && key.url != null && key.sha256 != null then
+      withTrust {
+        source = "${pkgs.fetchurl {
+          url = key.url;
+          sha256 = key.sha256;
+        }}";
+      }
+    else if key ? source && key.source != null then
+      withTrust { source = key.source; }
+    else if key ? text && key.text != null then
+      withTrust { text = key.text; }
+    else if lib.isPath key then
+      { source = key; }
+    else if lib.isString key then
+      if lib.hasPrefix "-----BEGIN" key then { text = key; } else { source = key; }
+    else
+      throw "qnix.core.gpg.publicKeys: entry must be path, string, or attrset with url+sha256, source, or text (optional trust)";
+
+  publicKeysForHM = map toHMPublicKey cfg.publicKeys;
 in
 {
   config = lib.mkIf cfg.enable {
     # GPG configuration
     programs.gpg = {
       enable = true;
-      publicKeys = cfg.publicKeys;
+      publicKeys = publicKeysForHM;
       settings = {
         # Use agent for pinentry
         use-agent = true;
