@@ -129,9 +129,16 @@ lib.mkIf (cfg.enable && cfg.hyprsuite.hyprland.setDefaultKeybinds) {
 
   wayland.windowManager.hyprland.settings = {
     "$mod" = if isVm then "ALT" else "super";
+    "$ipc" = "noctalia-shell ipc call";
 
     bindl = [
       ",switch:Lid Switch, ${uexec "hyprlock"}"
+
+      ", xf86AudioMute, exec, pamixer -t && dunstify -i ~/.config/dunst/assets/$(pamixer --get-mute | grep -q 'true' && echo 'volume-mute.svg' || echo 'volume.svg') -t 500 -r 2593 'Toggle Mute'"
+      ", XF86AudioPlay, exec, playerctl play-pause"
+      ", XF86AudioNext, exec, playerctl next"
+      ", XF86AudioPrev, exec, playerctl previous"
+      ", XF86audiostop, exec, playerctl stop"
     ];
 
     bindm = [
@@ -151,6 +158,10 @@ lib.mkIf (cfg.enable && cfg.hyprsuite.hyprland.setDefaultKeybinds) {
       "$mod, right, movefocus, r"
       "$mod, up, movefocus, u"
       "$mod, down, movefocus, d"
+
+      "$mod, code:25, exec, $ipc launcher toggle"
+      "$mod SHIFT, code:25, exec, $ipc controlCenter toggle"
+
       "$mod, code:48, fullscreen #ä"
       "$mod, code:38, killactive #a"
       "$mod SHIFT, code:48, togglefloating #f"
@@ -166,10 +177,9 @@ lib.mkIf (cfg.enable && cfg.hyprsuite.hyprland.setDefaultKeybinds) {
       } #scratchpad"
       "$mod, code:26, ${hypr-special "notes" "obsidian" (lib.getExe apps.notes)} #e notes"
       "$mod, code:29, ${hypr-special "obs" "obs" "obs-studio"} #z obs"
-      "$mod, code:57, ${hypr-special "secrets" "bitwarden" "bitwarden-desktop"} #n bitwarden"
+      "$mod, code:57, ${hypr-special "secrets" "bitwarden" "bitwarden"} #n bitwarden"
       "$mod, code:43, ${hypr-special "music" "tidal-hifi" "tidal-hifi"} #d tidal-hifi"
 
-      ", xf86AudioMute, exec, pamixer -t && dunstify -i ~/.config/dunst/assets/$(pamixer --get-mute | grep -q 'true' && echo 'volume-mute.svg' || echo 'volume.svg') -t 500 -r 2593 'Toggle Mute'"
       ", XF86AudioPlay, exec, playerctl play-pause"
       ", XF86AudioNext, exec, playerctl next"
       ", XF86AudioPrev, exec, playerctl previous"

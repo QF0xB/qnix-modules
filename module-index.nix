@@ -44,6 +44,10 @@
       nixos = true;
       home = true;
     };
+    passwords = {
+      nixos = true;
+      home = false;
+    };
     plymouth = {
       nixos = true;
       home = false;

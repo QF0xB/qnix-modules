@@ -191,6 +191,14 @@ These modules define the core QNix configuration options.
 | `qnix.nvf.nvf.additionalWords` | `listOf` | `[ "nvf" "qnix" "qf0xb" "QPC" "QConfigVM" "QFram...]` | Additional words to add to the spellcheck dictionary |
 | `qnix.nvf.nvf.enable` | `bool` | `true` | spellcheck |
 
+### `passwords`
+
+**Type**: NixOS
+
+#### Options
+
+- `qnix.passwords.enable` (bool, default: `false`) - Enable this module
+
 ### `plymouth`
 
 **Type**: NixOS
