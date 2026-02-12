@@ -14,9 +14,10 @@ in
       (lib.optionals cfg.cli.enable [
         pkgs.bitwarden-cli
       ])
-      (lib.optionals cfg.desktop.enable [
-        pkgs.bitwarden-desktop
-      ])
+    ];
+
+    qnix.persist.home.directories = [
+      ".config/Bitwarden"
     ];
   };
 }

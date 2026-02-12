@@ -59,26 +59,6 @@ in
                 useCustomFont = false;
               }
               {
-                compactMode = true;
-                diskPath = "/persist";
-                iconColor = "none";
-                id = "SystemMonitor";
-                showCpuFreq = false;
-                showCpuTemp = true;
-                showCpuUsage = true;
-                showDiskAvailable = false;
-                showDiskUsage = false;
-                showDiskUsageAsPercent = false;
-                showGpuTemp = false;
-                showLoadAverage = false;
-                showMemoryAsPercent = true;
-                showMemoryUsage = true;
-                showNetworkStats = false;
-                showSwapUsage = false;
-                textColor = "none";
-                useMonospaceFont = true;
-              }
-              {
                 displayMode = "forceOpen";
                 iconColor = "none";
                 id = "KeyboardLayout";
@@ -270,7 +250,7 @@ in
         wallpaper = {
           enabled = true;
           overviewEnabled = false;
-          directory = config.home.homeDirectory;
+          directory = config.home.homeDirectory + "/Pictures/wallpaper";
           monitorDirectories = [ ];
           enableMultiMonitorDirectories = false;
           showHiddenFiles = false;
@@ -283,9 +263,9 @@ in
           automationEnabled = false;
           wallpaperChangeMode = "random";
           randomIntervalSec = 300;
-          transitionDuration = 1500;
-          transitionType = "random";
-          transitionEdgeSmoothness = 0.05;
+          transitionDuration = 2500;
+          transitionType = "honeycomb";
+          transitionEdgeSmoothness = 0.10;
           panelPosition = "follow_bar";
           hideWallpaperFilenames = false;
           useWallhaven = false;

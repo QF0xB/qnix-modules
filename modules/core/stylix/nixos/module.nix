@@ -40,11 +40,9 @@ in
     (lib.mkIf cfg.enable {
       stylix = {
         enable = true;
-
         base16Scheme = "${pkgs.base16-schemes}/share/themes/${cfg.colorScheme}.yaml";
         polarity = "dark";
         override = cfg.colorSchemeOverrides;
-
         cursor = {
           package = cfg.cursor.package;
           name = cfg.cursor.name;

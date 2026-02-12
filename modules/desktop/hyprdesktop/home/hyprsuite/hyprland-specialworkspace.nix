@@ -21,7 +21,7 @@ lib.mkIf (cfg.enable && cfg.hyprsuite.hyprland.setDefaultSpecialWorkspace) {
 
     animations = {
       enabled = vm-performance;
-      workspace_wraparound = true;
+      workspace_wraparound = false;
       animation = [ "specialWorkspace, 1, 8, default, slidevert" ];
     };
   };

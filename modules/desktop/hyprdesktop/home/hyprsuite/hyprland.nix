@@ -11,7 +11,7 @@
 let
   cfg = osConfig.qnix.desktop.hyprdesktop;
   keyboards = osConfig.qnix.core.localisation.xkb;
-  vm-performance = if isVm then false else true;
+  performance-mode = if isVm then false else true;
 in
 {
   imports = [
@@ -59,11 +59,11 @@ in
 
           # Blur and shadow enabled by default
           blur = {
-            enabled = vm-performance; # No blur in vm to help performance
+            enabled = performance-mode; # No blur in vm to help performance
           };
 
           shadow = {
-            enabled = vm-performance; # no shadow in vm to help performance
+            enabled = performance-mode; # no shadow in vm to help performance
           };
         };
 
@@ -77,7 +77,7 @@ in
         ];
 
         animations = {
-          enabled = vm-performance; # No animations in vm to help performance
+          enabled = performance-mode; # No animations in vm to help performance
         };
 
         input = {

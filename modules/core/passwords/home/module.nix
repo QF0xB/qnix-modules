@@ -1,0 +1,7 @@
+{ ... }:
+
+{
+  imports = [
+    ./bitwarden/module.nix
+  ];
+}

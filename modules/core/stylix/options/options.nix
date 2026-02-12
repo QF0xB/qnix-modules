@@ -2,6 +2,7 @@
   lib,
   pkgs ? null,
   isLaptop ? false,
+  config ? null,
   ...
 }:
 
@@ -130,6 +131,20 @@ in
           popups = (if isLaptop then 12 else 16);
           terminal = (if isLaptop then 12 else 16);
         };
+      };
+    };
+
+    wallpapers = {
+      enable = lib.mkEnableOption "wallpapers" // {
+        default = config != null && !config.qnix.headless;
+      };
+
+      # Path to the stylix wallpapers directory; copied to ~/Pictures/wallpaper when stylix is enabled
+      wallpapersPath = lib.mkOption {
+        type = lib.types.path;
+        default = ../wallpapers;
+        defaultText = lib.literalExpression "../wallpapers";
+        description = "Path to the stylix wallpapers directory. Contents are copied to ~/Pictures/wallpaper when stylix is enabled.";
       };
     };
 

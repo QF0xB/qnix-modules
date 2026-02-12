@@ -134,11 +134,12 @@ lib.mkIf (cfg.enable && cfg.hyprsuite.hyprland.setDefaultKeybinds) {
     bindl = [
       ",switch:Lid Switch, ${uexec "hyprlock"}"
 
-      ", xf86AudioMute, exec, pamixer -t && dunstify -i ~/.config/dunst/assets/$(pamixer --get-mute | grep -q 'true' && echo 'volume-mute.svg' || echo 'volume.svg') -t 500 -r 2593 'Toggle Mute'"
-      ", XF86AudioPlay, exec, playerctl play-pause"
-      ", XF86AudioNext, exec, playerctl next"
-      ", XF86AudioPrev, exec, playerctl previous"
-      ", XF86audiostop, exec, playerctl stop"
+      # Media keys
+      ", XF86AudioRaiseVolume, exec, $ipc volume increase"
+      ", XF86AudioLowerVolume, exec, $ipc volume decrease"
+      ", XF86AudioMute, exec, $ipc volume muteOutput"
+      ", XF86MonBrightnessUp, exec, $ipc brightness increase"
+      ", XF86MonBrightnessDown, exec, $ipc brightness decrease"
     ];
 
     bindm = [
@@ -161,6 +162,7 @@ lib.mkIf (cfg.enable && cfg.hyprsuite.hyprland.setDefaultKeybinds) {
 
       "$mod, code:25, exec, $ipc launcher toggle"
       "$mod SHIFT, code:25, exec, $ipc controlCenter toggle"
+      "ALT, code:46, exec, $ipc lockScreen lock"
 
       "$mod, code:48, fullscreen #ä"
       "$mod, code:38, killactive #a"
@@ -172,8 +174,8 @@ lib.mkIf (cfg.enable && cfg.hyprsuite.hyprland.setDefaultKeybinds) {
       "$mod, code:40, ${default-app-uexec "file-manager"} #d"
 
       # Special workspaces (toggle; launch app if no matching window)
-      "$mod, enter, ${
-        hypr-special "scratch" "scratchpad" (lib.getExe apps.terminal + " --class scratchpad")
+      "$mod, return, ${
+        hypr-special "scratch" "scratchpad" "${lib.getExe apps.terminal} --class scratchpad"
       } #scratchpad"
       "$mod, code:26, ${hypr-special "notes" "obsidian" (lib.getExe apps.notes)} #e notes"
       "$mod, code:29, ${hypr-special "obs" "obs" "obs-studio"} #z obs"

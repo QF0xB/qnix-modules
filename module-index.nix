@@ -46,7 +46,7 @@
     };
     passwords = {
       nixos = true;
-      home = false;
+      home = true;
     };
     plymouth = {
       nixos = true;
@@ -74,7 +74,7 @@
     };
     stylix = {
       nixos = true;
-      home = false;
+      home = true;
     };
     user = {
       nixos = true;
@@ -129,10 +129,6 @@
     };
     vscode = {
       nixos = true;
-      home = true;
-    };
-    wallpaper = {
-      nixos = false;
       home = true;
     };
     xdg-folders = {

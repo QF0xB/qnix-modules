@@ -193,7 +193,7 @@ These modules define the core QNix configuration options.
 
 ### `passwords`
 
-**Type**: NixOS
+**Type**: NixOS, Home Manager
 
 #### Options
 
@@ -313,13 +313,14 @@ These modules define the core QNix configuration options.
 
 ### `stylix`
 
-**Type**: NixOS
+**Type**: NixOS, Home Manager
 
 #### Options
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `qnix.stylix.enable` | `bool` | `true` | stylix |
+| `qnix.stylix.enable` | `bool` | `config != null && !config.qnix.headless` | wallpapers |
 | `qnix.stylix.colorScheme` | `str` | `"solarized-dark"` | The color scheme to use, must be in base16scheme repo |
 | `qnix.stylix.colorSchemeOverrides` | `attrs` | `none` | Override the color scheme with custom colors |
 | `qnix.stylix.cursor` | `attrs` | `{ package = if pkgs != null then pkgs.simp1e-cu...` | The cursor to use |
@@ -331,11 +332,14 @@ These modules define the core QNix configuration options.
 | `qnix.stylix.monospace` | `attrs` | `{ package = if pkgs != null then pkgs.nerd-font...` | The monospace font to use |
 | `qnix.stylix.emoji` | `attrs` | `{ package = if pkgs != null then pkgs.noto-font...` | The emoji font to use |
 | `qnix.stylix.sizes` | `attrs` | `{ applications = (if isLaptop then 12 else 16)` | The sizes of the fonts |
+| `qnix.stylix.wallpapersPath` | `path` | `../wallpapers` | Path to the stylix wallpapers directory. Contents are copied to ~/Pictures/wallpaper when stylix is enabled. |
 | `qnix.stylix.solarizedColors` | `attrsOf` | `none` | Colors converted from stylix base16 to solarized naming scheme (base03, base02, base01, base00, base0, base1, base2, base3, red, orange, yellow, green, cyan, blue, violet, magenta) |
 | `qnix.stylix.fonts.sansSerif` | `attrs` | `{ package = if pkgs != null then pkgs.fira-sans...` | The sans-serif font to use |
 | `qnix.stylix.fonts.monospace` | `attrs` | `{ package = if pkgs != null then pkgs.nerd-font...` | The monospace font to use |
 | `qnix.stylix.fonts.emoji` | `attrs` | `{ package = if pkgs != null then pkgs.noto-font...` | The emoji font to use |
 | `qnix.stylix.fonts.sizes` | `attrs` | `{ applications = (if isLaptop then 12 else 16)` | The sizes of the fonts |
+| `qnix.stylix.wallpapers.wallpapersPath` | `path` | `../wallpapers` | Path to the stylix wallpapers directory. Contents are copied to ~/Pictures/wallpaper when stylix is enabled. |
+| `qnix.stylix.wallpapers.enable` | `bool` | `config != null && !config.qnix.headless` | wallpapers |
 
 ### `user`
 
@@ -516,18 +520,6 @@ These modules define the core QNix configuration options.
 | `qnix.vscode.enable` | `bool` | `config != null && !config.qnix.headless` | VS Code / Cursor |
 | `qnix.vscode.package` | `package` | `if pkgs != null then pkgs.code-cursor else null` | No description |
 | `qnix.vscode.agentPanelSize` | `int` | `400` | Default width (in pixels) for the Cursor agent panel/sidebar |
-
-### `wallpaper`
-
-**Type**: Home Manager
-
-#### Options
-
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `qnix.wallpaper.enable` | `bool` | `config != null && config.qnix.wayland && !config.qnix.headless` | waypaper |
-| `qnix.wallpaper.wallpaperSource` | `nullOr` | `../assets` | Source directory containing wallpapers to copy to ~/Pictures/wallpaper |
-| `qnix.wallpaper.defaultWallpaper` | `nullOr` | `"solarized-dark.png"` | Default wallpaper filename to use (relative to ~/Pictures/wallpaper) |
 
 ### `xdg-folders`
 
