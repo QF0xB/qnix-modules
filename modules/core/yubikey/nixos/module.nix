@@ -18,22 +18,17 @@ in
 
       extraRules = lib.strings.concatStrings [
         ''
-          # YubiKey 5 NFC udev rule for CCID interface (gpg --card-info)
-          SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ENV{ID_VENDOR_ID}=="1050", ENV{ID_MODEL_ID}=="0407", ENV{ID_SECURITY_TOKEN}=="1", MODE="0660", GROUP="wheel"
-          ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10ec", ATTR{device}=="0x8125", ATTR{power/control}="on" 
+          # YubiKey CCID (GPG smartcard) - all Yubico vendor 1050 security tokens, not just 0407
+          SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ENV{ID_VENDOR_ID}=="1050", ENV{ID_SECURITY_TOKEN}=="1", MODE="0660", GROUP="wheel"
+          ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10ec", ATTR{device}=="0x8125", ATTR{power/control}="on"
         ''
         (
           if cfg.autolock then
             ''
-              ACTION=="remove",\
-                ENV{ID_BUS}=="usb",\
-                ENV{ID_MODEL_ID}=="0407",\
-                ENV{ID_VENDOR_ID}=="1050",\
-                ENV{ID_VENDOR}=="Yubico",\
-                RUN+="${pkgs.systemd}/bin/systemctl --machine=${user}@ --user start yubikey-autolock.service"
+              ACTION=="remove", ENV{ID_BUS}=="usb", ENV{ID_VENDOR_ID}=="1050", ENV{ID_VENDOR}=="Yubico", RUN+="${pkgs.systemd}/bin/systemctl --machine=${user}@ --user start yubikey-autolock.service"
             ''
           else
-            ''''
+            ""
         )
       ];
     };

@@ -443,6 +443,27 @@ These modules define the core QNix configuration options.
 |--------|------|---------|-------------|
 | `qnix.hyprdesktop.enable` | `bool` | `false` | hyprdesktop |
 
+### `jetbrains`
+
+**Type**: NixOS, Home Manager
+
+#### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `qnix.jetbrains.enable` | `bool` | `false` | jetbrains |
+| `qnix.jetbrains.enable` | `bool` | `false` | CLion |
+| `qnix.jetbrains.enable` | `bool` | `false` | DataGrip |
+| `qnix.jetbrains.enable` | `bool` | `false` | DataSpell |
+| `qnix.jetbrains.enable` | `bool` | `false` | IntelliJ IDEA |
+| `qnix.jetbrains.enable` | `bool` | `false` | PHPStorm |
+| `qnix.jetbrains.enable` | `bool` | `false` | PyCharm |
+| `qnix.jetbrains.enable` | `bool` | `false` | Rider |
+| `qnix.jetbrains.enable` | `bool` | `false` | RubyMine |
+| `qnix.jetbrains.enable` | `bool` | `false` | Rust Rover |
+| `qnix.jetbrains.enable` | `bool` | `false` | WebStorm |
+| `qnix.jetbrains.jetbrains.enable` | `bool` | `false` | CLion |
+
 ### `laptop-specifics`
 
 **Type**: NixOS

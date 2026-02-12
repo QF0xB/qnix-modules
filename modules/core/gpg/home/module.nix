@@ -1,4 +1,10 @@
-{ lib, config, osConfig, pkgs, ... }:
+{
+  lib,
+  config,
+  osConfig,
+  pkgs,
+  ...
+}:
 
 let
   cfg = osConfig.qnix.core.gpg;
@@ -24,7 +30,7 @@ in
       enableSshSupport = cfg.enableSSH;
       enableExtraSocket = cfg.enableSSH;
       pinentry.package = cfg.pinentryPackage;
-      
+
       # Cache TTLs
       defaultCacheTtl = 3600;
       defaultCacheTtlSsh = 3600;
@@ -45,7 +51,7 @@ in
         mkdir -p "$XDG_RUNTIME_DIR/gnupg"
         chmod 700 "$XDG_RUNTIME_DIR/gnupg"
       fi
-      
+
       # Ensure GPG agent is running (it will create the SSH socket)
       if [ "$XDG_RUNTIME_DIR" != "" ] && [ -d "$XDG_RUNTIME_DIR" ]; then
         # Try to connect to agent, start if not running
@@ -53,9 +59,6 @@ in
       fi
     '';
 
-    # Ensure scdaemon is available for YubiKey smartcard support
-    # The YubiKey module enables pcscd and gpgSmartcards at system level,
-    # but we need to ensure the user has access to scdaemon for smartcard operations
     home.packages = lib.mkIf yubikeyEnabled [
       pkgs.gnupg
     ];

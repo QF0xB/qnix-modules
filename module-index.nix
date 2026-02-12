@@ -103,6 +103,10 @@
       nixos = true;
       home = true;
     };
+    jetbrains = {
+      nixos = true;
+      home = true;
+    };
     laptop-specifics = {
       nixos = true;
       home = false;
