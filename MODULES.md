@@ -62,6 +62,24 @@ These modules define the core QNix configuration options.
 | `qnix.fail2ban.fail2ban.banTime` | `str` | `"1h"` | Time to ban for |
 | `qnix.fail2ban.fail2ban.banTimeIncrement` | `bool` | `true` | fail2ban ban time increment |
 
+### `fingerprint`
+
+**Type**: NixOS
+
+#### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `qnix.fingerprint.enable` | `bool` | `false` | fingerprint authentication (fprintd) |
+| `qnix.fingerprint.login` | `bool` | `false` | fingerprint for login (PAM) |
+| `qnix.fingerprint.sudo` | `bool` | `false` | fingerprint for sudo (PAM) |
+| `qnix.fingerprint.enable` | `bool` | `false` | Touch OEM Driver (for some laptop readers) |
+| `qnix.fingerprint.driver` | `nullOr` | `null` | TOD driver package when tod.enable is true (e.g. libfprint-2-tod1-goodix, libfprint-2-tod1-elan). |
+| `qnix.fingerprint.fingerprint.driver` | `nullOr` | `null` | TOD driver package when tod.enable is true (e.g. libfprint-2-tod1-goodix, libfprint-2-tod1-elan). |
+| `qnix.fingerprint.fingerprint.login` | `bool` | `false` | fingerprint for login (PAM) |
+| `qnix.fingerprint.fingerprint.sudo` | `bool` | `false` | fingerprint for sudo (PAM) |
+| `qnix.fingerprint.fingerprint.enable` | `bool` | `false` | Touch OEM Driver (for some laptop readers) |
+
 ### `git`
 
 **Type**: Home Manager

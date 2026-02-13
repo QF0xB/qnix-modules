@@ -244,7 +244,7 @@ true
 ```
 
 *Declared by:*
- - [/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -268,7 +268,7 @@ string
 ```
 
 *Declared by:*
- - [/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/boot/options/grub-options.nix)
+ - [/nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/core/boot/options/grub-options\.nix](file:///nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/core/boot/options/grub-options.nix)
 
 
 
@@ -300,7 +300,7 @@ true
 ```
 
 *Declared by:*
- - [/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/boot/options/systemd-boot-options.nix)
+ - [/nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/core/boot/options/systemd-boot-options\.nix](file:///nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/core/boot/options/systemd-boot-options.nix)
 
 
 
@@ -421,6 +421,151 @@ true
 
 ```nix
 true
+```
+
+
+
+## core\.fingerprint\.enable
+
+
+
+Whether to enable fingerprint authentication (fprintd)\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+
+```nix
+false
+```
+
+
+
+*Example:*
+
+```nix
+true
+```
+
+
+
+## core\.fingerprint\.login
+
+
+
+Whether to enable fingerprint for login (PAM)\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+
+```nix
+false
+```
+
+
+
+*Example:*
+
+```nix
+true
+```
+
+
+
+## core\.fingerprint\.sudo
+
+
+
+Whether to enable fingerprint for sudo (PAM)\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+
+```nix
+false
+```
+
+
+
+*Example:*
+
+```nix
+true
+```
+
+
+
+## core\.fingerprint\.tod\.enable
+
+
+
+Whether to enable Touch OEM Driver (for some laptop readers)\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+
+```nix
+false
+```
+
+
+
+*Example:*
+
+```nix
+true
+```
+
+
+
+## core\.fingerprint\.tod\.driver
+
+
+
+TOD driver package when tod\.enable is true (e\.g\. libfprint-2-tod1-goodix, libfprint-2-tod1-elan)\.
+
+
+
+*Type:*
+null or package
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+
+
+*Example:*
+
+```nix
+pkgs.libfprint-2-tod1-goodix
 ```
 
 
@@ -661,7 +806,7 @@ list of (absolute path or string or (submodule))
     url = "https://keys.openpgp.org/vks/v1/by-fingerprint/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
   }
   {
-    source = /nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/gpg/options/pubkey.asc;
+    source = /nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/core/gpg/options/pubkey.asc;
     trust = "full";
   }
   ''
@@ -926,7 +1071,7 @@ true
 ```
 
 *Declared by:*
- - [/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/firewall/options\.nix](file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/firewall/options.nix)
+ - [/nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/core/network/options/firewall/options\.nix](file:///nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/core/network/options/firewall/options.nix)
 
 
 
@@ -950,7 +1095,7 @@ true
 ```
 
 *Declared by:*
- - [/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/firewall/options\.nix](file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/firewall/options.nix)
+ - [/nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/core/network/options/firewall/options\.nix](file:///nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/core/network/options/firewall/options.nix)
 
 
 
@@ -974,7 +1119,7 @@ list of string
 ```
 
 *Declared by:*
- - [/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/firewall/options\.nix](file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/firewall/options.nix)
+ - [/nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/core/network/options/firewall/options\.nix](file:///nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/core/network/options/firewall/options.nix)
 
 
 
@@ -998,7 +1143,7 @@ list of signed integer
 ```
 
 *Declared by:*
- - [/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/firewall/options\.nix](file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/firewall/options.nix)
+ - [/nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/core/network/options/firewall/options\.nix](file:///nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/core/network/options/firewall/options.nix)
 
 
 
@@ -1022,7 +1167,7 @@ list of string
 ```
 
 *Declared by:*
- - [/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/firewall/options\.nix](file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/firewall/options.nix)
+ - [/nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/core/network/options/firewall/options\.nix](file:///nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/core/network/options/firewall/options.nix)
 
 
 
@@ -1046,7 +1191,7 @@ list of signed integer
 ```
 
 *Declared by:*
- - [/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/firewall/options\.nix](file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/firewall/options.nix)
+ - [/nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/core/network/options/firewall/options\.nix](file:///nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/core/network/options/firewall/options.nix)
 
 
 
@@ -1070,7 +1215,7 @@ false
 ```
 
 *Declared by:*
- - [/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/firewall/options\.nix](file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/firewall/options.nix)
+ - [/nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/core/network/options/firewall/options\.nix](file:///nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/core/network/options/firewall/options.nix)
 
 
 
@@ -1102,7 +1247,7 @@ true
 ```
 
 *Declared by:*
- - [/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/nm/options\.nix](file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/nm/options.nix)
+ - [/nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/core/network/options/nm/options\.nix](file:///nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/core/network/options/nm/options.nix)
 
 
 
@@ -1138,7 +1283,7 @@ list of string
 ```
 
 *Declared by:*
- - [/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/nm/options\.nix](file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/nm/options.nix)
+ - [/nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/core/network/options/nm/options\.nix](file:///nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/core/network/options/nm/options.nix)
 
 
 
@@ -1162,7 +1307,7 @@ list of string
 ```
 
 *Declared by:*
- - [/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/nm/options\.nix](file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/network/options/nm/options.nix)
+ - [/nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/core/network/options/nm/options\.nix](file:///nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/core/network/options/nm/options.nix)
 
 
 
@@ -1470,7 +1615,7 @@ true
 ```
 
 *Declared by:*
- - [/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/passwords/options/bitwarden/options\.nix](file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/passwords/options/bitwarden/options.nix)
+ - [/nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/core/passwords/options/bitwarden/options\.nix](file:///nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/core/passwords/options/bitwarden/options.nix)
 
 
 
@@ -1502,7 +1647,7 @@ true
 ```
 
 *Declared by:*
- - [/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/passwords/options/bitwarden/options\.nix](file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/core/passwords/options/bitwarden/options.nix)
+ - [/nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/core/passwords/options/bitwarden/options\.nix](file:///nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/core/passwords/options/bitwarden/options.nix)
 
 
 
@@ -2458,8 +2603,6 @@ attribute set
 
 ## core\.stylix\.fonts\.sansSerif
 
-
-
 The sans-serif font to use
 
 
@@ -2578,6 +2721,8 @@ floating point number
 
 
 ## core\.stylix\.opacity\.terminal
+
+
 
 The opacity of the terminal
 
@@ -3383,7 +3528,7 @@ true
 ```
 
 *Declared by:*
- - [/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/displaymanager/options/sddm-options\.nix](file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/displaymanager/options/sddm-options.nix)
+ - [/nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/desktop/displaymanager/options/sddm-options\.nix](file:///nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/desktop/displaymanager/options/sddm-options.nix)
 
 
 
@@ -3407,7 +3552,7 @@ null or package
 ```
 
 *Declared by:*
- - [/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/displaymanager/options/sddm-options\.nix](file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/displaymanager/options/sddm-options.nix)
+ - [/nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/desktop/displaymanager/options/sddm-options\.nix](file:///nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/desktop/displaymanager/options/sddm-options.nix)
 
 
 
@@ -3431,7 +3576,7 @@ string
 ```
 
 *Declared by:*
- - [/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/displaymanager/options/sddm-options\.nix](file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/displaymanager/options/sddm-options.nix)
+ - [/nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/desktop/displaymanager/options/sddm-options\.nix](file:///nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/desktop/displaymanager/options/sddm-options.nix)
 
 
 
@@ -3455,7 +3600,7 @@ string
 ```
 
 *Declared by:*
- - [/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/displaymanager/options/sddm-options\.nix](file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/displaymanager/options/sddm-options.nix)
+ - [/nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/desktop/displaymanager/options/sddm-options\.nix](file:///nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/desktop/displaymanager/options/sddm-options.nix)
 
 
 
@@ -3516,7 +3661,7 @@ true
 ```
 
 *Declared by:*
- - [/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/ags\.nix](file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/ags.nix)
+ - [/nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/desktop/hyprdesktop/options/ags\.nix](file:///nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/desktop/hyprdesktop/options/ags.nix)
 
 
 
@@ -3548,7 +3693,7 @@ null
 ```
 
 *Declared by:*
- - [/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/ags\.nix](file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/ags.nix)
+ - [/nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/desktop/hyprdesktop/options/ags\.nix](file:///nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/desktop/hyprdesktop/options/ags.nix)
 
 
 
@@ -3583,7 +3728,7 @@ list of string
 ```
 
 *Declared by:*
- - [/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/ags\.nix](file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/ags.nix)
+ - [/nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/desktop/hyprdesktop/options/ags\.nix](file:///nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/desktop/hyprdesktop/options/ags.nix)
 
 
 
@@ -3617,7 +3762,7 @@ list of string
 ```
 
 *Declared by:*
- - [/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/ags\.nix](file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/ags.nix)
+ - [/nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/desktop/hyprdesktop/options/ags\.nix](file:///nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/desktop/hyprdesktop/options/ags.nix)
 
 
 
@@ -3641,7 +3786,7 @@ list of package
 ```
 
 *Declared by:*
- - [/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/ags\.nix](file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/ags.nix)
+ - [/nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/desktop/hyprdesktop/options/ags\.nix](file:///nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/desktop/hyprdesktop/options/ags.nix)
 
 
 
@@ -3673,7 +3818,7 @@ true
 ```
 
 *Declared by:*
- - [/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland\.nix](file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix)
+ - [/nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland\.nix](file:///nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix)
 
 
 
@@ -3705,7 +3850,7 @@ true
 ```
 
 *Declared by:*
- - [/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland\.nix](file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix)
+ - [/nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland\.nix](file:///nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix)
 
 
 
@@ -3737,7 +3882,7 @@ true
 ```
 
 *Declared by:*
- - [/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland\.nix](file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix)
+ - [/nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland\.nix](file:///nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix)
 
 
 
@@ -3769,7 +3914,7 @@ true
 ```
 
 *Declared by:*
- - [/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland\.nix](file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix)
+ - [/nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland\.nix](file:///nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix)
 
 
 
@@ -3801,7 +3946,7 @@ true
 ```
 
 *Declared by:*
- - [/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland\.nix](file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix)
+ - [/nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland\.nix](file:///nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix)
 
 
 
@@ -3833,7 +3978,7 @@ true
 ```
 
 *Declared by:*
- - [/nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/noctalia\.nix](file:///nix/store/amv1dzww1j51x3cvxxk05ppv2mvmm1ry-source/modules/desktop/hyprdesktop/options/noctalia.nix)
+ - [/nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/desktop/hyprdesktop/options/noctalia\.nix](file:///nix/store/x2b3kg5jx12h3lny2d31j09rwjfxh7a4-source/modules/desktop/hyprdesktop/options/noctalia.nix)
 
 
 

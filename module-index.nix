@@ -12,6 +12,10 @@
       nixos = true;
       home = false;
     };
+    fingerprint = {
+      nixos = true;
+      home = false;
+    };
     git = {
       nixos = false;
       home = true;
