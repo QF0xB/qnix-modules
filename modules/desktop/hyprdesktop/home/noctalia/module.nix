@@ -1,3 +1,4 @@
+# Add after noctalia HM module: inputs.qnix-modules.homeManagerModules.qnixNoctaliaIntegration
 {
   osConfig,
   pkgs,
@@ -6,15 +7,10 @@
   inputs,
   ...
 }:
-
 let
   cfg = osConfig.qnix.desktop.hyprdesktop.noctalia;
 in
 {
-  imports = [
-    inputs.noctalia.homeModules.default
-  ];
-
   config = lib.mkIf cfg.enable {
     programs.noctalia-shell = {
       enable = true;

@@ -1,4 +1,9 @@
-{ lib, config, ... }:
+{
+  lib,
+  config,
+  options,
+  ...
+}:
 
 let
   # Get config from home-manager (options only exist there)
@@ -16,9 +21,9 @@ let
         openssh.authorizedKeys.keys = userCfg.openssh.authorizedKeys.keys or [ ];
         ignoreShellProgramCheck = userCfg.ignoreShellProgramCheck or true;
       };
-      # If passwordFromSops is set, use hashedPasswordFile; otherwise use initialHashedPassword
+      # If passwordFromSops is set and sops-nix is loaded, use hashedPasswordFile; else initialHashedPassword
       passwordConfig =
-        if userCfg.passwordFromSops != null then
+        if userCfg.passwordFromSops != null && (options ? sops) then
           { hashedPasswordFile = config.sops.secrets.${userCfg.passwordFromSops}.path; }
         else
           { initialHashedPassword = userCfg.initialHashedPassword; };
@@ -34,7 +39,7 @@ let
   rootUser = lib.optionalAttrs cfg.root.enable (
     let
       passwordConfig =
-        if cfg.root.passwordFromSops != null then
+        if cfg.root.passwordFromSops != null && (options ? sops) then
           { hashedPasswordFile = config.sops.secrets.${cfg.root.passwordFromSops}.path; }
         else
           { initialHashedPassword = cfg.root.password; };
