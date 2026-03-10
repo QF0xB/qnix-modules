@@ -115,7 +115,7 @@ These modules define the core QNix configuration options.
 | `qnix.gpg.text` | `nullOr` | `null` | Literal key block (use this or url+sha256 or source). |
 | `qnix.gpg.trust` | `nullOr` | `null` | Trust level: unknown, never, marginal, full, ultimate (or 1–5). |
 | `qnix.gpg.enableSSH` | `bool` | `true` | Enable GPG as SSH agent |
-| `qnix.gpg.pinentryPackage` | `package` | `pkgs.pinentry-tty` | Pinentry package to use for password entry |
+| `qnix.gpg.pinentryPackage` | `nullOr` | `null` | Pinentry package to use for password entry |
 | `qnix.gpg.publicKeys` | `listOf` | `[ ]` | List of public GPG keys to import: URLs (with sha256), literal key data (strings), file paths, or attrsets with optional trust. |
 
 ### `impermanence`
@@ -187,6 +187,7 @@ These modules define the core QNix configuration options.
 | `qnix.nix-helpers.enable` | `bool` | `true` | periodic nh clean user (garbage collection) |
 | `qnix.nix-helpers.enable` | `bool` | `true` | nixfmt |
 | `qnix.nix-helpers.enable` | `bool` | `true` | direnv |
+| `qnix.nix-helpers.enable` | `bool` | `true` | devenv |
 | `qnix.nix-helpers.dates` | `singleLineStr` | `"weekly"` | How often to run nh clean (systemd timer calendar). |
 | `qnix.nix-helpers.extraArgs` | `singleLineStr` | `""` | Extra arguments passed to nh clean. |
 | `qnix.nix-helpers.helpers.dates` | `singleLineStr` | `"weekly"` | How often to run nh clean (systemd timer calendar). |
@@ -194,6 +195,7 @@ These modules define the core QNix configuration options.
 | `qnix.nix-helpers.helpers.enable` | `bool` | `true` | periodic nh clean user (garbage collection) |
 | `qnix.nix-helpers.nixfmt.enable` | `bool` | `true` | nixfmt |
 | `qnix.nix-helpers.direnv.enable` | `bool` | `true` | direnv |
+| `qnix.nix-helpers.devenv.enable` | `bool` | `true` | devenv |
 
 ### `nvf`
 
@@ -343,20 +345,20 @@ These modules define the core QNix configuration options.
 | `qnix.stylix.enable` | `bool` | `config != null && !config.qnix.headless` | wallpapers |
 | `qnix.stylix.colorScheme` | `str` | `"solarized-dark"` | The color scheme to use, must be in base16scheme repo |
 | `qnix.stylix.colorSchemeOverrides` | `attrs` | `none` | Override the color scheme with custom colors |
-| `qnix.stylix.cursor` | `attrs` | `{ package = if pkgs != null then pkgs.simp1e-cu...` | The cursor to use |
+| `qnix.stylix.cursor` | `attrs` | `{ package = null` | The cursor to use |
 | `qnix.stylix.applications` | `float` | `0.5` | The opacity of the applications |
 | `qnix.stylix.terminal` | `float` | `0.5` | The opacity of the terminal |
 | `qnix.stylix.icons` | `attrs` | `{ enable = true` | The icons to use |
-| `qnix.stylix.serif` | `attrs` | `{ package = if pkgs != null then pkgs.fira-sans...` | The serif font to use |
-| `qnix.stylix.sansSerif` | `attrs` | `{ package = if pkgs != null then pkgs.fira-sans...` | The sans-serif font to use |
-| `qnix.stylix.monospace` | `attrs` | `{ package = if pkgs != null then pkgs.nerd-font...` | The monospace font to use |
-| `qnix.stylix.emoji` | `attrs` | `{ package = if pkgs != null then pkgs.noto-font...` | The emoji font to use |
+| `qnix.stylix.serif` | `attrs` | `{ package = null` | The serif font to use |
+| `qnix.stylix.sansSerif` | `attrs` | `{ package = null` | The sans-serif font to use |
+| `qnix.stylix.monospace` | `attrs` | `{ package = null` | The monospace font to use |
+| `qnix.stylix.emoji` | `attrs` | `{ package = null` | The emoji font to use |
 | `qnix.stylix.sizes` | `attrs` | `{ applications = (if isLaptop then 12 else 16)` | The sizes of the fonts |
 | `qnix.stylix.wallpapersPath` | `path` | `../wallpapers` | Path to the stylix wallpapers directory. Contents are copied to ~/Pictures/wallpaper when stylix is enabled. |
 | `qnix.stylix.solarizedColors` | `attrsOf` | `none` | Colors converted from stylix base16 to solarized naming scheme (base03, base02, base01, base00, base0, base1, base2, base3, red, orange, yellow, green, cyan, blue, violet, magenta) |
-| `qnix.stylix.fonts.sansSerif` | `attrs` | `{ package = if pkgs != null then pkgs.fira-sans...` | The sans-serif font to use |
-| `qnix.stylix.fonts.monospace` | `attrs` | `{ package = if pkgs != null then pkgs.nerd-font...` | The monospace font to use |
-| `qnix.stylix.fonts.emoji` | `attrs` | `{ package = if pkgs != null then pkgs.noto-font...` | The emoji font to use |
+| `qnix.stylix.fonts.sansSerif` | `attrs` | `{ package = null` | The sans-serif font to use |
+| `qnix.stylix.fonts.monospace` | `attrs` | `{ package = null` | The monospace font to use |
+| `qnix.stylix.fonts.emoji` | `attrs` | `{ package = null` | The emoji font to use |
 | `qnix.stylix.fonts.sizes` | `attrs` | `{ applications = (if isLaptop then 12 else 16)` | The sizes of the fonts |
 | `qnix.stylix.wallpapers.wallpapersPath` | `path` | `../wallpapers` | Path to the stylix wallpapers directory. Contents are copied to ~/Pictures/wallpaper when stylix is enabled. |
 | `qnix.stylix.wallpapers.enable` | `bool` | `config != null && !config.qnix.headless` | wallpapers |
@@ -397,6 +399,20 @@ These modules define the core QNix configuration options.
 | `qnix.user.user.ignoreShellProgramCheck` | `bool` | `true` | Ignore shell program check |
 | `qnix.user.user.enable` | `bool` | `false` | root user |
 | `qnix.user.openssh.authorizedKeys.keys` | `listOf` | `[ ]` | SSH authorized keys |
+
+### `virtualisation`
+
+**Type**: NixOS
+
+#### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `qnix.virtualisation.enable` | `bool` | `false` | virt-manager |
+| `qnix.virtualisation.gui` | `bool` | `true` | virt-manager gui |
+| `qnix.virtualisation.passthrough` | `bool` | `false` | passthrough |
+| `qnix.virtualisation.virtualisation.gui` | `bool` | `true` | virt-manager gui |
+| `qnix.virtualisation.virtualisation.passthrough` | `bool` | `false` | passthrough |
 
 ### `yubikey`
 

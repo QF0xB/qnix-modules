@@ -8,6 +8,7 @@
 
 let
   cfg = osConfig.qnix.core.shell.fish;
+  direnvEnabled = osConfig.qnix.core.nix-helpers.direnv.enable or false;
 in
 {
   config = lib.mkIf cfg.enable {
@@ -18,6 +19,10 @@ in
       shellInit = ''
         # shut up welcoming
         set fish_greeting
+      ''
+      + lib.optionalString direnvEnabled ''
+        # Enable direnv .envrc loading in fish.
+        direnv hook fish | source
       '';
 
       plugins = with pkgs.fishPlugins; [

@@ -56,7 +56,7 @@ in
       enable = true;
       enableSshSupport = cfg.enableSSH;
       enableExtraSocket = cfg.enableSSH;
-      pinentry.package = cfg.pinentryPackage;
+      pinentry.package = if cfg.pinentryPackage != null then cfg.pinentryPackage else pkgs.pinentry-tty;
 
       # Cache TTLs
       defaultCacheTtl = 3600;

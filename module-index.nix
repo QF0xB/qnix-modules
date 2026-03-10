@@ -84,6 +84,10 @@
       nixos = true;
       home = false;
     };
+    virtualisation = {
+      nixos = true;
+      home = false;
+    };
     yubikey = {
       nixos = true;
       home = false;

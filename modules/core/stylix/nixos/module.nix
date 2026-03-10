@@ -8,6 +8,14 @@
 let
   # Read from NixOS-level options (always available since stylix options are loaded in NixOS loader)
   cfg = config.qnix.core.stylix;
+  cursorPackage = if cfg.cursor.package != null then cfg.cursor.package else pkgs.simp1e-cursors;
+  iconPackage = if cfg.icons.package != null then cfg.icons.package else pkgs.fluent-icon-theme;
+  serifPackage = if cfg.fonts.serif.package != null then cfg.fonts.serif.package else pkgs.fira-sans;
+  sansSerifPackage = if cfg.fonts.sansSerif.package != null then cfg.fonts.sansSerif.package else pkgs.fira-sans;
+  monospacePackage =
+    if cfg.fonts.monospace.package != null then cfg.fonts.monospace.package else pkgs.nerd-fonts.jetbrains-mono;
+  emojiPackage =
+    if cfg.fonts.emoji.package != null then cfg.fonts.emoji.package else pkgs.noto-fonts-color-emoji;
 
   # Convert stylix base16 colors to solarized naming scheme
   # Takes config.stylix.base16 (from stylix) and returns colors in solarized format
@@ -44,7 +52,7 @@ in
         polarity = "dark";
         override = cfg.colorSchemeOverrides;
         cursor = {
-          package = cfg.cursor.package;
+          package = cursorPackage;
           name = cfg.cursor.name;
           size = cfg.cursor.size;
         };
@@ -57,29 +65,29 @@ in
         icons = {
           enable = true;
 
-          package = cfg.icons.package;
+          package = iconPackage;
           dark = cfg.icons.dark;
           light = cfg.icons.light;
         };
 
         fonts = {
           serif = {
-            package = cfg.fonts.serif.package;
+            package = serifPackage;
             name = cfg.fonts.serif.name;
           };
 
           sansSerif = {
-            package = cfg.fonts.sansSerif.package;
+            package = sansSerifPackage;
             name = cfg.fonts.sansSerif.name;
           };
 
           monospace = {
-            package = cfg.fonts.monospace.package;
+            package = monospacePackage;
             name = cfg.fonts.monospace.name;
           };
 
           emoji = {
-            package = cfg.fonts.emoji.package;
+            package = emojiPackage;
             name = cfg.fonts.emoji.name;
           };
 

@@ -19,7 +19,8 @@
 
       package = mkOption {
         type = types.nullOr types.package;
-        default = pkgs.sddm-astronaut;
+        default = null;
+        defaultText = literalExpression "pkgs.sddm-astronaut";
         description = "SDDM theme package";
       };
 

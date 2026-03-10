@@ -62,8 +62,9 @@ in
     };
 
     pinentryPackage = lib.mkOption {
-      type = lib.types.package;
-      default = pkgs.pinentry-tty;
+      type = lib.types.nullOr lib.types.package;
+      default = null;
+      defaultText = lib.literalExpression "pkgs.pinentry-tty";
       description = "Pinentry package to use for password entry";
     };
 

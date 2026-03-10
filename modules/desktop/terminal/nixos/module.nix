@@ -7,6 +7,6 @@
 
 {
   config = lib.mkIf config.qnix.desktop.terminal.enable {
-    qnix.apps.terminal = pkgs.kitty;
+    qnix.apps.terminal = lib.mkDefault pkgs.kitty;
   };
 }

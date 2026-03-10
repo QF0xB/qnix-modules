@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, config, ... }:
 
 {
   options.qnix.core.network.nm = {
@@ -21,6 +21,10 @@
         "nm-openvpn-sniffer"
         "nm-openvpn-sniffer"
       ];
+    };
+
+    gui = lib.mkEnableOption "Networkmanager gui components" // {
+      default = !config.qnix.headless;
     };
   };
 }

@@ -1,7 +1,7 @@
 {
   lib,
   categories ? null,
-  loadOptions ? false,
+  loadOptions ? true,
   ...
 }:
 let
@@ -68,12 +68,10 @@ let
     else
       [ ];
 
-  optionImports = qnixOptions ++ allOptionModules;
+  optionImports = qnixOptions ++ lib.optionals loadOptions allOptionModules;
 in
-lib.traceSeqN 1
-  ">>> [qnix/nixos] Categories: ${builtins.toString validCategories}, loadOptions: ${builtins.toString loadOptions}"
-  {
-    # Import options first (if loadOptions=true), then NixOS modules
-    # Modules should check config.qnix.* first, fallback to config.hm.qnix.*
-    imports = optionImports ++ allNixosModules;
-  }
+{
+  # Import options first (if loadOptions=true), then NixOS modules
+  # Modules should check config.qnix.* first, fallback to config.hm.qnix.*
+  imports = optionImports ++ allNixosModules;
+}

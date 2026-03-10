@@ -8,6 +8,7 @@
 let
   cfg = config.qnix.desktop.displaymanager.sddm;
   displaymanagerCfg = config.qnix.desktop.displaymanager;
+  themePackage = if cfg.theme.package != null then cfg.theme.package else pkgs.sddm-astronaut;
 in
 {
   config = lib.mkIf (displaymanagerCfg.enable && cfg.enable) {
@@ -16,8 +17,8 @@ in
       [
         kdePackages.qtmultimedia
       ]
-      ++ lib.optional (cfg.theme.package != null) (
-        cfg.theme.package.override { embeddedTheme = cfg.theme.embeddedTheme; }
+      ++ lib.optional (themePackage != null) (
+        themePackage.override { embeddedTheme = cfg.theme.embeddedTheme; }
       );
 
     services.xserver.enable = true;

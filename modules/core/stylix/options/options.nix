@@ -55,10 +55,17 @@ in
       type = lib.types.attrs;
       description = "The cursor to use";
       default = {
-        package = if pkgs != null then pkgs.simp1e-cursors else null;
+        package = null;
         name = "Simp1e-Solarized-Dark";
         size = 24;
       };
+      defaultText = lib.literalExpression ''
+        {
+          package = pkgs.simp1e-cursors;
+          name = "Simp1e-Solarized-Dark";
+          size = 24;
+        }
+      '';
     };
 
     opacity = {
@@ -79,10 +86,18 @@ in
       description = "The icons to use";
       default = {
         enable = true;
-        package = if pkgs != null then pkgs.fluent-icon-theme else null;
+        package = null;
         dark = "Fluent-dark";
         light = "Fluent-light";
       };
+      defaultText = lib.literalExpression ''
+        {
+          enable = true;
+          package = pkgs.fluent-icon-theme;
+          dark = "Fluent-dark";
+          light = "Fluent-light";
+        }
+      '';
     };
 
     fonts = {
@@ -90,36 +105,60 @@ in
         type = lib.types.attrs;
         description = "The serif font to use";
         default = {
-          package = if pkgs != null then pkgs.fira-sans else null;
+          package = null;
           name = "Fira Sans";
         };
+        defaultText = lib.literalExpression ''
+          {
+            package = pkgs.fira-sans;
+            name = "Fira Sans";
+          }
+        '';
       };
 
       sansSerif = lib.mkOption {
         type = lib.types.attrs;
         description = "The sans-serif font to use";
         default = {
-          package = if pkgs != null then pkgs.fira-sans else null;
+          package = null;
           name = "Fira Sans";
         };
+        defaultText = lib.literalExpression ''
+          {
+            package = pkgs.fira-sans;
+            name = "Fira Sans";
+          }
+        '';
       };
 
       monospace = lib.mkOption {
         type = lib.types.attrs;
         description = "The monospace font to use";
         default = {
-          package = if pkgs != null then pkgs.nerd-fonts.jetbrains-mono else null;
+          package = null;
           name = "JetBrains Mono Nerd Font";
         };
+        defaultText = lib.literalExpression ''
+          {
+            package = pkgs.nerd-fonts.jetbrains-mono;
+            name = "JetBrains Mono Nerd Font";
+          }
+        '';
       };
 
       emoji = lib.mkOption {
         type = lib.types.attrs;
         description = "The emoji font to use";
         default = {
-          package = if pkgs != null then pkgs.noto-fonts-color-emoji else null;
+          package = null;
           name = "Noto Color Emoji";
         };
+        defaultText = lib.literalExpression ''
+          {
+            package = pkgs.noto-fonts-color-emoji;
+            name = "Noto Color Emoji";
+          }
+        '';
       };
 
       sizes = lib.mkOption {

@@ -12,7 +12,8 @@ in
   config = {
     environment.systemPackages =
       (lib.optionals cfg.nixfmt.enable [ pkgs.nixfmt ])
-      ++ (lib.optionals cfg.direnv.enable [ pkgs.direnv ]);
+      ++ (lib.optionals cfg.direnv.enable [ pkgs.direnv ])
+      ++ (lib.optionals cfg.devenv.enable [ pkgs.devenv ]);
 
     programs = {
       nh = lib.mkIf (cfg.nh.enable) {

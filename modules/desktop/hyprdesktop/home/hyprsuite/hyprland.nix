@@ -24,7 +24,13 @@ in
       hyprpolkitagent
     ];
 
-    home.sessionVariables.NIXOS_OZONE_WL = "1";
+    home.sessionVariables = {
+      NIXOS_OZONE_WL = "1";
+    }
+    // lib.optionalAttrs isVm {
+      # VM sessions often lag/jitter with hardware cursors.
+      WLR_NO_HARDWARE_CURSORS = "1";
+    };
 
     wayland.windowManager.hyprland = {
       enable = true;
@@ -37,6 +43,10 @@ in
         source = [
           "~/.config/hypr/monitors.conf"
           "~/.config/hypr/workspaces.conf"
+        ];
+
+        exec-once = [
+          "systemctl --user start hyprpolkitagent"
         ];
 
         general = {
@@ -105,7 +115,7 @@ in
 
         misc = {
           disable_hyprland_logo = true;
-          vrr = "1";
+          vrr = if isVm then "0" else "1";
           focus_on_activate = true; # Focus window when requesting activation
           anr_missed_pings = "10"; # Increase default for not responding to prevent issues
         };

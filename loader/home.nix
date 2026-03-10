@@ -52,7 +52,7 @@ let
     else
       [ ];
 in
-lib.traceSeqN 1 ">>> [qnix/home] Categories: ${builtins.toString validCategories}" {
+{
   # Import qnix options first, then other options, then modules
   imports = qnixHomeModule ++ allHomeModules;
 }

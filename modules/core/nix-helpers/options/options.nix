@@ -37,5 +37,12 @@
         description = "Whether to install direnv.";
       };
     };
+
+    devenv = {
+      enable = lib.mkEnableOption "devenv" // {
+        default = true;
+        description = "Whether to install devenv.";
+      };
+    };
   };
 }

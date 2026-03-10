@@ -1,4 +1,9 @@
-{ lib, config, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.qnix.core.network.nm;
@@ -11,9 +16,14 @@ in
 
         unmanaged = cfg.unmanaged;
 
-        plugins = cfg.extraPlugins;
+        # Map plugin names (strings) to packages in pkgs.
+        plugins = builtins.map (p: pkgs.${p}) cfg.extraPlugins;
       };
     };
+
+    environment.systemPackages = [
+      pkgs.networkmanagerapplet
+    ];
 
     qnix.persist.root.directories = [
       "/etc/NetworkManager/system-connections/"
