@@ -39,7 +39,8 @@ let
 
     # --- Tags ---------------------------------------------
     "match:class ^(ghostty|footclient|kitty|Alacritty)$, tag +term"
-    "match:class ^(code|cursor|codium|jetbrains-.*)$, tag +code"
+    # Only tag IDE with +code when tiled; floating popups stay on current workspace
+    "match:class ^(code|cursor|codium|jetbrains-.*)$, match:float false, tag +code"
     "match:class ^(brave-browser|google-chrome)$, tag +browser"
     "match:class ^(tidal-hifi)$, tag +music"
     "match:class ^(nemo|thunar)$, tag +files"
