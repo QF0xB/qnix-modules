@@ -6,6 +6,10 @@
       default = config.qnix.desktop.hyprdesktop.enable;
     };
 
+    noHardwareCursors = lib.mkEnableOption "no hardware cursors" // {
+      default = false;
+    };
+
     setDefaultKeybinds = lib.mkEnableOption "set default keybinds" // {
       default = true;
     };

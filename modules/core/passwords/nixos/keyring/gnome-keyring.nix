@@ -18,7 +18,11 @@
 
     # Optional GUI to inspect/edit secrets
     environment.systemPackages = lib.mkIf config.qnix.core.passwords.keyring.gnome.gui [
-      pkgs.gnome.seahorse
+      pkgs.seahorse
+    ];
+
+    qnix.persist.home.directories = [
+      ".local/share/keyrings"
     ];
   };
 }

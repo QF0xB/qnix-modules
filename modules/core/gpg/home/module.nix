@@ -49,6 +49,10 @@ in
         # Default key server
         keyserver = "hkps://keys.openpgp.org";
       };
+
+      scdaemonSettings = {
+        disable-ccid = true;
+      };
     };
 
     # Configure GPG agent

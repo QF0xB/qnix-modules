@@ -34,6 +34,9 @@ let
     # --- Steam quirks -------------------------------------
     "match:class ^steam$, match:title ^(Friends List|Steam Friends List).*$, float on, size 420 900, move (monitor_w-(window_w+24)) (monitor_h*0.12), focus_on_activate off"
 
+    # --- IDE Quirk ---------------------------------------
+    # "match:class ^(jetbrains-.*)$, match:float on, stay_focused on"
+
     # --- Tags ---------------------------------------------
     "match:class ^(ghostty|footclient|kitty|Alacritty)$, tag +term"
     "match:class ^(code|cursor|codium|jetbrains-.*)$, tag +code"

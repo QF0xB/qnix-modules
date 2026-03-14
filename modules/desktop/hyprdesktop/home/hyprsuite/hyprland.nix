@@ -133,6 +133,7 @@ in
         };
 
         cursor = {
+          no_hardware_cursors = cfg.hyprsuite.hyprland.noHardwareCursors;
           persistent_warps = true; # Move to last position on window
         };
 

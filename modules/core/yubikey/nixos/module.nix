@@ -17,11 +17,7 @@ in
       ];
 
       extraRules = lib.strings.concatStrings [
-        ''
-          # YubiKey CCID (GPG smartcard) - all Yubico vendor 1050 security tokens, not just 0407
-          SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ENV{ID_VENDOR_ID}=="1050", ENV{ID_SECURITY_TOKEN}=="1", MODE="0660", GROUP="wheel"
-          ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10ec", ATTR{device}=="0x8125", ATTR{power/control}="on"
-        ''
+        ""
         (
           if cfg.autolock then
             ''
