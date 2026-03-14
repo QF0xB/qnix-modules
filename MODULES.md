@@ -459,6 +459,18 @@ These modules define the core QNix configuration options.
 | `qnix.browser.firefox.enable` | `bool` | `false` | Firefox browser |
 | `qnix.browser.brave.enable` | `bool` | `config != null && !config.qnix.headless` | Brave browser (annoying features disabled via policy) |
 
+### `dev-utilities`
+
+**Type**: NixOS, Home Manager
+
+#### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `qnix.dev-utilities.enable` | `bool` | `config != null && !config.qnix.headless && config.qnix.development` | dev-utilities |
+| `qnix.dev-utilities.enable` | `bool` | `false` | Postman development utility |
+| `qnix.dev-utilities.enable` | `bool` | `false` | Wireshark development utility |
+
 ### `displaymanager`
 
 **Type**: NixOS

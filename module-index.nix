@@ -103,6 +103,10 @@
       nixos = true;
       home = true;
     };
+    dev-utilities = {
+      nixos = true;
+      home = true;
+    };
     displaymanager = {
       nixos = true;
       home = false;
