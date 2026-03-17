@@ -27,11 +27,11 @@ in
           # Cursor specific settings
           "cursor.composer.shouldChimeAfterChatFinishes" = true;
           "cursor.composer.usageSummaryDisplay" = "always";
-          
+
           # Workbench panel settings (affects agent window size)
           "workbench.panel.defaultSize" = cfg.agentPanelSize;
           "workbench.sideBar.location" = "left";
-          
+
           # Cursor agent panel settings
           "cursor.windowSwitcher.sidebarHoverCollapsed" = false;
 
@@ -51,18 +51,26 @@ in
           "git.showActionButton.fetch" = false;
           "github.gitAuthentication" = false;
           "github.gitProtocol" = "ssh";
-          
+
           # File watching settings (helps with git status updates)
           "files.watcherExclude" = {
             "**/.git/objects/**" = true;
             "**/.git/subtree-cache/**" = true;
             "**/node_modules/**" = true;
           };
+
+          # 42Crunch OpenAPI: keep token out of the Nix store (provide via env var)
+          "openapi.securityAuditToken" = "\${env:OPENAPI_SECURITY_AUDIT_TOKEN}";
+
         };
         extensions = with pkgs; [
           # Nix
           vscode-extensions.jnoortheen.nix-ide
           vscode-extensions.mkhl.direnv
+
+          # OpenAPI / Swagger
+          vscode-extensions."42crunch".vscode-openapi
+          vscode-extensions.redhat.vscode-yaml
 
           # Python
           vscode-extensions.ms-python.python
