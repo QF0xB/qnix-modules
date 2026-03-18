@@ -12,7 +12,7 @@ in
 {
   config = lib.mkIf enabled {
     qnix.persist.home.directories = [
-      ".config/postman"
+      ".config/Postman"
     ];
   };
 }

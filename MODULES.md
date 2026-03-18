@@ -48,6 +48,16 @@ These modules define the core QNix configuration options.
 | `qnix.boot.zfsSupport` | `bool` | `true` | Enable ZFS support |
 | `qnix.boot.efiSupport` | `bool` | `true` | Enable EFI support |
 
+### `docker`
+
+**Type**: NixOS
+
+#### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `qnix.docker.enable` | `bool` | `false` | docker |
+
 ### `fail2ban`
 
 **Type**: NixOS
@@ -535,6 +545,16 @@ These modules define the core QNix configuration options.
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `qnix.obsidian.enable` | `bool` | `false` | obsidian |
+
+### `openrgb`
+
+**Type**: NixOS
+
+#### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `qnix.openrgb.enable` | `bool` | `false` | openrgb |
 
 ### `periphery`
 

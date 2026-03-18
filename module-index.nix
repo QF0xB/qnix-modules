@@ -8,6 +8,10 @@
       nixos = true;
       home = false;
     };
+    docker = {
+      nixos = true;
+      home = false;
+    };
     fail2ban = {
       nixos = true;
       home = false;
@@ -126,6 +130,10 @@
     obsidian = {
       nixos = true;
       home = true;
+    };
+    openrgb = {
+      nixos = true;
+      home = false;
     };
     periphery = {
       nixos = true;

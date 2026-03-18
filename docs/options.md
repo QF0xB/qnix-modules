@@ -349,6 +349,35 @@ true
 
 
 
+## core\.docker\.enable
+
+
+
+Whether to enable docker\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+
+```nix
+false
+```
+
+
+
+*Example:*
+
+```nix
+true
+```
+
+
+
 ## core\.fail2ban\.enable
 
 
@@ -2653,8 +2682,6 @@ string
 
 ## core\.stylix\.colorSchemeOverrides
 
-
-
 Override the color scheme with custom colors
 
 
@@ -2673,6 +2700,8 @@ attribute set
 
 
 ## core\.stylix\.cursor
+
+
 
 The cursor to use
 
@@ -4151,7 +4180,7 @@ true
 ```
 
 *Declared by:*
- - [/nix/store/gdd7fj5xk86hw82r0q7v7a66fl4nrxd1-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland\.nix](file:///nix/store/gdd7fj5xk86hw82r0q7v7a66fl4nrxd1-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix)
+ - [/nix/store/f6jgj9pil5bg8qz22kj3hdsipgpyxaj8-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland\.nix](file:///nix/store/f6jgj9pil5bg8qz22kj3hdsipgpyxaj8-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix)
 
 
 
@@ -4832,6 +4861,35 @@ true
 
 
 
+## desktop\.openrgb\.enable
+
+
+
+Whether to enable openrgb\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+
+```nix
+false
+```
+
+
+
+*Example:*
+
+```nix
+true
+```
+
+
+
 ## desktop\.periphery\.thunderbolt\.enable
 
 
@@ -5257,8 +5315,6 @@ list of string
 
 ## persist\.root\.cache\.files
 
-
-
 Files to cache in root filesystem
 
 
@@ -5306,6 +5362,8 @@ true
 
 
 ## persist\.root\.directories
+
+
 
 Directories to persist in root filesystem
 

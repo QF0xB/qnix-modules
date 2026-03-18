@@ -342,6 +342,36 @@ true
 
 
 
+== core{zwsp}.docker{zwsp}.enable
+
+
+
+Whether to enable docker{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__
+
+[source,nix]
+----
+false
+----
+
+
+
+__Example:__
+
+[source,nix]
+----
+true
+----
+
+
+
 == core{zwsp}.fail2ban{zwsp}.enable
 
 
@@ -2705,8 +2735,6 @@ __Default:__
 
 == core{zwsp}.stylix{zwsp}.colorSchemeOverrides
 
-
-
 Override the color scheme with custom colors
 
 
@@ -2725,6 +2753,8 @@ __Default:__
 
 
 == core{zwsp}.stylix{zwsp}.cursor
+
+
 
 The cursor to use
 
@@ -4239,7 +4269,7 @@ true
 
 __Declared by:__
 
-* link:file:///nix/store/gdd7fj5xk86hw82r0q7v7a66fl4nrxd1-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix[/nix/store/gdd7fj5xk86hw82r0q7v7a66fl4nrxd1-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland{zwsp}.nix]
+* link:file:///nix/store/f6jgj9pil5bg8qz22kj3hdsipgpyxaj8-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix[/nix/store/f6jgj9pil5bg8qz22kj3hdsipgpyxaj8-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland{zwsp}.nix]
 
 
 
@@ -4945,6 +4975,36 @@ true
 
 
 
+== desktop{zwsp}.openrgb{zwsp}.enable
+
+
+
+Whether to enable openrgb{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__
+
+[source,nix]
+----
+false
+----
+
+
+
+__Example:__
+
+[source,nix]
+----
+true
+----
+
+
+
 == desktop{zwsp}.periphery{zwsp}.thunderbolt{zwsp}.enable
 
 
@@ -5376,8 +5436,6 @@ __Default:__
 
 == persist{zwsp}.root{zwsp}.cache{zwsp}.files
 
-
-
 Files to cache in root filesystem
 
 
@@ -5426,6 +5484,8 @@ true
 
 
 == persist{zwsp}.root{zwsp}.directories
+
+
 
 Directories to persist in root filesystem
 

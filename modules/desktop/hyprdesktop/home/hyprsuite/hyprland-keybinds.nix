@@ -122,9 +122,8 @@ let
   bindingLines = builtins.concatLists (map generateBindings workspaces);
 in
 lib.mkIf (cfg.enable && cfg.hyprsuite.hyprland.setDefaultKeybinds) {
-  home.packages = [
-    hyprSpecial
-    pkgs.bitwarden-desktop
+  home.packages = lib.concatLists [
+    [ hyprSpecial ]
   ];
 
   wayland.windowManager.hyprland.settings = {
