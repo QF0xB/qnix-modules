@@ -234,7 +234,7 @@ true
 
 __Declared by:__
 
-* link:file:///nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/core/boot/options/grub-options.nix[/nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/core/boot/options/grub-options{zwsp}.nix]
+* link:file:///nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/core/boot/options/grub-options.nix[/nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/core/boot/options/grub-options{zwsp}.nix]
 
 
 
@@ -259,7 +259,7 @@ __Default:__
 
 __Declared by:__
 
-* link:file:///nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/core/boot/options/grub-options.nix[/nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/core/boot/options/grub-options{zwsp}.nix]
+* link:file:///nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/core/boot/options/grub-options.nix[/nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/core/boot/options/grub-options{zwsp}.nix]
 
 
 
@@ -293,7 +293,7 @@ true
 
 __Declared by:__
 
-* link:file:///nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/core/boot/options/systemd-boot-options.nix[/nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/core/boot/options/systemd-boot-options{zwsp}.nix]
+* link:file:///nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/core/boot/options/systemd-boot-options.nix[/nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/core/boot/options/systemd-boot-options{zwsp}.nix]
 
 
 
@@ -630,6 +630,48 @@ true
 
 
 
+== core{zwsp}.git{zwsp}.gh
+
+
+
+Whether to enable gh
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__
+
+[source,nix]
+----
+true
+----
+
+
+
+== core{zwsp}.git{zwsp}.ghDash
+
+
+
+Whether to enable gh-dash
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__
+
+[source,nix]
+----
+true
+----
+
+
+
 == core{zwsp}.git{zwsp}.lfs
 
 
@@ -839,7 +881,7 @@ __Example:__
     url = "https://keys.openpgp.org/vks/v1/by-fingerprint/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
   }
   {
-    source = /nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/core/gpg/options/pubkey.asc;
+    source = /nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/core/gpg/options/pubkey.asc;
     trust = "full";
   }
   ''
@@ -1111,7 +1153,7 @@ true
 
 __Declared by:__
 
-* link:file:///nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/core/network/options/firewall/options.nix[/nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/core/network/options/firewall/options{zwsp}.nix]
+* link:file:///nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/core/network/options/firewall/options.nix[/nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/core/network/options/firewall/options{zwsp}.nix]
 
 
 
@@ -1136,7 +1178,7 @@ true
 
 __Declared by:__
 
-* link:file:///nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/core/network/options/firewall/options.nix[/nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/core/network/options/firewall/options{zwsp}.nix]
+* link:file:///nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/core/network/options/firewall/options.nix[/nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/core/network/options/firewall/options{zwsp}.nix]
 
 
 
@@ -1161,7 +1203,7 @@ __Default:__
 
 __Declared by:__
 
-* link:file:///nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/core/network/options/firewall/options.nix[/nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/core/network/options/firewall/options{zwsp}.nix]
+* link:file:///nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/core/network/options/firewall/options.nix[/nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/core/network/options/firewall/options{zwsp}.nix]
 
 
 
@@ -1186,7 +1228,7 @@ __Default:__
 
 __Declared by:__
 
-* link:file:///nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/core/network/options/firewall/options.nix[/nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/core/network/options/firewall/options{zwsp}.nix]
+* link:file:///nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/core/network/options/firewall/options.nix[/nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/core/network/options/firewall/options{zwsp}.nix]
 
 
 
@@ -1211,7 +1253,7 @@ __Default:__
 
 __Declared by:__
 
-* link:file:///nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/core/network/options/firewall/options.nix[/nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/core/network/options/firewall/options{zwsp}.nix]
+* link:file:///nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/core/network/options/firewall/options.nix[/nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/core/network/options/firewall/options{zwsp}.nix]
 
 
 
@@ -1236,7 +1278,7 @@ __Default:__
 
 __Declared by:__
 
-* link:file:///nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/core/network/options/firewall/options.nix[/nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/core/network/options/firewall/options{zwsp}.nix]
+* link:file:///nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/core/network/options/firewall/options.nix[/nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/core/network/options/firewall/options{zwsp}.nix]
 
 
 
@@ -1261,7 +1303,7 @@ false
 
 __Declared by:__
 
-* link:file:///nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/core/network/options/firewall/options.nix[/nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/core/network/options/firewall/options{zwsp}.nix]
+* link:file:///nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/core/network/options/firewall/options.nix[/nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/core/network/options/firewall/options{zwsp}.nix]
 
 
 
@@ -1295,7 +1337,7 @@ true
 
 __Declared by:__
 
-* link:file:///nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/core/network/options/nm/options.nix[/nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/core/network/options/nm/options{zwsp}.nix]
+* link:file:///nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/core/network/options/nm/options.nix[/nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/core/network/options/nm/options{zwsp}.nix]
 
 
 
@@ -1333,7 +1375,7 @@ __Example:__
 
 __Declared by:__
 
-* link:file:///nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/core/network/options/nm/options.nix[/nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/core/network/options/nm/options{zwsp}.nix]
+* link:file:///nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/core/network/options/nm/options.nix[/nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/core/network/options/nm/options{zwsp}.nix]
 
 
 
@@ -1367,7 +1409,7 @@ true
 
 __Declared by:__
 
-* link:file:///nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/core/network/options/nm/options.nix[/nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/core/network/options/nm/options{zwsp}.nix]
+* link:file:///nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/core/network/options/nm/options.nix[/nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/core/network/options/nm/options{zwsp}.nix]
 
 
 
@@ -1392,7 +1434,7 @@ __Default:__
 
 __Declared by:__
 
-* link:file:///nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/core/network/options/nm/options.nix[/nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/core/network/options/nm/options{zwsp}.nix]
+* link:file:///nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/core/network/options/nm/options.nix[/nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/core/network/options/nm/options{zwsp}.nix]
 
 
 
@@ -1739,7 +1781,7 @@ true
 
 __Declared by:__
 
-* link:file:///nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/core/passwords/options/bitwarden/options.nix[/nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/core/passwords/options/bitwarden/options{zwsp}.nix]
+* link:file:///nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/core/passwords/options/bitwarden/options.nix[/nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/core/passwords/options/bitwarden/options{zwsp}.nix]
 
 
 
@@ -1773,7 +1815,7 @@ true
 
 __Declared by:__
 
-* link:file:///nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/core/passwords/options/bitwarden/options.nix[/nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/core/passwords/options/bitwarden/options{zwsp}.nix]
+* link:file:///nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/core/passwords/options/bitwarden/options.nix[/nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/core/passwords/options/bitwarden/options{zwsp}.nix]
 
 
 
@@ -1807,7 +1849,7 @@ true
 
 __Declared by:__
 
-* link:file:///nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/core/passwords/options/keyring/options.nix[/nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/core/passwords/options/keyring/options{zwsp}.nix]
+* link:file:///nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/core/passwords/options/keyring/options.nix[/nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/core/passwords/options/keyring/options{zwsp}.nix]
 
 
 
@@ -1841,7 +1883,7 @@ true
 
 __Declared by:__
 
-* link:file:///nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/core/passwords/options/keyring/options.nix[/nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/core/passwords/options/keyring/options{zwsp}.nix]
+* link:file:///nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/core/passwords/options/keyring/options.nix[/nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/core/passwords/options/keyring/options{zwsp}.nix]
 
 
 
@@ -2635,8 +2677,6 @@ true
 
 == core{zwsp}.starship{zwsp}.qnixFormat
 
-
-
 Whether to enable qnix format{zwsp}.
 
 
@@ -2715,6 +2755,8 @@ __Default:__
 
 
 == core{zwsp}.stylix{zwsp}.colorSchemeOverrides
+
+
 
 Override the color scheme with custom colors
 
@@ -3495,6 +3537,284 @@ true
 
 
 
+== core{zwsp}.vpn{zwsp}.openvpn{zwsp}.enable
+
+
+
+Whether to enable openvpn{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__
+
+[source,nix]
+----
+true
+----
+
+
+
+__Example:__
+
+[source,nix]
+----
+true
+----
+
+
+
+== core{zwsp}.vpn{zwsp}.openvpn{zwsp}.servers
+
+
+
+Define OpenVPN instances (servers or clients) that are implemented via NixOS ``services{zwsp}.openvpn{zwsp}.servers{zwsp}.{zwsp}+<+{zwsp}name{gt}``{zwsp}.
+
+
+
+__Type:__ attribute set of (submodule)
+
+
+
+__Default:__
+
+[source,nix]
+----
+{ }
+----
+
+
+
+== core{zwsp}.vpn{zwsp}.openvpn{zwsp}.servers{zwsp}.{zwsp}+<+{zwsp}name{gt}{zwsp}.authUserPass
+
+
+
+Store username / password credentials using OpenVPN’s ``auth-user-pass`` method{zwsp}.
+
+WARNING: Using this option puts the credentials WORLD-READABLE in the Nix store{zwsp}.
+
+
+
+__Type:__ null or (submodule)
+
+
+
+__Default:__
+
+[source,nix]
+----
+null
+----
+
+
+
+== core{zwsp}.vpn{zwsp}.openvpn{zwsp}.servers{zwsp}.{zwsp}+<+{zwsp}name{gt}{zwsp}.authUserPass{zwsp}.password
+
+
+
+The password to store inside the credentials file{zwsp}.
+
+
+
+__Type:__ string
+
+
+
+== core{zwsp}.vpn{zwsp}.openvpn{zwsp}.servers{zwsp}.{zwsp}+<+{zwsp}name{gt}{zwsp}.authUserPass{zwsp}.username
+
+
+
+The username to store inside the credentials file{zwsp}.
+
+
+
+__Type:__ string
+
+
+
+== core{zwsp}.vpn{zwsp}.openvpn{zwsp}.servers{zwsp}.{zwsp}+<+{zwsp}name{gt}{zwsp}.autoStart
+
+
+
+Whether this OpenVPN instance should be started automatically{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__
+
+[source,nix]
+----
+true
+----
+
+
+
+== core{zwsp}.vpn{zwsp}.openvpn{zwsp}.servers{zwsp}.{zwsp}+<+{zwsp}name{gt}{zwsp}.config
+
+
+
+OpenVPN configuration for the server/client instance{zwsp}. See [.manpage]``openvpn(8)`` for details{zwsp}.
+
+
+
+__Type:__ null or strings concatenated with “{backslash}n”
+
+
+
+__Default:__
+
+[source,nix]
+----
+null
+----
+
+
+
+== core{zwsp}.vpn{zwsp}.openvpn{zwsp}.servers{zwsp}.{zwsp}+<+{zwsp}name{gt}{zwsp}.configFile
+
+
+
+Path (relative to /etc/openvpn/{zwsp}+<+{zwsp}serverName{gt}/) of a config file to reference via OpenVPN’s ``config {zwsp}.{zwsp}.{zwsp}.`` directive{zwsp}.
+
+
+
+__Type:__ null or string
+
+
+
+__Default:__
+
+[source,nix]
+----
+null
+----
+
+
+
+== core{zwsp}.vpn{zwsp}.openvpn{zwsp}.servers{zwsp}.{zwsp}+<+{zwsp}name{gt}{zwsp}.down
+
+
+
+Shell commands executed when the instance is shutting down{zwsp}.
+
+
+
+__Type:__ strings concatenated with “{backslash}n”
+
+
+
+__Default:__
+
+[source,nix]
+----
+""
+----
+
+
+
+== core{zwsp}.vpn{zwsp}.openvpn{zwsp}.servers{zwsp}.{zwsp}+<+{zwsp}name{gt}{zwsp}.files
+
+
+
+Additional files needed by OpenVPN (certs, keys, scripts, and optionally config files){zwsp}. Those will be written by NixOS into /etc/openvpn/{zwsp}+<+{zwsp}serverName{gt}/…
+
+
+
+__Type:__ attribute set of (submodule)
+
+
+
+__Default:__
+
+[source,nix]
+----
+{ }
+----
+
+
+
+== core{zwsp}.vpn{zwsp}.openvpn{zwsp}.servers{zwsp}.{zwsp}+<+{zwsp}name{gt}{zwsp}.files{zwsp}.{zwsp}+<+{zwsp}name{gt}{zwsp}.content
+
+
+
+File content{zwsp}.
+
+
+
+__Type:__ strings concatenated with “{backslash}n”
+
+
+
+== core{zwsp}.vpn{zwsp}.openvpn{zwsp}.servers{zwsp}.{zwsp}+<+{zwsp}name{gt}{zwsp}.files{zwsp}.{zwsp}+<+{zwsp}name{gt}{zwsp}.mode
+
+
+
+POSIX mode for the file (e{zwsp}.g{zwsp}. 0400 for keys){zwsp}.
+
+
+
+__Type:__ string
+
+
+
+__Default:__
+
+[source,nix]
+----
+"0444"
+----
+
+
+
+== core{zwsp}.vpn{zwsp}.openvpn{zwsp}.servers{zwsp}.{zwsp}+<+{zwsp}name{gt}{zwsp}.up
+
+
+
+Shell commands executed when the instance is starting{zwsp}.
+
+
+
+__Type:__ strings concatenated with “{backslash}n”
+
+
+
+__Default:__
+
+[source,nix]
+----
+""
+----
+
+
+
+== core{zwsp}.vpn{zwsp}.openvpn{zwsp}.servers{zwsp}.{zwsp}+<+{zwsp}name{gt}{zwsp}.updateResolvConf
+
+
+
+Use OpenVPN’s ``update-resolv-conf`` script to update resolv{zwsp}.conf with DNS information{zwsp}.
+
+
+
+__Type:__ boolean
+
+
+
+__Default:__
+
+[source,nix]
+----
+false
+----
+
+
+
 == core{zwsp}.yubikey{zwsp}.enable
 
 
@@ -3966,7 +4286,7 @@ true
 
 __Declared by:__
 
-* link:file:///nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/desktop/displaymanager/options/sddm-options.nix[/nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/desktop/displaymanager/options/sddm-options{zwsp}.nix]
+* link:file:///nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/desktop/displaymanager/options/sddm-options.nix[/nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/desktop/displaymanager/options/sddm-options{zwsp}.nix]
 
 
 
@@ -3991,7 +4311,7 @@ pkgs.sddm-astronaut
 
 __Declared by:__
 
-* link:file:///nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/desktop/displaymanager/options/sddm-options.nix[/nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/desktop/displaymanager/options/sddm-options{zwsp}.nix]
+* link:file:///nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/desktop/displaymanager/options/sddm-options.nix[/nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/desktop/displaymanager/options/sddm-options{zwsp}.nix]
 
 
 
@@ -4016,7 +4336,7 @@ __Default:__
 
 __Declared by:__
 
-* link:file:///nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/desktop/displaymanager/options/sddm-options.nix[/nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/desktop/displaymanager/options/sddm-options{zwsp}.nix]
+* link:file:///nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/desktop/displaymanager/options/sddm-options.nix[/nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/desktop/displaymanager/options/sddm-options{zwsp}.nix]
 
 
 
@@ -4041,7 +4361,7 @@ __Default:__
 
 __Declared by:__
 
-* link:file:///nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/desktop/displaymanager/options/sddm-options.nix[/nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/desktop/displaymanager/options/sddm-options{zwsp}.nix]
+* link:file:///nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/desktop/displaymanager/options/sddm-options.nix[/nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/desktop/displaymanager/options/sddm-options{zwsp}.nix]
 
 
 
@@ -4105,7 +4425,7 @@ true
 
 __Declared by:__
 
-* link:file:///nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/desktop/hyprdesktop/options/ags.nix[/nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/desktop/hyprdesktop/options/ags{zwsp}.nix]
+* link:file:///nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/desktop/hyprdesktop/options/ags.nix[/nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/desktop/hyprdesktop/options/ags{zwsp}.nix]
 
 
 
@@ -4139,7 +4459,7 @@ __Example:__
 
 __Declared by:__
 
-* link:file:///nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/desktop/hyprdesktop/options/ags.nix[/nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/desktop/hyprdesktop/options/ags{zwsp}.nix]
+* link:file:///nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/desktop/hyprdesktop/options/ags.nix[/nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/desktop/hyprdesktop/options/ags{zwsp}.nix]
 
 
 
@@ -4176,7 +4496,7 @@ __Example:__
 
 __Declared by:__
 
-* link:file:///nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/desktop/hyprdesktop/options/ags.nix[/nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/desktop/hyprdesktop/options/ags{zwsp}.nix]
+* link:file:///nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/desktop/hyprdesktop/options/ags.nix[/nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/desktop/hyprdesktop/options/ags{zwsp}.nix]
 
 
 
@@ -4212,7 +4532,7 @@ __Example:__
 
 __Declared by:__
 
-* link:file:///nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/desktop/hyprdesktop/options/ags.nix[/nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/desktop/hyprdesktop/options/ags{zwsp}.nix]
+* link:file:///nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/desktop/hyprdesktop/options/ags.nix[/nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/desktop/hyprdesktop/options/ags{zwsp}.nix]
 
 
 
@@ -4237,7 +4557,7 @@ __Default:__
 
 __Declared by:__
 
-* link:file:///nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/desktop/hyprdesktop/options/ags.nix[/nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/desktop/hyprdesktop/options/ags{zwsp}.nix]
+* link:file:///nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/desktop/hyprdesktop/options/ags.nix[/nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/desktop/hyprdesktop/options/ags{zwsp}.nix]
 
 
 
@@ -4271,7 +4591,7 @@ true
 
 __Declared by:__
 
-* link:file:///nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix[/nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland{zwsp}.nix]
+* link:file:///nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix[/nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland{zwsp}.nix]
 
 
 
@@ -4305,7 +4625,7 @@ true
 
 __Declared by:__
 
-* link:file:///nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix[/nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland{zwsp}.nix]
+* link:file:///nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix[/nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland{zwsp}.nix]
 
 
 
@@ -4339,7 +4659,7 @@ true
 
 __Declared by:__
 
-* link:file:///nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix[/nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland{zwsp}.nix]
+* link:file:///nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix[/nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland{zwsp}.nix]
 
 
 
@@ -4373,7 +4693,7 @@ true
 
 __Declared by:__
 
-* link:file:///nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix[/nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland{zwsp}.nix]
+* link:file:///nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix[/nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland{zwsp}.nix]
 
 
 
@@ -4407,7 +4727,7 @@ true
 
 __Declared by:__
 
-* link:file:///nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix[/nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland{zwsp}.nix]
+* link:file:///nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix[/nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland{zwsp}.nix]
 
 
 
@@ -4441,7 +4761,7 @@ true
 
 __Declared by:__
 
-* link:file:///nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix[/nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland{zwsp}.nix]
+* link:file:///nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland.nix[/nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/desktop/hyprdesktop/options/hyprsuite/hyprland{zwsp}.nix]
 
 
 
@@ -4475,7 +4795,7 @@ true
 
 __Declared by:__
 
-* link:file:///nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/desktop/hyprdesktop/options/noctalia.nix[/nix/store/xs0788iakm196a6kywgfd8ki4xyq8bjz-source/modules/desktop/hyprdesktop/options/noctalia{zwsp}.nix]
+* link:file:///nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/desktop/hyprdesktop/options/noctalia.nix[/nix/store/x3abrhwfdchc3kpg96nzlfskggnkjlpl-source/modules/desktop/hyprdesktop/options/noctalia{zwsp}.nix]
 
 
 
@@ -5003,8 +5323,6 @@ true
 
 == desktop{zwsp}.periphery{zwsp}.thunderbolt{zwsp}.enable
 
-
-
 Whether to enable thunderbolt{zwsp}.
 
 
@@ -5410,6 +5728,8 @@ __Default:__
 
 
 == persist{zwsp}.root{zwsp}.cache{zwsp}.directories
+
+
 
 Directories to cache in root filesystem
 

@@ -38,5 +38,17 @@
       description = "Whether to enable git lfs";
       default = false;
     };
+
+    gh = lib.mkOption {
+      type = lib.types.bool;
+      description = "Whether to enable gh";
+      default = true;
+    };
+
+    ghDash = lib.mkOption {
+      type = lib.types.bool;
+      description = "Whether to enable gh-dash";
+      default = true;
+    };
   };
 }

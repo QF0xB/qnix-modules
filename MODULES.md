@@ -104,11 +104,15 @@ These modules define the core QNix configuration options.
 | `qnix.git.signing` | `bool` | `false` | Whether to enable git signing |
 | `qnix.git.signingKey` | `str` | `""` | The key to use for git signing |
 | `qnix.git.lfs` | `bool` | `false` | Whether to enable git lfs |
+| `qnix.git.gh` | `bool` | `true` | Whether to enable gh |
+| `qnix.git.ghDash` | `bool` | `true` | Whether to enable gh-dash |
 | `qnix.git.git.userName` | `str` | `""` | The name to use for git commits |
 | `qnix.git.git.userEmail` | `str` | `""` | The email to use for git commits |
 | `qnix.git.git.signing` | `bool` | `false` | Whether to enable git signing |
 | `qnix.git.git.signingKey` | `str` | `""` | The key to use for git signing |
 | `qnix.git.git.lfs` | `bool` | `false` | Whether to enable git lfs |
+| `qnix.git.git.gh` | `bool` | `true` | Whether to enable gh |
+| `qnix.git.git.ghDash` | `bool` | `true` | Whether to enable gh-dash |
 
 ### `gpg`
 
@@ -433,6 +437,28 @@ These modules define the core QNix configuration options.
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `qnix.vpn.enable` | `bool` | `false` | vpn |
+| `qnix.vpn.enable` | `bool` | `true` | openvpn |
+| `qnix.vpn.servers` | `attrsOf` | `null` | No description |
+| `qnix.vpn.configFile` | `nullOr` | `null` | No description |
+| `qnix.vpn.files` | `attrsOf` | `none` | File content. |
+| `qnix.vpn.mode` | `str` | `"0444"` | POSIX mode for the file (e.g. 0400 for keys). |
+| `qnix.vpn.updateResolvConf` | `bool` | `false` | No description |
+| `qnix.vpn.up` | `lines` | `""` | Shell commands executed when the instance is starting. |
+| `qnix.vpn.down` | `lines` | `""` | Shell commands executed when the instance is shutting down. |
+| `qnix.vpn.autoStart` | `bool` | `true` | Whether this OpenVPN instance should be started automatically. |
+| `qnix.vpn.authUserPass` | `nullOr` | `null` | The username to store inside the credentials file. |
+| `qnix.vpn.password` | `str` | `none` | The password to store inside the credentials file. |
+| `qnix.vpn.vpn.servers` | `attrsOf` | `null` | No description |
+| `qnix.vpn.vpn.configFile` | `nullOr` | `null` | No description |
+| `qnix.vpn.vpn.files` | `attrsOf` | `none` | File content. |
+| `qnix.vpn.vpn.mode` | `str` | `"0444"` | POSIX mode for the file (e.g. 0400 for keys). |
+| `qnix.vpn.vpn.updateResolvConf` | `bool` | `false` | No description |
+| `qnix.vpn.vpn.up` | `lines` | `""` | Shell commands executed when the instance is starting. |
+| `qnix.vpn.vpn.down` | `lines` | `""` | Shell commands executed when the instance is shutting down. |
+| `qnix.vpn.vpn.autoStart` | `bool` | `true` | Whether this OpenVPN instance should be started automatically. |
+| `qnix.vpn.vpn.authUserPass` | `nullOr` | `null` | The username to store inside the credentials file. |
+| `qnix.vpn.vpn.password` | `str` | `none` | The password to store inside the credentials file. |
+| `qnix.vpn.vpn.enable` | `bool` | `true` | openvpn |
 
 ### `yubikey`
 

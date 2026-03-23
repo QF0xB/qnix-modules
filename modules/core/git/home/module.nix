@@ -10,27 +10,40 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
-    programs.git = {
-      enable = true;
+    programs = {
+      git = {
+        enable = true;
 
-      lfs.enable = cfg.lfs;
+        lfs.enable = cfg.lfs;
 
-      signing = lib.mkIf cfg.signing {
-        key = cfg.signingKey;
-        signByDefault = true;
+        signing = lib.mkIf cfg.signing {
+          key = cfg.signingKey;
+          signByDefault = true;
+        };
+
+        settings = {
+          core = {
+            editor = "nvim";
+          };
+
+          user = {
+            name = cfg.userName;
+            email = cfg.userEmail;
+          };
+
+          commit.gpgSign = cfg.signing;
+        };
       };
 
-      settings = {
-        core = {
-          editor = "nvim";
+      gh = {
+        enable = cfg.gh;
+        settings = {
+          git_protocol = "ssh";
         };
+      };
 
-        user = {
-          name = cfg.userName;
-          email = cfg.userEmail;
-        };
-
-        commit.gpgSign = cfg.signing;
+      gh-dash = {
+        enable = cfg.ghDash;
       };
     };
   };
