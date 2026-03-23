@@ -424,6 +424,16 @@ These modules define the core QNix configuration options.
 | `qnix.virtualisation.virtualisation.gui` | `bool` | `true` | virt-manager gui |
 | `qnix.virtualisation.virtualisation.passthrough` | `bool` | `false` | passthrough |
 
+### `vpn`
+
+**Type**: NixOS
+
+#### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `qnix.vpn.enable` | `bool` | `false` | vpn |
+
 ### `yubikey`
 
 **Type**: NixOS

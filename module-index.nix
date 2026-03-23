@@ -92,6 +92,10 @@
       nixos = true;
       home = false;
     };
+    vpn = {
+      nixos = true;
+      home = false;
+    };
     yubikey = {
       nixos = true;
       home = false;
