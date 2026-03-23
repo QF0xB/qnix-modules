@@ -8,21 +8,22 @@ in
     # Create /etc/openvpn/<serverName>/... from the files passed in via options.
     environment.etc =
       lib.mkMerge [
-        (lib.listToAttrs (lib.concatLists (lib.mapAttrsToList
-          (serverName: serverCfg:
-            lib.mapAttrsToList
-              (filePath: fileCfg: {
-                name = "openvpn/${serverName}/${filePath}";
-                value = {
-                  source = pkgs.writeText
-                    "openvpn-${serverName}-${lib.replaceStrings ["/"] ["-"] filePath}"
-                    fileCfg.content;
-                  mode = fileCfg.mode;
-                };
-              })
-              serverCfg.files
-          )
-          cfg.openvpn.servers)));
+        (lib.listToAttrs
+          (lib.concatLists
+            (lib.mapAttrsToList
+              (serverName: serverCfg:
+                lib.mapAttrsToList
+                  (filePath: fileCfg: {
+                    name = "openvpn/${serverName}/${filePath}";
+                    value = {
+                      source = pkgs.writeText
+                        "openvpn-${serverName}-${lib.replaceStrings ["/"] ["-"] filePath}"
+                        fileCfg.content;
+                      mode = fileCfg.mode;
+                    };
+                  })
+                  serverCfg.files)
+              cfg.openvpn.servers)))
       ];
 
     # Translate our wrapper options into the upstream NixOS OpenVPN module.
