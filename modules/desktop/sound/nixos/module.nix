@@ -25,5 +25,9 @@ in
       pkgs.pamixer
       pkgs.playerctl
     ];
+
+    qnix.persist.home.directories = [
+      ".local/state/wireplumber"
+    ];
   };
 }

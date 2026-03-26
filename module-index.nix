@@ -40,6 +40,10 @@
       nixos = false;
       home = true;
     };
+    microcontroller = {
+      nixos = true;
+      home = false;
+    };
     network = {
       nixos = true;
       home = false;

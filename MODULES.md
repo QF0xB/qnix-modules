@@ -181,6 +181,16 @@ These modules define the core QNix configuration options.
 |--------|------|---------|-------------|
 | `qnix.lsd.enable` | `bool` | `true` | lsd |
 
+### `microcontroller`
+
+**Type**: NixOS
+
+#### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `qnix.microcontroller.enable` | `bool` | `false` | microcontroller |
+
 ### `network`
 
 **Type**: NixOS
