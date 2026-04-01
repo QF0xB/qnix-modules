@@ -42,9 +42,20 @@
                 type = lib.types.attrsOf (
                   lib.types.submodule {
                     options = {
+                      # Provide either `content` or `source` (absolute path).
                       content = lib.mkOption {
-                        type = lib.types.lines;
-                        description = "File content.";
+                        type = lib.types.nullOr lib.types.lines;
+                        default = null;
+                        description = lib.mdDoc "File content (embedded into the Nix store).";
+                      };
+
+                      source = lib.mkOption {
+                        type = lib.types.nullOr lib.types.str;
+                        default = null;
+                        description = lib.mdDoc ''
+                          Absolute path to an existing file on the target machine.
+                          If set, NixOS will copy it into place during activation.
+                        '';
                       };
 
                       mode = lib.mkOption {
@@ -66,9 +77,26 @@
               updateResolvConf = lib.mkOption {
                 type = lib.types.bool;
                 default = false;
-                description = ''
+                description = lib.mdDoc ''
                   Use OpenVPN's `update-resolv-conf` script to update resolv.conf
                   with DNS information.
+                '';
+              };
+
+              systemdServiceType = lib.mkOption {
+                type = lib.types.enum [
+                  "notify"
+                  "simple"
+                  "exec"
+                ];
+                default = "simple";
+                description = lib.mdDoc ''
+                  systemd unit `Type=` for `openvpn-<name>.service`.
+
+                  NixOS' upstream OpenVPN module defaults to `Type=notify`, but
+                  some OpenVPN builds/systems may not emit sd_notify, which
+                  causes systemd startup timeouts. Use `simple` as a safe
+                  fallback.
                 '';
               };
 
@@ -92,7 +120,7 @@
 
               authUserPass = lib.mkOption {
                 default = null;
-                description = ''
+                description = lib.mdDoc ''
                   Store username / password credentials using OpenVPN's
                   `auth-user-pass` method.
 
@@ -103,22 +131,41 @@
                   lib.types.submodule {
                     options = {
                       username = lib.mkOption {
-                        description = "The username to store inside the credentials file.";
+                        description = lib.mdDoc "The username to store inside the credentials file.";
                         type = lib.types.str;
                       };
                       password = lib.mkOption {
-                        description = "The password to store inside the credentials file.";
+                        description = lib.mdDoc "The password to store inside the credentials file.";
                         type = lib.types.str;
                       };
                     };
                   }
                 );
               };
+
+              # File-based alternative to `authUserPass` that does not embed
+              # secrets into the Nix store.
+              #
+              # If set, the module will append `auth-user-pass <path>` at the
+              # end of the generated OpenVPN config so it overrides a bare
+              # `auth-user-pass` directive in the base config.
+              authUserPassFile = lib.mkOption {
+                type = lib.types.nullOr lib.types.str;
+                default = null;
+                description = lib.mdDoc ''
+                  Absolute path to a credentials file to be used by OpenVPN's
+                  `auth-user-pass` directive.
+
+                  The file is expected to contain username and password in
+                  the format OpenVPN accepts (typically two lines: username
+                  then password).
+                '';
+              };
             };
           }
         );
         default = { };
-        description = ''
+        description = lib.mdDoc ''
           Define OpenVPN instances (servers or clients) that are implemented via
           NixOS `services.openvpn.servers.<name>`.
         '';
