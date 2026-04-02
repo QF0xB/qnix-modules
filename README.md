@@ -217,6 +217,60 @@ Modules use capability detection via `lib.hasAttrByPath` to handle upstream API 
 
 Modules automatically adapt to the available API.
 
+For renamed option paths between stable and unstable, prefer checking `options`
+instead of `config`, then assign to whichever path exists:
+
+```nix
+{ lib, options, ... }:
+let
+  kubernetesPaths = [
+    [ "services" "kubernatess" ]  # old path
+    [ "services" "kubernetes" ]   # new path
+  ];
+in
+{
+  config = lib.qnix-lib.setAttrByExistingPath options kubernetesPaths {
+    enable = true;
+  };
+}
+```
+
+If a module also has normal configuration that does not need compatibility
+handling, use `lib.mkMerge` and keep the compatibility bits isolated:
+
+```nix
+{ lib, options, ... }:
+{
+  config = lib.mkMerge [
+    {
+      services.openssh.enable = true;
+      users.mutableUsers = false;
+    }
+
+    (lib.qnix-lib.setAttrByExistingPath options [
+      [ "services" "kubernatess" ]
+      [ "services" "kubernetes" ]
+    ] {
+      enable = true;
+    })
+  ];
+}
+```
+
+Use this pattern when:
+
+- most of the module is stable and only a few upstream paths changed
+- client and server share the same module but pin different nixpkgs revisions
+- you want capability detection without duplicating whole modules
+
+Available helpers:
+
+- `lib.qnix-lib.firstExistingAttrPath attrs paths`
+- `lib.qnix-lib.hasAnyAttrPath attrs paths`
+- `lib.qnix-lib.getAttrFromPaths attrs paths`
+- `lib.qnix-lib.getAttrFromPathsOr default attrs paths`
+- `lib.qnix-lib.setAttrByExistingPath attrs paths value`
+
 ## Accessing Inputs in Modules
 
 Modules receive selected inputs via `specialArgs`. Pass only what modules need:

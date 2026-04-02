@@ -84,6 +84,51 @@ lib.extend (
         violet = base16.base0E or "";
         magenta = base16.base0F or "";
       };
+
+      # Find the first existing attr path in an attrset.
+      # Useful for upstream compatibility when stable and unstable expose
+      # different option or input paths.
+      firstExistingAttrPath =
+        attrs: paths:
+        let
+          matches = builtins.filter (path: lib.hasAttrByPath path attrs) paths;
+        in
+        if matches == [ ] then null else builtins.head matches;
+
+      # Whether any of the candidate attr paths exists in an attrset.
+      hasAnyAttrPath = attrs: paths: (firstExistingAttrPath attrs paths) != null;
+
+      # Get the value at the first existing attr path or return a default.
+      getAttrFromPathsOr =
+        default: attrs: paths:
+        let
+          path = firstExistingAttrPath attrs paths;
+        in
+        if path == null then default else lib.getAttrFromPath path attrs;
+
+      # Get the value at the first existing attr path.
+      # Throws if none of the paths exists.
+      getAttrFromPaths =
+        attrs: paths:
+        let
+          path = firstExistingAttrPath attrs paths;
+        in
+        if path == null then
+          throw "lib.qnix-lib.getAttrFromPaths: none of the candidate attr paths exist"
+        else
+          lib.getAttrFromPath path attrs;
+
+      # Set a value at the first supported option path.
+      # Intended for compatibility with renamed upstream module options:
+      # lib.qnix-lib.setAttrByExistingPath options
+      #   [ [ \"services\" \"oldName\" ] [ \"services\" \"newName\" ] ]
+      #   { enable = true; }
+      setAttrByExistingPath =
+        attrs: paths: value:
+        let
+          path = firstExistingAttrPath attrs paths;
+        in
+        if path == null then { } else lib.setAttrByPath path value;
     };
   }
 )

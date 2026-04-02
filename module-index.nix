@@ -115,6 +115,10 @@
       nixos = true;
       home = true;
     };
+    codex = {
+      nixos = true;
+      home = true;
+    };
     dev-utilities = {
       nixos = true;
       home = true;
