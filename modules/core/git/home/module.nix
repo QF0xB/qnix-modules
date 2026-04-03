@@ -26,6 +26,10 @@ in
             editor = "nvim";
           };
 
+          push = {
+            autoSetupRemote = true;
+          };
+
           user = {
             name = cfg.userName;
             email = cfg.userEmail;
