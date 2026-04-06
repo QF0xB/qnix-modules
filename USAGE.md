@@ -72,6 +72,7 @@ Use this when the machine only consumes NixOS modules and not Home Manager.
         inherit pkgs lib;
 
         modules = [
+          inputs.impermanence.nixosModules.impermanence
           inputs.sops-nix.nixosModules.sops
 
           ./hosts/myhost/configuration.nix
@@ -109,6 +110,11 @@ Use this when the machine only consumes NixOS modules and not Home Manager.
 
 If you use `qnix.security.sops`, the consumer must import `sops-nix`
 explicitly. `qnix-modules` does not import `sops-nix` from inside the module.
+
+If you use the `impermanent` profile or set `qnix.storage.impermanence.enable`,
+the consumer must also import `inputs.impermanence.nixosModules.impermanence`
+explicitly. `qnix-modules` does not import the upstream impermanence module
+from inside the storage module.
 
 ## 2. Home Manager Only
 
@@ -220,6 +226,7 @@ This is the most important combined mode because:
         inherit pkgs lib;
 
         modules = [
+          inputs.impermanence.nixosModules.impermanence
           inputs.sops-nix.nixosModules.sops
 
           ./hosts/myclient/configuration.nix
@@ -268,6 +275,11 @@ This is the most important combined mode because:
 
 If the NixOS side uses `qnix.security.sops`, keep `sops-nix` imported on the
 NixOS side and let Home Manager consume the resulting `osConfig.qnix` state.
+
+If the NixOS side loads the `impermanent` profile, keep
+`inputs.impermanence.nixosModules.impermanence` in the NixOS module list so the
+`environment.persistence` option tree exists before the QNix storage module
+configures it.
 
 ### Host config pattern
 

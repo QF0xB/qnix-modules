@@ -24,5 +24,13 @@
       packages.enable = lib.mkEnableOption "packages";
       users.enable = lib.mkEnableOption "users";
     };
+
+    security = {
+      sops.enable = lib.mkEnableOption "sops";
+    };
+
+    storage = {
+      impermanence.enable = lib.mkEnableOption "impermanence";
+    };
   };
 }

@@ -7,6 +7,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    impermanence = {
+      url = "github:nix-community/impermanence";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -18,6 +22,7 @@
     {
       nixpkgs,
       home-manager,
+      impermanence,
       sops-nix,
       qnix-modules,
       ...
@@ -62,6 +67,7 @@
           nixosEvaluation = lib.nixosSystem {
             inherit pkgs lib;
             modules = [
+              impermanence.nixosModules.impermanence
               sops-nix.nixosModules.sops
 
               (import ../loader/nixos.nix {
@@ -92,6 +98,7 @@
                   };
                   secrets = { };
                 };
+                qnix.storage.impermanence.enable = true;
               }
             ];
           };

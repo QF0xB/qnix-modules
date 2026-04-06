@@ -28,6 +28,7 @@
       security = {
         sops.enable = lib.mkDefault true;
       };
+
     };
 
     nix.settings.experimental-features = lib.mkDefault [

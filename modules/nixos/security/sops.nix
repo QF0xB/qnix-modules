@@ -11,8 +11,6 @@ in
 {
   options = {
     qnix.security.sops = {
-      enable = lib.mkEnableOption "sops-nix integration";
-
       defaultSopsFile = lib.mkOption {
         type = lib.types.nullOr lib.types.path;
         default = null;
