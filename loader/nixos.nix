@@ -9,7 +9,7 @@ let
 in
 {
   imports = [
-    ../shared/qnix-options.nix
+    ../modules/shared/qnix-options.nix
   ]
   ++ profileModules;
 }
