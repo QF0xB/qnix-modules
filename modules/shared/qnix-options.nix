@@ -1,6 +1,6 @@
 { lib, pkgs, ... }:
 {
-  options = {
+  options.qnix = {
     profiles = {
       base.enable = lib.mkEnableOption "base profile";
       server.enable = lib.mkEnableOption "server profile";

@@ -5,7 +5,7 @@
 }:
 
 let
-  profileModules = builtins.map (name: ../profiles/${name}.nix) profiles;
+  profileModules = builtins.map (name: ../profiles/nixos/${name}.nix) profiles;
 in
 {
   imports = [
