@@ -21,12 +21,16 @@ let
           };
     in
     {
-      group = userCfg.group or username;
-      home = userCfg.home;
-      description = userCfg.description;
+      group = if userCfg.group != null then userCfg.group else username;
       extraGroups = lib.unique (cfg.defaultExtraGroups ++ userCfg.extraGroups);
       openssh.authorizedKeys.keys = userCfg.openssh.authorizedKeys.keys;
       ignoreShellProgramCheck = userCfg.ignoreShellProgramCheck;
+    }
+    // lib.optionalAttrs (userCfg.home != null) {
+      home = userCfg.home;
+    }
+    // lib.optionalAttrs (userCfg.description != null) {
+      description = userCfg.description;
     }
     // passwordConfig
     // (if userCfg.kind == "system" then { isSystemUser = true; } else { isNormalUser = true; });

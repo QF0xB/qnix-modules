@@ -77,11 +77,20 @@
                   "server"
                   "workstation"
                   "laptop"
+                  "impermanence"
                 ];
               })
               {
                 system.stateVersion = "25.11";
                 fileSystems."/" = {
+                  device = "none";
+                  fsType = "tmpfs";
+                };
+                fileSystems."/persist" = {
+                  device = "none";
+                  fsType = "tmpfs";
+                };
+                fileSystems."/cache" = {
                   device = "none";
                   fsType = "tmpfs";
                 };
@@ -98,7 +107,19 @@
                   };
                   secrets = { };
                 };
+                qnix.system.users.users.tester = {
+                  kind = "normal";
+                  home = "/home/tester";
+                  extraGroups = [ "wheel" ];
+                  openssh.authorizedKeys.keys = [
+                    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEexampleexampleexampleexampleexample tester@example"
+                  ];
+                };
                 qnix.storage.impermanence.enable = true;
+                qnix.persist.users."*" = {
+                  directories = [ ".config/nvim" ];
+                  files = [ ".zsh_history" ];
+                };
               }
             ];
           };

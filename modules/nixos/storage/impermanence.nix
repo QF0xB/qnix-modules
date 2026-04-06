@@ -1,26 +1,21 @@
 # Impermanence integration for QNix.
 #
 # Enable with `qnix.storage.impermanence.enable` (see `modules/shared/qnix-options.nix`).
-# Path lists live under `qnix.persist.{root,home}` (this file defines those options).
-#
-# Module argument `user`:
-# - `null` (default): only system paths under `/persist` and `/cache` are configured; no
-#   `environment.persistence.*.users` entries. Use for headless hosts or when home is
-#   managed elsewhere.
-# - A string username: expands `qnix.persist.home` paths under `/home/<user>/` and adds
-#   per-user persistence. Pass via the module import, e.g.:
-#     imports = [ (import ./impermanence.nix { user = "alice"; }) ];
-#   or from a profile that sets `_module.args.user` / `specialArgs` for that import.
+# Path lists live under `qnix.persist.{root,users}` (this file defines those options).
+# `qnix.persist.users` is keyed by username and may also contain `"*"` defaults that are
+# merged into every managed user from `qnix.system.users.users`.
 #
 {
   lib,
   config,
   pkgs,
-  user ? null,
   ...
 }:
 
 let
+  cfg = config.qnix.persist;
+  usersCfg = config.qnix.system.users.users;
+
   assertNoHomeDirs =
     paths:
     assert (
@@ -28,6 +23,69 @@ let
         "Paths must not use the /home prefix; use root.* for system paths or home.* as paths relative to the home directory"
     );
     paths;
+
+  persistUserType = lib.types.submodule {
+    options = {
+      directories = lib.mkOption {
+        type = lib.types.listOf lib.types.str;
+        default = [ ];
+        description = "Paths relative to the user's home directory.";
+        apply = assertNoHomeDirs;
+      };
+
+      files = lib.mkOption {
+        type = lib.types.listOf lib.types.str;
+        default = [ ];
+        description = "File paths relative to the user's home directory.";
+        apply = assertNoHomeDirs;
+      };
+
+      cache = {
+        directories = lib.mkOption {
+          type = lib.types.listOf lib.types.str;
+          default = [ ];
+          description = "Cache directories relative to the user's home directory.";
+          apply = assertNoHomeDirs;
+        };
+
+        files = lib.mkOption {
+          type = lib.types.listOf lib.types.str;
+          default = [ ];
+          description = "Cache files relative to the user's home directory.";
+          apply = assertNoHomeDirs;
+        };
+      };
+    };
+  };
+
+  wildcardUserCfg = cfg.users."*" or { };
+
+  mergeUserPersist =
+    username:
+    let
+      specific = cfg.users.${username} or { };
+      merged = lib.recursiveUpdate wildcardUserCfg specific;
+    in
+    {
+      files = lib.unique ((merged.files or [ ]) ++ (merged.cache.files or [ ]));
+      directories = lib.unique ((merged.directories or [ ]) ++ (merged.cache.directories or [ ]));
+      persistFiles = merged.files or [ ];
+      persistDirectories = merged.directories or [ ];
+      cacheFiles = merged.cache.files or [ ];
+      cacheDirectories = merged.cache.directories or [ ];
+      expandedFiles = lib.unique (
+        lib.map
+          (f: "/home/${username}/" + (if lib.hasPrefix "/" (toString f) then lib.removePrefix "/" (toString f) else toString f))
+          ((merged.files or [ ]) ++ (merged.cache.files or [ ]))
+      );
+      expandedDirectories = lib.unique (
+        lib.map
+          (d: "/home/${username}/" + (if lib.hasPrefix "/" (toString d) then lib.removePrefix "/" (toString d) else toString d))
+          ((merged.directories or [ ]) ++ (merged.cache.directories or [ ]))
+      );
+    };
+
+  managedPersistUsers = lib.genAttrs (lib.attrNames usersCfg) mergeUserPersist;
 in
 {
   options = {
@@ -66,33 +124,13 @@ in
           };
         };
 
-        home = {
-          directories = lib.mkOption {
-            type = lib.types.listOf lib.types.str;
-            default = [ ];
-            description = "Paths relative to the home directory (or absolute under that home only). Must not start with /home; use .config/foo not /home/user/.config.";
-            apply = assertNoHomeDirs;
-          };
-          files = lib.mkOption {
-            type = lib.types.listOf lib.types.str;
-            default = [ ];
-            description = "Same as home.directories, for files.";
-            apply = assertNoHomeDirs;
-          };
-          cache = {
-            directories = lib.mkOption {
-              type = lib.types.listOf lib.types.str;
-              default = [ ];
-              description = "Home-relative cache paths, persisted under /cache.";
-              apply = assertNoHomeDirs;
-            };
-            files = lib.mkOption {
-              type = lib.types.listOf lib.types.str;
-              default = [ ];
-              description = "Home-relative cache files, persisted under /cache.";
-              apply = assertNoHomeDirs;
-            };
-          };
+        users = lib.mkOption {
+          type = lib.types.attrsOf persistUserType;
+          default = { };
+          description = ''
+            Per-user persistence config keyed by username. The special key `"*"`
+            applies defaults to every managed user from `qnix.system.users.users`.
+          '';
         };
       };
     };
@@ -100,41 +138,19 @@ in
 
   config = lib.mkIf config.qnix.storage.impermanence.enable (
     let
-      cfg = config.qnix.persist;
-
       rootDirs = cfg.root.directories ++ cfg.root.cache.directories;
       rootFiles = cfg.root.files ++ cfg.root.cache.files;
 
-      homeDirs = cfg.home.directories ++ cfg.home.cache.directories;
-      homeFiles = cfg.home.files ++ cfg.home.cache.files;
-
-      homeDirPaths =
-        if user != null then
-          lib.unique (
-            lib.map (
-              d:
-              "/home/${user}/"
-              + (if lib.hasPrefix "/" (toString d) then lib.removePrefix "/" (toString d) else toString d)
-            ) homeDirs
-          )
-        else
-          [ ];
-      homeFilePaths =
-        if user != null then
-          lib.unique (
-            lib.map (
-              f:
-              "/home/${user}/"
-              + (if lib.hasPrefix "/" (toString f) then lib.removePrefix "/" (toString f) else toString f)
-            ) homeFiles
-          )
-        else
-          [ ];
-
       impermanenceJson = pkgs.writeText "impermanence.json" (
         builtins.toJSON {
-          directories = lib.unique (rootDirs ++ homeDirPaths);
-          files = lib.unique (rootFiles ++ homeFilePaths);
+          directories = lib.unique (
+            rootDirs
+            ++ lib.concatMap (userCfg: userCfg.expandedDirectories) (lib.attrValues managedPersistUsers)
+          );
+          files = lib.unique (
+            rootFiles
+            ++ lib.concatMap (userCfg: userCfg.expandedFiles) (lib.attrValues managedPersistUsers)
+          );
         }
       );
     in
@@ -148,24 +164,20 @@ in
           files = lib.unique (cfg.root.files ++ cfg.root.cache.files);
           directories = lib.unique (cfg.root.directories ++ cfg.root.cache.directories);
 
-          users = lib.mkIf (user != null) {
-            ${user} = {
-              files = cfg.home.files;
-              directories = cfg.home.directories;
-            };
-          };
+          users = lib.mapAttrs (_: userCfg: {
+            files = userCfg.persistFiles;
+            directories = userCfg.persistDirectories;
+          }) managedPersistUsers;
         };
         "/cache" = {
           hideMounts = true;
           files = cfg.root.cache.files;
           directories = cfg.root.cache.directories;
 
-          users = lib.mkIf (user != null) {
-            ${user} = {
-              files = cfg.home.cache.files;
-              directories = cfg.home.cache.directories;
-            };
-          };
+          users = lib.mapAttrs (_: userCfg: {
+            files = userCfg.cacheFiles;
+            directories = userCfg.cacheDirectories;
+          }) managedPersistUsers;
         };
       };
 

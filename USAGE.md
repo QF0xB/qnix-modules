@@ -116,6 +116,10 @@ the consumer must also import `inputs.impermanence.nixosModules.impermanence`
 explicitly. `qnix-modules` does not import the upstream impermanence module
 from inside the storage module.
 
+Per-user persistence is configured through `qnix.persist.users`, keyed by
+username. The special key `"*"` applies defaults to every managed user from
+`qnix.system.users.users`.
+
 ## 2. Home Manager Only
 
 Use this when there is no NixOS system module layer, for example:
