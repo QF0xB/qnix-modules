@@ -49,6 +49,10 @@
         let
           pkgs = mkPkgs system;
           lib = mkLib system;
+          qnixLib = qnix-modules.lib {
+            lib = nixpkgs.lib;
+            inherit pkgs;
+          };
 
           nixosEvaluation = lib.nixosSystem {
             inherit pkgs lib;
@@ -63,22 +67,7 @@
                 ];
               })
               {
-                qnix = {
-                  system.headless = false;
-                  services = {
-                    openssh.enable = true;
-                    fail2ban.enable = true;
-                  };
-                };
-
-                system.stateVersion = "25.11";
-
-                fileSystems."/" = {
-                  device = "none";
-                  fsType = "tmpfs";
-                };
-
-                boot.isContainer = true;
+                qnix = { };
               }
             ];
           };
@@ -86,18 +75,14 @@
           homeEvaluation = home-manager.lib.homeManagerConfiguration {
             inherit pkgs;
             extraSpecialArgs = {
-              inherit lib;
+              inherit qnixLib;
             };
             modules = [
               (import ../loader/home.nix {
-                inherit lib;
+                lib = nixpkgs.lib;
                 profiles = [ "base" ];
               })
               {
-                home.username = "tester";
-                home.homeDirectory = "/tmp/tester";
-                home.stateVersion = "25.11";
-
                 qnix = { };
               }
             ];
