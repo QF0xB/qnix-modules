@@ -1,4 +1,8 @@
 { lib, config, ... }:
+
+let
+  cfg = config.qnix.system.packages;
+in
 {
   options = {
     qnix.system.packages = {
