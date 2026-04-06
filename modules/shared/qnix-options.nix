@@ -1,23 +1,25 @@
 { lib, pkgs, ... }:
 {
   options.qnix = {
-    services = {
-      openssh.enable = lib.mkEnableOption "openssh";
-      fail2ban.enable = lib.mkEnableOption "fail2ban";
-      docker.enable = lib.mkEnableOption "docker";
-      netbird.enable = lib.mkEnableOption "netbird";
-    };
-
-    system = {
+    status = {
       headless = lib.mkOption {
         type = lib.types.bool;
         default = false;
       };
 
-      primaryUser = lib.mkOption {
-        type = lib.types.str;
-        default = null;
+      server = lib.mkOption {
+        type = lib.types.bool;
+        default = false;
       };
+
+      vm = lib.mkOption {
+        type = lib.types.bool;
+        default = false;
+      };
+    };
+
+    system = {
+      boot-manager.enable = lib.mkEnableOption "boot manager";
     };
   };
 }

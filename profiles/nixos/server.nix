@@ -1,9 +1,13 @@
 { lib, config, ... }:
 {
-  config = {
-    qnix.system.headless = lib.mkDefault true;
+  imports = [
+    ../../modules/nixos/security/openssh.nix
+    ../../modules/nixos/security/fail2ban.nix
+  ];
 
-    services.openssh.enable = lib.mkDefault true;
-    services.fail2ban.enable = lib.mkDefault true;
+  config = {
+    qnix.status.headless = lib.mkDefault false;
+    qnix.status.server = lib.mkDefault true;
+
   };
 }
