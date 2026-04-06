@@ -70,10 +70,6 @@ in
 
     time.timeZone = cfg.timezone;
 
-    environment.systemPackages = with pkgs; [
-      glibcLocales
-    ];
-
     i18n.defaultLocale = {
       supportedLocales = supportedLocales;
       extraLocaleSettings = cfg.localeSettings;
