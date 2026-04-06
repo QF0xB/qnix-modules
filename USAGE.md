@@ -10,6 +10,8 @@ supported modes:
 The new model is:
 
 - loaders activate **profiles**
+- loaders always import the shared `qnix-options` baseline
+- profiles import the implementation modules they need
 - host or user config sets `qnix.*` values
 - `NixOS` modules use `lib.qnix.*`
 - `Home Manager` modules use `qnixLib.qnix.*`
@@ -44,6 +46,27 @@ Then use:
 ```nix
 qnixLib.qnix.*
 ```
+
+For Home profiles/modules you can also use:
+
+```nix
+lib.qnix.mkHomeFeatureImports
+lib.qnix.mkHomeOptionImports
+```
+
+These helpers import the canonical option files only in standalone Home Manager
+mode. When `osConfig.qnix` exists, they skip option imports and rely on the
+NixOS-owned schema instead.
+
+If a Home profile wants to set default `qnix.*` values, use:
+
+```nix
+lib.qnix.mkStandaloneHomeConfig
+```
+
+This emits the `qnix` config fragment only in standalone Home Manager mode. In
+`NixOS + Home Manager`, the Home profile must not define `qnix.*` again and
+should rely on `osConfig.qnix`.
 
 ## 1. NixOS Only
 
@@ -111,7 +134,7 @@ Use this when the machine only consumes NixOS modules and not Home Manager.
 If you use `qnix.security.sops`, the consumer must import `sops-nix`
 explicitly. `qnix-modules` does not import `sops-nix` from inside the module.
 
-If you use the `impermanent` profile or set `qnix.storage.impermanence.enable`,
+If you use the `impermanence` profile or set `qnix.storage.impermanence.enable`,
 the consumer must also import `inputs.impermanence.nixosModules.impermanence`
 explicitly. `qnix-modules` does not import the upstream impermanence module
 from inside the storage module.
@@ -280,7 +303,7 @@ This is the most important combined mode because:
 If the NixOS side uses `qnix.security.sops`, keep `sops-nix` imported on the
 NixOS side and let Home Manager consume the resulting `osConfig.qnix` state.
 
-If the NixOS side loads the `impermanent` profile, keep
+If the NixOS side loads the `impermanence` profile, keep
 `inputs.impermanence.nixosModules.impermanence` in the NixOS module list so the
 `environment.persistence` option tree exists before the QNix storage module
 configures it.

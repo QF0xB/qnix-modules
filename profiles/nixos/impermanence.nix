@@ -1,9 +1,10 @@
 { lib, config, ... }:
 
 {
-  imports = [
-    ../../modules/nixos/storage/impermanence.nix
-  ];
+  imports = lib.qnix.mkNixosFeatureImports {
+    category = "storage";
+    name = "impermanence";
+  };
 
   config = {
     qnix = {

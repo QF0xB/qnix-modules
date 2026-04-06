@@ -9,36 +9,6 @@ let
   cfg = config.qnix.storage.zfs;
 in
 {
-  options = {
-    qnix = {
-      storage.zfs = {
-        scrub = {
-          enable = lib.mkEnableOption "zfs scrub" // {
-            default = true;
-          };
-
-          interval = lib.mkOption {
-            type = lib.types.str;
-            default = "daily";
-            description = "The interval at which to scrub the ZFS pool.";
-          };
-        };
-
-        trim = {
-          enable = lib.mkEnableOption "zfs trim" // {
-            default = true;
-          };
-
-          interval = lib.mkOption {
-            type = lib.types.str;
-            default = "daily";
-            description = "The interval at which to trim the ZFS pool.";
-          };
-        };
-      };
-    };
-  };
-
   config = lib.mkIf cfg.enable {
     services.zfs = {
       autoScrub.enable = cfg.scrub.enable;

@@ -1,5 +1,20 @@
 { lib, config, ... }:
 {
+  imports = lib.concatLists [
+    (lib.qnix.mkNixosOptionImports {
+      category = "system";
+      name = "localisation";
+    })
+    (lib.qnix.mkNixosOptionImports {
+      category = "security";
+      name = "sops";
+    })
+    (lib.qnix.mkNixosOptionImports {
+      category = "security";
+      name = "gpg";
+    })
+  ];
+
   config = {
     qnix = {
       status = {
@@ -18,6 +33,9 @@
       };
 
       security = {
+        gpg = {
+          enable = lib.mkDefault true;
+        };
         sops = {
           enable = lib.mkDefault true;
           defaultSopsFile = lib.mkDefault "./secrets/default.yaml";

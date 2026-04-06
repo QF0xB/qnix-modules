@@ -1,7 +1,14 @@
 { lib, config, ... }:
 {
-  imports = [
-    ../../modules/nixos/security/openssh.nix
+  imports = lib.concatLists [
+    (lib.qnix.mkNixosFeatureImports {
+      category = "security";
+      name = "fail2ban";
+    })
+    (lib.qnix.mkNixosFeatureImports {
+      category = "security";
+      name = "openssh";
+    })
   ];
 
   config = {

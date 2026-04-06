@@ -5,6 +5,7 @@
 {
   qnix =
     (import ./context.nix { inherit lib; })
+    // (import ./imports.nix { })
     // (import ./options.nix { inherit lib; })
     // (import ./attrs.nix { inherit lib; })
     // (import ./packages.nix { inherit lib pkgs; });

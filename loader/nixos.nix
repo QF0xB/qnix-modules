@@ -10,6 +10,5 @@ in
 {
   imports = [
     ../modules/shared/qnix-options.nix
-  ]
-  ++ profileModules;
+  ] ++ profileModules;
 }

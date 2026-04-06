@@ -1,17 +1,35 @@
 { lib, config, ... }:
 {
-  imports = [
+  imports = lib.concatLists [
     # Sops MUST be imported before any modules that use it
-    ../../modules/nixos/security/sops.nix
-
-    ../../modules/nixos/system/boot.nix
-    ../../modules/nixos/system/localisation.nix
-    ../../modules/nixos/system/packages.nix
-    ../../modules/nixos/system/users.nix
-
-    ../../modules/nixos/security/firewall.nix
-
-    ../../modules/nixos/storage/zfs.nix
+    (lib.qnix.mkNixosFeatureImports {
+      category = "security";
+      name = "sops";
+    })
+    (lib.qnix.mkNixosFeatureImports {
+      category = "system";
+      name = "boot";
+    })
+    (lib.qnix.mkNixosFeatureImports {
+      category = "system";
+      name = "localisation";
+    })
+    (lib.qnix.mkNixosFeatureImports {
+      category = "system";
+      name = "packages";
+    })
+    (lib.qnix.mkNixosFeatureImports {
+      category = "system";
+      name = "users";
+    })
+    (lib.qnix.mkNixosFeatureImports {
+      category = "security";
+      name = "firewall";
+    })
+    (lib.qnix.mkNixosFeatureImports {
+      category = "storage";
+      name = "zfs";
+    })
   ];
 
   config = {

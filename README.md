@@ -10,6 +10,7 @@ The new structure is based on:
 
 - **profiles** for composition
 - **modules** for reusable capabilities
+- **options** for feature schemas
 - a shared `qnix.*` config tree
 - helper functions under `lib.qnix.*`
 
@@ -22,9 +23,10 @@ category-based structure is obsolete.
 
 - `profiles/nixos` describes machine roles
 - `profiles/home` describes user roles
+- `modules/shared/qnix-options.nix` defines always-available shared schema
+- `options/` defines additional feature option schemas
 - `modules/nixos` implements reusable NixOS capabilities
 - `modules/home` implements reusable Home Manager capabilities
-- `modules/shared` defines the public `qnix` option tree
 - `lib/` contains compatibility and context helpers
 
 ### Canonical config
@@ -61,7 +63,11 @@ Rules:
 ├── loader/
 │   ├── nixos.nix
 │   └── home.nix
+├── options/
+│   └── nixos/
 ├── modules/
+│   ├── nixos/
+│   ├── home/
 │   └── shared/
 │       └── qnix-options.nix
 └── profiles/
@@ -127,6 +133,10 @@ Use the NixOS loader to activate machine profiles:
 })
 ```
 
+The loader always imports `modules/shared/qnix-options.nix` and then the
+selected profiles. Profiles are still responsible for importing the
+implementation modules they need.
+
 ### Home Manager loader
 
 Use the Home loader to activate user profiles:
@@ -143,6 +153,8 @@ Use the Home loader to activate user profiles:
 
 Important:
 
+- the loader always imports `modules/shared/qnix-options.nix`
+- profiles provide the actual feature/module imports
 - the Home loader should use plain `nixpkgs.lib`
 - do **not** override Home Manager's `lib`
 - pass `qnixLib` separately via `extraSpecialArgs`

@@ -1,6 +1,6 @@
 # Impermanence integration for QNix.
 #
-# Enable with `qnix.storage.impermanence.enable` (see `modules/shared/qnix-options.nix`).
+# Enable with `qnix.storage.impermanence.enable`.
 # Path lists live under `qnix.persist.{root,users}` (this file defines those options).
 # `qnix.persist.users` is keyed by username and may also contain `"*"` defaults that are
 # merged into every managed user from `qnix.system.users.users`.
@@ -23,40 +23,6 @@ let
         "Paths must not use the /home prefix; use root.* for system paths or home.* as paths relative to the home directory"
     );
     paths;
-
-  persistUserType = lib.types.submodule {
-    options = {
-      directories = lib.mkOption {
-        type = lib.types.listOf lib.types.str;
-        default = [ ];
-        description = "Paths relative to the user's home directory.";
-        apply = assertNoHomeDirs;
-      };
-
-      files = lib.mkOption {
-        type = lib.types.listOf lib.types.str;
-        default = [ ];
-        description = "File paths relative to the user's home directory.";
-        apply = assertNoHomeDirs;
-      };
-
-      cache = {
-        directories = lib.mkOption {
-          type = lib.types.listOf lib.types.str;
-          default = [ ];
-          description = "Cache directories relative to the user's home directory.";
-          apply = assertNoHomeDirs;
-        };
-
-        files = lib.mkOption {
-          type = lib.types.listOf lib.types.str;
-          default = [ ];
-          description = "Cache files relative to the user's home directory.";
-          apply = assertNoHomeDirs;
-        };
-      };
-    };
-  };
 
   wildcardUserCfg = cfg.users."*" or { };
 
@@ -88,54 +54,6 @@ let
   managedPersistUsers = lib.genAttrs (lib.attrNames usersCfg) mergeUserPersist;
 in
 {
-  options = {
-    qnix = {
-      persist = {
-        root = {
-          directories = lib.mkOption {
-            type = lib.types.listOf lib.types.str;
-            default = [
-              "/var/log"
-              "/var/lib/nixos"
-            ];
-            description = "System directories to bind under /persist (must not be under /home).";
-            apply = assertNoHomeDirs;
-          };
-          files = lib.mkOption {
-            type = lib.types.listOf lib.types.str;
-            default = [ ];
-            description = "System files to bind under /persist (must not be under /home).";
-            apply = assertNoHomeDirs;
-          };
-
-          cache = {
-            directories = lib.mkOption {
-              type = lib.types.listOf lib.types.str;
-              default = [ ];
-              description = "System cache directories under /cache (must not be under /home).";
-              apply = assertNoHomeDirs;
-            };
-            files = lib.mkOption {
-              type = lib.types.listOf lib.types.str;
-              default = [ ];
-              description = "System cache files under /cache (must not be under /home).";
-              apply = assertNoHomeDirs;
-            };
-          };
-        };
-
-        users = lib.mkOption {
-          type = lib.types.attrsOf persistUserType;
-          default = { };
-          description = ''
-            Per-user persistence config keyed by username. The special key `"*"`
-            applies defaults to every managed user from `qnix.system.users.users`.
-          '';
-        };
-      };
-    };
-  };
-
   config = lib.mkIf config.qnix.storage.impermanence.enable (
     let
       rootDirs = cfg.root.directories ++ cfg.root.cache.directories;
