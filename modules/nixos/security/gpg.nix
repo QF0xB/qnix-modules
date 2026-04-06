@@ -15,6 +15,6 @@ in
       enableSSHSupport = cfg.enableSSH;
     };
 
-    qnix.persist.home.directories = [ ".gnupg" ];
+    qnix.persist.users."*".directories = [ ".gnupg" ];
   };
 }
