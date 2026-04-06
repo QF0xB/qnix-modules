@@ -1,6 +1,9 @@
 { lib, config, ... }:
 {
   imports = [
+    # Sops MUST be imported before any modules that use it
+    ../../modules/nixos/security/sops.nix
+
     ../../modules/nixos/system/boot.nix
     ../../modules/nixos/system/localisation.nix
     ../../modules/nixos/system/packages.nix
@@ -20,6 +23,10 @@
             enable = lib.mkDefault false;
           };
         };
+      };
+
+      security = {
+        sops.enable = lib.mkDefault true;
       };
     };
 
