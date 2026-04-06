@@ -4,7 +4,7 @@
     ./base.nix
   ];
 
-  config = lib.mkIf config.qnix.profiles.workstation.enable {
+  config = {
     qnix.profiles.base.enable = true;
 
     qnix.system.headless = lib.mkDefault false;

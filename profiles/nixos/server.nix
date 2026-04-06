@@ -4,9 +4,7 @@
     ./base.nix
   ];
 
-  config = lib.mkIf config.qnix.profiles.server.enable {
-    qnix.profiles.base.enable = true;
-
+  config = {
     qnix.system.headless = lib.mkDefault true;
 
     services.openssh.enable = lib.mkDefault true;
