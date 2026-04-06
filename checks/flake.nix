@@ -67,6 +67,12 @@
                 ];
               })
               {
+                system.stateVersion = "25.11";
+                fileSystems."/" = {
+                  device = "none";
+                  fsType = "tmpfs";
+                };
+                boot.isContainer = true;
                 qnix = { };
               }
             ];
@@ -83,6 +89,9 @@
                 profiles = [ "base" ];
               })
               {
+                home.username = "tester";
+                home.homeDirectory = "/tmp/tester";
+                home.stateVersion = "25.11";
                 qnix = { };
               }
             ];
