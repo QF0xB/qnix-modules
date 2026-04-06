@@ -26,6 +26,7 @@
     };
 
     security = {
+      openssh.enable = lib.mkEnableOption "openssh";
       sops.enable = lib.mkEnableOption "sops";
     };
 
