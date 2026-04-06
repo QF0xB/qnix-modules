@@ -9,6 +9,8 @@
     ../../modules/nixos/system/packages.nix
     ../../modules/nixos/system/users.nix
 
+    ../../modules/nixos/security/firewall.nix
+
     ../../modules/nixos/storage/zfs.nix
   ];
 
@@ -28,6 +30,7 @@
       };
 
       security = {
+        firewall.enable = lib.mkDefault true;
         sops.enable = lib.mkDefault true;
       };
 

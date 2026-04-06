@@ -26,6 +26,7 @@
     };
 
     security = {
+      firewall.enable = lib.mkEnableOption "firewall";
       openssh.enable = lib.mkEnableOption "openssh";
       sops.enable = lib.mkEnableOption "sops";
     };
