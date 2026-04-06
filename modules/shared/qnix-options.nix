@@ -26,6 +26,7 @@
     };
 
     security = {
+      fail2ban.enable = lib.mkEnableOption "fail2ban";
       firewall.enable = lib.mkEnableOption "firewall";
       openssh.enable = lib.mkEnableOption "openssh";
       sops.enable = lib.mkEnableOption "sops";

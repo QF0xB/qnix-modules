@@ -12,6 +12,7 @@
       };
 
       security = {
+        fail2ban.enable = lib.mkDefault true;
         openssh.enable = lib.mkDefault true;
       };
     };
