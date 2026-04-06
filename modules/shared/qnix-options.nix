@@ -31,6 +31,7 @@
 
     storage = {
       impermanence.enable = lib.mkEnableOption "impermanence";
+      zfs.enable = lib.mkEnableOption "zfs";
     };
   };
 }

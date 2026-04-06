@@ -8,6 +8,8 @@
     ../../modules/nixos/system/localisation.nix
     ../../modules/nixos/system/packages.nix
     ../../modules/nixos/system/users.nix
+
+    ../../modules/nixos/storage/zfs.nix
   ];
 
   config = {
@@ -29,6 +31,9 @@
         sops.enable = lib.mkDefault true;
       };
 
+      storage = {
+        zfs.enable = lib.mkDefault true;
+      };
     };
 
     nix.settings.experimental-features = lib.mkDefault [
