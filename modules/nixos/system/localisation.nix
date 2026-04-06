@@ -70,7 +70,7 @@ in
 
     time.timeZone = cfg.timezone;
 
-    i18n.defaultLocale = {
+    i18n = {
       supportedLocales = supportedLocales;
       extraLocaleSettings = cfg.localeSettings;
     };

@@ -7,6 +7,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     qnix-modules.url = "path:..";
   };
 
@@ -14,6 +18,7 @@
     {
       nixpkgs,
       home-manager,
+      sops-nix,
       qnix-modules,
       ...
     }:
@@ -57,6 +62,8 @@
           nixosEvaluation = lib.nixosSystem {
             inherit pkgs lib;
             modules = [
+              sops-nix.nixosModules.sops
+
               (import ../loader/nixos.nix {
                 inherit lib;
                 profiles = [
@@ -73,7 +80,18 @@
                   fsType = "tmpfs";
                 };
                 boot.isContainer = true;
-                qnix = { };
+                networking.hostId = "12345678";
+                qnix.security.sops = {
+                  enable = true;
+                  defaultSopsFile = builtins.toFile "dummy-secrets.yaml" ''
+                    {}
+                  '';
+                  age = {
+                    generateKey = false;
+                    keyFile = "/tmp/dummy-age-key.txt";
+                  };
+                  secrets = { };
+                };
               }
             ];
           };

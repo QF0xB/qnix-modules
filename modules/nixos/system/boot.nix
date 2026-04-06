@@ -72,7 +72,6 @@ in
         systemd-boot = lib.mkIf (cfg.loader == "systemd-boot") {
           enable = true;
           configurationLimit = 10;
-          storeConfig = true;
           memtest86 = {
             enable = !config.qnix.status.vm;
             sortKey = "o_memtest86";
