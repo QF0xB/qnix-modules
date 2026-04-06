@@ -43,6 +43,9 @@
             keyFile = lib.mkDefault "~/.config/sops/age/keys/default.key";
           };
         };
+        yubikey = {
+          enable = lib.mkDefault true;
+        };
       };
     };
   };
