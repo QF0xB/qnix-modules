@@ -73,7 +73,7 @@ in
           enable = true;
           configurationLimit = 10;
           storeConfig = true;
-          memtest86 = { 
+          memtest86 = {
             enable = !config.qnix.status.vm;
             sortKey = "o_memtest86";
           };
@@ -84,7 +84,7 @@ in
 
       initrd = {
         systemd.enable = cfg.systemdSecondStage;
-      }
+      };
     };
   };
 }
