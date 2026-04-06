@@ -1,13 +1,6 @@
 { lib, pkgs, ... }:
 {
   options.qnix = {
-    profiles = {
-      base.enable = lib.mkEnableOption "base profile";
-      server.enable = lib.mkEnableOption "server profile";
-      workstation.enable = lib.mkEnableOption "workstation profile";
-      laptop.enable = lib.mkEnableOption "laptop profile";
-    };
-
     services = {
       openssh.enable = lib.mkEnableOption "openssh";
       fail2ban.enable = lib.mkEnableOption "fail2ban";
@@ -25,6 +18,6 @@
         type = lib.types.str;
         default = null;
       };
-    }
-  }
+    };
+  };
 }

@@ -1,9 +1,5 @@
 { lib, config, ... }:
 {
-  imports = [
-    ./base.nix
-  ];
-
   config = {
     qnix.system.headless = lib.mkDefault true;
 
