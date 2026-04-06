@@ -1,17 +1,21 @@
 { lib, config, ... }:
 {
   imports = lib.concatLists [
-    (lib.qnix.mkNixosOptionImports {
+    (lib.qnix.mkNixosFeatureImports {
       category = "system";
       name = "localisation";
     })
-    (lib.qnix.mkNixosOptionImports {
+    (lib.qnix.mkNixosFeatureImports {
       category = "security";
       name = "sops";
     })
-    (lib.qnix.mkNixosOptionImports {
+    (lib.qnix.mkNixosFeatureImports {
       category = "security";
       name = "gpg";
+    })
+    (lib.qnix.mkNixosFeatureImports {
+      category = "security";
+      name = "yubikey";
     })
   ];
 
