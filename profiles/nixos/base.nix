@@ -5,7 +5,11 @@
   ];
 
   config = {
-    qnix.system.boot-manager.enable = lib.mkDefault true;
+    qnix = {
+      system = {
+        boot-manager.enable = lib.mkDefault true;
+      };
+    };
 
     time.timeZone = lib.mkDefault "Europe/Berlin";
 
