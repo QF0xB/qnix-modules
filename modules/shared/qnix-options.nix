@@ -20,6 +20,8 @@
 
     system = {
       boot-manager.enable = lib.mkEnableOption "boot manager";
+      localisation.enable = lib.mkEnableOption "localisation";
+      packages.enable = lib.mkEnableOption "packages";
     };
   };
 }
