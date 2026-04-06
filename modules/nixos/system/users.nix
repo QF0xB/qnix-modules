@@ -141,22 +141,27 @@ in
     };
   };
 
-  assertions = [
+  config = lib.mkMerge [
     {
-      assertion = !(cfg.root.initialHashedPassword != null && cfg.root.passwordFromSops != null);
-      message = "qnix.users.root: initialHashedPassword and passwordFromSops are mutually exclusive.";
+      assertions =
+        [
+          {
+            assertion = !(cfg.root.initialHashedPassword != null && cfg.root.passwordFromSops != null);
+            message = "qnix.users.root: initialHashedPassword and passwordFromSops are mutually exclusive.";
+          }
+        ]
+        ++ lib.mapAttrsToList (username: userCfg: {
+          assertion = !(userCfg.initialHashedPassword != null && userCfg.passwordFromSops != null);
+          message = "qnix.users.users.${username}: initialHashedPassword and passwordFromSops are mutually exclusive.";
+        }) cfg.users;
     }
-  ]
-  ++ lib.mapAttrsToList (username: userCfg: {
-    assertion = !(userCfg.initialHashedPassword != null && userCfg.passwordFromSops != null);
-    message = "qnix.users.users.${username}: initialHashedPassword and passwordFromSops are mutually exclusive.";
-  }) cfg.users;
 
-  config = lib.mkIf shouldManage {
-    users = {
-      mutableUsers = false;
-      users = renderedRoot // renderedUsers;
-      groups = renderedGroups;
-    };
-  };
+    (lib.mkIf shouldManage {
+      users = {
+        mutableUsers = false;
+        users = renderedRoot // renderedUsers;
+        groups = renderedGroups;
+      };
+    })
+  ];
 }

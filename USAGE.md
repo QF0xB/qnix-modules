@@ -72,6 +72,8 @@ Use this when the machine only consumes NixOS modules and not Home Manager.
         inherit pkgs lib;
 
         modules = [
+          inputs.sops-nix.nixosModules.sops
+
           ./hosts/myhost/configuration.nix
           ./hosts/myhost/qnix.nix
           ./hosts/myhost/hardware.nix
@@ -104,6 +106,9 @@ Use this when the machine only consumes NixOS modules and not Home Manager.
   };
 }
 ```
+
+If you use `qnix.security.sops`, the consumer must import `sops-nix`
+explicitly. `qnix-modules` does not import `sops-nix` from inside the module.
 
 ## 2. Home Manager Only
 
@@ -215,6 +220,8 @@ This is the most important combined mode because:
         inherit pkgs lib;
 
         modules = [
+          inputs.sops-nix.nixosModules.sops
+
           ./hosts/myclient/configuration.nix
           ./hosts/myclient/qnix.nix
           ./hosts/myclient/hardware.nix
@@ -258,6 +265,9 @@ This is the most important combined mode because:
     };
 }
 ```
+
+If the NixOS side uses `qnix.security.sops`, keep `sops-nix` imported on the
+NixOS side and let Home Manager consume the resulting `osConfig.qnix` state.
 
 ### Host config pattern
 

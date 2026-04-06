@@ -1,30 +1,35 @@
-{ lib, config, ... }:
+{
+  lib,
+  config,
+  options,
+  ...
+}:
 
 let
   cfg = config.qnix.security.sops;
 in
 {
-  imports = lib.optional (inputs ? sops-nix) inputs.sops-nix.nixosModules.sops;
-
   options = {
     qnix.security.sops = {
-      defaultSecretFile = lib.mkOption {
-        type = lib.types.str;
+      enable = lib.mkEnableOption "sops-nix integration";
+
+      defaultSopsFile = lib.mkOption {
+        type = lib.types.nullOr lib.types.path;
         default = null;
-        description = "The default secret file to use for sops";
+        description = "The default sops file to use.";
       };
 
       age = {
-        keyFile = lib.mkOption {
-          type = lib.types.str;
-          default = null;
-          description = "The age key file to use for sops";
+        generateKey = lib.mkOption {
+          type = lib.types.bool;
+          default = false;
+          description = "Whether to generate an age key.";
         };
 
-        keyType = lib.mkOption {
-          type = lib.types.str;
-          default = "rsa";
-          description = "The age key type to use for sops";
+        keyFile = lib.mkOption {
+          type = lib.types.nullOr lib.types.str;
+          default = null;
+          description = "Path to the age key file used by sops.";
         };
       };
 
@@ -77,9 +82,9 @@ in
     };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf (cfg.enable && options ? sops) {
     sops = {
-      defaultSopsFile = lib.mkIf (cfg.defaultSopsFile != null) cfg.defaultSopsFile;
+      defaultSopsFile = cfg.defaultSopsFile;
 
       age = {
         generateKey = cfg.age.generateKey;
