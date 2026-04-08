@@ -20,6 +20,10 @@
     })
     (lib.qnix.mkNixosFeatureImports {
       category = "system";
+      name = "shell";
+    })
+    (lib.qnix.mkNixosFeatureImports {
+      category = "system";
       name = "users";
     })
     (lib.qnix.mkNixosFeatureImports {
@@ -38,6 +42,7 @@
         boot-manager.enable = lib.mkDefault true;
         localisation.enable = lib.mkDefault true;
         packages.enable = lib.mkDefault true;
+        shell.enable = lib.mkDefault true;
         users = {
           enable = lib.mkDefault true;
           defaultExtraGroups = lib.mkDefault [ "wheel" ];

@@ -64,7 +64,57 @@
             inherit pkgs;
           };
 
-          nixosOnlyEvaluation = lib.nixosSystem {
+          commonSystemModule = {
+            system.stateVersion = "25.11";
+            fileSystems."/" = {
+              device = "none";
+              fsType = "tmpfs";
+            };
+            fileSystems."/persist" = {
+              device = "none";
+              fsType = "tmpfs";
+            };
+            fileSystems."/cache" = {
+              device = "none";
+              fsType = "tmpfs";
+            };
+            boot.isContainer = true;
+            networking.hostId = "12345678";
+
+            qnix.security.sops = {
+              enable = true;
+              defaultSopsFile = builtins.toFile "dummy-secrets.yaml" ''
+                {}
+              '';
+              age = {
+                generateKey = false;
+                keyFile = "/tmp/dummy-age-key.txt";
+              };
+              secrets = { };
+            };
+          };
+
+          testUserModule = {
+            qnix.system.users.users.tester = {
+              kind = "normal";
+              group = "tester";
+              home = "/home/tester";
+              extraGroups = [ "wheel" ];
+              openssh.authorizedKeys.keys = [
+                "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEexampleexampleexampleexampleexample tester@example"
+              ];
+            };
+          };
+
+          impermanenceTestModule = {
+            qnix.storage.impermanence.enable = true;
+            qnix.persist.users."*" = {
+              directories = [ ".config/nvim" ];
+              files = [ ".zsh_history" ];
+            };
+          };
+
+          nixosServerEvaluation = lib.nixosSystem {
             inherit pkgs lib;
             modules = [
               impermanence.nixosModules.impermanence
@@ -75,50 +125,40 @@
                 profiles = [
                   "base"
                   "server"
+                ];
+              })
+              commonSystemModule
+              testUserModule
+            ];
+          };
+
+          nixosClientEvaluation = lib.nixosSystem {
+            inherit pkgs lib;
+            modules = [
+              impermanence.nixosModules.impermanence
+              sops-nix.nixosModules.sops
+
+              (import ../loader/nixos.nix {
+                inherit lib;
+                profiles = [
+                  "base"
                   "workstation"
-                  "laptop"
                   "impermanence"
                 ];
               })
+              commonSystemModule
+              testUserModule
+              impermanenceTestModule
               {
-                system.stateVersion = "25.11";
-                fileSystems."/" = {
-                  device = "none";
-                  fsType = "tmpfs";
+                qnix.security.gpg.enable = true;
+                qnix.security.yubikey = {
+                  gui = true;
+                  login = false;
+                  sudo = false;
                 };
-                fileSystems."/persist" = {
-                  device = "none";
-                  fsType = "tmpfs";
-                };
-                fileSystems."/cache" = {
-                  device = "none";
-                  fsType = "tmpfs";
-                };
-                boot.isContainer = true;
-                networking.hostId = "12345678";
-                qnix.security.sops = {
+                qnix.system.shell = {
                   enable = true;
-                  defaultSopsFile = builtins.toFile "dummy-secrets.yaml" ''
-                    {}
-                  '';
-                  age = {
-                    generateKey = false;
-                    keyFile = "/tmp/dummy-age-key.txt";
-                  };
-                  secrets = { };
-                };
-                qnix.system.users.users.tester = {
-                  kind = "normal";
-                  home = "/home/tester";
-                  extraGroups = [ "wheel" ];
-                  openssh.authorizedKeys.keys = [
-                    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEexampleexampleexampleexampleexample tester@example"
-                  ];
-                };
-                qnix.storage.impermanence.enable = true;
-                qnix.persist.users."*" = {
-                  directories = [ ".config/nvim" ];
-                  files = [ ".zsh_history" ];
+                  direnv.enable = true;
                 };
               }
             ];
@@ -142,6 +182,11 @@
                 home.homeDirectory = "/tmp/tester";
                 home.stateVersion = "25.11";
                 qnix.security.gpg.enable = true;
+                qnix.system.shell = {
+                  enable = true;
+                  direnv.enable = true;
+                  projectRoot = "/tmp/qnix";
+                };
               }
             ];
           };
@@ -157,50 +202,26 @@
                 profiles = [
                   "base"
                   "workstation"
+                  "impermanence"
                 ];
               })
 
               home-manager.nixosModules.home-manager
 
+              commonSystemModule
+              testUserModule
+              impermanenceTestModule
               {
-                system.stateVersion = "25.11";
-                fileSystems."/" = {
-                  device = "none";
-                  fsType = "tmpfs";
-                };
-                fileSystems."/persist" = {
-                  device = "none";
-                  fsType = "tmpfs";
-                };
-                fileSystems."/cache" = {
-                  device = "none";
-                  fsType = "tmpfs";
-                };
-                boot.isContainer = true;
-                networking.hostId = "12345678";
-
-                qnix.security.sops = {
-                  enable = true;
-                  defaultSopsFile = builtins.toFile "dummy-secrets.yaml" ''
-                    {}
-                  '';
-                  age = {
-                    generateKey = false;
-                    keyFile = "/tmp/dummy-age-key.txt";
-                  };
-                  secrets = { };
-                };
-
                 qnix.security.gpg.enable = true;
-
-                qnix.system.users.users.tester = {
-                  kind = "normal";
-                  group = "tester";
-                  home = "/home/tester";
-                  extraGroups = [ "wheel" ];
-                  openssh.authorizedKeys.keys = [
-                    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEexampleexampleexampleexampleexample tester@example"
-                  ];
+                qnix.security.yubikey = {
+                  gui = true;
+                  login = false;
+                  sudo = false;
+                };
+                qnix.system.shell = {
+                  enable = true;
+                  direnv.enable = true;
+                  projectRoot = "/tmp/qnix";
                 };
 
                 home-manager = {
@@ -241,11 +262,13 @@
             touch $out
           '';
 
-          nixos-only-evaluates = nixosOnlyEvaluation.config.system.build.toplevel;
+          nixos-server-evaluates = nixosServerEvaluation.config.system.build.toplevel;
 
-          home-manager-only-evaluates = homeOnlyEvaluation.activationPackage;
+          nixos-client-evaluates = nixosClientEvaluation.config.system.build.toplevel;
 
-          nixos-and-home-manager-evaluates = nixosWithHomeEvaluation.config.system.build.toplevel;
+          home-manager-client-evaluates = homeOnlyEvaluation.activationPackage;
+
+          nixos-and-home-manager-client-evaluates = nixosWithHomeEvaluation.config.system.build.toplevel;
         }
       );
     };

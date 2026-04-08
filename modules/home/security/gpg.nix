@@ -75,13 +75,15 @@ in
 
     # Ensure GPG agent socket directory exists and restart agent if needed
     home.activation.setupGpgSshSocket = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      if [ ! -d "$XDG_RUNTIME_DIR/gnupg" ]; then
-        mkdir -p "$XDG_RUNTIME_DIR/gnupg"
-        chmod 700 "$XDG_RUNTIME_DIR/gnupg"
+      runtime_dir="''${XDG_RUNTIME_DIR:-}"
+
+      if [ -n "$runtime_dir" ] && [ ! -d "$runtime_dir/gnupg" ]; then
+        mkdir -p "$runtime_dir/gnupg"
+        chmod 700 "$runtime_dir/gnupg"
       fi
 
       # Ensure GPG agent is running (it will create the SSH socket)
-      if [ "$XDG_RUNTIME_DIR" != "" ] && [ -d "$XDG_RUNTIME_DIR" ]; then
+      if [ -n "$runtime_dir" ] && [ -d "$runtime_dir" ]; then
         # Try to connect to agent, start if not running
         gpg-connect-agent /bye > /dev/null 2>&1 || true
       fi

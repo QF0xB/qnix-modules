@@ -34,6 +34,13 @@
             variant = lib.mkDefault "koy, , ";
           };
         };
+
+        shell = {
+          defaultShell = {
+            package = lib.mkDefault "fish";
+          };
+          fish.enable = lib.mkDefault true;
+        };
       };
 
       security = {

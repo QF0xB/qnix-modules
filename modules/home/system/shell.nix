@@ -1,0 +1,104 @@
+{
+  lib,
+  config,
+  osConfig ? null,
+  qnixLib,
+  pkgs,
+  ...
+}:
+let
+  qconfig = qnixLib.qnix.getQnixConfig {
+    inherit config osConfig;
+  };
+  cfg = qconfig.system.shell;
+
+  shellAliases =
+    {
+      c = "clear";
+      ls = "clear && lsd -l";
+      lss = "lsd -la";
+      lsa = "clear && lsd -la";
+      mime = "xdg-mime query filetype";
+      mkdir = "mkdir -p";
+      mount = "mount --mkdir";
+      open = "xdg-open";
+
+      ga = "git add .";
+      gc = "git commit";
+      gp = "git push";
+      gacp = "git add . && git commit && git push";
+
+      ".." = "cd ..";
+      "..." = "cd ../..";
+      "...." = "cd ../../..";
+      "....." = "cd ../../../..";
+      "......" = "cd ../../../../..";
+    }
+    // lib.optionalAttrs (cfg.projectRoot != null) {
+      dots = "cd ${cfg.projectRoot}";
+      nhs = "nh os switch ${cfg.projectRoot}";
+    }
+    // lib.optionalAttrs cfg.qnixAliases {
+      qnix = "cd ~/projects/qnix";
+      nuq = "nix flake update qnix-modules";
+      nbv = "nix build .#nixosConfigurations.QTestVM.config.system.build.vm";
+    };
+
+  fishPlugins = with pkgs.fishPlugins; [
+    {
+      name = "sponge";
+      src = sponge.src;
+    }
+    {
+      name = "forgit";
+      src = forgit.src;
+    }
+    {
+      name = "fzf";
+      src = fzf.src;
+    }
+    {
+      name = "autopair";
+      src = autopair.src;
+    }
+    {
+      name = "done";
+      src = done.src;
+    }
+    {
+      name = "sudope";
+      src = plugin-sudope.src;
+    }
+  ];
+in
+{
+  config = lib.mkIf cfg.enable {
+    home.packages = lib.attrValues cfg.packages;
+
+    home.shellAliases = lib.mkIf cfg.aliases shellAliases;
+
+    programs.fish = lib.mkIf cfg.fish.enable {
+      enable = true;
+      preferAbbrs = false;
+      shellAliases = lib.mkForce (if cfg.aliases then shellAliases else { });
+      shellInit = ''
+        set fish_greeting
+      ''
+      + lib.optionalString cfg.direnv.enable ''
+        direnv hook fish | source
+      '';
+      plugins = fishPlugins;
+    };
+
+    programs.zsh = lib.mkIf cfg.zsh.enable {
+      enable = true;
+      autosuggestion.enable = cfg.zsh.autosuggestions;
+      syntaxHighlighting.enable = cfg.zsh.syntaxHighlighting;
+      enableCompletion = cfg.zsh.enableCompletion;
+      dotDir = "${config.xdg.configHome}/zsh";
+      initContent = lib.optionalString cfg.direnv.enable ''
+        eval "$(direnv hook zsh)"
+      '';
+    };
+  };
+}
