@@ -77,6 +77,13 @@ in
 
     home.shellAliases = lib.mkIf cfg.aliases shellAliases;
 
+    programs.lsd = {
+      enable = true;
+      enableBashIntegration = false;
+      enableFishIntegration = false;
+      enableZshIntegration = false;
+    };
+
     programs.fish = lib.mkIf cfg.fish.enable {
       enable = true;
       preferAbbrs = false;
