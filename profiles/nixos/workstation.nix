@@ -5,6 +5,7 @@ let
 in
 {
   imports = lib.concatLists [
+    [ ./base.nix ]
     (lib.qnix.mkNixosFeatureImports {
       category = "dev";
       name = "nh";

@@ -123,7 +123,6 @@
               (import ../loader/nixos.nix {
                 inherit lib;
                 profiles = [
-                  "base"
                   "server"
                 ];
               })
@@ -161,9 +160,8 @@
               (import ../loader/nixos.nix {
                 inherit lib;
                 profiles = [
-                  "base"
                   "dev"
-                  "desktop"
+                  "hyprland"
                   "impermanence"
                 ];
               })
@@ -199,9 +197,8 @@
               (import ../loader/home.nix {
                 lib = nixpkgs.lib;
                 profiles = [
-                  "base"
                   "dev"
-                  "desktop"
+                  "hyprland"
                 ];
               })
               {
@@ -228,7 +225,6 @@
               (import ../loader/home.nix {
                 lib = nixpkgs.lib;
                 profiles = [
-                  "base"
                   "server"
                 ];
               })
@@ -249,9 +245,8 @@
               (import ../loader/nixos.nix {
                 inherit lib;
                 profiles = [
-                  "base"
                   "dev"
-                  "desktop"
+                  "hyprland"
                   "impermanence"
                 ];
               })
@@ -290,9 +285,8 @@
                       (import ../loader/home.nix {
                         lib = nixpkgs.lib;
                         profiles = [
-                          "base"
                           "dev"
-                          "desktop"
+                          "hyprland"
                         ];
                       })
                     ];
@@ -333,6 +327,16 @@
           home-manager-server-status-defaults = pkgs.runCommand "home-manager-server-status-defaults" { } ''
             test "${if homeOnlyServerEvaluation.config.qnix.status.server then "yes" else "no"}" = "yes"
             test "${if homeOnlyServerEvaluation.config.qnix.status.headless then "yes" else "no"}" = "yes"
+            touch $out
+          '';
+
+          hyprland-profile-defaults = pkgs.runCommand "hyprland-profile-defaults" { } ''
+            test "${if nixosClientEvaluation.config.qnix.desktop.wayland.enable then "yes" else "no"}" = "yes"
+            test "${if nixosClientEvaluation.config.qnix.desktop.hyprland.enable then "yes" else "no"}" = "yes"
+            test "${if nixosClientEvaluation.config.programs.hyprland.enable then "yes" else "no"}" = "yes"
+            test "${if nixosClientEvaluation.config.xdg.portal.enable then "yes" else "no"}" = "yes"
+            test "${if homeOnlyEvaluation.config.wayland.windowManager.hyprland.enable then "yes" else "no"}" = "yes"
+            test "${homeOnlyEvaluation.config.home.sessionVariables.NIXOS_OZONE_WL}" = "1"
             touch $out
           '';
 

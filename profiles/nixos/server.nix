@@ -3,7 +3,7 @@ let
   sharedQnix = import ../shared/server.nix { inherit lib; };
 in
 {
-  imports = lib.concatLists [
+  imports = [ ./base.nix ] ++ lib.concatLists [
     (lib.qnix.mkNixosFeatureImports {
       category = "security";
       name = "fail2ban";

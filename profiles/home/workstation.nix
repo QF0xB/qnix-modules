@@ -10,6 +10,7 @@ in
 
 {
   imports = lib.concatLists [
+    [ ./base.nix ]
     (qnixLib.qnix.mkHomeFeatureImports {
       category = "security";
       name = "gpg";
