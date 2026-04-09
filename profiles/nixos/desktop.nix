@@ -11,6 +11,10 @@ in
     name = "terminal";
   })
   ++ (lib.qnix.mkNixosFeatureImports {
+    category = "desktop";
+    name = "xdg-folders";
+  })
+  ++ (lib.qnix.mkNixosFeatureImports {
       category = "security";
       name = "polkit";
     });

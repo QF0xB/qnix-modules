@@ -10,9 +10,14 @@ in
 {
   imports = [
     ./workstation.nix
-  ] ++ (qnixLib.qnix.mkHomeFeatureImports {
+  ]
+  ++ (qnixLib.qnix.mkHomeFeatureImports {
     category = "desktop";
     name = "terminal";
+  })
+  ++ (qnixLib.qnix.mkHomeFeatureImports {
+    category = "desktop";
+    name = "xdg-folders";
   });
 
   config = lib.mkIf qnixHomeStandalone {

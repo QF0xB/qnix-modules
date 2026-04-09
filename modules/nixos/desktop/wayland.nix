@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  pkgs,
   ...
 }:
 let
@@ -9,10 +8,10 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
-    xdg.portal = {
+    xdg.portal = lib.mkIf cfg.portal.enable {
       enable = true;
-      xdgOpenUsePortal = true;
-      extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+      xdgOpenUsePortal = cfg.portal.xdgOpenUsePortal;
+      extraPortals = [ cfg.portal.package ] ++ cfg.portal.extraPackages;
     };
   };
 }

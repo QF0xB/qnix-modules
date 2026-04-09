@@ -52,6 +52,11 @@ in
         base16Scheme = "${pkgs.base16-schemes}/share/themes/${cfg.colorScheme}.yaml";
         polarity = "dark";
         override = cfg.colorSchemeOverrides;
+        targets = {
+          vencord.enable = false;
+          vesktop.enable = false;
+          nixcord.enable = false;
+        };
 
         cursor = {
           package = cursorPackage;
