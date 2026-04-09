@@ -1,5 +1,9 @@
 { lib }:
 {
+  status = {
+    server = lib.mkDefault false;
+  };
+
   system = {
     starship.enable = lib.mkOverride 900 true;
 

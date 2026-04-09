@@ -163,7 +163,7 @@
                 profiles = [
                   "base"
                   "dev"
-                  "workstation"
+                  "desktop"
                   "impermanence"
                 ];
               })
@@ -201,7 +201,7 @@
                 profiles = [
                   "base"
                   "dev"
-                  "workstation"
+                  "desktop"
                 ];
               })
               {
@@ -218,6 +218,28 @@
             ];
           };
 
+          homeOnlyServerEvaluation = home-manager.lib.homeManagerConfiguration {
+            inherit pkgs;
+            extraSpecialArgs = {
+              inherit qnixLib;
+              qnixHomeStandalone = true;
+            };
+            modules = [
+              (import ../loader/home.nix {
+                lib = nixpkgs.lib;
+                profiles = [
+                  "base"
+                  "server"
+                ];
+              })
+              {
+                home.username = "tester";
+                home.homeDirectory = "/tmp/tester";
+                home.stateVersion = "25.11";
+              }
+            ];
+          };
+
           nixosWithHomeEvaluation = lib.nixosSystem {
             inherit pkgs lib;
             modules = [
@@ -229,7 +251,7 @@
                 profiles = [
                   "base"
                   "dev"
-                  "workstation"
+                  "desktop"
                   "impermanence"
                 ];
               })
@@ -270,7 +292,7 @@
                         profiles = [
                           "base"
                           "dev"
-                          "workstation"
+                          "desktop"
                         ];
                       })
                     ];
@@ -307,6 +329,12 @@
           nixos-client-evaluates = nixosClientEvaluation.config.system.build.toplevel;
 
           home-manager-client-evaluates = homeOnlyEvaluation.activationPackage;
+
+          home-manager-server-status-defaults = pkgs.runCommand "home-manager-server-status-defaults" { } ''
+            test "${if homeOnlyServerEvaluation.config.qnix.status.server then "yes" else "no"}" = "yes"
+            test "${if homeOnlyServerEvaluation.config.qnix.status.headless then "yes" else "no"}" = "yes"
+            touch $out
+          '';
 
           nixos-and-home-manager-client-evaluates = nixosWithHomeEvaluation.config.system.build.toplevel;
         }

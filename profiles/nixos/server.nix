@@ -1,4 +1,7 @@
 { lib, config, ... }:
+let
+  sharedQnix = import ../shared/server.nix { inherit lib; };
+in
 {
   imports = lib.concatLists [
     (lib.qnix.mkNixosFeatureImports {
@@ -12,12 +15,7 @@
   ];
 
   config = {
-      qnix = {
-      status = {
-        headless = lib.mkDefault true;
-        server = lib.mkDefault true;
-      };
-
+    qnix = lib.recursiveUpdate sharedQnix {
       network.networkmanager = {
         enable = lib.mkDefault false;
         gui = lib.mkDefault false;

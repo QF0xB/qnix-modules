@@ -29,11 +29,6 @@ in
 
   config = {
     qnix = lib.recursiveUpdate sharedQnix {
-      status = {
-        headless = lib.mkDefault false;
-        server = lib.mkDefault false;
-      };
-
       dev = {
         nh = {
           enable = lib.mkDefault true;
@@ -42,8 +37,6 @@ in
       };
 
       system = {
-        packages.nerdFonts.enable = lib.mkDefault true;
-
         localisation = {
           enable = lib.mkDefault true;
           xkb = {
@@ -58,11 +51,6 @@ in
           };
           fish.enable = lib.mkDefault true;
         };
-      };
-
-      network.networkmanager = {
-        enable = lib.mkDefault true;
-        gui = lib.mkDefault true;
       };
 
       security = {
