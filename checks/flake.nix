@@ -167,8 +167,10 @@
               (import ../loader/nixos.nix {
                 inherit lib;
                 profiles = [
+                  "creator"
                   "dev"
                   "hyprland"
+                  "personal"
                   "stylix"
                   "impermanence"
                 ];
@@ -206,8 +208,10 @@
               (import ../loader/home.nix {
                 lib = nixpkgs.lib;
                 profiles = [
+                  "creator"
                   "dev"
                   "hyprland"
+                  "personal"
                   "stylix"
                 ];
               })
@@ -257,8 +261,10 @@
               (import ../loader/nixos.nix {
                 inherit lib;
                 profiles = [
+                  "creator"
                   "dev"
                   "hyprland"
+                  "personal"
                   "stylix"
                   "impermanence"
                 ];
@@ -298,8 +304,10 @@
                       (import ../loader/home.nix {
                         lib = nixpkgs.lib;
                         profiles = [
+                          "creator"
                           "dev"
                           "hyprland"
+                          "personal"
                           "stylix"
                         ];
                       })
@@ -351,6 +359,13 @@
             test "${if nixosClientEvaluation.config.qnix.desktop.displaymanager.sddm.enable then "yes" else "no"}" = "yes"
             test "${if nixosClientEvaluation.config.qnix.desktop.stylix.enable then "yes" else "no"}" = "yes"
             test "${if nixosClientEvaluation.config.qnix.desktop.terminal.enable then "yes" else "no"}" = "yes"
+            test "${if nixosClientEvaluation.config.qnix.desktop.browser.enable then "yes" else "no"}" = "yes"
+            test "${if nixosClientEvaluation.config.qnix.desktop.fileManager.enable then "yes" else "no"}" = "yes"
+            test "${if nixosClientEvaluation.config.qnix.desktop.lock.enable then "yes" else "no"}" = "yes"
+            test "${if nixosClientEvaluation.config.qnix.desktop.notes.enable then "yes" else "no"}" = "yes"
+            test "${if nixosClientEvaluation.config.qnix.desktop.bitwarden.enable then "yes" else "no"}" = "yes"
+            test "${if nixosClientEvaluation.config.qnix.desktop.music.enable then "yes" else "no"}" = "yes"
+            test "${if nixosClientEvaluation.config.qnix.desktop.obs.enable then "yes" else "no"}" = "yes"
             test "${if nixosClientEvaluation.config.programs.hyprland.enable then "yes" else "no"}" = "yes"
             test "${if nixosClientEvaluation.config.xdg.portal.enable then "yes" else "no"}" = "yes"
             test "${if nixosClientEvaluation.config.services.displayManager.sddm.enable then "yes" else "no"}" = "yes"
@@ -358,6 +373,10 @@
             test "${if homeOnlyEvaluation.config.wayland.windowManager.hyprland.enable then "yes" else "no"}" = "yes"
             test "${if homeOnlyEvaluation.config.stylix.enable then "yes" else "no"}" = "yes"
             test "${if homeOnlyEvaluation.config.programs.kitty.enable then "yes" else "no"}" = "yes"
+            test "${if homeOnlyEvaluation.config.qnix.desktop.notes.enable then "yes" else "no"}" = "yes"
+            test "${if homeOnlyEvaluation.config.qnix.desktop.bitwarden.enable then "yes" else "no"}" = "yes"
+            test "${if homeOnlyEvaluation.config.qnix.desktop.music.enable then "yes" else "no"}" = "yes"
+            test "${if homeOnlyEvaluation.config.qnix.desktop.obs.enable then "yes" else "no"}" = "yes"
             test "${homeOnlyEvaluation.config.home.sessionVariables.NIXOS_OZONE_WL}" = "1"
             touch $out
           '';

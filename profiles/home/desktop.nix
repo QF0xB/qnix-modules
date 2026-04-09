@@ -13,6 +13,18 @@ in
   ]
   ++ (qnixLib.qnix.mkHomeFeatureImports {
     category = "desktop";
+    name = "browser";
+  })
+  ++ (qnixLib.qnix.mkHomeFeatureImports {
+    category = "desktop";
+    name = "file-manager";
+  })
+  ++ (qnixLib.qnix.mkHomeFeatureImports {
+    category = "desktop";
+    name = "lock";
+  })
+  ++ (qnixLib.qnix.mkHomeFeatureImports {
+    category = "desktop";
     name = "terminal";
   })
   ++ (qnixLib.qnix.mkHomeFeatureImports {

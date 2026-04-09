@@ -6,6 +6,18 @@ in
   imports = [
     ./workstation.nix
   ]
+  ++ (lib.qnix.mkNixosOptionImports {
+    category = "desktop";
+    name = "browser";
+  })
+  ++ (lib.qnix.mkNixosOptionImports {
+    category = "desktop";
+    name = "file-manager";
+  })
+  ++ (lib.qnix.mkNixosOptionImports {
+    category = "desktop";
+    name = "lock";
+  })
   ++ (lib.qnix.mkNixosFeatureImports {
     category = "desktop";
     name = "terminal";
