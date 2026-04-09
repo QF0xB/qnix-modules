@@ -4,15 +4,15 @@ let
 in
 {
   imports =
-    (lib.qnix.mkNixosOptionImports {
+    (lib.qnix.mkNixosFeatureImports {
       category = "desktop";
       name = "notes";
     })
-    ++ (lib.qnix.mkNixosOptionImports {
+    ++ (lib.qnix.mkNixosFeatureImports {
       category = "desktop";
       name = "bitwarden";
     })
-    ++ (lib.qnix.mkNixosOptionImports {
+    ++ (lib.qnix.mkNixosFeatureImports {
       category = "desktop";
       name = "music";
     });

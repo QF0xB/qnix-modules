@@ -6,7 +6,7 @@ in
   imports = [
     ./workstation.nix
   ]
-  ++ (lib.qnix.mkNixosOptionImports {
+  ++ (lib.qnix.mkNixosFeatureImports {
     category = "desktop";
     name = "browser";
   })
