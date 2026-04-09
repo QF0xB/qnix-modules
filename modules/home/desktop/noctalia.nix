@@ -11,6 +11,7 @@ let
   };
   cfg = qconfig.desktop.noctalia or { enable = false; };
   isLaptop = qconfig.status.laptop or false;
+  screenshotsCfg = qconfig.desktop.screenshots or { annotationTool = ""; };
 in
 {
   config = lib.mkIf cfg.enable {
@@ -303,7 +304,7 @@ in
           enableSettingsSearch = true;
           enableWindowsSearch = true;
           ignoreMouseInput = false;
-          screenshotAnnotationTool = "";
+          screenshotAnnotationTool = screenshotsCfg.annotationTool;
           overviewLayer = true;
         };
 

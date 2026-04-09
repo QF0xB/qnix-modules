@@ -12,7 +12,15 @@ in
   })
   ++ (lib.qnix.mkNixosOptionImports {
     category = "desktop";
+    name = "clipboard";
+  })
+  ++ (lib.qnix.mkNixosOptionImports {
+    category = "desktop";
     name = "file-manager";
+  })
+  ++ (lib.qnix.mkNixosOptionImports {
+    category = "desktop";
+    name = "screenshots";
   })
   ++ (lib.qnix.mkNixosOptionImports {
     category = "desktop";

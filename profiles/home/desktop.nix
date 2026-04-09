@@ -17,11 +17,19 @@ in
   })
   ++ (qnixLib.qnix.mkHomeFeatureImports {
     category = "desktop";
+    name = "clipboard";
+  })
+  ++ (qnixLib.qnix.mkHomeFeatureImports {
+    category = "desktop";
     name = "file-manager";
   })
   ++ (qnixLib.qnix.mkHomeFeatureImports {
     category = "desktop";
     name = "lock";
+  })
+  ++ (qnixLib.qnix.mkHomeFeatureImports {
+    category = "desktop";
+    name = "screenshots";
   })
   ++ (qnixLib.qnix.mkHomeFeatureImports {
     category = "desktop";

@@ -21,12 +21,25 @@ let
       enable = false;
       privateArgs = [ ];
     };
+  clipboardCfg =
+    qconfig.desktop.clipboard or {
+      enable = false;
+      package = pkgs.cliphist;
+      pickerPackage = pkgs.fuzzel;
+    };
   fileManagerCfg = qconfig.desktop.fileManager or { enable = false; };
   notesCfg = qconfig.desktop.notes or { enable = false; };
   lockCfg = qconfig.desktop.lock or { enable = false; };
   obsCfg = qconfig.desktop.obs or { enable = false; };
   bitwardenCfg = qconfig.desktop.bitwarden or { enable = false; };
   musicCfg = qconfig.desktop.music or { enable = false; };
+  screenshotsCfg =
+    qconfig.desktop.screenshots or {
+      enable = false;
+      grimPackage = pkgs.grim;
+      slurpPackage = pkgs.slurp;
+      annotationTool = "";
+    };
   browserExe = if browserCfg.enable then lib.getExe browserCfg.package else null;
   fileManagerExe = if fileManagerCfg.enable then lib.getExe fileManagerCfg.package else null;
   notesExe = if notesCfg.enable then lib.getExe notesCfg.package else null;
@@ -34,6 +47,8 @@ let
   obsExe = if obsCfg.enable then lib.getExe obsCfg.package else null;
   bitwardenExe = if bitwardenCfg.enable then lib.getExe bitwardenCfg.package else null;
   musicExe = if musicCfg.enable then lib.getExe musicCfg.package else null;
+  clipboardExe = if clipboardCfg.enable then lib.getExe clipboardCfg.package else null;
+  clipboardPickerExe = if clipboardCfg.enable then lib.getExe clipboardCfg.pickerPackage else null;
 
   hyprSpecial = pkgs.writeShellApplication {
     name = "hypr-special";
@@ -84,6 +99,81 @@ let
       fi
     '';
   };
+
+  clipboardPicker =
+    if clipboardCfg.enable then
+      pkgs.writeShellApplication {
+        name = "hypr-clipboard-picker";
+        runtimeInputs = [
+          clipboardCfg.package
+          clipboardCfg.pickerPackage
+          pkgs.wl-clipboard
+          pkgs.libnotify
+        ];
+        text = ''
+          set -eu
+
+          selection="$(${clipboardExe} list | ${clipboardPickerExe} --dmenu --prompt "Clipboard> " || true)"
+
+          if [ -z "$selection" ]; then
+            exit 0
+          fi
+
+          printf '%s\n' "$selection" | ${clipboardExe} decode | wl-copy
+          notify-send "Clipboard" "Entry copied to clipboard"
+        '';
+      }
+    else
+      null;
+
+  screenshotTool =
+    if screenshotsCfg.enable then
+      pkgs.writeShellApplication {
+        name = "hypr-screenshot";
+        runtimeInputs = [
+          screenshotsCfg.grimPackage
+          screenshotsCfg.slurpPackage
+          pkgs.wl-clipboard
+          pkgs.coreutils
+          pkgs.bash
+          pkgs.libnotify
+        ];
+        text = ''
+          set -eu
+
+          if [ "$#" -lt 1 ]; then
+            echo "usage: hypr-screenshot <full|region|region-annotate>" >&2
+            exit 2
+          fi
+
+          mode="$1"
+          dir="$HOME/Pictures/Screenshots"
+          mkdir -p "$dir"
+          file="$dir/$(date +%Y-%m-%d_%H-%M-%S).png"
+
+          case "$mode" in
+            full)
+              ${lib.getExe screenshotsCfg.grimPackage} "$file"
+              ;;
+            region|region-annotate)
+              ${lib.getExe screenshotsCfg.grimPackage} -g "$(${lib.getExe screenshotsCfg.slurpPackage})" "$file"
+              ;;
+            *)
+              echo "unknown screenshot mode: $mode" >&2
+              exit 2
+              ;;
+          esac
+
+          wl-copy < "$file"
+          notify-send "Screenshot" "Saved to $file and copied to clipboard"
+
+          if [ "$mode" = "region-annotate" ] && [ -n "${screenshotsCfg.annotationTool}" ]; then
+            exec sh -lc '${screenshotsCfg.annotationTool} "$1"' _ "$file"
+          fi
+        '';
+      }
+    else
+      null;
 
   uexec = program: "exec, uwsm app -- ${program}";
   optionalExec = command: "exec, ${lib.getExe optionalRunner} -- ${command}";
@@ -220,6 +310,13 @@ in
       ++
         lib.optional (musicExe != null)
           "$mod, code:43, ${hyprSpecialExec "music" "tidal-hifi" musicExe} #d tidal-hifi"
+      ++ lib.optional clipboardCfg.enable "$mod, code:55, exec, ${lib.getExe clipboardPicker}"
+      ++ lib.optional screenshotsCfg.enable ", Print, exec, ${lib.getExe screenshotTool} full"
+      ++ lib.optional screenshotsCfg.enable "SHIFT, Print, exec, ${lib.getExe screenshotTool} region"
+      ++
+        lib.optional
+          (screenshotsCfg.enable && screenshotsCfg.annotationTool != "")
+          "CTRL, Print, exec, ${lib.getExe screenshotTool} region-annotate"
       ++ workspaceBindings;
     };
   };
