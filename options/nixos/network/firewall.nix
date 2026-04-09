@@ -1,6 +1,6 @@
 { lib, ... }:
 {
-  options.qnix.security.firewall = {
+  options.qnix.network.firewall = {
     enable = lib.mkEnableOption "firewall";
 
     allowedTCPPorts = lib.mkOption {

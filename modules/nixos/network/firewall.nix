@@ -1,7 +1,7 @@
 { lib, config, ... }:
 
 let
-  cfg = config.qnix.security.firewall;
+  cfg = config.qnix.network.firewall;
 in
 {
   config = lib.mkIf cfg.enable {

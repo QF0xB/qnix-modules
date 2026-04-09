@@ -129,6 +129,26 @@
               })
               commonSystemModule
               testUserModule
+              {
+                qnix.network.addressing = {
+                  hostName = "server-test";
+                  nameservers = [
+                    "1.1.1.1"
+                    "9.9.9.9"
+                  ];
+                  defaultGateway = "192.0.2.1";
+                  defaultGatewayInterface = "eth0";
+                  interfaces.eth0 = {
+                    useDHCP = false;
+                    ipv4.addresses = [
+                      {
+                        address = "192.0.2.10";
+                        prefixLength = 24;
+                      }
+                    ];
+                  };
+                };
+              }
             ];
           };
 
@@ -156,6 +176,7 @@
                   login = false;
                   sudo = false;
                 };
+                qnix.network.networkmanager.extraPlugins = [ "networkmanager-openvpn" ];
                 qnix.system.shell = {
                   enable = true;
                   direnv.enable = true;
@@ -265,6 +286,13 @@
           '';
 
           nixos-server-evaluates = nixosServerEvaluation.config.system.build.toplevel;
+
+          nixos-server-network-defaults = pkgs.runCommand "nixos-server-network-defaults" { } ''
+            test "${if nixosServerEvaluation.config.qnix.network.networkmanager.enable then "yes" else "no"}" = "no"
+            test "${if nixosServerEvaluation.config.networking.networkmanager.enable then "yes" else "no"}" = "no"
+            test "${nixosServerEvaluation.config.networking.hostName}" = "server-test"
+            touch $out
+          '';
 
           nixos-client-evaluates = nixosClientEvaluation.config.system.build.toplevel;
 

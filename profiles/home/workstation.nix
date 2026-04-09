@@ -14,10 +14,6 @@ in
       category = "dev";
       name = "git";
     })
-    (qnixLib.qnix.mkHomeOptionImports {
-      category = "system";
-      name = "packages";
-    })
     (qnixLib.qnix.mkHomeFeatureImports {
       category = "security";
       name = "gpg";

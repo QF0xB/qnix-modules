@@ -34,12 +34,20 @@ in
       name = "users";
     })
     (lib.qnix.mkNixosFeatureImports {
-      category = "security";
+      category = "storage";
+      name = "zfs";
+    })
+    (lib.qnix.mkNixosFeatureImports {
+      category = "network";
       name = "firewall";
     })
     (lib.qnix.mkNixosFeatureImports {
-      category = "storage";
-      name = "zfs";
+      category = "network";
+      name = "addressing";
+    })
+    (lib.qnix.mkNixosFeatureImports {
+      category = "network";
+      name = "networkmanager";
     })
   ];
 
@@ -58,10 +66,9 @@ in
         };
       };
 
-      security = {
-        firewall.enable = lib.mkDefault true;
-        sops.enable = lib.mkDefault true;
-      };
+      security.sops.enable = lib.mkDefault true;
+
+      network.firewall.enable = lib.mkDefault true;
 
       storage = {
         zfs.enable = lib.mkDefault true;

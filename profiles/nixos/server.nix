@@ -12,10 +12,15 @@
   ];
 
   config = {
-    qnix = {
+      qnix = {
       status = {
         headless = lib.mkDefault true;
         server = lib.mkDefault true;
+      };
+
+      network.networkmanager = {
+        enable = lib.mkDefault false;
+        gui = lib.mkDefault false;
       };
 
       security = {

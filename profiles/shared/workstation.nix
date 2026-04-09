@@ -12,8 +12,6 @@
   };
 
   system = {
-    packages.nerdFonts.enable = lib.mkOverride 900 true;
-
     starship.enable = lib.mkOverride 900 true;
 
     shell = {
