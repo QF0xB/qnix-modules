@@ -20,9 +20,7 @@ in
     })
   ];
 
-  config = lib.mkMerge [
-    (lib.mkIf qnixHomeStandalone {
-      qnix = sharedQnix;
-    })
-  ];
+  config = lib.mkIf qnixHomeStandalone {
+    qnix = sharedQnix;
+  };
 }
