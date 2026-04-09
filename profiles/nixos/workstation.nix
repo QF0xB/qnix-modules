@@ -5,6 +5,10 @@ let
 in
 {
   imports = lib.concatLists [
+    (lib.qnix.mkNixosOptionImports {
+      category = "dev";
+      name = "git";
+    })
     (lib.qnix.mkNixosFeatureImports {
       category = "system";
       name = "localisation";

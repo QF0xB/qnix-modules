@@ -11,6 +11,9 @@ let
     inherit config osConfig;
   };
   cfg = qconfig.system.shell;
+  gitEnabled =
+    lib.hasAttrByPath [ "dev" "git" "enable" ] qconfig && qconfig.dev.git.enable;
+  fishRuntimePackages = [ pkgs.fzf ];
 
   shellAliases =
     {
@@ -23,16 +26,17 @@ let
       mount = "mount --mkdir";
       open = "xdg-open";
 
-      ga = "git add .";
-      gc = "git commit";
-      gp = "git push";
-      gacp = "git add . && git commit && git push";
-
       ".." = "cd ..";
       "..." = "cd ../..";
       "...." = "cd ../../..";
       "....." = "cd ../../../..";
       "......" = "cd ../../../../..";
+    }
+    // lib.optionalAttrs gitEnabled {
+      ga = "git add .";
+      gc = "git commit";
+      gp = "git push";
+      gacp = "git add . && git commit && git push";
     }
     // lib.optionalAttrs (cfg.projectRoot != null) {
       dots = "cd ${cfg.projectRoot}";
@@ -50,10 +54,6 @@ let
       src = sponge.src;
     }
     {
-      name = "forgit";
-      src = forgit.src;
-    }
-    {
       name = "fzf";
       src = fzf.src;
     }
@@ -69,11 +69,14 @@ let
       name = "sudope";
       src = plugin-sudope.src;
     }
-  ];
+  ] ++ lib.optional gitEnabled {
+    name = "forgit";
+    src = forgit.src;
+  };
 in
 {
   config = lib.mkIf cfg.enable {
-    home.packages = lib.attrValues cfg.packages;
+    home.packages = lib.attrValues cfg.packages ++ lib.optionals cfg.fish.enable fishRuntimePackages;
 
     home.shellAliases = lib.mkIf cfg.aliases shellAliases;
 

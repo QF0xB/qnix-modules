@@ -10,6 +10,10 @@ in
 
 {
   imports = lib.concatLists [
+    (qnixLib.qnix.mkHomeFeatureImports {
+      category = "dev";
+      name = "git";
+    })
     (qnixLib.qnix.mkHomeOptionImports {
       category = "system";
       name = "packages";
