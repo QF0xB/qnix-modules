@@ -1,4 +1,7 @@
 { lib, config, ... }:
+let
+  sharedQnix = import ../shared/base.nix { inherit lib; };
+in
 {
   imports = lib.concatLists [
     # Sops MUST be imported before any modules that use it
@@ -22,6 +25,10 @@
       category = "system";
       name = "shell";
     })
+    (lib.qnix.mkNixosOptionImports {
+      category = "system";
+      name = "starship";
+    })
     (lib.qnix.mkNixosFeatureImports {
       category = "system";
       name = "users";
@@ -37,12 +44,11 @@
   ];
 
   config = {
-    qnix = {
+    qnix = lib.recursiveUpdate sharedQnix {
       system = {
         boot-manager.enable = lib.mkDefault true;
         localisation.enable = lib.mkDefault true;
         packages.enable = lib.mkDefault true;
-        shell.enable = lib.mkDefault true;
         users = {
           enable = lib.mkDefault true;
           defaultExtraGroups = lib.mkDefault [ "wheel" ];

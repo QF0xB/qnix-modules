@@ -1,4 +1,8 @@
 { lib, config, ... }:
+
+let
+  sharedQnix = import ../shared/workstation.nix { inherit lib; };
+in
 {
   imports = lib.concatLists [
     (lib.qnix.mkNixosFeatureImports {
@@ -20,7 +24,7 @@
   ];
 
   config = {
-    qnix = {
+    qnix = lib.recursiveUpdate sharedQnix {
       status = {
         headless = lib.mkDefault false;
         server = lib.mkDefault false;
@@ -44,9 +48,6 @@
       };
 
       security = {
-        gpg = {
-          enable = lib.mkDefault true;
-        };
         sops = {
           enable = lib.mkDefault true;
           defaultSopsFile = lib.mkDefault "./secrets/default.yaml";

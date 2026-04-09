@@ -168,6 +168,7 @@
             inherit pkgs;
             extraSpecialArgs = {
               inherit qnixLib;
+              qnixHomeStandalone = true;
             };
             modules = [
               (import ../loader/home.nix {
@@ -229,6 +230,7 @@
                   useUserPackages = true;
                   extraSpecialArgs = {
                     inherit qnixLib;
+                    qnixHomeStandalone = false;
                   };
 
                   users.tester = {

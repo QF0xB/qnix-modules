@@ -82,6 +82,7 @@ in
       enableBashIntegration = false;
       enableFishIntegration = false;
       enableZshIntegration = false;
+      settings.icons.when = if cfg.showIcons then "auto" else "never";
     };
 
     programs.fish = lib.mkIf cfg.fish.enable {

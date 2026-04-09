@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 let
   mkShellPackages =
     packages:
@@ -29,6 +34,12 @@ in
 
     qnixAliases = lib.mkEnableOption "QNix-specific aliases" // {
       default = true;
+    };
+
+    showIcons = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "Whether terminal-facing tools managed by the shell module should render icon glyphs when supported.";
     };
 
     projectRoot = lib.mkOption {
