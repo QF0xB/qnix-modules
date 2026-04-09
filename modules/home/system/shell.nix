@@ -13,6 +13,8 @@ let
   cfg = qconfig.system.shell;
   gitEnabled =
     lib.hasAttrByPath [ "dev" "git" "enable" ] qconfig && qconfig.dev.git.enable;
+  nhEnabled =
+    lib.hasAttrByPath [ "dev" "nh" "enable" ] qconfig && qconfig.dev.nh.enable;
   fishRuntimePackages = [ pkgs.fzf ];
 
   shellAliases =
@@ -38,7 +40,7 @@ let
       gp = "git push";
       gacp = "git add . && git commit && git push";
     }
-    // lib.optionalAttrs (cfg.projectRoot != null) {
+    // lib.optionalAttrs (cfg.projectRoot != null && nhEnabled) {
       dots = "cd ${cfg.projectRoot}";
       nhs = "nh os switch ${cfg.projectRoot}";
     }
@@ -94,9 +96,6 @@ in
       shellAliases = lib.mkForce (if cfg.aliases then shellAliases else { });
       shellInit = ''
         set fish_greeting
-      ''
-      + lib.optionalString cfg.direnv.enable ''
-        direnv hook fish | source
       '';
       plugins = fishPlugins;
     };
@@ -107,9 +106,6 @@ in
       syntaxHighlighting.enable = cfg.zsh.syntaxHighlighting;
       enableCompletion = cfg.zsh.enableCompletion;
       dotDir = "${config.xdg.configHome}/zsh";
-      initContent = lib.optionalString cfg.direnv.enable ''
-        eval "$(direnv hook zsh)"
-      '';
     };
   };
 }

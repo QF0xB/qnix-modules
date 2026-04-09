@@ -5,14 +5,17 @@
   ...
 }:
 let
-  sharedQnix = import ../shared/workstation.nix { inherit lib; };
+  sharedQnix = import ../shared/dev.nix { inherit lib; };
 in
-
 {
   imports = lib.concatLists [
     (qnixLib.qnix.mkHomeFeatureImports {
-      category = "security";
-      name = "gpg";
+      category = "dev";
+      name = "direnv";
+    })
+    (qnixLib.qnix.mkHomeFeatureImports {
+      category = "dev";
+      name = "git";
     })
   ];
 

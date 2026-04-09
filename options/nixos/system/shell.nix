@@ -94,12 +94,6 @@ in
       };
     };
 
-    direnv = {
-      enable = lib.mkEnableOption "direnv shell hooks" // {
-        default = false;
-      };
-    };
-
     packages = lib.mkOption {
       type = lib.types.attrsOf (
         lib.types.oneOf [

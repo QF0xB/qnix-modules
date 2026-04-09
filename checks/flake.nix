@@ -162,6 +162,7 @@
                 inherit lib;
                 profiles = [
                   "base"
+                  "dev"
                   "workstation"
                   "impermanence"
                 ];
@@ -176,10 +177,13 @@
                   login = false;
                   sudo = false;
                 };
+                qnix.dev = {
+                  direnv.enable = true;
+                  nh.enable = true;
+                };
                 qnix.network.networkmanager.extraPlugins = [ "networkmanager-openvpn" ];
                 qnix.system.shell = {
                   enable = true;
-                  direnv.enable = true;
                 };
               }
             ];
@@ -196,6 +200,7 @@
                 lib = nixpkgs.lib;
                 profiles = [
                   "base"
+                  "dev"
                   "workstation"
                 ];
               })
@@ -204,9 +209,9 @@
                 home.homeDirectory = "/tmp/tester";
                 home.stateVersion = "25.11";
                 qnix.security.gpg.enable = true;
+                qnix.dev.direnv.enable = true;
                 qnix.system.shell = {
                   enable = true;
-                  direnv.enable = true;
                   projectRoot = "/tmp/qnix";
                 };
               }
@@ -223,6 +228,7 @@
                 inherit lib;
                 profiles = [
                   "base"
+                  "dev"
                   "workstation"
                   "impermanence"
                 ];
@@ -240,9 +246,12 @@
                   login = false;
                   sudo = false;
                 };
+                qnix.dev = {
+                  direnv.enable = true;
+                  nh.enable = true;
+                };
                 qnix.system.shell = {
                   enable = true;
-                  direnv.enable = true;
                   projectRoot = "/tmp/qnix";
                 };
 
@@ -260,6 +269,7 @@
                         lib = nixpkgs.lib;
                         profiles = [
                           "base"
+                          "dev"
                           "workstation"
                         ];
                       })

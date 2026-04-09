@@ -5,9 +5,9 @@ let
 in
 {
   imports = lib.concatLists [
-    (lib.qnix.mkNixosOptionImports {
+    (lib.qnix.mkNixosFeatureImports {
       category = "dev";
-      name = "git";
+      name = "nh";
     })
     (lib.qnix.mkNixosFeatureImports {
       category = "system";
@@ -32,6 +32,13 @@ in
       status = {
         headless = lib.mkDefault false;
         server = lib.mkDefault false;
+      };
+
+      dev = {
+        nh = {
+          enable = lib.mkDefault true;
+          clean.enable = lib.mkDefault true;
+        };
       };
 
       system = {
