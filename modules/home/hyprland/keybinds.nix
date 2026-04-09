@@ -13,6 +13,7 @@ let
   hyprCfg = qconfig.desktop.hyprland or { enable = false; };
   cfg = hyprCfg.keybinds or { enable = true; };
   isVm = qconfig.status.vm or false;
+  isLaptop = qconfig.status.laptop or false;
   terminalPackage = qconfig.desktop.terminal.package or pkgs.kitty;
   terminalExe = lib.getExe terminalPackage;
   browserCfg =
@@ -157,13 +158,17 @@ in
       "$mod" = if isVm then "ALT" else "super";
       "$ipc" = "${lib.getExe optionalRunner} -- noctalia-shell ipc call";
 
-      bindl = lib.optional (lockExe != null) ",switch:Lid Switch, ${optionalExec lockExe}" ++ [
+      bindl =
+        lib.optional (lockExe != null) ",switch:Lid Switch, ${optionalExec lockExe}"
+        ++ [
         ", XF86AudioRaiseVolume, exec, $ipc volume increase"
         ", XF86AudioLowerVolume, exec, $ipc volume decrease"
         ", XF86AudioMute, exec, $ipc volume muteOutput"
-        ", XF86MonBrightnessUp, exec, $ipc brightness increase"
-        ", XF86MonBrightnessDown, exec, $ipc brightness decrease"
-      ];
+      ]
+        ++ lib.optionals isLaptop [
+          ", XF86MonBrightnessUp, exec, $ipc brightness increase"
+          ", XF86MonBrightnessDown, exec, $ipc brightness decrease"
+        ];
 
       bindm = [
         "$mod, mouse:272, movewindow"

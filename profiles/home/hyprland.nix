@@ -26,6 +26,10 @@ in
   ++ (qnixLib.qnix.mkHomeFeatureImports {
     category = "hyprland";
     name = "special-workspaces";
+  })
+  ++ (qnixLib.qnix.mkHomeFeatureImports {
+    category = "desktop";
+    name = "noctalia";
   });
 
   config = lib.mkIf qnixHomeStandalone {

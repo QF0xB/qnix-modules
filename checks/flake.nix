@@ -11,6 +11,10 @@
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    noctalia-shell = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     impermanence = {
       url = "github:nix-community/impermanence";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -27,6 +31,7 @@
       nixpkgs,
       home-manager,
       stylix,
+      noctalia-shell,
       impermanence,
       sops-nix,
       qnix-modules,
@@ -197,6 +202,47 @@
             ];
           };
 
+          nixosLaptopEvaluation = lib.nixosSystem {
+            inherit pkgs lib;
+            modules = [
+              stylix.nixosModules.stylix
+              impermanence.nixosModules.impermanence
+              sops-nix.nixosModules.sops
+
+              (import ../loader/nixos.nix {
+                inherit lib;
+                profiles = [
+                  "creator"
+                  "dev"
+                  "hyprland"
+                  "personal"
+                  "stylix"
+                  "impermanence"
+                  "laptop"
+                ];
+              })
+              commonSystemModule
+              testUserModule
+              impermanenceTestModule
+              {
+                qnix.security.gpg.enable = true;
+                qnix.security.yubikey = {
+                  gui = true;
+                  login = false;
+                  sudo = false;
+                };
+                qnix.dev = {
+                  direnv.enable = true;
+                  nh.enable = true;
+                };
+                qnix.system.shell = {
+                  enable = true;
+                  projectRoot = "/tmp/qnix";
+                };
+              }
+            ];
+          };
+
           homeOnlyEvaluation = home-manager.lib.homeManagerConfiguration {
             inherit pkgs;
             extraSpecialArgs = {
@@ -205,6 +251,7 @@
             };
             modules = [
               stylix.homeModules.stylix
+              noctalia-shell.homeModules.default
               (import ../loader/home.nix {
                 lib = nixpkgs.lib;
                 profiles = [
@@ -237,6 +284,7 @@
             };
             modules = [
               stylix.homeModules.stylix
+              noctalia-shell.homeModules.default
               (import ../loader/home.nix {
                 lib = nixpkgs.lib;
                 profiles = [
@@ -247,6 +295,40 @@
                 home.username = "tester";
                 home.homeDirectory = "/tmp/tester";
                 home.stateVersion = "25.11";
+              }
+            ];
+          };
+
+          homeOnlyLaptopEvaluation = home-manager.lib.homeManagerConfiguration {
+            inherit pkgs;
+            extraSpecialArgs = {
+              inherit qnixLib;
+              qnixHomeStandalone = true;
+            };
+            modules = [
+              stylix.homeModules.stylix
+              noctalia-shell.homeModules.default
+              (import ../loader/home.nix {
+                lib = nixpkgs.lib;
+                profiles = [
+                  "creator"
+                  "dev"
+                  "hyprland"
+                  "laptop"
+                  "personal"
+                  "stylix"
+                ];
+              })
+              {
+                home.username = "tester";
+                home.homeDirectory = "/tmp/tester";
+                home.stateVersion = "25.11";
+                qnix.security.gpg.enable = true;
+                qnix.dev.direnv.enable = true;
+                qnix.system.shell = {
+                  enable = true;
+                  projectRoot = "/tmp/qnix";
+                };
               }
             ];
           };
@@ -294,6 +376,9 @@
                 home-manager = {
                   useGlobalPkgs = true;
                   useUserPackages = true;
+                  sharedModules = [
+                    noctalia-shell.homeModules.default
+                  ];
                   extraSpecialArgs = {
                     inherit qnixLib;
                     qnixHomeStandalone = false;
@@ -344,11 +429,27 @@
 
           nixos-client-evaluates = nixosClientEvaluation.config.system.build.toplevel;
 
+          nixos-laptop-evaluates = nixosLaptopEvaluation.config.system.build.toplevel;
+
+          nixos-laptop-defaults = pkgs.runCommand "nixos-laptop-defaults" { } ''
+            test "${if nixosLaptopEvaluation.config.qnix.status.laptop then "yes" else "no"}" = "yes"
+            test "${if nixosLaptopEvaluation.config.qnix.system.power-management.enable then "yes" else "no"}" = "yes"
+            test "${if nixosLaptopEvaluation.config.services.upower.enable then "yes" else "no"}" = "yes"
+            test "${if nixosLaptopEvaluation.config.services.tuned.enable then "yes" else "no"}" = "yes"
+            touch $out
+          '';
+
+
           home-manager-client-evaluates = homeOnlyEvaluation.activationPackage;
 
           home-manager-server-status-defaults = pkgs.runCommand "home-manager-server-status-defaults" { } ''
             test "${if homeOnlyServerEvaluation.config.qnix.status.server then "yes" else "no"}" = "yes"
             test "${if homeOnlyServerEvaluation.config.qnix.status.headless then "yes" else "no"}" = "yes"
+            touch $out
+          '';
+
+          home-manager-laptop-status-defaults = pkgs.runCommand "home-manager-laptop-status-defaults" { } ''
+            test "${if homeOnlyLaptopEvaluation.config.qnix.status.laptop then "yes" else "no"}" = "yes"
             touch $out
           '';
 
@@ -359,6 +460,7 @@
             test "${if nixosClientEvaluation.config.qnix.desktop.displaymanager.sddm.enable then "yes" else "no"}" = "yes"
             test "${if nixosClientEvaluation.config.qnix.desktop.stylix.enable then "yes" else "no"}" = "yes"
             test "${if nixosClientEvaluation.config.qnix.desktop.terminal.enable then "yes" else "no"}" = "yes"
+            test "${if nixosClientEvaluation.config.qnix.desktop.noctalia.enable then "yes" else "no"}" = "yes"
             test "${if nixosClientEvaluation.config.qnix.desktop.browser.enable then "yes" else "no"}" = "yes"
             test "${if nixosClientEvaluation.config.qnix.desktop.fileManager.enable then "yes" else "no"}" = "yes"
             test "${if nixosClientEvaluation.config.qnix.desktop.lock.enable then "yes" else "no"}" = "yes"
@@ -373,6 +475,7 @@
             test "${if homeOnlyEvaluation.config.wayland.windowManager.hyprland.enable then "yes" else "no"}" = "yes"
             test "${if homeOnlyEvaluation.config.stylix.enable then "yes" else "no"}" = "yes"
             test "${if homeOnlyEvaluation.config.programs.kitty.enable then "yes" else "no"}" = "yes"
+            test "${if homeOnlyEvaluation.config.programs.noctalia-shell.enable then "yes" else "no"}" = "yes"
             test "${if homeOnlyEvaluation.config.qnix.desktop.notes.enable then "yes" else "no"}" = "yes"
             test "${if homeOnlyEvaluation.config.qnix.desktop.bitwarden.enable then "yes" else "no"}" = "yes"
             test "${if homeOnlyEvaluation.config.qnix.desktop.music.enable then "yes" else "no"}" = "yes"

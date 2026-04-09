@@ -11,6 +11,10 @@ in
     name = "displaymanager";
   })
   ++ (lib.qnix.mkNixosFeatureImports {
+    category = "desktop";
+    name = "noctalia";
+  })
+  ++ (lib.qnix.mkNixosFeatureImports {
     category = "hyprland";
     name = "hyprland";
   });
@@ -21,6 +25,7 @@ in
         enable = lib.mkDefault true;
         sddm.enable = lib.mkDefault true;
       };
+      desktop.noctalia.enable = lib.mkDefault true;
     };
   };
 }
