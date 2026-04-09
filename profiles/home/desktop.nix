@@ -33,6 +33,10 @@ in
   })
   ++ (qnixLib.qnix.mkHomeFeatureImports {
     category = "desktop";
+    name = "sound";
+  })
+  ++ (qnixLib.qnix.mkHomeFeatureImports {
+    category = "desktop";
     name = "terminal";
   })
   ++ (qnixLib.qnix.mkHomeFeatureImports {

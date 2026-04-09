@@ -241,7 +241,6 @@ in
   config = lib.mkIf (hyprCfg.enable && cfg.enable) {
     home.packages = [
       hyprSpecial
-      pkgs.playerctl
     ];
 
     wayland.windowManager.hyprland.settings = {

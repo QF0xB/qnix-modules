@@ -22,6 +22,10 @@ in
     category = "desktop";
     name = "screenshots";
   })
+  ++ (lib.qnix.mkNixosFeatureImports {
+    category = "desktop";
+    name = "sound";
+  })
   ++ (lib.qnix.mkNixosOptionImports {
     category = "desktop";
     name = "lock";

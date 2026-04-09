@@ -6,11 +6,35 @@ in
   imports = lib.concatLists [
     (lib.qnix.mkNixosOptionImports {
       category = "dev";
+      name = "codex";
+    })
+    (lib.qnix.mkNixosFeatureImports {
+      category = "dev";
+      name = "codex";
+    })
+    (lib.qnix.mkNixosOptionImports {
+      category = "dev";
+      name = "cursor";
+    })
+    (lib.qnix.mkNixosFeatureImports {
+      category = "dev";
+      name = "cursor";
+    })
+    (lib.qnix.mkNixosOptionImports {
+      category = "dev";
       name = "direnv";
     })
     (lib.qnix.mkNixosOptionImports {
       category = "dev";
       name = "git";
+    })
+    (lib.qnix.mkNixosOptionImports {
+      category = "dev";
+      name = "jetbrains";
+    })
+    (lib.qnix.mkNixosFeatureImports {
+      category = "dev";
+      name = "jetbrains";
     })
     (lib.qnix.mkNixosFeatureImports {
       category = "dev";
