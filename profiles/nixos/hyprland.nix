@@ -7,6 +7,10 @@ in
     ./wayland.nix
   ]
   ++ (lib.qnix.mkNixosFeatureImports {
+    category = "security";
+    name = "gnome-keyring";
+  })
+  ++ (lib.qnix.mkNixosFeatureImports {
     category = "desktop";
     name = "displaymanager";
   })
@@ -26,6 +30,7 @@ in
         sddm.enable = lib.mkDefault true;
       };
       desktop.noctalia.enable = lib.mkDefault true;
+      security.gnome-keyring.enable = lib.mkDefault true;
     };
   };
 }
