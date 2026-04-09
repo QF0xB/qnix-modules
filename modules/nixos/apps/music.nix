@@ -1,6 +1,6 @@
 { lib, config, ... }:
 let
-  cfg = config.qnix.desktop.music;
+  cfg = config.qnix.apps.music;
 in
 {
   config = lib.mkIf cfg.enable {

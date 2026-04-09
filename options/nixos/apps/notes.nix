@@ -4,7 +4,7 @@
   ...
 }:
 {
-  options.qnix.desktop.notes = {
+  options.qnix.apps.notes = {
     enable = lib.mkEnableOption "notes application" // {
       default = false;
     };

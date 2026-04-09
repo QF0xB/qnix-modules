@@ -5,15 +5,15 @@ in
 {
   imports =
     (lib.qnix.mkNixosFeatureImports {
-      category = "desktop";
+      category = "apps";
       name = "notes";
     })
     ++ (lib.qnix.mkNixosFeatureImports {
-      category = "desktop";
+      category = "apps";
       name = "bitwarden";
     })
     ++ (lib.qnix.mkNixosFeatureImports {
-      category = "desktop";
+      category = "apps";
       name = "music";
     });
 

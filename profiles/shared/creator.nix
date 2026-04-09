@@ -1,4 +1,4 @@
 { lib }:
 {
-  desktop.obs.enable = lib.mkDefault true;
+  apps.obs.enable = lib.mkDefault true;
 }

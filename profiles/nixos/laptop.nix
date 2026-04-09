@@ -8,6 +8,10 @@ in
   ]
   ++ (lib.qnix.mkNixosFeatureImports {
     category = "system";
+    name = "thunderbolt";
+  })
+  ++ (lib.qnix.mkNixosFeatureImports {
+    category = "system";
     name = "power-management";
   });
 
@@ -18,6 +22,8 @@ in
         tuned.enable = lib.mkDefault true;
         upower.enable = lib.mkDefault true;
       };
+
+      system.thunderbolt.enable = lib.mkDefault true;
     };
   };
 }

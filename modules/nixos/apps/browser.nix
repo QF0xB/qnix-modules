@@ -1,6 +1,6 @@
 { lib, config, ... }:
 let
-  cfg = config.qnix.desktop.browser;
+  cfg = config.qnix.apps.browser;
   isBrave = lib.hasInfix "brave" (lib.getName cfg.package);
 in
 {

@@ -4,7 +4,7 @@ let
 in
 {
   imports = lib.qnix.mkNixosOptionImports {
-    category = "desktop";
+    category = "apps";
     name = "obs";
   };
 

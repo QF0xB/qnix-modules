@@ -4,7 +4,7 @@
   ...
 }:
 {
-  options.qnix.desktop.music = {
+  options.qnix.apps.music = {
     enable = lib.mkEnableOption "music application" // {
       default = false;
     };

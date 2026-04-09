@@ -4,7 +4,7 @@
   ...
 }:
 {
-  options.qnix.desktop.bitwarden = {
+  options.qnix.apps.bitwarden = {
     enable = lib.mkEnableOption "Bitwarden desktop" // {
       default = false;
     };

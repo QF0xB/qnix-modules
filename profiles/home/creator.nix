@@ -9,7 +9,7 @@ let
 in
 {
   imports = qnixLib.qnix.mkHomeFeatureImports {
-    category = "desktop";
+    category = "apps";
     name = "obs";
   };
 

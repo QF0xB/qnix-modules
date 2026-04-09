@@ -4,7 +4,7 @@
   ...
 }:
 {
-  options.qnix.desktop.obs = {
+  options.qnix.apps.obs = {
     enable = lib.mkEnableOption "OBS Studio" // {
       default = false;
     };

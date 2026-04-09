@@ -29,6 +29,10 @@ in
       category = "dev";
       name = "jetbrains";
     })
+    (qnixLib.qnix.mkHomeFeatureImports {
+      category = "dev";
+      name = "postman";
+    })
   ];
 
   config = lib.mkIf qnixHomeStandalone {

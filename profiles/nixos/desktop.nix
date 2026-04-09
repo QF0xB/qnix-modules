@@ -7,7 +7,7 @@ in
     ./workstation.nix
   ]
   ++ (lib.qnix.mkNixosFeatureImports {
-    category = "desktop";
+    category = "apps";
     name = "browser";
   })
   ++ (lib.qnix.mkNixosOptionImports {
@@ -15,7 +15,7 @@ in
     name = "clipboard";
   })
   ++ (lib.qnix.mkNixosOptionImports {
-    category = "desktop";
+    category = "apps";
     name = "file-manager";
   })
   ++ (lib.qnix.mkNixosOptionImports {

@@ -12,7 +12,7 @@ in
     ./workstation.nix
   ]
   ++ (qnixLib.qnix.mkHomeFeatureImports {
-    category = "desktop";
+    category = "apps";
     name = "browser";
   })
   ++ (qnixLib.qnix.mkHomeFeatureImports {
@@ -20,7 +20,7 @@ in
     name = "clipboard";
   })
   ++ (qnixLib.qnix.mkHomeFeatureImports {
-    category = "desktop";
+    category = "apps";
     name = "file-manager";
   })
   ++ (qnixLib.qnix.mkHomeFeatureImports {

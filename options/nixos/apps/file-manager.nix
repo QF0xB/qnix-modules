@@ -4,7 +4,7 @@
   ...
 }:
 {
-  options.qnix.desktop.fileManager = {
+  options.qnix.apps.fileManager = {
     enable = lib.mkEnableOption "file manager" // {
       default = false;
     };

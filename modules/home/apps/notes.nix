@@ -9,7 +9,7 @@ let
   qconfig = qnixLib.qnix.getQnixConfig {
     inherit config osConfig;
   };
-  cfg = qconfig.desktop.notes or { enable = false; };
+  cfg = qconfig.apps.notes or { enable = false; };
   isObsidian = lib.hasInfix "obsidian" (lib.getName cfg.package);
 in
 {

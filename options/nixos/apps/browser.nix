@@ -4,7 +4,7 @@
   ...
 }:
 {
-  options.qnix.desktop.browser = {
+  options.qnix.apps.browser = {
     enable = lib.mkEnableOption "browser" // {
       default = false;
     };

@@ -36,6 +36,22 @@ in
       category = "dev";
       name = "jetbrains";
     })
+    (lib.qnix.mkNixosOptionImports {
+      category = "dev";
+      name = "postman";
+    })
+    (lib.qnix.mkNixosFeatureImports {
+      category = "dev";
+      name = "postman";
+    })
+    (lib.qnix.mkNixosOptionImports {
+      category = "dev";
+      name = "wireshark";
+    })
+    (lib.qnix.mkNixosFeatureImports {
+      category = "dev";
+      name = "wireshark";
+    })
     (lib.qnix.mkNixosFeatureImports {
       category = "dev";
       name = "devenv";
@@ -51,6 +67,7 @@ in
       dev = {
         devenv.enable = lib.mkDefault true;
         nixfmt.enable = lib.mkDefault true;
+        wireshark.enable = lib.mkDefault true;
       };
     };
   };

@@ -1,11 +1,11 @@
 { lib, config, ... }:
 let
-  cfg = config.qnix.desktop.bitwarden;
+  cfg = config.qnix.apps.notes;
 in
 {
   config = lib.mkIf cfg.enable {
     qnix.persist.users."*".directories = [
-      ".config/Bitwarden"
+      ".config/obsidian"
     ];
   };
 }

@@ -10,15 +10,15 @@ in
 {
   imports =
     (qnixLib.qnix.mkHomeFeatureImports {
-      category = "desktop";
+      category = "apps";
       name = "notes";
     })
     ++ (qnixLib.qnix.mkHomeFeatureImports {
-      category = "desktop";
+      category = "apps";
       name = "bitwarden";
     })
     ++ (qnixLib.qnix.mkHomeFeatureImports {
-      category = "desktop";
+      category = "apps";
       name = "music";
     });
 

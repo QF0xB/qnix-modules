@@ -17,7 +17,7 @@ let
   terminalPackage = qconfig.desktop.terminal.package or pkgs.kitty;
   terminalExe = lib.getExe terminalPackage;
   browserCfg =
-    qconfig.desktop.browser or {
+    qconfig.apps.browser or {
       enable = false;
       privateArgs = [ ];
     };
@@ -27,12 +27,12 @@ let
       package = pkgs.cliphist;
       pickerPackage = pkgs.fuzzel;
     };
-  fileManagerCfg = qconfig.desktop.fileManager or { enable = false; };
-  notesCfg = qconfig.desktop.notes or { enable = false; };
+  fileManagerCfg = qconfig.apps.fileManager or { enable = false; };
+  notesCfg = qconfig.apps.notes or { enable = false; };
   lockCfg = qconfig.desktop.lock or { enable = false; };
-  obsCfg = qconfig.desktop.obs or { enable = false; };
-  bitwardenCfg = qconfig.desktop.bitwarden or { enable = false; };
-  musicCfg = qconfig.desktop.music or { enable = false; };
+  obsCfg = qconfig.apps.obs or { enable = false; };
+  bitwardenCfg = qconfig.apps.bitwarden or { enable = false; };
+  musicCfg = qconfig.apps.music or { enable = false; };
   screenshotsCfg =
     qconfig.desktop.screenshots or {
       enable = false;

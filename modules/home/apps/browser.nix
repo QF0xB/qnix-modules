@@ -9,7 +9,7 @@ let
   qconfig = qnixLib.qnix.getQnixConfig {
     inherit config osConfig;
   };
-  cfg = qconfig.desktop.browser or { enable = false; };
+  cfg = qconfig.apps.browser or { enable = false; };
   isBrave = lib.hasInfix "brave" (lib.getName cfg.package);
 in
 {

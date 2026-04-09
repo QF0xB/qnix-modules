@@ -9,6 +9,7 @@
     };
 
     direnv.enable = lib.mkDefault true;
+    postman.enable = lib.mkDefault true;
 
     git = {
       lfs = lib.mkDefault true;

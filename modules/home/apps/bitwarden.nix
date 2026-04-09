@@ -9,7 +9,7 @@ let
   qconfig = qnixLib.qnix.getQnixConfig {
     inherit config osConfig;
   };
-  cfg = qconfig.desktop.bitwarden or { enable = false; };
+  cfg = qconfig.apps.bitwarden or { enable = false; };
 in
 {
   config = lib.mkIf cfg.enable {
