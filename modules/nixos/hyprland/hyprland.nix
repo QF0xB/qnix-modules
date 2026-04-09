@@ -16,6 +16,13 @@ in
       portalPackage = pkgs.xdg-desktop-portal-hyprland;
     };
 
+    services.displayManager.defaultSession = lib.mkDefault "hyprland";
+
     environment.systemPackages = [ pkgs.hyprpolkitagent ];
+
+    qnix.persist.users."*".files = [
+      ".config/hypr/monitors.conf"
+      ".config/hypr/workspaces.conf"
+    ];
   };
 }

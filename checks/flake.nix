@@ -7,6 +7,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    stylix = {
+      url = "github:danth/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     impermanence = {
       url = "github:nix-community/impermanence";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -22,6 +26,7 @@
     {
       nixpkgs,
       home-manager,
+      stylix,
       impermanence,
       sops-nix,
       qnix-modules,
@@ -117,6 +122,7 @@
           nixosServerEvaluation = lib.nixosSystem {
             inherit pkgs lib;
             modules = [
+              stylix.nixosModules.stylix
               impermanence.nixosModules.impermanence
               sops-nix.nixosModules.sops
 
@@ -154,6 +160,7 @@
           nixosClientEvaluation = lib.nixosSystem {
             inherit pkgs lib;
             modules = [
+              stylix.nixosModules.stylix
               impermanence.nixosModules.impermanence
               sops-nix.nixosModules.sops
 
@@ -162,6 +169,7 @@
                 profiles = [
                   "dev"
                   "hyprland"
+                  "stylix"
                   "impermanence"
                 ];
               })
@@ -194,11 +202,13 @@
               qnixHomeStandalone = true;
             };
             modules = [
+              stylix.homeModules.stylix
               (import ../loader/home.nix {
                 lib = nixpkgs.lib;
                 profiles = [
                   "dev"
                   "hyprland"
+                  "stylix"
                 ];
               })
               {
@@ -222,6 +232,7 @@
               qnixHomeStandalone = true;
             };
             modules = [
+              stylix.homeModules.stylix
               (import ../loader/home.nix {
                 lib = nixpkgs.lib;
                 profiles = [
@@ -239,6 +250,7 @@
           nixosWithHomeEvaluation = lib.nixosSystem {
             inherit pkgs lib;
             modules = [
+              stylix.nixosModules.stylix
               impermanence.nixosModules.impermanence
               sops-nix.nixosModules.sops
 
@@ -247,6 +259,7 @@
                 profiles = [
                   "dev"
                   "hyprland"
+                  "stylix"
                   "impermanence"
                 ];
               })
@@ -287,6 +300,7 @@
                         profiles = [
                           "dev"
                           "hyprland"
+                          "stylix"
                         ];
                       })
                     ];
@@ -333,9 +347,17 @@
           hyprland-profile-defaults = pkgs.runCommand "hyprland-profile-defaults" { } ''
             test "${if nixosClientEvaluation.config.qnix.desktop.wayland.enable then "yes" else "no"}" = "yes"
             test "${if nixosClientEvaluation.config.qnix.desktop.hyprland.enable then "yes" else "no"}" = "yes"
+            test "${if nixosClientEvaluation.config.qnix.desktop.displaymanager.enable then "yes" else "no"}" = "yes"
+            test "${if nixosClientEvaluation.config.qnix.desktop.displaymanager.sddm.enable then "yes" else "no"}" = "yes"
+            test "${if nixosClientEvaluation.config.qnix.desktop.stylix.enable then "yes" else "no"}" = "yes"
+            test "${if nixosClientEvaluation.config.qnix.desktop.terminal.enable then "yes" else "no"}" = "yes"
             test "${if nixosClientEvaluation.config.programs.hyprland.enable then "yes" else "no"}" = "yes"
             test "${if nixosClientEvaluation.config.xdg.portal.enable then "yes" else "no"}" = "yes"
+            test "${if nixosClientEvaluation.config.services.displayManager.sddm.enable then "yes" else "no"}" = "yes"
+            test "${if nixosClientEvaluation.config.stylix.enable then "yes" else "no"}" = "yes"
             test "${if homeOnlyEvaluation.config.wayland.windowManager.hyprland.enable then "yes" else "no"}" = "yes"
+            test "${if homeOnlyEvaluation.config.stylix.enable then "yes" else "no"}" = "yes"
+            test "${if homeOnlyEvaluation.config.programs.kitty.enable then "yes" else "no"}" = "yes"
             test "${homeOnlyEvaluation.config.home.sessionVariables.NIXOS_OZONE_WL}" = "1"
             touch $out
           '';

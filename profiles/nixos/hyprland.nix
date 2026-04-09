@@ -5,12 +5,22 @@ in
 {
   imports = [
     ./wayland.nix
-  ] ++ (lib.qnix.mkNixosFeatureImports {
+  ]
+  ++ (lib.qnix.mkNixosFeatureImports {
     category = "desktop";
+    name = "displaymanager";
+  })
+  ++ (lib.qnix.mkNixosFeatureImports {
+    category = "hyprland";
     name = "hyprland";
   });
 
   config = {
-    qnix = lib.recursiveUpdate sharedQnix { };
+    qnix = lib.recursiveUpdate sharedQnix {
+      desktop.displaymanager = {
+        enable = lib.mkDefault true;
+        sddm.enable = lib.mkDefault true;
+      };
+    };
   };
 }

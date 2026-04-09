@@ -5,7 +5,12 @@ in
 {
   imports = [
     ./workstation.nix
-  ] ++ (lib.qnix.mkNixosFeatureImports {
+  ]
+  ++ (lib.qnix.mkNixosFeatureImports {
+    category = "desktop";
+    name = "terminal";
+  })
+  ++ (lib.qnix.mkNixosFeatureImports {
       category = "security";
       name = "polkit";
     });
