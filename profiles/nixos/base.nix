@@ -53,6 +53,10 @@ in
       category = "network";
       name = "networkmanager";
     })
+    (lib.qnix.mkNixosFeatureImports {
+      category = "network";
+      name = "tailscale";
+    })
   ];
 
   config = {
