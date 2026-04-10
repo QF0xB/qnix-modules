@@ -1,26 +1,27 @@
 {
-  description = "QNix NixOS modules";
+  description = "QNix modules";
 
-  # No inputs - qnix-modules is version-agnostic
-  # Modules receive inputs via specialArgs from consuming repositories
-  outputs = { self, ... }:
-    {
-      # NixOS module loader
-      nixosModules.qnix = import ./loader/nixos.nix;
-      
-      # Home Manager module loader
-      homeManagerModules.qnix = import ./loader/home.nix;
-      
-      # Library builder - consumers pass their lib and pkgs
-      # Usage: lib = inputs.qnix-modules.lib { lib = nixpkgs.lib; pkgs = ...; };
-      lib = { lib, pkgs }: import ./qnix-lib.nix { inherit lib pkgs; };
+  # Keep the root flake version-agnostic. Evaluation checks live in ./checks.
+  inputs = {};
 
-      # Development outputs
-      # Validate flake structure: nix eval .#checks
-      # This ensures the flake evaluates correctly
-      checks = {
-        # If this evaluates, the flake structure is valid
-        valid = true;
-      };
-    };
+  outputs = {self, ...}: {
+    # Profile-based NixOS loader.
+    nixosModules.qnix = import ./loader/nixos.nix;
+
+    # Profile-based Home Manager loader.
+    homeManagerModules.qnix = import ./loader/home.nix;
+
+    # Shared helper library, exposed as lib.qnix.* in consuming repos.
+    #
+    # Usage:
+    # lib = inputs.qnix-modules.lib {
+    #   lib = nixpkgs.lib;
+    #   pkgs = pkgs;
+    # };
+    lib = {
+      lib,
+      pkgs ? null,
+    }:
+      import ./lib {inherit lib pkgs;};
+  };
 }
