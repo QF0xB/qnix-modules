@@ -127,7 +127,7 @@ in
                 id = "plugin:hyprland-steam-overlay";
               }
               {
-                colorizeDistroLogo = true;
+                colorizeDistroLogo = false;
                 colorizeSystemIcon = "primary";
                 customIconPath = "";
                 enableColorization = true;

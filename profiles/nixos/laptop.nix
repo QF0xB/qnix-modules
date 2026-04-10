@@ -8,6 +8,10 @@ in
   ]
   ++ (lib.qnix.mkNixosFeatureImports {
     category = "system";
+    name = "laptop";
+  })
+  ++ (lib.qnix.mkNixosFeatureImports {
+    category = "system";
     name = "thunderbolt";
   })
   ++ (lib.qnix.mkNixosFeatureImports {
@@ -17,6 +21,8 @@ in
 
   config = {
     qnix = lib.recursiveUpdate sharedQnix {
+      system.laptop.enable = lib.mkDefault true;
+
       system.power-management = {
         enable = lib.mkDefault true;
         tuned.enable = lib.mkDefault true;

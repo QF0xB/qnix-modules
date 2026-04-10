@@ -442,10 +442,16 @@
 
           nixos-laptop-defaults = pkgs.runCommand "nixos-laptop-defaults" { } ''
             test "${if nixosLaptopEvaluation.config.qnix.status.laptop then "yes" else "no"}" = "yes"
+            test "${if nixosLaptopEvaluation.config.qnix.system.laptop.enable then "yes" else "no"}" = "yes"
             test "${if nixosLaptopEvaluation.config.qnix.system.power-management.enable then "yes" else "no"}" = "yes"
             test "${if nixosLaptopEvaluation.config.qnix.system.thunderbolt.enable then "yes" else "no"}" = "yes"
             test "${if nixosLaptopEvaluation.config.services.upower.enable then "yes" else "no"}" = "yes"
             test "${if nixosLaptopEvaluation.config.services.tuned.enable then "yes" else "no"}" = "yes"
+            test "${if nixosLaptopEvaluation.config.services.thermald.enable then "yes" else "no"}" = "yes"
+            test "${if nixosLaptopEvaluation.config.services.fwupd.enable then "yes" else "no"}" = "yes"
+            test "${nixosLaptopEvaluation.config.services.logind.settings.Login.HandleLidSwitch}" = "suspend"
+            test "${nixosLaptopEvaluation.config.services.logind.settings.Login.HandleLidSwitchExternalPower}" = "ignore"
+            test "${nixosLaptopEvaluation.config.services.logind.settings.Login.HandleLidSwitchDocked}" = "ignore"
             test "${if nixosLaptopEvaluation.config.services.hardware.bolt.enable then "yes" else "no"}" = "yes"
             touch $out
           '';

@@ -135,6 +135,7 @@ in
           softtabstop = 2;
           showtabline = 2;
           expandtab = true;
+          autoindent = true;
           smartindent = true;
           shiftwidth = 2;
           breakindent = true;
@@ -168,7 +169,7 @@ in
         formatter.conform-nvim = {
           enable = true;
           setupOpts = {
-            defult_format_opts = {
+            default_format_opts = {
               lsp_format = "fallback";
             };
             formatters_by_ft = {
@@ -184,7 +185,7 @@ in
           neogit.enable = true;
         };
 
-        languages =
+        languages = lib.recursiveUpdate
           {
             enableFormat = true;
             enableDAP = true;
@@ -232,7 +233,6 @@ in
             nix = {
               enable = true;
               format.enable = true;
-              format.type = [ "nixfmt" ];
               lsp.enable = true;
               lsp.servers = [ "nixd" ];
               extraDiagnostics.enable = true;
@@ -253,13 +253,11 @@ in
             python = {
               enable = true;
               format.enable = true;
-              format.type = [ "black" ];
             };
 
             rust = {
               enable = true;
               format.enable = true;
-              format.type = [ "rustfmt" ];
               lsp.enable = true;
             };
 
@@ -274,7 +272,7 @@ in
               lsp.enable = true;
             };
           }
-          // treeSitterEnables;
+          treeSitterEnables;
 
         lsp = {
           enable = true;
@@ -363,6 +361,67 @@ in
           })
         '';
 
+        pluginRC.nix-braces = ''
+          -- In Nix files, let `=` followed by `{` expand to `{  };` and keep the cursor inside.
+          local npairs = require("nvim-autopairs")
+          local Rule = require("nvim-autopairs.rule")
+          local cond = require("nvim-autopairs.conds")
+
+          npairs.add_rules({
+            Rule("=%s*{$", "  };", "nix")
+              :use_regex(true, "{")
+              :set_end_pair_length(3)
+              :with_move(cond.none()),
+          })
+
+          -- In Nix files, turn `{  };` into a multiline attrset on <CR> and keep the trailing `;`.
+          vim.api.nvim_create_autocmd("FileType", {
+            pattern = "nix",
+            callback = function(ev)
+              local termcodes = function(keys)
+                return vim.api.nvim_replace_termcodes(keys, true, false, true)
+              end
+
+              vim.keymap.set("i", "<CR>", function()
+                local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+                local line = vim.api.nvim_get_current_line()
+                local before = line:sub(1, col)
+                local after = line:sub(col + 1)
+
+                if before:match("{%s*$") and after:match("^%s*};") then
+                  local base_indent = line:match("^%s*") or ""
+                  local shiftwidth = vim.bo.shiftwidth > 0 and vim.bo.shiftwidth or vim.bo.tabstop
+                  local inner_indent = base_indent .. string.rep(" ", shiftwidth)
+                  local open_line = before:gsub("%s*$", "")
+                  local close_suffix = after:match("^%s*(};.*)$")
+
+                  vim.schedule(function()
+                    if not vim.api.nvim_buf_is_valid(ev.buf) then
+                      return
+                    end
+
+                    vim.api.nvim_buf_set_lines(ev.buf, row - 1, row, false, {
+                      open_line,
+                      inner_indent,
+                      base_indent .. close_suffix,
+                    })
+                    vim.api.nvim_win_set_cursor(0, { row + 1, #inner_indent })
+                  end)
+
+                  return ""
+                end
+
+                return termcodes("<CR>")
+              end, {
+                buffer = ev.buf,
+                expr = true,
+                noremap = true,
+                silent = true,
+              })
+            end,
+          })
+        '';
+
         statusline.lualine = {
           enable = true;
           disabledFiletypes = [ "alpha" ];
@@ -405,6 +464,11 @@ in
       };
     };
 
-    home.packages = [ pkgs.ripgrep ];
+    home.packages = [
+      pkgs.ripgrep
+      pkgs.nixfmt
+      pkgs.black
+      pkgs.rustfmt
+    ];
   };
 }
