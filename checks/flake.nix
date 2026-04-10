@@ -522,36 +522,44 @@
             let
               nixosNvfEvaluation = lib.nixosSystem {
                 inherit pkgs lib;
-                modules = [
-                  stylix.nixosModules.stylix
-                  impermanence.nixosModules.impermanence
-
-                  (import ../loader/nixos.nix {
-                    inherit lib;
-                    profiles = [
-                      "impermanence"
-                      "nvf"
-                    ];
+                modules =
+                  [
+                    stylix.nixosModules.stylix
+                    impermanence.nixosModules.impermanence
+                  ]
+                  # `storage/impermanence` references `qnix.system.shell.packages`; the nvf-only
+                  # profile set does not pull base, so declare shell options explicitly.
+                  ++ (lib.qnix.mkNixosOptionImports {
+                    category = "system";
+                    name = "shell";
                   })
-                  {
-                    system.stateVersion = "25.11";
-                    fileSystems."/" = {
-                      device = "none";
-                      fsType = "tmpfs";
-                    };
-                    fileSystems."/persist" = {
-                      device = "none";
-                      fsType = "tmpfs";
-                    };
-                    fileSystems."/cache" = {
-                      device = "none";
-                      fsType = "tmpfs";
-                    };
-                    boot.isContainer = true;
-                    networking.hostId = "12345678";
-                  }
-                  impermanenceTestModule
-                ];
+                  ++ [
+                    (import ../loader/nixos.nix {
+                      inherit lib;
+                      profiles = [
+                        "impermanence"
+                        "nvf"
+                      ];
+                    })
+                    {
+                      system.stateVersion = "25.11";
+                      fileSystems."/" = {
+                        device = "none";
+                        fsType = "tmpfs";
+                      };
+                      fileSystems."/persist" = {
+                        device = "none";
+                        fsType = "tmpfs";
+                      };
+                      fileSystems."/cache" = {
+                        device = "none";
+                        fsType = "tmpfs";
+                      };
+                      boot.isContainer = true;
+                      networking.hostId = "12345678";
+                    }
+                    impermanenceTestModule
+                  ];
               };
 
               homeOnlyNvfEvaluation = home-manager.lib.homeManagerConfiguration {

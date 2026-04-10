@@ -21,6 +21,10 @@ in
       category = "system";
       name = "packages";
     })
+    (lib.qnix.mkNixosOptionImports {
+      category = "storage";
+      name = "impermanence";
+    })
     (lib.qnix.mkNixosFeatureImports {
       category = "system";
       name = "shell";
