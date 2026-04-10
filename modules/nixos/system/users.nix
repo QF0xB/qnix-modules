@@ -57,9 +57,9 @@ let
     }
   );
 
-  renderedGroups = lib.foldl' (acc: groupName: acc // { ${groupName} = { }; }) { users = { }; } (
-    lib.unique (lib.mapAttrsToList (_: u: u.group) renderedUsers)
-  );
+  renderedGroups = lib.genAttrs
+    (lib.unique (lib.mapAttrsToList (_: u: u.group) renderedUsers))
+    (_: { });
 
   shouldManage = cfg.users != { } || cfg.root.enable;
 in
@@ -70,12 +70,12 @@ in
         [
           {
             assertion = !(cfg.root.initialHashedPassword != null && cfg.root.passwordFromSops != null);
-            message = "qnix.users.root: initialHashedPassword and passwordFromSops are mutually exclusive.";
+            message = "qnix.system.users.root: initialHashedPassword and passwordFromSops are mutually exclusive.";
           }
         ]
         ++ lib.mapAttrsToList (username: userCfg: {
           assertion = !(userCfg.initialHashedPassword != null && userCfg.passwordFromSops != null);
-          message = "qnix.users.users.${username}: initialHashedPassword and passwordFromSops are mutually exclusive.";
+          message = "qnix.system.users.users.${username}: initialHashedPassword and passwordFromSops are mutually exclusive.";
         }) cfg.users;
     }
 
