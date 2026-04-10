@@ -12,7 +12,7 @@ let
     options = {
       directories = lib.mkOption {
         type = lib.types.listOf lib.types.str;
-        default = [ "projects" ];
+        default = [ ];
         description = "Paths relative to the user's home directory.";
         apply = assertNoHomeDirs;
       };
@@ -50,10 +50,7 @@ in
       root = {
         directories = lib.mkOption {
           type = lib.types.listOf lib.types.str;
-          default = [
-            "/var/log"
-            "/var/lib/nixos"
-          ];
+          default = [ ];
           description = "System directories to bind under /persist (must not be under /home).";
           apply = assertNoHomeDirs;
         };
@@ -87,16 +84,22 @@ in
           Per-user persistence config keyed by username. The special key `"*"`
           applies defaults to every managed user from `qnix.system.users.users`.
 
-          Each user entry’s `directories` option defaults to including `projects`
-          (see submodule defaults); override or extend as needed.
+          Baseline persisted user directories are injected by this module's
+          `config` using list merging, so other modules can extend them without
+          replacing them.
         '';
       };
     };
   };
 
-  # Ensure `projects` is present even when many modules set `users."*"`.`directories`
-  # (attrsOf defaults alone are skipped once any `users` definitions exist).
+  # Provide baseline persisted paths as merged config values rather than option
+  # defaults, so feature modules can extend them without replacing them.
   config = {
+    qnix.persist.root.directories = lib.mkBefore [
+      "/var/log"
+      "/var/lib/nixos"
+    ];
+
     qnix.persist.users."*".directories = lib.mkBefore [
       "projects"
       ".ssh"

@@ -61,6 +61,11 @@ in
 
   config = {
     qnix = lib.recursiveUpdate sharedQnix {
+      persist.users."*".directories = [
+        ".ssh"
+        ".config/sops"
+      ];
+
       system = {
         boot-manager.enable = lib.mkDefault true;
         localisation.enable = lib.mkDefault true;
