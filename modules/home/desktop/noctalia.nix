@@ -92,8 +92,7 @@ in
                 unfocusedIconsOpacity = 1;
               }
             ];
-            right =
-              [
+            right = [
               {
                 blacklist = [ ];
                 chevronColor = "none";
@@ -128,7 +127,7 @@ in
                 id = "plugin:hyprland-steam-overlay";
               }
               {
-                colorizeDistroLogo = false;
+                colorizeDistroLogo = true;
                 colorizeSystemIcon = "primary";
                 customIconPath = "";
                 enableColorization = true;
@@ -136,24 +135,24 @@ in
                 id = "ControlCenter";
                 useDistroLogo = true;
               }
-              ]
-              ++ lib.optionals isLaptop [
-                {
-                  deviceNativePath = "__default__";
-                  displayMode = "graphic-clean";
-                  hideIfIdle = false;
-                  hideIfNotDetected = true;
-                  id = "Battery";
-                  showNoctaliaPerformance = true;
-                  showPowerProfiles = true;
-                }
-                {
-                  displayMode = "alwaysHide";
-                  iconColor = "none";
-                  id = "Brightness";
-                  textColor = "none";
-                }
-              ];
+            ]
+            ++ lib.optionals isLaptop [
+              {
+                deviceNativePath = "__default__";
+                displayMode = "graphic-clean";
+                hideIfIdle = false;
+                hideIfNotDetected = true;
+                id = "Battery";
+                showNoctaliaPerformance = true;
+                showPowerProfiles = true;
+              }
+              {
+                displayMode = "alwaysHide";
+                iconColor = "none";
+                id = "Brightness";
+                textColor = "none";
+              }
+            ];
           };
           screenOverrides = [ ];
         };
@@ -327,8 +326,7 @@ in
               { id = "NightLight"; }
             ];
           };
-          cards =
-            [
+          cards = [
             {
               enabled = true;
               id = "profile-card";
@@ -349,13 +347,13 @@ in
               enabled = true;
               id = "media-sysmon-card";
             }
-            ]
-            ++ lib.optionals isLaptop [
-              {
-                enabled = true;
-                id = "brightness-card";
-              }
-            ];
+          ]
+          ++ lib.optionals isLaptop [
+            {
+              enabled = true;
+              id = "brightness-card";
+            }
+          ];
         };
 
         systemMonitor = {
