@@ -24,6 +24,6 @@ jobs:
       - uses: "DeterminateSystems/flakehub-push@main"
         with:
           visibility: "unlisted"
-          name: "QF0xB/qnix-modules"
+          name: "QF0xB/modules"
           tag: "${{ inputs.tag }}"
           include-output-paths: true
