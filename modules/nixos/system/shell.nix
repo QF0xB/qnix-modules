@@ -24,6 +24,10 @@ in
   config = lib.mkIf cfg.enable {
     environment.systemPackages = lib.attrValues cfg.packages;
 
+    qnix.persist.users."*".directories = lib.optionals (cfg.fish.enable || cfg.defaultShell.package == "fish") [
+      ".local/share/fish"
+    ];
+
     programs.bash.interactiveShellInit = lib.mkIf (cfg.defaultShell.enable && cfg.defaultShell.package != "bash") ''
       if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "${cfg.defaultShell.package}" && -z ''${BASH_EXECUTION_STRING} ]]
       then

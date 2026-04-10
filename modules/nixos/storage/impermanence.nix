@@ -40,21 +40,31 @@ let
       cacheFiles = merged.cache.files or [ ];
       cacheDirectories = merged.cache.directories or [ ];
       expandedFiles = lib.unique (
-        lib.map
-          (f: "/home/${username}/" + (if lib.hasPrefix "/" (toString f) then lib.removePrefix "/" (toString f) else toString f))
-          ((merged.files or [ ]) ++ (merged.cache.files or [ ]))
+        lib.map (
+          f:
+          "/home/${username}/"
+          + (if lib.hasPrefix "/" (toString f) then lib.removePrefix "/" (toString f) else toString f)
+        ) ((merged.files or [ ]) ++ (merged.cache.files or [ ]))
       );
       expandedDirectories = lib.unique (
-        lib.map
-          (d: "/home/${username}/" + (if lib.hasPrefix "/" (toString d) then lib.removePrefix "/" (toString d) else toString d))
-          ((merged.directories or [ ]) ++ (merged.cache.directories or [ ]))
+        lib.map (
+          d:
+          "/home/${username}/"
+          + (if lib.hasPrefix "/" (toString d) then lib.removePrefix "/" (toString d) else toString d)
+        ) ((merged.directories or [ ]) ++ (merged.cache.directories or [ ]))
       );
     };
 
   managedPersistUsers = lib.genAttrs (lib.attrNames usersCfg) mergeUserPersist;
 in
 {
-  config = lib.mkIf config.qnix.storage.impermanence.enable (
+  config = lib.mkMerge [
+    (lib.mkIf config.qnix.storage.impermanence.enable {
+      # Ephemeral-root installs need a stable tree for checkouts; desktop/laptop used to
+      # get this from the workstation profile only — client-style profile sets omit it.
+      qnix.persist.users."*".directories = [ "projects" ];
+    })
+    (lib.mkIf config.qnix.storage.impermanence.enable (
     let
       rootDirs = cfg.root.directories ++ cfg.root.cache.directories;
       rootFiles = cfg.root.files ++ cfg.root.cache.files;
@@ -66,8 +76,7 @@ in
             ++ lib.concatMap (userCfg: userCfg.expandedDirectories) (lib.attrValues managedPersistUsers)
           );
           files = lib.unique (
-            rootFiles
-            ++ lib.concatMap (userCfg: userCfg.expandedFiles) (lib.attrValues managedPersistUsers)
+            rootFiles ++ lib.concatMap (userCfg: userCfg.expandedFiles) (lib.attrValues managedPersistUsers)
           );
         }
       );
@@ -75,6 +84,41 @@ in
     {
       fileSystems."/persist".neededForBoot = true;
       fileSystems."/cache".neededForBoot = true;
+
+      qnix.system.shell.packages.show-root-filesystem = {
+        runtimeInputs = with pkgs; [
+          fd
+          jq
+          coreutils
+          gnugrep
+          gawk
+        ];
+        text = ''
+          exclude_args=()
+
+          if [[ -f /etc/impermanence.json ]]; then
+            while IFS= read -r path; do
+              [[ -n "$path" ]] && exclude_args+=(--exclude "$path")
+            done < <(jq -r '.directories[], .files[]' /etc/impermanence.json 2>/dev/null)
+          fi
+
+          sudo fd \
+            --one-file-system \
+            --base-directory / \
+            --type f \
+            --hidden \
+            "''${exclude_args[@]}" \
+            --exclude "/etc/{ssh,passwd,shadow}" \
+            --exclude "/var/cache/man" \
+            --exclude "*.timer" \
+            --exclude "/var/lib/NetworkManager" \
+            --exclude "/var/lib/sddm/.cache/" \
+            --exclude "/root/.cache" \
+            --exec stat --printf='%s %n\n' \
+          | sort -rn -k1 \
+          | awk '{ print $1, $2 }'
+        '';
+      };
 
       environment.persistence = {
         "/persist" = {
@@ -101,5 +145,6 @@ in
 
       environment.etc."impermanence.json".source = impermanenceJson;
     }
-  );
+    ))
+  ];
 }
