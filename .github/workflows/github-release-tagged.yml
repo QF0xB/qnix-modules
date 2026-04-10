@@ -37,7 +37,8 @@ jobs:
           if [ -f VERSION ]; then
             echo "value=$(tr -d '[:space:]' < VERSION)" >> "$GITHUB_OUTPUT"
           else
-            echo "value=${{ steps.tag.outputs.value#v }}" >> "$GITHUB_OUTPUT"
+            _tag='${{ steps.tag.outputs.value }}'
+            echo "value=${_tag#v}" >> "$GITHUB_OUTPUT"
           fi
 
       - name: "Create GitHub release"
