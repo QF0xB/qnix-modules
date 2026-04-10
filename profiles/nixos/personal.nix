@@ -15,6 +15,10 @@ in
     ++ (lib.qnix.mkNixosFeatureImports {
       category = "apps";
       name = "music";
+    })
+    ++ (lib.qnix.mkNixosFeatureImports {
+      category = "apps";
+      name = "social";
     });
 
   config.qnix = sharedQnix;

@@ -32,7 +32,7 @@ in
       "match:class ^(tidal-hifi)$, tag +music"
       "match:class ^(nemo|thunar)$, tag +files"
       "match:class ^(Bitwarden)$, tag +passwords"
-      "match:class ^(signal|discord)$, tag +messenger"
+      "match:class ^(signal|discord|element|Element|element-desktop)$, tag +messenger"
       "match:class ^(obsidian)$, tag +notes"
       "match:class ^(obs|com\\.obsproject\\.Studio)$, tag +obs"
       "match:class ^Bitwarden$, no_screen_share on"

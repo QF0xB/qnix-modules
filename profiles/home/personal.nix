@@ -20,6 +20,10 @@ in
     ++ (qnixLib.qnix.mkHomeFeatureImports {
       category = "apps";
       name = "music";
+    })
+    ++ (qnixLib.qnix.mkHomeFeatureImports {
+      category = "apps";
+      name = "social";
     });
 
   config = lib.mkIf qnixHomeStandalone {
