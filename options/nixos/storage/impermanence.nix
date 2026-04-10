@@ -12,7 +12,7 @@ let
     options = {
       directories = lib.mkOption {
         type = lib.types.listOf lib.types.str;
-        default = [ ];
+        default = [ "projects" ];
         description = "Paths relative to the user's home directory.";
         apply = assertNoHomeDirs;
       };
@@ -86,8 +86,17 @@ in
         description = ''
           Per-user persistence config keyed by username. The special key `"*"`
           applies defaults to every managed user from `qnix.system.users.users`.
+
+          Each user entry’s `directories` option defaults to including `projects`
+          (see submodule defaults); override or extend as needed.
         '';
       };
     };
+  };
+
+  # Ensure `projects` is present even when many modules set `users."*"`.`directories`
+  # (attrsOf defaults alone are skipped once any `users` definitions exist).
+  config = {
+    qnix.persist.users."*".directories = lib.mkBefore [ "projects" ];
   };
 }

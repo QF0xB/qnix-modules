@@ -58,13 +58,7 @@ let
   managedPersistUsers = lib.genAttrs (lib.attrNames usersCfg) mergeUserPersist;
 in
 {
-  config = lib.mkMerge [
-    (lib.mkIf config.qnix.storage.impermanence.enable {
-      # Ephemeral-root installs need a stable tree for checkouts; desktop/laptop used to
-      # get this from the workstation profile only — client-style profile sets omit it.
-      qnix.persist.users."*".directories = [ "projects" ];
-    })
-    (lib.mkIf config.qnix.storage.impermanence.enable (
+  config = lib.mkIf config.qnix.storage.impermanence.enable (
     let
       rootDirs = cfg.root.directories ++ cfg.root.cache.directories;
       rootFiles = cfg.root.files ++ cfg.root.cache.files;
@@ -145,6 +139,5 @@ in
 
       environment.etc."impermanence.json".source = impermanenceJson;
     }
-    ))
-  ];
+  );
 }
