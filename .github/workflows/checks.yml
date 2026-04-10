@@ -1,0 +1,19 @@
+name: "Checks"
+
+on:
+  pull_request: {}
+  push:
+    branches:
+      - "main"
+      - "master"
+
+jobs:
+  checks:
+    runs-on: "ubuntu-latest"
+    permissions:
+      contents: "read"
+    steps:
+      - uses: "actions/checkout@v4"
+      - uses: "DeterminateSystems/determinate-nix-action@v3"
+      - name: "Run checks flake"
+        run: "nix flake check ./checks --keep-going --print-build-logs"

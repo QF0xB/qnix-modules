@@ -1,0 +1,52 @@
+name: "Publish GitHub Release"
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "The existing tag to publish as a GitHub release"
+        type: "string"
+        required: true
+
+jobs:
+  github-release:
+    runs-on: "ubuntu-latest"
+    permissions:
+      contents: "write"
+    steps:
+      - uses: "actions/checkout@v4"
+        with:
+          fetch-depth: 0
+          ref: "${{ inputs.tag != null && format('refs/tags/{0}', inputs.tag) || github.ref }}"
+
+      - name: "Determine release tag"
+        id: "tag"
+        run: |
+          if [ -n "${{ inputs.tag }}" ]; then
+            echo "value=${{ inputs.tag }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "value=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: "Read version file"
+        id: "version"
+        run: |
+          if [ -f VERSION ]; then
+            echo "value=$(tr -d '[:space:]' < VERSION)" >> "$GITHUB_OUTPUT"
+          else
+            echo "value=${{ steps.tag.outputs.value#v }}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: "Create GitHub release"
+        uses: "softprops/action-gh-release@v2"
+        with:
+          tag_name: "${{ steps.tag.outputs.value }}"
+          name: "${{ steps.tag.outputs.value }}"
+          generate_release_notes: true
+          body: |
+            qnix-modules release `${{ steps.tag.outputs.value }}`
+
+            Version: `${{ steps.version.outputs.value }}`

@@ -7,7 +7,8 @@
 let
   cfg = config.qnix.system.shell;
   qnixRoot = if cfg.projectRoot != null then builtins.dirOf cfg.projectRoot else null;
-  qnixModulesReleasePrefix = "github:QF0xB/qnix-modules";
+  qnixModulesGithubPrefix = "github:QF0xB/qnix-modules";
+  qnixModulesFlakehubPrefix = "https://flakehub.com/f/QF0xB/qnix-modules";
 
   loginShellPackage =
     {
@@ -32,7 +33,8 @@ let
         MODULES_ROOT="$QNIX_ROOT/modules"
         CLIENT_FLAKE="$CLIENT_ROOT/flake.nix"
         MODULES_VERSION_FILE="$MODULES_ROOT/VERSION"
-        RELEASE_PREFIX="''${QNIX_MODULES_RELEASE_PREFIX:-${qnixModulesReleasePrefix}}"
+        GITHUB_RELEASE_PREFIX="''${QNIX_MODULES_GITHUB_PREFIX:-${qnixModulesGithubPrefix}}"
+        FLAKEHUB_RELEASE_PREFIX="''${QNIX_MODULES_FLAKEHUB_PREFIX:-${qnixModulesFlakehubPrefix}}"
 
         die() {
           printf '%s\n' "$*" >&2
@@ -89,6 +91,64 @@ let
           fi
 
           die "Invalid version: $input"
+        }
+
+        normalize_source() {
+          local input="$1"
+
+          case "$input" in
+            ""|github|flakehub)
+              printf '%s\n' "''${input:-github}"
+              ;;
+            *)
+              die "Unsupported source: $input"
+              ;;
+          esac
+        }
+
+        parse_release_args() {
+          RELEASE_SOURCE="$(normalize_source "''${QNIX_MODULES_RELEASE_SOURCE:-github}")"
+          RELEASE_ARG=""
+
+          while [[ $# -gt 0 ]]; do
+            case "$1" in
+              --source)
+                [[ $# -ge 2 ]] || die "Missing value for --source"
+                RELEASE_SOURCE="$(normalize_source "$2")"
+                shift 2
+                ;;
+              --source=*)
+                RELEASE_SOURCE="$(normalize_source "''${1#--source=}")"
+                shift
+                ;;
+              -*)
+                die "Unknown option: $1"
+                ;;
+              *)
+                [[ -z "$RELEASE_ARG" ]] || die "Unexpected extra argument: $1"
+                RELEASE_ARG="$1"
+                shift
+                ;;
+            esac
+          done
+        }
+
+        release_url() {
+          local source="$1"
+          local version="$2"
+          local ref="$3"
+
+          case "$source" in
+            github)
+              printf '%s?ref=%s\n' "$GITHUB_RELEASE_PREFIX" "$ref"
+              ;;
+            flakehub)
+              printf '%s/=%s\n' "$FLAKEHUB_RELEASE_PREFIX" "$version"
+              ;;
+            *)
+              die "Unsupported source: $source"
+              ;;
+          esac
         }
 
         read_version() {
@@ -159,14 +219,16 @@ let
         # shellcheck source=/dev/null
         source ${qnixReleaseHelper}
 
-        version="$(normalize_version "''${1:-}")"
+        parse_release_args "$@"
+        version="$(normalize_version "$RELEASE_ARG")"
         ref="v$version"
+        url="$(release_url "$RELEASE_SOURCE" "$version" "$ref")"
 
         require_repo "$CLIENT_ROOT"
-        write_client_input_url "$RELEASE_PREFIX?ref=$ref"
+        write_client_input_url "$url"
         update_client_lock
 
-        printf 'Client now uses qnix-modules %s via %s\n' "$ref" "$RELEASE_PREFIX"
+        printf 'Client now uses qnix-modules %s via %s\n' "$ref" "$RELEASE_SOURCE"
       '';
     };
 
@@ -196,7 +258,8 @@ let
         # shellcheck source=/dev/null
         source ${qnixReleaseHelper}
 
-        bump="''${1:-patch}"
+        parse_release_args "$@"
+        bump="''${RELEASE_ARG:-patch}"
         current_version="$(read_version)"
 
         case "$bump" in
@@ -224,13 +287,13 @@ let
         git -C "$MODULES_ROOT" push origin HEAD
         git -C "$MODULES_ROOT" push origin "$ref"
 
-        write_client_input_url "$RELEASE_PREFIX?ref=$ref"
+        write_client_input_url "$(release_url "$RELEASE_SOURCE" "$version" "$ref")"
         update_client_lock
 
         printf 'Released qnix-modules %s\n' "$ref"
-        printf 'Client now points to %s\n' "$ref"
+        printf 'Client now points to %s via %s\n' "$ref" "$RELEASE_SOURCE"
         printf 'Review and commit %s/flake.nix and %s/flake.lock\n' "$CLIENT_ROOT" "$CLIENT_ROOT"
-        printf 'GitHub Actions will publish tag %s to FlakeHub.\n' "$ref"
+        printf 'GitHub Actions will publish tag %s as a GitHub Release.\n' "$ref"
       '';
     };
   };
