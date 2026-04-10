@@ -4,17 +4,9 @@ let
 in
 {
   imports = lib.concatLists [
-    (lib.qnix.mkNixosOptionImports {
-      category = "dev";
-      name = "codex";
-    })
     (lib.qnix.mkNixosFeatureImports {
       category = "dev";
       name = "codex";
-    })
-    (lib.qnix.mkNixosOptionImports {
-      category = "dev";
-      name = "cursor";
     })
     (lib.qnix.mkNixosFeatureImports {
       category = "dev";
@@ -28,25 +20,13 @@ in
       category = "dev";
       name = "git";
     })
-    (lib.qnix.mkNixosOptionImports {
+    (lib.qnix.mkNixosFeatureImports {
       category = "dev";
       name = "jetbrains";
     })
     (lib.qnix.mkNixosFeatureImports {
       category = "dev";
-      name = "jetbrains";
-    })
-    (lib.qnix.mkNixosOptionImports {
-      category = "dev";
       name = "postman";
-    })
-    (lib.qnix.mkNixosFeatureImports {
-      category = "dev";
-      name = "postman";
-    })
-    (lib.qnix.mkNixosOptionImports {
-      category = "dev";
-      name = "wireshark";
     })
     (lib.qnix.mkNixosFeatureImports {
       category = "dev";

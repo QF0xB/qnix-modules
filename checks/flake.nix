@@ -15,6 +15,10 @@
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nvf = {
+      url = "github:notashelf/nvf";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     impermanence = {
       url = "github:nix-community/impermanence";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -32,6 +36,7 @@
       home-manager,
       stylix,
       noctalia-shell,
+      nvf,
       impermanence,
       sops-nix,
       qnix-modules,
@@ -251,6 +256,7 @@
             };
             modules = [
               stylix.homeModules.stylix
+              nvf.homeManagerModules.default
               noctalia-shell.homeModules.default
               (import ../loader/home.nix {
                 lib = nixpkgs.lib;
@@ -284,6 +290,7 @@
             };
             modules = [
               stylix.homeModules.stylix
+              nvf.homeManagerModules.default
               noctalia-shell.homeModules.default
               (import ../loader/home.nix {
                 lib = nixpkgs.lib;
@@ -307,6 +314,7 @@
             };
             modules = [
               stylix.homeModules.stylix
+              nvf.homeManagerModules.default
               noctalia-shell.homeModules.default
               (import ../loader/home.nix {
                 lib = nixpkgs.lib;
@@ -377,6 +385,7 @@
                   useGlobalPkgs = true;
                   useUserPackages = true;
                   sharedModules = [
+                    nvf.homeManagerModules.default
                     noctalia-shell.homeModules.default
                   ];
                   extraSpecialArgs = {
@@ -508,6 +517,74 @@
           '';
 
           nixos-and-home-manager-client-evaluates = nixosWithHomeEvaluation.config.system.build.toplevel;
+
+          nvf-profile-defaults =
+            let
+              nixosNvfEvaluation = lib.nixosSystem {
+                inherit pkgs lib;
+                modules = [
+                  stylix.nixosModules.stylix
+                  impermanence.nixosModules.impermanence
+
+                  (import ../loader/nixos.nix {
+                    inherit lib;
+                    profiles = [
+                      "impermanence"
+                      "nvf"
+                    ];
+                  })
+                  {
+                    system.stateVersion = "25.11";
+                    fileSystems."/" = {
+                      device = "none";
+                      fsType = "tmpfs";
+                    };
+                    fileSystems."/persist" = {
+                      device = "none";
+                      fsType = "tmpfs";
+                    };
+                    fileSystems."/cache" = {
+                      device = "none";
+                      fsType = "tmpfs";
+                    };
+                    boot.isContainer = true;
+                    networking.hostId = "12345678";
+                  }
+                  impermanenceTestModule
+                ];
+              };
+
+              homeOnlyNvfEvaluation = home-manager.lib.homeManagerConfiguration {
+                inherit pkgs;
+                extraSpecialArgs = {
+                  inherit qnixLib;
+                  qnixHomeStandalone = true;
+                };
+                modules = [
+                  nvf.homeManagerModules.default
+                  {
+                    imports = [
+                      (import ../loader/home.nix {
+                        lib = nixpkgs.lib;
+                        profiles = [
+                          "nvf"
+                        ];
+                      })
+                    ];
+
+                    home.username = "tester";
+                    home.homeDirectory = "/tmp/tester";
+                    home.stateVersion = "25.11";
+                  }
+                ];
+              };
+            in
+            pkgs.runCommand "nvf-profile-defaults" { } ''
+              test "${if nixosNvfEvaluation.config.qnix.dev.nvf.enable then "yes" else "no"}" = "yes"
+              test "${if homeOnlyNvfEvaluation.config.qnix.dev.nvf.enable then "yes" else "no"}" = "yes"
+              test "${if homeOnlyNvfEvaluation.config.programs.nvf.enable then "yes" else "no"}" = "yes"
+              touch $out
+            '';
         }
       );
     };
