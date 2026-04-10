@@ -309,6 +309,7 @@ in
       ++
         lib.optional (musicExe != null)
           "$mod, code:43, ${hyprSpecialExec "music" "tidal-hifi" musicExe} #d tidal-hifi"
+      ++ [ "$mod, code:39, togglespecialworkspace, messenger #s messenger special workspace" ]
       ++ lib.optional clipboardCfg.enable "$mod, code:55, exec, ${lib.getExe clipboardPicker}"
       ++ lib.optional screenshotsCfg.enable ", Print, exec, ${lib.getExe screenshotTool} full"
       ++ lib.optional screenshotsCfg.enable "SHIFT, Print, exec, ${lib.getExe screenshotTool} region"
