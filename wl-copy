@@ -1,46 +1,38 @@
-/persist
-├── etc
-│   └── NetworkManager
-│       └── system-connections  [error opening dir]
-├── home
-│   └── q.braendli
-│       ├── Documents
-│       ├── Downloads
-│       ├── Music
-│       ├── Pictures
-│       │   └── wallpaper
-│       ├── projects
-│       │   ├── foxshield
-│       │   ├── qnix
-│       │   ├── QSecv1
-│       └── Videos
-└── var
-    ├── lib
-    │   ├── libvirt
-    │   │   ├── dnsmasq
-    │   │   ├── hooks
-    │   │   │   ├── daemon.d
-    │   │   │   ├── libxl.d
-    │   │   │   ├── lxc.d
-    │   │   │   ├── network.d
-    │   │   │   └── qemu.d
-    │   │   ├── nwfilter
-    │   │   ├── qemu
-    │   │   │   ├── checkpoint
-    │   │   │   ├── dump
-    │   │   │   ├── networks
-    │   │   │   ├── nvram
-    │   │   │   ├── ram
-    │   │   │   ├── save
-    │   │   │   ├── snapshot
-    │   │   │   └── varstore
-    │   │   └── secrets
-    │   └── nixos
-    └── log
-        ├── fail2ban  [error opening dir]
-        ├── journal
-        ├── libvirt
-        │   └── qemu
-        └── private  [error opening dir]
+Configured persisted directories:
+/var/log
+/var/lib/nixos
+/home/q.braendli/projects
+/home/q.braendli/.codex
+/home/q.braendli/.config/VSCodium
+/home/q.braendli/.vscode-oss
+/home/q.braendli/.config/Cursor
+/home/q.braendli/.cursor
+/home/q.braendli/.config/JetBrains
+/home/q.braendli/.local/share/JetBrains
+/home/q.braendli/.java/.userPrefs
+/home/q.braendli/.gradle
+/home/q.braendli/.local/share/direnv/allow
+/home/q.braendli/.config/Postman
+/home/q.braendli/.local/share/keyrings
+/home/q.braendli/.local/share/nvf
+/home/q.braendli/.config/obsidian
+/home/q.braendli/.config/Bitwarden
+/home/q.braendli/.config/tidal-hifi
+/home/q.braendli/.config/BraveSoftware
+/home/q.braendli/.local/state/wireplumber
+/home/q.braendli/.cache/dconf
+/home/q.braendli/.config/dconf
+/home/q.braendli/Documents
+/home/q.braendli/Downloads
+/home/q.braendli/Music
+/home/q.braendli/Pictures
+/home/q.braendli/Videos
+/home/q.braendli/.gnupg
+/home/q.braendli/.local/share/fish
+/home/q.braendli/.cache/JetBrains
+/home/q.braendli/.cache/noctalia
+/home/q.braendli/.cache/BraveSoftware
 
-1947 directories
+Configured persisted files:
+/home/q.braendli/.config/hypr/monitors.conf
+/home/q.braendli/.config/hypr/workspaces.conf

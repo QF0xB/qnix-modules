@@ -8,12 +8,7 @@
 let
   cfg = config.qnix.network.networkmanager;
 
-  resolvePlugin =
-    plugin:
-    if lib.isString plugin then
-      pkgs.${plugin}
-    else
-      plugin;
+  resolvePlugin = plugin: if lib.isString plugin then pkgs.${plugin} else plugin;
 
   nmAppletOptionPath = [
     "programs"
@@ -40,8 +35,13 @@ in
           plugins = map resolvePlugin cfg.extraPlugins;
         };
       };
+
+      qnix.persist.root.directories = [
+        "/etc/NetworkManager/system-connections"
+      ];
     })
 
     (lib.mkIf (cfg.enable && cfg.gui) nmAppletConfig)
+
   ];
 }

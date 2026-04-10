@@ -97,6 +97,9 @@ in
   # Ensure `projects` is present even when many modules set `users."*"`.`directories`
   # (attrsOf defaults alone are skipped once any `users` definitions exist).
   config = {
-    qnix.persist.users."*".directories = lib.mkBefore [ "projects" ];
+    qnix.persist.users."*".directories = lib.mkBefore [
+      "projects"
+      ".ssh"
+    ];
   };
 }
