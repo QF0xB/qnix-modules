@@ -105,6 +105,17 @@ Run locally with:
 nix flake check ./checks
 ```
 
+### GitHub Actions
+
+This repo publishes and validates flakes through GitHub Actions:
+
+- [`.github/workflows/checks.yml`](./.github/workflows/checks.yml)
+  runs `nix flake check ./checks` on pull requests and pushes to the default branch
+- [`.github/workflows/flakehub-publish.yml`](./.github/workflows/flakehub-publish.yml)
+  publishes tagged releases (`v*`) to FlakeHub
+
+The release helper commands in the client workflow assume tags like `v0.1.0`.
+
 ### Garnix
 
 Garnix is configured to evaluate the nested checks flake directly:

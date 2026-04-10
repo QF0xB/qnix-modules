@@ -1,0 +1,25 @@
+name: "Publish to FlakeHub"
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch: {}
+
+jobs:
+  publish:
+    runs-on: "ubuntu-latest"
+    permissions:
+      id-token: "write"
+      contents: "read"
+    steps:
+      - uses: "actions/checkout@v4"
+        with:
+          fetch-depth: 0
+      - uses: "DeterminateSystems/determinate-nix-action@v3"
+      - uses: "DeterminateSystems/flakehub-push@main"
+        with:
+          name: "QF0xB/qnix-modules"
+          visibility: "public"
+          include-output-paths: true
+          tag: "${{ github.ref_name }}"

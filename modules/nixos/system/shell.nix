@@ -141,7 +141,7 @@ let
         # shellcheck source=/dev/null
         source ${qnixReleaseHelper}
 
-        require_clean_repo "$CLIENT_ROOT" "client"
+        require_repo "$CLIENT_ROOT"
         write_client_input_url "path:$MODULES_ROOT"
         update_client_lock
 
@@ -162,8 +162,8 @@ let
         version="$(normalize_version "''${1:-}")"
         ref="v$version"
 
-        require_clean_repo "$CLIENT_ROOT" "client"
-        write_client_input_url "$RELEASE_PREFIX/$ref"
+        require_repo "$CLIENT_ROOT"
+        write_client_input_url "$RELEASE_PREFIX?ref=$ref"
         update_client_lock
 
         printf 'Client now uses qnix-modules %s via %s\n' "$ref" "$RELEASE_PREFIX"
@@ -179,7 +179,7 @@ let
         # shellcheck source=/dev/null
         source ${qnixReleaseHelper}
 
-        require_clean_repo "$CLIENT_ROOT" "client"
+        require_repo "$CLIENT_ROOT"
         update_client_lock
 
         printf 'Updated client flake.lock for the current qnix-modules source\n'
@@ -224,13 +224,13 @@ let
         git -C "$MODULES_ROOT" push origin HEAD
         git -C "$MODULES_ROOT" push origin "$ref"
 
-        write_client_input_url "$RELEASE_PREFIX/$ref"
+        write_client_input_url "$RELEASE_PREFIX?ref=$ref"
         update_client_lock
 
         printf 'Released qnix-modules %s\n' "$ref"
         printf 'Client now points to %s\n' "$ref"
         printf 'Review and commit %s/flake.nix and %s/flake.lock\n' "$CLIENT_ROOT" "$CLIENT_ROOT"
-        printf 'If you publish on FlakeHub, publish tag %s next.\n' "$ref"
+        printf 'GitHub Actions will publish tag %s to FlakeHub.\n' "$ref"
       '';
     };
   };
