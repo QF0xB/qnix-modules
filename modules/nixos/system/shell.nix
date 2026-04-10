@@ -211,7 +211,7 @@ let
         ref="v$version"
 
         require_clean_repo "$MODULES_ROOT" "modules"
-        require_clean_repo "$CLIENT_ROOT" "client"
+        require_repo "$CLIENT_ROOT"
 
         if git -C "$MODULES_ROOT" rev-parse "$ref" >/dev/null 2>&1; then
           die "Git tag already exists: $ref"
