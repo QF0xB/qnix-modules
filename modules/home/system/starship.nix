@@ -20,13 +20,13 @@ let
     };
 
   colors = {
-    fg = "#08131a";
-    violet = "#b9a2ff";
-    cyan = "#8fd3d7";
-    blue = "#89b7ff";
-    green = "#a9d46e";
-    red = "#ff7a7a";
-    yellow = "#e3bc5b";
+    fg = "#002b36";
+    violet = "#6c71c4";
+    cyan = "#2aa198";
+    blue = "#268bd2";
+    green = "#859900";
+    red = "#dc322f";
+    yellow = "#b58900";
   };
 
   icons =

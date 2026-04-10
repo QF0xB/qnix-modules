@@ -17,10 +17,10 @@ let
       { enable = false; };
 
   stylixToSolarized = base16: {
-    base03 = base16.base03 or "";
-    base02 = base16.base02 or "";
-    base01 = base16.base01 or "";
-    base00 = base16.base00 or "";
+    base03 = base16.base00 or "";
+    base02 = base16.base01 or "";
+    base01 = base16.base02 or "";
+    base00 = base16.base03 or "";
     base0 = base16.base04 or "";
     base1 = base16.base05 or "";
     base2 = base16.base06 or "";
@@ -38,9 +38,13 @@ let
   cursorPackage = if cfg.cursor.package != null then cfg.cursor.package else pkgs.simp1e-cursors;
   iconPackage = if cfg.icons.package != null then cfg.icons.package else pkgs.fluent-icon-theme;
   serifPackage = if cfg.fonts.serif.package != null then cfg.fonts.serif.package else pkgs.fira-sans;
-  sansSerifPackage = if cfg.fonts.sansSerif.package != null then cfg.fonts.sansSerif.package else pkgs.fira-sans;
+  sansSerifPackage =
+    if cfg.fonts.sansSerif.package != null then cfg.fonts.sansSerif.package else pkgs.fira-sans;
   monospacePackage =
-    if cfg.fonts.monospace.package != null then cfg.fonts.monospace.package else pkgs.nerd-fonts.jetbrains-mono;
+    if cfg.fonts.monospace.package != null then
+      cfg.fonts.monospace.package
+    else
+      pkgs.nerd-fonts.jetbrains-mono;
   emojiPackage =
     if cfg.fonts.emoji.package != null then cfg.fonts.emoji.package else pkgs.noto-fonts-color-emoji;
 in
@@ -53,6 +57,7 @@ in
         polarity = "dark";
         override = cfg.colorSchemeOverrides;
         targets = {
+          kitty.variant256Colors = true;
           vencord.enable = false;
           vesktop.enable = false;
           nixcord.enable = false;
