@@ -62,7 +62,6 @@ in
   config = {
     qnix = lib.recursiveUpdate sharedQnix {
       persist.users."*".directories = [
-        ".ssh"
         ".config/sops"
       ];
 
