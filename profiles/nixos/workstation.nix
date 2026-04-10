@@ -15,6 +15,10 @@ in
       name = "localisation";
     })
     (lib.qnix.mkNixosFeatureImports {
+      category = "system";
+      name = "bluetooth";
+    })
+    (lib.qnix.mkNixosFeatureImports {
       category = "security";
       name = "sops";
     })
@@ -52,6 +56,8 @@ in
           };
           fish.enable = lib.mkDefault true;
         };
+
+        bluetooth.enable = lib.mkDefault true;
       };
 
       security = {

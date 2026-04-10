@@ -41,7 +41,9 @@
 
     extraConfig = lib.mkOption {
       type = lib.types.attrs;
-      default = { };
+      default = {
+        push.autoSetupRemote = true;
+      };
       description = "Additional Git configuration merged into programs.git.extraConfig.";
     };
   };

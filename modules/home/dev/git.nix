@@ -23,22 +23,21 @@ in
       {
         enable = true;
         lfs.enable = cfg.lfs;
-        settings = lib.recursiveUpdate cfg.extraConfig (
-          lib.mkMerge [
-            (lib.optionalAttrs (cfg.aliases != { }) {
-              alias = cfg.aliases;
-            })
-            (lib.optionalAttrs (cfg.userName != null || cfg.userEmail != null) {
-              user = { }
-              // lib.optionalAttrs (cfg.userName != null) {
-                name = cfg.userName;
-              }
-              // lib.optionalAttrs (cfg.userEmail != null) {
-                email = cfg.userEmail;
-              };
-            })
-          ]
-        );
+        settings = lib.mkMerge [
+          cfg.extraConfig
+          (lib.optionalAttrs (cfg.aliases != { }) {
+            alias = cfg.aliases;
+          })
+          (lib.optionalAttrs (cfg.userName != null || cfg.userEmail != null) {
+            user = { }
+            // lib.optionalAttrs (cfg.userName != null) {
+              name = cfg.userName;
+            }
+            // lib.optionalAttrs (cfg.userEmail != null) {
+              email = cfg.userEmail;
+            };
+          })
+        ];
         signing = {
           key = cfg.signingKey;
           signByDefault = cfg.signing;
