@@ -42,6 +42,10 @@ in
   ++ (qnixLib.qnix.mkHomeFeatureImports {
     category = "desktop";
     name = "xdg-folders";
+  })
+  ++ (qnixLib.qnix.mkHomeFeatureImports {
+    category = "desktop";
+    name = "client-pr-notify";
   });
 
   config = lib.mkIf qnixHomeStandalone {

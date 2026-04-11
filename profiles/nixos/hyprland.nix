@@ -6,6 +6,10 @@ in
   imports = [
     ./wayland.nix
   ]
+  ++ (lib.qnix.mkNixosOptionImports {
+    category = "desktop";
+    name = "client-pr-notify";
+  })
   ++ (lib.qnix.mkNixosFeatureImports {
     category = "security";
     name = "gnome-keyring";

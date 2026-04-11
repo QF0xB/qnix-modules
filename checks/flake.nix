@@ -129,6 +129,11 @@
             };
           };
 
+          # Hyprland profile defaults enable client PR notify; test configs have no GitHub token.
+          hyprlandTestDisableClientPrNotifyModule = {
+            qnix.desktop.clientPrNotify.enable = lib.mkForce false;
+          };
+
           nixosServerEvaluation = lib.nixosSystem {
             inherit pkgs lib;
             modules = [
@@ -188,6 +193,7 @@
               commonSystemModule
               testUserModule
               impermanenceTestModule
+              hyprlandTestDisableClientPrNotifyModule
               {
                 qnix.security.gpg.enable = true;
                 qnix.security.yubikey = {
@@ -229,6 +235,7 @@
               commonSystemModule
               testUserModule
               impermanenceTestModule
+              hyprlandTestDisableClientPrNotifyModule
               {
                 qnix.security.gpg.enable = true;
                 qnix.security.yubikey = {
@@ -278,6 +285,7 @@
                   enable = true;
                   projectRoot = "/tmp/qnix";
                 };
+                qnix.desktop.clientPrNotify.enable = lib.mkForce false;
               }
             ];
           };
@@ -337,6 +345,7 @@
                   enable = true;
                   projectRoot = "/tmp/qnix";
                 };
+                qnix.desktop.clientPrNotify.enable = lib.mkForce false;
               }
             ];
           };
@@ -365,6 +374,7 @@
               commonSystemModule
               testUserModule
               impermanenceTestModule
+              hyprlandTestDisableClientPrNotifyModule
               {
                 qnix.security.gpg.enable = true;
                 qnix.security.yubikey = {
