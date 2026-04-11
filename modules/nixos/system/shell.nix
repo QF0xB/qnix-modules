@@ -68,10 +68,12 @@ let
           perl -0pi -e 's@(?ms)(qnix-modules = \{\n\s*# Managed by qnix-dev-modules and qnix-use-release\.\n\s*url = ")[^"]+(";\n\s*\};)@$1'"$url"'$2@' "$CLIENT_FLAKE"
         }
 
+        # Sync flake.lock to the qnix-modules URL in flake.nix (no system build required).
+        # For a brand-new FlakeHub version, run this only after CI has published that release.
         update_client_lock() {
           (
             cd "$CLIENT_ROOT"
-            nix flake lock --update-input qnix-modules
+            nix flake update qnix-modules
           )
         }
 
@@ -98,7 +100,7 @@ let
 
           case "$input" in
             ""|github|flakehub)
-              printf '%s\n' "''${input:-github}"
+              printf '%s\n' "''${input:-flakehub}"
               ;;
             *)
               die "Unsupported source: $input"
@@ -107,7 +109,7 @@ let
         }
 
         parse_release_args() {
-          RELEASE_SOURCE="$(normalize_source "''${QNIX_MODULES_RELEASE_SOURCE:-github}")"
+          RELEASE_SOURCE="$(normalize_source "''${QNIX_MODULES_RELEASE_SOURCE:-flakehub}")"
           RELEASE_ARG=""
 
           while [[ $# -gt 0 ]]; do
@@ -288,12 +290,23 @@ let
         git -C "$MODULES_ROOT" push origin "$ref"
 
         write_client_input_url "$(release_url "$RELEASE_SOURCE" "$version" "$ref")"
-        update_client_lock
+
+        # GitHub tag URL: Flake can lock immediately. FlakeHub: release is published asynchronously in CI.
+        if [[ "$RELEASE_SOURCE" == "flakehub" ]]; then
+          printf 'Skipped flake lock: FlakeHub does not have %s until CI finishes.\n' "$ref"
+          printf 'When the publish job is green, run: (cd %s && nix flake update qnix-modules)\n' "$CLIENT_ROOT"
+        else
+          update_client_lock
+        fi
 
         printf 'Released qnix-modules %s\n' "$ref"
         printf 'Client now points to %s via %s\n' "$ref" "$RELEASE_SOURCE"
-        printf 'Review and commit %s/flake.nix and %s/flake.lock\n' "$CLIENT_ROOT" "$CLIENT_ROOT"
-        printf 'GitHub Actions will publish tag %s as a GitHub Release.\n' "$ref"
+        if [[ "$RELEASE_SOURCE" == "flakehub" ]]; then
+          printf 'Review and commit %s/flake.nix after: nix flake update qnix-modules (once FlakeHub has the release).\n' "$CLIENT_ROOT"
+        else
+          printf 'Review and commit %s/flake.nix and %s/flake.lock\n' "$CLIENT_ROOT" "$CLIENT_ROOT"
+        fi
+        printf 'CI will publish %s to FlakeHub (consumer source) and open a GitHub Release (changelog only).\n' "$ref"
       '';
     };
   };
