@@ -111,8 +111,8 @@ This repo publishes and validates flakes through GitHub Actions:
 
 - [`.github/workflows/checks.yml`](./.github/workflows/checks.yml)
   runs `nix flake check ./checks` on pull requests and pushes to the default branch
-- [`.github/workflows/github-release-tagged.yml`](./.github/workflows/github-release-tagged.yml)
-  publishes tagged releases (`v*`) as GitHub Releases
+- [`.github/workflows/release-tagged.yml`](./.github/workflows/release-tagged.yml)
+  on tag `v*`: publishes the flake to **FlakeHub** (consumer-facing) and creates a **GitHub Release** with changelog notes only
 
 The release helper commands in the client workflow assume tags like `v0.1.0`.
 

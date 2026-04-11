@@ -1,0 +1,78 @@
+name: "Release (FlakeHub + GitHub)"
+
+# FlakeHub: canonical flake for consumers (flake.lock inputs).
+# GitHub Release: human-readable changelog and notes only.
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing tag to publish (FlakeHub + GitHub Release)"
+        type: string
+        required: true
+
+jobs:
+  flakehub-publish:
+    runs-on: "ubuntu-latest"
+    permissions:
+      id-token: "write"
+      contents: "read"
+    steps:
+      - uses: "actions/checkout@v6"
+        with:
+          persist-credentials: false
+          ref: "${{ (inputs.tag != null) && format('refs/tags/{0}', inputs.tag) || '' }}"
+      - uses: "DeterminateSystems/determinate-nix-action@v3"
+      - uses: "DeterminateSystems/flakehub-push@main"
+        with:
+          visibility: "unlisted"
+          name: "QF0xB/qnix-modules"
+          tag: "${{ inputs.tag }}"
+          include-output-paths: true
+
+  github-release:
+    runs-on: "ubuntu-latest"
+    permissions:
+      contents: "write"
+    steps:
+      - uses: "actions/checkout@v4"
+        with:
+          fetch-depth: 0
+          ref: "${{ github.event_name == 'workflow_dispatch' && format('refs/tags/{0}', inputs.tag) || github.ref }}"
+
+      - name: "Determine release tag"
+        id: "tag"
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "value=${{ inputs.tag }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "value=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: "Read version file"
+        id: "version"
+        run: |
+          if [ -f VERSION ]; then
+            echo "value=$(tr -d '[:space:]' < VERSION)" >> "$GITHUB_OUTPUT"
+          else
+            _tag='${{ steps.tag.outputs.value }}'
+            echo "value=${_tag#v}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: "Create GitHub release (changelog only)"
+        uses: "softprops/action-gh-release@v2"
+        with:
+          tag_name: "${{ steps.tag.outputs.value }}"
+          name: "${{ steps.tag.outputs.value }}"
+          generate_release_notes: true
+          body: |
+            **Install this flake from [FlakeHub](https://flakehub.com)** — that is the supported input for `flake.nix` / lockfiles.
+
+            This GitHub Release is for **changelog and human-readable notes** only.
+
+            ---
+
+            Version string (without leading `v` if applicable): `${{ steps.version.outputs.value }}`
