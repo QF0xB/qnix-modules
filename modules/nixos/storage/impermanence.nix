@@ -35,10 +35,10 @@ let
     {
       files = lib.unique ((merged.files or [ ]) ++ (merged.cache.files or [ ]));
       directories = lib.unique ((merged.directories or [ ]) ++ (merged.cache.directories or [ ]));
-      persistFiles = merged.files or [ ];
-      persistDirectories = merged.directories or [ ];
-      cacheFiles = merged.cache.files or [ ];
-      cacheDirectories = merged.cache.directories or [ ];
+      persistFiles = lib.unique (merged.files or [ ]);
+      persistDirectories = lib.unique (merged.directories or [ ]);
+      cacheFiles = lib.unique (merged.cache.files or [ ]);
+      cacheDirectories = lib.unique (merged.cache.directories or [ ]);
       expandedFiles = lib.unique (
         lib.map (
           f:
@@ -117,8 +117,8 @@ in
       environment.persistence = {
         "/persist" = {
           hideMounts = true;
-          files = lib.unique (cfg.root.files ++ cfg.root.cache.files);
-          directories = lib.unique (cfg.root.directories ++ cfg.root.cache.directories);
+          files = cfg.root.files;
+          directories = cfg.root.directories;
 
           users = lib.mapAttrs (_: userCfg: {
             files = userCfg.persistFiles;

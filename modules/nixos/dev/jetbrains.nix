@@ -20,10 +20,10 @@ in
         ".config/JetBrains"
         ".local/share/JetBrains"
         ".java/.userPrefs"
-        ".gradle"
         ".local/share/direnv/allow"
       ];
       cache.directories = [
+        ".gradle"
         ".cache/JetBrains"
       ];
     };

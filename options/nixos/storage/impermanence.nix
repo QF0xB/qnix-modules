@@ -96,13 +96,24 @@ in
   # defaults, so feature modules can extend them without replacing them.
   config = {
     qnix.persist.root.directories = lib.mkBefore [
-      "/var/log"
       "/var/lib/nixos"
     ];
 
-    qnix.persist.users."*".directories = lib.mkBefore [
-      "projects"
-      ".ssh"
+    qnix.persist.root.cache.directories = lib.mkBefore [
+      "/var/log"
+      "/var/log/journal"
     ];
+
+    qnix.persist.users."*" = {
+      directories = lib.mkBefore [
+        "projects"
+        ".ssh"
+      ];
+
+      cache.directories = lib.mkBefore [
+        ".cache"
+        ".gradle"
+      ];
+    };
   };
 }

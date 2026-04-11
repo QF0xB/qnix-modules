@@ -4,14 +4,18 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
-    qnix.persist.users."*".directories = [
-      ".cache/dconf"
-      ".config/dconf"
-      "Documents"
-      "Downloads"
-      "Music"
-      "Pictures"
-      "Videos"
-    ];
+    qnix.persist.users."*" = {
+      directories = [
+        ".config/dconf"
+        "Documents"
+        "Music"
+        "Pictures"
+        "Videos"
+      ];
+
+      cache.directories = [
+        "Downloads"
+      ];
+    };
   };
 }

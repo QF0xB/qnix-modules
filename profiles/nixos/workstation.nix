@@ -19,6 +19,10 @@ in
       name = "bluetooth";
     })
     (lib.qnix.mkNixosFeatureImports {
+      category = "storage";
+      name = "backup";
+    })
+    (lib.qnix.mkNixosFeatureImports {
       category = "security";
       name = "sops";
     })

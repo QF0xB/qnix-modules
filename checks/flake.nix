@@ -255,6 +255,74 @@
             ];
           };
 
+          nixosBackupEvaluation = lib.nixosSystem {
+            inherit pkgs lib;
+            modules = [
+              sops-nix.nixosModules.sops
+            ]
+            ++ (lib.qnix.mkNixosOptionImports {
+              category = "dev";
+              name = "git";
+            })
+            ++ [
+              (import ../loader/nixos.nix {
+                inherit lib;
+                profiles = [
+                  "workstation"
+                ];
+              })
+              commonSystemModule
+              testUserModule
+              {
+                qnix.storage.backup = {
+                  enable = true;
+                  targets = {
+                    borg = {
+                      us = {
+                        enable = true;
+                        repo = "tester@us.repo.borgbase.com:repo";
+                        sshKeyPath = "/run/keys/borgbase-us";
+                        encryption.sopsSecretName = "borgbase-us-passphrase";
+                      };
+
+                      eu = {
+                        enable = true;
+                        repo = "tester@eu.repo.borgbase.com:repo";
+                        sshKeyPath = "/run/keys/borgbase-eu";
+                        encryption.sopsSecretName = "borgbase-eu-passphrase";
+                      };
+                    };
+
+                    nfs = {
+                      home = {
+                        enable = true;
+                        repo = "/mnt/backup-nfs/tester";
+                        mount.what = "nas:/srv/backup";
+                        encryption.sopsSecretName = "nfs-passphrase";
+                      };
+                    };
+                  };
+                };
+
+                qnix.security.sops = {
+                  enable = true;
+                  defaultSopsFile = builtins.toFile "dummy-secrets.yaml" ''
+                    {}
+                  '';
+                  age = {
+                    generateKey = false;
+                    keyFile = "/tmp/dummy-age-key.txt";
+                  };
+                  secrets = {
+                    borgbase-us-passphrase = { };
+                    borgbase-eu-passphrase = { };
+                    nfs-passphrase = { };
+                  };
+                };
+              }
+            ];
+          };
+
           homeOnlyEvaluation = home-manager.lib.homeManagerConfiguration {
             inherit pkgs;
             extraSpecialArgs = {
@@ -467,6 +535,18 @@
             test "${if nixosLaptopEvaluation.config.hardware.bluetooth.enable then "yes" else "no"}" = "yes"
             test "${if nixosLaptopEvaluation.config.hardware.bluetooth.powerOnBoot then "yes" else "no"}" = "yes"
             test "${if nixosLaptopEvaluation.config.services.blueman.enable then "yes" else "no"}" = "yes"
+            touch $out
+          '';
+
+          nixos-backup-evaluates = pkgs.runCommand "nixos-backup-evaluates" { } ''
+            test "${if nixosBackupEvaluation.config.qnix.storage.backup.enable then "yes" else "no"}" = "yes"
+            test "${if builtins.hasAttr "us" nixosBackupEvaluation.config.services.borgbackup.jobs then "yes" else "no"}" = "yes"
+            test "${if builtins.hasAttr "eu" nixosBackupEvaluation.config.services.borgbackup.jobs then "yes" else "no"}" = "yes"
+            test "${if builtins.hasAttr "home" nixosBackupEvaluation.config.services.borgbackup.jobs then "yes" else "no"}" = "yes"
+            test "${nixosBackupEvaluation.config.services.borgbackup.jobs.us.repo}" = "tester@us.repo.borgbase.com:repo"
+            test "${nixosBackupEvaluation.config.services.borgbackup.jobs.eu.repo}" = "tester@eu.repo.borgbase.com:repo"
+            test "${nixosBackupEvaluation.config.services.borgbackup.jobs.home.repo}" = "/mnt/backup-nfs/tester"
+            test "${nixosBackupEvaluation.config.fileSystems."/mnt/backup-nfs".device}" = "nas:/srv/backup"
             touch $out
           '';
 
