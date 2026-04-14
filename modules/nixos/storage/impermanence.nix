@@ -79,6 +79,8 @@ in
       fileSystems."/persist".neededForBoot = true;
       fileSystems."/cache".neededForBoot = true;
 
+      services.journald.storage = "persistent";
+
       qnix.system.shell.packages.show-root-filesystem = {
         runtimeInputs = with pkgs; [
           fd

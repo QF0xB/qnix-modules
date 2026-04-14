@@ -213,6 +213,74 @@
             ];
           };
 
+          nixosContainerHostEvaluation = lib.nixosSystem {
+            inherit pkgs lib;
+            modules = [
+              stylix.nixosModules.stylix
+              impermanence.nixosModules.impermanence
+              sops-nix.nixosModules.sops
+
+              (import ../loader/nixos.nix {
+                inherit lib;
+                profiles = [
+                  "container-host"
+                ];
+              })
+              commonSystemModule
+              testUserModule
+              {
+                qnix.network.addressing.hostName = "container-host-test";
+              }
+            ];
+          };
+
+          nixosWireguardClientEvaluation = lib.nixosSystem {
+            inherit pkgs lib;
+            modules = [
+              stylix.nixosModules.stylix
+              impermanence.nixosModules.impermanence
+              sops-nix.nixosModules.sops
+
+              (import ../loader/nixos.nix {
+                inherit lib;
+                profiles = [
+                  "creator"
+                  "dev"
+                  "hyprland"
+                  "personal"
+                  "stylix"
+                  "impermanence"
+                ];
+              })
+              commonSystemModule
+              testUserModule
+              impermanenceTestModule
+              hyprlandTestDisableClientPrNotifyModule
+              {
+                qnix.network.wireguard = {
+                  enable = true;
+                  openFirewall = true;
+                  interfaces.wg0 = {
+                    ips = [ "10.23.42.2/32" ];
+                    privateKeyFile = "/run/secrets/wireguard-client.key";
+                    listenPort = 51820;
+                    peers = [
+                      {
+                        publicKey = "xTIBA5rboUvnH4htodjb6e697QjLERt1NAB4mZqp8Dg=";
+                        allowedIPs = [
+                          "0.0.0.0/0"
+                          "::/0"
+                        ];
+                        endpoint = "vpn.example.test:51820";
+                        persistentKeepalive = 25;
+                      }
+                    ];
+                  };
+                };
+              }
+            ];
+          };
+
           nixosLaptopEvaluation = lib.nixosSystem {
             inherit pkgs lib;
             modules = [
@@ -515,6 +583,30 @@
           '';
 
           nixos-client-evaluates = nixosClientEvaluation.config.system.build.toplevel;
+
+          nixos-container-host-evaluates = nixosContainerHostEvaluation.config.system.build.toplevel;
+
+          nixos-container-host-defaults = pkgs.runCommand "nixos-container-host-defaults" { } ''
+            test "${if nixosContainerHostEvaluation.config.qnix.status.server then "yes" else "no"}" = "yes"
+            test "${if nixosContainerHostEvaluation.config.qnix.status.headless then "yes" else "no"}" = "yes"
+            test "${if nixosContainerHostEvaluation.config.qnix.runtime.docker.enable then "yes" else "no"}" = "yes"
+            test "${if nixosContainerHostEvaluation.config.virtualisation.docker.enable then "yes" else "no"}" = "yes"
+            test "${nixosContainerHostEvaluation.config.networking.hostName}" = "container-host-test"
+            test "${lib.concatStringsSep " " nixosContainerHostEvaluation.config.users.users.tester.extraGroups}" = "wheel docker"
+            touch $out
+          '';
+
+          nixos-wireguard-client-evaluates = nixosWireguardClientEvaluation.config.system.build.toplevel;
+
+          nixos-wireguard-client-defaults = pkgs.runCommand "nixos-wireguard-client-defaults" { } ''
+            test "${if nixosWireguardClientEvaluation.config.qnix.network.wireguard.enable then "yes" else "no"}" = "yes"
+            test "${if nixosWireguardClientEvaluation.config.networking.wireguard.enable then "yes" else "no"}" = "yes"
+            test "${nixosWireguardClientEvaluation.config.networking.wireguard.interfaces.wg0.privateKeyFile}" = "/run/secrets/wireguard-client.key"
+            test "${toString nixosWireguardClientEvaluation.config.networking.wireguard.interfaces.wg0.listenPort}" = "51820"
+            test "${builtins.head nixosWireguardClientEvaluation.config.networking.wireguard.interfaces.wg0.ips}" = "10.23.42.2/32"
+            test "${builtins.head nixosWireguardClientEvaluation.config.networking.firewall.allowedUDPPorts}" = "51820"
+            touch $out
+          '';
 
           nixos-laptop-evaluates = nixosLaptopEvaluation.config.system.build.toplevel;
 

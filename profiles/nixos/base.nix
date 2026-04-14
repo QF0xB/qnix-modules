@@ -57,6 +57,10 @@ in
       category = "network";
       name = "tailscale";
     })
+    (lib.qnix.mkNixosFeatureImports {
+      category = "network";
+      name = "wireguard";
+    })
   ];
 
   config = {
