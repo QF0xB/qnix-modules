@@ -134,6 +134,15 @@
             qnix.desktop.clientPrNotify.enable = lib.mkForce false;
           };
 
+          # Hyprland profile defaults also enable YubiKey login/sudo auth, which
+          # requires U2F mappings that these generic eval fixtures do not provide.
+          hyprlandTestDisableYubikeyAuthModule = {
+            qnix.security.yubikey = {
+              login = lib.mkForce false;
+              sudo = lib.mkForce false;
+            };
+          };
+
           nixosServerEvaluation = lib.nixosSystem {
             inherit pkgs lib;
             modules = [
@@ -194,6 +203,7 @@
               testUserModule
               impermanenceTestModule
               hyprlandTestDisableClientPrNotifyModule
+              hyprlandTestDisableYubikeyAuthModule
               {
                 qnix.security.gpg.enable = true;
                 qnix.security.yubikey = {
@@ -256,6 +266,7 @@
               testUserModule
               impermanenceTestModule
               hyprlandTestDisableClientPrNotifyModule
+              hyprlandTestDisableYubikeyAuthModule
               {
                 qnix.network.wireguard = {
                   enable = true;
@@ -304,6 +315,7 @@
               testUserModule
               impermanenceTestModule
               hyprlandTestDisableClientPrNotifyModule
+              hyprlandTestDisableYubikeyAuthModule
               {
                 qnix.security.gpg.enable = true;
                 qnix.security.yubikey = {
@@ -592,7 +604,7 @@
             test "${if nixosContainerHostEvaluation.config.qnix.runtime.docker.enable then "yes" else "no"}" = "yes"
             test "${if nixosContainerHostEvaluation.config.virtualisation.docker.enable then "yes" else "no"}" = "yes"
             test "${nixosContainerHostEvaluation.config.networking.hostName}" = "container-host-test"
-            test "${lib.concatStringsSep " " nixosContainerHostEvaluation.config.users.users.tester.extraGroups}" = "wheel docker"
+            test "${lib.concatStringsSep " " (lib.sort builtins.lessThan nixosContainerHostEvaluation.config.users.users.tester.extraGroups)}" = "docker wheel"
             touch $out
           '';
 
@@ -604,7 +616,7 @@
             test "${nixosWireguardClientEvaluation.config.networking.wireguard.interfaces.wg0.privateKeyFile}" = "/run/secrets/wireguard-client.key"
             test "${toString nixosWireguardClientEvaluation.config.networking.wireguard.interfaces.wg0.listenPort}" = "51820"
             test "${builtins.head nixosWireguardClientEvaluation.config.networking.wireguard.interfaces.wg0.ips}" = "10.23.42.2/32"
-            test "${builtins.head nixosWireguardClientEvaluation.config.networking.firewall.allowedUDPPorts}" = "51820"
+            test "${toString (builtins.head nixosWireguardClientEvaluation.config.networking.firewall.allowedUDPPorts)}" = "51820"
             touch $out
           '';
 
