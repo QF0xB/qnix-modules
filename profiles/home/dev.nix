@@ -31,11 +31,17 @@ in
     })
     (qnixLib.qnix.mkHomeFeatureImports {
       category = "dev";
+      name = "kubernetes-cli";
+    })
+    (qnixLib.qnix.mkHomeFeatureImports {
+      category = "dev";
       name = "postman";
     })
   ];
 
   config = lib.mkIf qnixHomeStandalone {
-    qnix = sharedQnix;
+    qnix = lib.recursiveUpdate sharedQnix {
+      dev.kubernetesCli.enable = lib.mkDefault true;
+    };
   };
 }
