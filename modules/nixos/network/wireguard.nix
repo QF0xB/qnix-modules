@@ -86,6 +86,7 @@ let
           }
           // lib.optionalAttrs (peerCfg.presharedKey.sopsSecret != null) {
             "preshared-key" = "$" + "{${nmPresharedKeyEnvVar tunnelName peerName}}";
+            "preshared-key-flags" = 0;
           }
         )
       ) tunnelCfg.peers;

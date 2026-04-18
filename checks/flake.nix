@@ -98,6 +98,7 @@
               defaultSopsFile = builtins.toFile "dummy-secrets.yaml" ''
                 wireguard-client-key: dummy-client-key
                 wireguard-home-key: dummy-home-key
+                wireguard-gateway-psk: dummy-gateway-psk
               '';
               age = {
                 generateKey = false;
@@ -283,6 +284,7 @@
                           "::/0"
                         ];
                         endpoint = "vpn.example.test:51820";
+                        presharedKey.sopsSecret = "wireguard-gateway-psk";
                         persistentKeepalive = 25;
                       };
                     };
@@ -644,6 +646,9 @@
             test "${
               nixosWireguardClientEvaluation.config.networking.networkmanager.ensureProfiles.profiles.work."wireguard-peer.xTIBA5rboUvnH4htodjb6e697QjLERt1NAB4mZqp8Dg=".endpoint
             }" = "vpn.example.test:51820"
+            test "${
+              toString nixosWireguardClientEvaluation.config.networking.networkmanager.ensureProfiles.profiles.work."wireguard-peer.xTIBA5rboUvnH4htodjb6e697QjLERt1NAB4mZqp8Dg="."preshared-key-flags"
+            }" = "0"
             test "${nixosWireguardClientEvaluation.config.networking.networkmanager.ensureProfiles.profiles.home.connection.interface-name}" = "wg1"
             test "${nixosWireguardClientEvaluation.config.networking.networkmanager.ensureProfiles.profiles.home.ipv4.address1}" = "10.77.0.2/32"
             test "${toString (builtins.head nixosWireguardClientEvaluation.config.qnix.network.firewall.allowedUDPPorts)}" = "51820"
