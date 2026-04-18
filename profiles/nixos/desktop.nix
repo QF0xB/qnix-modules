@@ -35,6 +35,10 @@ in
     name = "terminal";
   })
   ++ (lib.qnix.mkNixosFeatureImports {
+    category = "system";
+    name = "plymouth";
+  })
+  ++ (lib.qnix.mkNixosFeatureImports {
     category = "desktop";
     name = "xdg-folders";
   })
@@ -47,6 +51,7 @@ in
     qnix = lib.recursiveUpdate sharedQnix {
       security.polkit.enable = lib.mkDefault true;
 
+      system.plymouth.enable = lib.mkDefault true;
       system.packages.nerdFonts.enable = lib.mkDefault true;
 
       network.networkmanager = {
