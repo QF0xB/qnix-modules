@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  options,
   pkgs,
   ...
 }:
@@ -54,6 +55,32 @@ let
 
   nmConnections = cfg.networkManager.connections;
 
+  sanitizeEnvName =
+    value:
+    lib.toUpper (
+      lib.replaceStrings
+        [
+          "-"
+          "."
+          " "
+          ":"
+          "/"
+          "="
+        ]
+        [
+          "_"
+          "_"
+          "_"
+          "_"
+          "_"
+          "_"
+        ]
+        value
+    );
+
+  nmPrivateKeyEnvVar = connectionId: "QNIX_WG_${sanitizeEnvName connectionId}_PRIVATE_KEY";
+  nmPresharedKeyEnvVar = connectionId: peerIndex: "QNIX_WG_${sanitizeEnvName connectionId}_PEER_${toString peerIndex}_PSK";
+
   nmListenPorts = lib.unique (
     lib.filter (port: port != null) (lib.mapAttrsToList (_: connectionCfg: connectionCfg.listenPort) nmConnections)
   );
@@ -62,7 +89,7 @@ let
     connectionId: connectionCfg:
     let
       peerSections = lib.listToAttrs (
-        map (peerCfg: {
+        map ({ peerIndex, peerCfg }: {
           name = "wireguard-peer.${peerCfg.publicKey}";
           value =
             {
@@ -75,9 +102,9 @@ let
               "persistent-keepalive" = peerCfg.persistentKeepalive;
             }
             // lib.optionalAttrs (peerCfg.presharedKeySecretName != null) {
-              "preshared-key-flags" = 0;
+              "preshared-key" = "$" + "{${nmPresharedKeyEnvVar connectionId peerIndex}}";
             };
-        }) connectionCfg.peers
+        }) (lib.imap0 (peerIndex: peerCfg: { inherit peerIndex peerCfg; }) connectionCfg.peers)
       );
     in
     {
@@ -90,7 +117,7 @@ let
 
       wireguard =
         {
-          "private-key-flags" = 0;
+          "private-key" = "$" + "{${nmPrivateKeyEnvVar connectionId}}";
           "peer-routes" = boolToNm connectionCfg.peerRoutes;
         }
         // lib.optionalAttrs (connectionCfg.listenPort != null) {
@@ -114,32 +141,10 @@ let
     // peerSections
   ) nmConnections;
 
-  nmSecretEntries = lib.concatLists (
-    lib.mapAttrsToList (
-      connectionId: connectionCfg:
-      [
-        {
-          matchId = connectionId;
-          matchType = "wireguard";
-          matchSetting = "wireguard";
-          key = "private-key";
-          file = config.sops.secrets.${connectionCfg.privateKeySecretName}.path;
-        }
-      ]
-      ++ map (peerCfg: {
-        matchId = connectionId;
-        matchType = "wireguard";
-        matchSetting = "wireguard";
-        key = "peers.${peerCfg.publicKey}.preshared-key";
-        file = config.sops.secrets.${peerCfg.presharedKeySecretName}.path;
-      }) (lib.filter (peerCfg: peerCfg.presharedKeySecretName != null) connectionCfg.peers)
-    ) nmConnections
-  );
-
   nmSecretNames = lib.unique (
     lib.concatLists (
       lib.mapAttrsToList (
-        _: connectionCfg:
+        _connectionId: connectionCfg:
         [ connectionCfg.privateKeySecretName ]
         ++ map (peerCfg: peerCfg.presharedKeySecretName) (
           lib.filter (peerCfg: peerCfg.presharedKeySecretName != null) connectionCfg.peers
@@ -148,11 +153,40 @@ let
     )
   );
 
+  nmSecretTemplates = lib.mapAttrs' (
+    connectionId: connectionCfg:
+    let
+      templateName = "networkmanager-wireguard-${connectionId}.env";
+      peerLines =
+        lib.imap0 (
+          peerIndex: peerCfg:
+          lib.optionalString (peerCfg.presharedKeySecretName != null) ''
+            ${nmPresharedKeyEnvVar connectionId peerIndex}=${config.sops.placeholder.${peerCfg.presharedKeySecretName}}
+          ''
+        ) connectionCfg.peers;
+    in
+    lib.nameValuePair templateName {
+      owner = "root";
+      group = "root";
+      mode = "0400";
+      content = ''
+        ${nmPrivateKeyEnvVar connectionId}=${config.sops.placeholder.${connectionCfg.privateKeySecretName}}
+        ${lib.concatStringsSep "\n" peerLines}
+      '';
+    }
+  ) nmConnections;
+
+  nmSecretTemplatePaths = lib.mapAttrsToList (
+    connectionId: _connectionCfg: config.sops.templates."networkmanager-wireguard-${connectionId}.env".path
+  ) nmConnections;
+
   secretDefaults = lib.genAttrs nmSecretNames (_: {
     owner = "root";
     group = "root";
     mode = "0400";
   });
+
+  hasSopsModule = options ? sops;
 in
 {
   config = lib.mkMerge [
@@ -177,6 +211,10 @@ in
         ++ lib.mapAttrsToList (_: _: {
           assertion = config.qnix.security.sops.enable;
           message = "qnix.network.wireguard.networkManager.connections requires qnix.security.sops.enable.";
+        }) nmConnections
+        ++ lib.mapAttrsToList (_: _: {
+          assertion = hasSopsModule;
+          message = "qnix.network.wireguard.networkManager.connections requires the upstream sops module to be imported.";
         }) nmConnections;
     }
 
@@ -191,8 +229,12 @@ in
 
       networking.networkmanager.ensureProfiles = {
         profiles = nmProfiles;
-        secrets.entries = nmSecretEntries;
+        environmentFiles = nmSecretTemplatePaths;
       };
+    })
+
+    (lib.mkIf (hasSopsModule && nmConnections != { }) {
+      sops.templates = nmSecretTemplates;
     })
 
     (lib.mkIf (cfg.openFirewall && (listenPorts ++ nmListenPorts) != [ ]) {
