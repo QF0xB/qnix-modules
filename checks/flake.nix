@@ -27,7 +27,6 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    qnix-modules.url = "path:..";
   };
 
   outputs =
@@ -39,7 +38,6 @@
       nvf,
       impermanence,
       sops-nix,
-      qnix-modules,
       ...
     }:
     let
@@ -60,7 +58,7 @@
         system:
         let
           pkgs = mkPkgs system;
-          qnixLib = qnix-modules.lib {
+          qnixLib = import ../lib {
             lib = nixpkgs.lib;
             inherit pkgs;
           };
@@ -73,7 +71,7 @@
         let
           pkgs = mkPkgs system;
           lib = mkLib system;
-          qnixLib = qnix-modules.lib {
+          qnixLib = import ../lib {
             lib = nixpkgs.lib;
             inherit pkgs;
           };
