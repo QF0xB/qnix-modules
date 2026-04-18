@@ -45,7 +45,6 @@
     let
       systems = [
         "x86_64-linux"
-        "aarch64-linux"
       ];
 
       forAllSystems = nixpkgs.lib.genAttrs systems;
@@ -99,7 +98,8 @@
             qnix.security.sops = {
               enable = true;
               defaultSopsFile = builtins.toFile "dummy-secrets.yaml" ''
-                {}
+                wireguard-client-key: dummy-client-key
+                wireguard-home-key: dummy-home-key
               '';
               age = {
                 generateKey = false;
@@ -271,12 +271,14 @@
                 qnix.network.wireguard = {
                   enable = true;
                   openFirewall = true;
-                  interfaces.wg0 = {
-                    ips = [ "10.23.42.2/32" ];
-                    privateKeyFile = "/run/secrets/wireguard-client.key";
+                  tunnels.work = {
+                    backend = "networkmanager";
+                    interfaceName = "wg0";
+                    addresses = [ "10.23.42.2/32" ];
+                    privateKey.sopsSecret = "wireguard-client-key";
                     listenPort = 51820;
-                    peers = [
-                      {
+                    peers = {
+                      gateway = {
                         publicKey = "xTIBA5rboUvnH4htodjb6e697QjLERt1NAB4mZqp8Dg=";
                         allowedIPs = [
                           "0.0.0.0/0"
@@ -284,8 +286,19 @@
                         ];
                         endpoint = "vpn.example.test:51820";
                         persistentKeepalive = 25;
-                      }
-                    ];
+                      };
+                    };
+                  };
+                  tunnels.home = {
+                    backend = "networkmanager";
+                    interfaceName = "wg1";
+                    addresses = [ "10.77.0.2/32" ];
+                    privateKey.sopsSecret = "wireguard-home-key";
+                    peers.gateway = {
+                      publicKey = "4JfGkH9b5j+3JZfd7bZ5g6bQpTjKWxJ2grdM9GCBqDQ=";
+                      allowedIPs = [ "10.77.0.0/24" ];
+                      endpoint = "home.example.test:51820";
+                    };
                   };
                 };
               }
@@ -588,8 +601,12 @@
           nixos-server-evaluates = nixosServerEvaluation.config.system.build.toplevel;
 
           nixos-server-network-defaults = pkgs.runCommand "nixos-server-network-defaults" { } ''
-            test "${if nixosServerEvaluation.config.qnix.network.networkmanager.enable then "yes" else "no"}" = "no"
-            test "${if nixosServerEvaluation.config.networking.networkmanager.enable then "yes" else "no"}" = "no"
+            test "${
+              if nixosServerEvaluation.config.qnix.network.networkmanager.enable then "yes" else "no"
+            }" = "no"
+            test "${
+              if nixosServerEvaluation.config.networking.networkmanager.enable then "yes" else "no"
+            }" = "no"
             test "${nixosServerEvaluation.config.networking.hostName}" = "server-test"
             touch $out
           '';
@@ -601,8 +618,12 @@
           nixos-container-host-defaults = pkgs.runCommand "nixos-container-host-defaults" { } ''
             test "${if nixosContainerHostEvaluation.config.qnix.status.server then "yes" else "no"}" = "yes"
             test "${if nixosContainerHostEvaluation.config.qnix.status.headless then "yes" else "no"}" = "yes"
-            test "${if nixosContainerHostEvaluation.config.qnix.runtime.docker.enable then "yes" else "no"}" = "yes"
-            test "${if nixosContainerHostEvaluation.config.virtualisation.docker.enable then "yes" else "no"}" = "yes"
+            test "${
+              if nixosContainerHostEvaluation.config.qnix.runtime.docker.enable then "yes" else "no"
+            }" = "yes"
+            test "${
+              if nixosContainerHostEvaluation.config.virtualisation.docker.enable then "yes" else "no"
+            }" = "yes"
             test "${nixosContainerHostEvaluation.config.networking.hostName}" = "container-host-test"
             test "${lib.concatStringsSep " " (lib.sort builtins.lessThan nixosContainerHostEvaluation.config.users.users.tester.extraGroups)}" = "docker wheel"
             touch $out
@@ -611,12 +632,23 @@
           nixos-wireguard-client-evaluates = nixosWireguardClientEvaluation.config.system.build.toplevel;
 
           nixos-wireguard-client-defaults = pkgs.runCommand "nixos-wireguard-client-defaults" { } ''
-            test "${if nixosWireguardClientEvaluation.config.qnix.network.wireguard.enable then "yes" else "no"}" = "yes"
-            test "${if nixosWireguardClientEvaluation.config.networking.wireguard.enable then "yes" else "no"}" = "yes"
-            test "${nixosWireguardClientEvaluation.config.networking.wireguard.interfaces.wg0.privateKeyFile}" = "/run/secrets/wireguard-client.key"
-            test "${toString nixosWireguardClientEvaluation.config.networking.wireguard.interfaces.wg0.listenPort}" = "51820"
-            test "${builtins.head nixosWireguardClientEvaluation.config.networking.wireguard.interfaces.wg0.ips}" = "10.23.42.2/32"
-            test "${toString (builtins.head nixosWireguardClientEvaluation.config.networking.firewall.allowedUDPPorts)}" = "51820"
+            test "${
+              if nixosWireguardClientEvaluation.config.qnix.network.wireguard.enable then "yes" else "no"
+            }" = "yes"
+            test "${nixosWireguardClientEvaluation.config.networking.networkmanager.ensureProfiles.profiles.work.connection.type}" = "wireguard"
+            test "${nixosWireguardClientEvaluation.config.networking.networkmanager.ensureProfiles.profiles.work.connection.interface-name}" = "wg0"
+            test "${
+              builtins.replaceStrings [ "$" "{" "}" ] [ "DOLLAR" "LBRACE" "RBRACE" ]
+                nixosWireguardClientEvaluation.config.networking.networkmanager.ensureProfiles.profiles.work.wireguard.private-key
+            }" = "DOLLARLBRACEQNIX_WG_WORK_PRIVATE_KEYRBRACE"
+            test "${toString nixosWireguardClientEvaluation.config.networking.networkmanager.ensureProfiles.profiles.work.wireguard.listen-port}" = "51820"
+            test "${nixosWireguardClientEvaluation.config.networking.networkmanager.ensureProfiles.profiles.work.ipv4.address1}" = "10.23.42.2/32"
+            test "${
+              nixosWireguardClientEvaluation.config.networking.networkmanager.ensureProfiles.profiles.work."wireguard-peer.xTIBA5rboUvnH4htodjb6e697QjLERt1NAB4mZqp8Dg=".endpoint
+            }" = "vpn.example.test:51820"
+            test "${nixosWireguardClientEvaluation.config.networking.networkmanager.ensureProfiles.profiles.home.connection.interface-name}" = "wg1"
+            test "${nixosWireguardClientEvaluation.config.networking.networkmanager.ensureProfiles.profiles.home.ipv4.address1}" = "10.77.0.2/32"
+            test "${toString (builtins.head nixosWireguardClientEvaluation.config.qnix.network.firewall.allowedUDPPorts)}" = "51820"
             touch $out
           '';
 
@@ -625,8 +657,12 @@
           nixos-laptop-defaults = pkgs.runCommand "nixos-laptop-defaults" { } ''
             test "${if nixosLaptopEvaluation.config.qnix.status.laptop then "yes" else "no"}" = "yes"
             test "${if nixosLaptopEvaluation.config.qnix.system.laptop.enable then "yes" else "no"}" = "yes"
-            test "${if nixosLaptopEvaluation.config.qnix.system.power-management.enable then "yes" else "no"}" = "yes"
-            test "${if nixosLaptopEvaluation.config.qnix.system.thunderbolt.enable then "yes" else "no"}" = "yes"
+            test "${
+              if nixosLaptopEvaluation.config.qnix.system.power-management.enable then "yes" else "no"
+            }" = "yes"
+            test "${
+              if nixosLaptopEvaluation.config.qnix.system.thunderbolt.enable then "yes" else "no"
+            }" = "yes"
             test "${if nixosLaptopEvaluation.config.qnix.system.bluetooth.enable then "yes" else "no"}" = "yes"
             test "${if nixosLaptopEvaluation.config.services.upower.enable then "yes" else "no"}" = "yes"
             test "${if nixosLaptopEvaluation.config.services.tuned.enable then "yes" else "no"}" = "yes"
@@ -637,23 +673,33 @@
             test "${nixosLaptopEvaluation.config.services.logind.settings.Login.HandleLidSwitchDocked}" = "ignore"
             test "${if nixosLaptopEvaluation.config.services.hardware.bolt.enable then "yes" else "no"}" = "yes"
             test "${if nixosLaptopEvaluation.config.hardware.bluetooth.enable then "yes" else "no"}" = "yes"
-            test "${if nixosLaptopEvaluation.config.hardware.bluetooth.powerOnBoot then "yes" else "no"}" = "yes"
+            test "${
+              if nixosLaptopEvaluation.config.hardware.bluetooth.powerOnBoot then "yes" else "no"
+            }" = "yes"
             test "${if nixosLaptopEvaluation.config.services.blueman.enable then "yes" else "no"}" = "yes"
             touch $out
           '';
 
           nixos-backup-evaluates = pkgs.runCommand "nixos-backup-evaluates" { } ''
             test "${if nixosBackupEvaluation.config.qnix.storage.backup.enable then "yes" else "no"}" = "yes"
-            test "${if builtins.hasAttr "us" nixosBackupEvaluation.config.services.borgbackup.jobs then "yes" else "no"}" = "yes"
-            test "${if builtins.hasAttr "eu" nixosBackupEvaluation.config.services.borgbackup.jobs then "yes" else "no"}" = "yes"
-            test "${if builtins.hasAttr "home" nixosBackupEvaluation.config.services.borgbackup.jobs then "yes" else "no"}" = "yes"
+            test "${
+              if builtins.hasAttr "us" nixosBackupEvaluation.config.services.borgbackup.jobs then "yes" else "no"
+            }" = "yes"
+            test "${
+              if builtins.hasAttr "eu" nixosBackupEvaluation.config.services.borgbackup.jobs then "yes" else "no"
+            }" = "yes"
+            test "${
+              if builtins.hasAttr "home" nixosBackupEvaluation.config.services.borgbackup.jobs then
+                "yes"
+              else
+                "no"
+            }" = "yes"
             test "${nixosBackupEvaluation.config.services.borgbackup.jobs.us.repo}" = "tester@us.repo.borgbase.com:repo"
             test "${nixosBackupEvaluation.config.services.borgbackup.jobs.eu.repo}" = "tester@eu.repo.borgbase.com:repo"
             test "${nixosBackupEvaluation.config.services.borgbackup.jobs.home.repo}" = "/mnt/backup-nfs/tester"
             test "${nixosBackupEvaluation.config.fileSystems."/mnt/backup-nfs".device}" = "nas:/srv/backup"
             touch $out
           '';
-
 
           home-manager-client-evaluates = homeOnlyEvaluation.activationPackage;
 
@@ -674,21 +720,31 @@
             test "${if nixosClientEvaluation.config.qnix.dev.codex.enable then "yes" else "no"}" = "yes"
             test "${if nixosClientEvaluation.config.qnix.dev.cursor.enable then "yes" else "no"}" = "yes"
             test "${if nixosClientEvaluation.config.qnix.dev.jetbrains.enable then "yes" else "no"}" = "yes"
-            test "${if nixosClientEvaluation.config.qnix.dev.jetbrains.idea.enable then "yes" else "no"}" = "yes"
+            test "${
+              if nixosClientEvaluation.config.qnix.dev.jetbrains.idea.enable then "yes" else "no"
+            }" = "yes"
             test "${if nixosClientEvaluation.config.qnix.dev.postman.enable then "yes" else "no"}" = "yes"
             test "${if nixosClientEvaluation.config.qnix.dev.wireshark.enable then "yes" else "no"}" = "yes"
-            test "${if nixosClientEvaluation.config.qnix.desktop.displaymanager.enable then "yes" else "no"}" = "yes"
-            test "${if nixosClientEvaluation.config.qnix.desktop.displaymanager.sddm.enable then "yes" else "no"}" = "yes"
+            test "${
+              if nixosClientEvaluation.config.qnix.desktop.displaymanager.enable then "yes" else "no"
+            }" = "yes"
+            test "${
+              if nixosClientEvaluation.config.qnix.desktop.displaymanager.sddm.enable then "yes" else "no"
+            }" = "yes"
             test "${if nixosClientEvaluation.config.qnix.desktop.stylix.enable then "yes" else "no"}" = "yes"
             test "${if nixosClientEvaluation.config.qnix.system.plymouth.enable then "yes" else "no"}" = "yes"
             test "${if nixosClientEvaluation.config.qnix.desktop.terminal.enable then "yes" else "no"}" = "yes"
             test "${if nixosClientEvaluation.config.qnix.desktop.noctalia.enable then "yes" else "no"}" = "yes"
-            test "${if nixosClientEvaluation.config.qnix.security.gnome-keyring.enable then "yes" else "no"}" = "yes"
+            test "${
+              if nixosClientEvaluation.config.qnix.security.gnome-keyring.enable then "yes" else "no"
+            }" = "yes"
             test "${if nixosClientEvaluation.config.qnix.apps.browser.enable then "yes" else "no"}" = "yes"
             test "${if nixosClientEvaluation.config.qnix.desktop.clipboard.enable then "yes" else "no"}" = "yes"
             test "${if nixosClientEvaluation.config.qnix.apps.fileManager.enable then "yes" else "no"}" = "yes"
             test "${if nixosClientEvaluation.config.qnix.desktop.lock.enable then "yes" else "no"}" = "yes"
-            test "${if nixosClientEvaluation.config.qnix.desktop.screenshots.enable then "yes" else "no"}" = "yes"
+            test "${
+              if nixosClientEvaluation.config.qnix.desktop.screenshots.enable then "yes" else "no"
+            }" = "yes"
             test "${if nixosClientEvaluation.config.qnix.desktop.sound.enable then "yes" else "no"}" = "yes"
             test "${if nixosClientEvaluation.config.qnix.apps.notes.enable then "yes" else "no"}" = "yes"
             test "${if nixosClientEvaluation.config.qnix.apps.bitwarden.enable then "yes" else "no"}" = "yes"
@@ -698,12 +754,18 @@
             test "${if nixosClientEvaluation.config.xdg.portal.enable then "yes" else "no"}" = "yes"
             test "${if nixosClientEvaluation.config.services.pipewire.enable then "yes" else "no"}" = "yes"
             test "${if nixosClientEvaluation.config.programs.wireshark.enable then "yes" else "no"}" = "yes"
-            test "${if nixosClientEvaluation.config.services.gnome.gnome-keyring.enable then "yes" else "no"}" = "yes"
-            test "${if nixosClientEvaluation.config.services.displayManager.sddm.enable then "yes" else "no"}" = "yes"
+            test "${
+              if nixosClientEvaluation.config.services.gnome.gnome-keyring.enable then "yes" else "no"
+            }" = "yes"
+            test "${
+              if nixosClientEvaluation.config.services.displayManager.sddm.enable then "yes" else "no"
+            }" = "yes"
             test "${if nixosClientEvaluation.config.stylix.enable then "yes" else "no"}" = "yes"
             test "${if nixosClientEvaluation.config.boot.plymouth.enable then "yes" else "no"}" = "yes"
             test "${nixosClientEvaluation.config.boot.plymouth.theme}" = "${nixosClientEvaluation.config.qnix.system.plymouth.theme}"
-            test "${if homeOnlyEvaluation.config.wayland.windowManager.hyprland.enable then "yes" else "no"}" = "yes"
+            test "${
+              if homeOnlyEvaluation.config.wayland.windowManager.hyprland.enable then "yes" else "no"
+            }" = "yes"
             test "${if homeOnlyEvaluation.config.stylix.enable then "yes" else "no"}" = "yes"
             test "${if homeOnlyEvaluation.config.qnix.dev.codex.enable then "yes" else "no"}" = "yes"
             test "${if homeOnlyEvaluation.config.qnix.dev.cursor.enable then "yes" else "no"}" = "yes"
@@ -729,44 +791,43 @@
             let
               nixosNvfEvaluation = lib.nixosSystem {
                 inherit pkgs lib;
-                modules =
-                  [
-                    stylix.nixosModules.stylix
-                    impermanence.nixosModules.impermanence
-                  ]
-                  # `storage/impermanence` references `qnix.system.shell.packages`; the nvf-only
-                  # profile set does not pull base, so declare shell options explicitly.
-                  ++ (lib.qnix.mkNixosOptionImports {
-                    category = "system";
-                    name = "shell";
+                modules = [
+                  stylix.nixosModules.stylix
+                  impermanence.nixosModules.impermanence
+                ]
+                # `storage/impermanence` references `qnix.system.shell.packages`; the nvf-only
+                # profile set does not pull base, so declare shell options explicitly.
+                ++ (lib.qnix.mkNixosOptionImports {
+                  category = "system";
+                  name = "shell";
+                })
+                ++ [
+                  (import ../loader/nixos.nix {
+                    inherit lib;
+                    profiles = [
+                      "impermanence"
+                      "nvf"
+                    ];
                   })
-                  ++ [
-                    (import ../loader/nixos.nix {
-                      inherit lib;
-                      profiles = [
-                        "impermanence"
-                        "nvf"
-                      ];
-                    })
-                    {
-                      system.stateVersion = "25.11";
-                      fileSystems."/" = {
-                        device = "none";
-                        fsType = "tmpfs";
-                      };
-                      fileSystems."/persist" = {
-                        device = "none";
-                        fsType = "tmpfs";
-                      };
-                      fileSystems."/cache" = {
-                        device = "none";
-                        fsType = "tmpfs";
-                      };
-                      boot.isContainer = true;
-                      networking.hostId = "12345678";
-                    }
-                    impermanenceTestModule
-                  ];
+                  {
+                    system.stateVersion = "25.11";
+                    fileSystems."/" = {
+                      device = "none";
+                      fsType = "tmpfs";
+                    };
+                    fileSystems."/persist" = {
+                      device = "none";
+                      fsType = "tmpfs";
+                    };
+                    fileSystems."/cache" = {
+                      device = "none";
+                      fsType = "tmpfs";
+                    };
+                    boot.isContainer = true;
+                    networking.hostId = "12345678";
+                  }
+                  impermanenceTestModule
+                ];
               };
 
               homeOnlyNvfEvaluation = home-manager.lib.homeManagerConfiguration {
