@@ -14,8 +14,22 @@
       default = null;
       description = ''
         Verbatim CoreDNS Corefile. When null, a block for `.:53` is generated from
-        `forwardUpstreams` (errors, log, health, forward, cache). Override this for
-        authoritative zones, split DNS, or custom plugins.
+        `staticHosts`, `forwardUpstreams` (errors, log, health, forward, cache). Override
+        this for full control; `staticHosts` is then ignored.
+      '';
+    };
+
+    staticHosts = lib.mkOption {
+      type = lib.types.attrsOf lib.types.str;
+      default = { };
+      example = {
+        "router.lan" = "192.168.1.1";
+        "nas.lan" = "192.168.1.2";
+      };
+      description = ''
+        Static `A` records merged into the generated server block via the `hosts` plugin
+        (`IP hostname` per line, then `fallthrough` to `forward`). Unused when `corefile`
+        is set.
       '';
     };
 

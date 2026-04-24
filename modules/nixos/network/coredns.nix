@@ -2,12 +2,26 @@
 let
   cfg = config.qnix.network.coredns;
 
+  hostsBlock =
+    if cfg.staticHosts == { } then
+      ""
+    else
+      ''
+        hosts {
+        ${lib.concatStringsSep "\n" (
+          lib.mapAttrsToList (hostname: ip: "          ${ip} ${hostname}") cfg.staticHosts
+        )}
+          fallthrough
+        }
+
+      '';
+
   generatedCorefile = ''
     .:53 {
       errors
       log
       health
-      forward . ${lib.concatStringsSep " " cfg.forwardUpstreams}
+      ${hostsBlock}      forward . ${lib.concatStringsSep " " cfg.forwardUpstreams}
       cache 300
     }
   '';
