@@ -25,6 +25,9 @@ in
         fail2ban.enable = lib.mkDefault true;
         openssh.enable = lib.mkDefault true;
       };
+
+      # Default server role targets VMs/containers unless a host opts into ZFS explicitly.
+      storage.zfs.enable = lib.mkForce false;
     };
   };
 }
