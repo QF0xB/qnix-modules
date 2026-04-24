@@ -180,6 +180,48 @@
             ];
           };
 
+          nixosCorednsEvaluation = lib.nixosSystem {
+            inherit pkgs lib;
+            modules = [
+              stylix.nixosModules.stylix
+              impermanence.nixosModules.impermanence
+              sops-nix.nixosModules.sops
+
+              (import ../loader/nixos.nix {
+                inherit lib;
+                profiles = [
+                  "coredns-server"
+                ];
+              })
+              commonSystemModule
+              testUserModule
+              {
+                qnix.network.addressing = {
+                  hostName = "coredns-test";
+                  nameservers = [
+                    "1.1.1.1"
+                  ];
+                  defaultGateway = "192.0.2.1";
+                  defaultGatewayInterface = "eth0";
+                  interfaces.eth0 = {
+                    useDHCP = false;
+                    ipv4.addresses = [
+                      {
+                        address = "192.0.2.53";
+                        prefixLength = 24;
+                      }
+                    ];
+                  };
+                };
+
+                qnix.network.coredns.forwardUpstreams = [
+                  "1.1.1.1"
+                  "9.9.9.9"
+                ];
+              }
+            ];
+          };
+
           nixosClientEvaluation = lib.nixosSystem {
             inherit pkgs lib;
             modules = [
@@ -608,6 +650,17 @@
               if nixosServerEvaluation.config.networking.networkmanager.enable then "yes" else "no"
             }" = "no"
             test "${nixosServerEvaluation.config.networking.hostName}" = "server-test"
+            touch $out
+          '';
+
+          nixos-coredns-evaluates = nixosCorednsEvaluation.config.system.build.toplevel;
+
+          nixos-coredns-defaults = pkgs.runCommand "nixos-coredns-defaults" { } ''
+            test "${if nixosCorednsEvaluation.config.qnix.network.coredns.enable then "yes" else "no"}" = "yes"
+            test "${if nixosCorednsEvaluation.config.qnix.status.server then "yes" else "no"}" = "yes"
+            test "${if nixosCorednsEvaluation.config.services.coredns.enable then "yes" else "no"}" = "yes"
+            test "${if lib.elem 53 nixosCorednsEvaluation.config.qnix.network.firewall.allowedTCPPorts then "yes" else "no"}" = "yes"
+            test "${if lib.elem 53 nixosCorednsEvaluation.config.qnix.network.firewall.allowedUDPPorts then "yes" else "no"}" = "yes"
             touch $out
           '';
 
