@@ -45,7 +45,8 @@
     kubeCtxPackage = lib.mkOption {
       type = lib.types.package;
       default = pkgs.kubectx;
-      description = "KubeCTX package";
+      defaultText = lib.literalExpression "pkgs.kubectx";
+      description = "kubectx package (and related helpers in its `bin`).";
     };
 
     k9sExtraPathPackages = lib.mkOption {
@@ -60,7 +61,7 @@
         interactive shell. Defaults to `kubelogin`; set to an empty list if unused.
       '';
     };
-    
+
     freelensPackage = lib.mkOption {
       type = lib.types.package;
       default = pkgs.freelens-bin;
