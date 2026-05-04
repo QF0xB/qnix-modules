@@ -59,6 +59,8 @@
         `v1/pods` command-not-found errors for a context that still works in an
         interactive shell. Defaults to `kubelogin`; set to an empty list if unused.
       '';
+    };
+    
     freelensPackage = lib.mkOption {
       type = lib.types.package;
       default = pkgs.freelens-bin;
