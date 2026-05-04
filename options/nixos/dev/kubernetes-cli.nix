@@ -35,7 +35,6 @@
       description = "Flux CLI package.";
     };
 
-<<<<<<< HEAD
     k9sPackage = lib.mkOption {
       type = lib.types.package;
       default = pkgs.k9s;
@@ -60,13 +59,11 @@
         `v1/pods` command-not-found errors for a context that still works in an
         interactive shell. Defaults to `kubelogin`; set to an empty list if unused.
       '';
-=======
     freelensPackage = lib.mkOption {
       type = lib.types.package;
       default = pkgs.freelens-bin;
       defaultText = lib.literalExpression "pkgs.freelens-bin";
       description = "Freelens package.";
->>>>>>> dc05296 (feat(kubernetes): add freelens application)
     };
   };
 }
