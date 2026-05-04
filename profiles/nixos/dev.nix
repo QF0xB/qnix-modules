@@ -26,6 +26,10 @@ in
     })
     (lib.qnix.mkNixosFeatureImports {
       category = "dev";
+      name = "kubernetes-cli";
+    })
+    (lib.qnix.mkNixosFeatureImports {
+      category = "dev";
       name = "postman";
     })
     (lib.qnix.mkNixosFeatureImports {
