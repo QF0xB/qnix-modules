@@ -53,5 +53,7 @@ in
       cfg.kubeCtxPackage
     ]
     ++ cfg.k9sExtraPathPackages;
+      cfg.freelensPackage
+    ];
   };
 }
