@@ -5,14 +5,12 @@
   qnixLib,
   pkgs,
   ...
-}:
-let
+}: let
   qconfig = qnixLib.qnix.getQnixConfig {
     inherit config osConfig;
   };
-  cfg = qconfig.dev.cursor or { enable = false; };
-in
-{
+  cfg = qconfig.dev.cursor or {enable = false;};
+in {
   config = lib.mkIf cfg.enable {
     programs.cursor = {
       enable = true;
@@ -53,6 +51,7 @@ in
           };
 
           "openapi.securityAuditToken" = "\${env:OPENAPI_SECURITY_AUDIT_TOKEN}";
+          "workbench.colorTheme" = "Better Solarized Dark";
         };
 
         extensions = with pkgs; [

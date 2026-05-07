@@ -827,7 +827,7 @@
             test "${if homeOnlyEvaluation.config.qnix.dev.cursor.enable then "yes" else "no"}" = "yes"
             test "${if homeOnlyEvaluation.config.qnix.dev.jetbrains.enable then "yes" else "no"}" = "yes"
             test "${if homeOnlyEvaluation.config.qnix.dev.postman.enable then "yes" else "no"}" = "yes"
-            test "${if homeOnlyEvaluation.config.programs.vscode.enable then "yes" else "no"}" = "yes"
+            test "${if homeOnlyEvaluation.config.programs.cursor.enable then "yes" else "no"}" = "yes"
             test "${if homeOnlyEvaluation.config.programs.kitty.enable then "yes" else "no"}" = "yes"
             test "${if homeOnlyEvaluation.config.programs.noctalia-shell.enable then "yes" else "no"}" = "yes"
             test "${if homeOnlyEvaluation.config.qnix.desktop.clipboard.enable then "yes" else "no"}" = "yes"
