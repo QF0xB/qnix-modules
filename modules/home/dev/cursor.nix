@@ -14,7 +14,7 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
-    programs.vscode = {
+    programs.cursor = {
       enable = true;
       package = cfg.package;
 
