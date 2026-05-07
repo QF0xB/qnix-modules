@@ -7,6 +7,7 @@ in
     qnix.persist.users."*".directories = [
       ".kube"
       ".config/Freelens"
+      ".freelens"
     ];
   };
 }
