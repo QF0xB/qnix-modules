@@ -185,94 +185,92 @@ in
           neogit.enable = true;
         };
 
-        languages = lib.recursiveUpdate
-          {
-            enableFormat = true;
-            enableDAP = true;
-            enableTreesitter = true;
-            enableExtraDiagnostics = true;
+        languages = lib.recursiveUpdate {
+          enableFormat = true;
+          enableDAP = true;
+          enableTreesitter = true;
+          enableExtraDiagnostics = true;
 
-            bash = {
-              enable = true;
-              format.enable = true;
-              lsp.enable = true;
-            };
+          bash = {
+            enable = true;
+            format.enable = true;
+            lsp.enable = true;
+          };
 
-            clang = {
-              enable = true;
-              cHeader = true;
-              dap.enable = true;
-              lsp.enable = true;
-            };
+          clang = {
+            enable = true;
+            cHeader = true;
+            dap.enable = true;
+            lsp.enable = true;
+          };
 
-            css = {
-              enable = true;
-              format.enable = true;
-              lsp.enable = true;
-            };
+          css = {
+            enable = true;
+            format.enable = true;
+            lsp.enable = true;
+          };
 
-            go = {
-              enable = true;
-              format.enable = true;
-              lsp.enable = true;
-              dap.enable = true;
-            };
+          go = {
+            enable = true;
+            format.enable = true;
+            lsp.enable = true;
+            dap.enable = true;
+          };
 
-            java = {
-              enable = true;
-              lsp.enable = true;
-              treesitter.enable = true;
-            };
+          java = {
+            enable = true;
+            lsp.enable = true;
+            treesitter.enable = true;
+          };
 
-            lua = {
-              enable = true;
-              format.enable = true;
-              lsp.enable = true;
-            };
+          lua = {
+            enable = true;
+            format.enable = true;
+            lsp.enable = true;
+          };
 
-            nix = {
-              enable = true;
-              format.enable = true;
-              lsp.enable = true;
-              lsp.servers = [ "nixd" ];
-              extraDiagnostics.enable = true;
-              extraDiagnostics.types = [
-                "statix"
-                "deadnix"
-              ];
-            };
+          nix = {
+            enable = true;
+            format.enable = true;
+            lsp.enable = true;
+            lsp.servers = [ "nixd" ];
+            extraDiagnostics.enable = true;
+            extraDiagnostics.types = [
+              "statix"
+              "deadnix"
+            ];
+          };
 
-            markdown = {
-              enable = true;
-              format.enable = true;
-              lsp.enable = true;
-              extensions.markview-nvim.enable = true;
-              extensions.render-markdown-nvim.enable = true;
-            };
+          markdown = {
+            enable = true;
+            format.enable = true;
+            lsp.enable = true;
+            extensions.markview-nvim.enable = true;
+            extensions.render-markdown-nvim.enable = true;
+          };
 
-            python = {
-              enable = true;
-              format.enable = true;
-            };
+          python = {
+            enable = true;
+            format.enable = true;
+          };
 
-            rust = {
-              enable = true;
-              format.enable = true;
-              lsp.enable = true;
-            };
+          rust = {
+            enable = true;
+            format.enable = true;
+            lsp.enable = true;
+          };
 
-            sql = {
-              enable = true;
-              format.enable = true;
-              lsp.enable = true;
-            };
+          sql = {
+            enable = true;
+            format.enable = true;
+            lsp.enable = true;
+          };
 
-            yaml = {
-              enable = true;
-              lsp.enable = true;
-            };
-          }
-          treeSitterEnables;
+          yaml = {
+            enable = true;
+            lsp.enable = true;
+          };
+        } treeSitterEnables;
 
         lsp = {
           enable = true;
@@ -424,7 +422,7 @@ in
 
         statusline.lualine = {
           enable = true;
-          disabledFiletypes = [ "alpha" ];
+          disabledFiletypes.statusline = [ "alpha" ];
         };
 
         tabline.nvimBufferline = {
