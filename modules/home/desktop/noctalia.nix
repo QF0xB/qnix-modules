@@ -15,7 +15,7 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
-    programs.noctalia-shell = {
+    programs.noctalia = {
       enable = true;
       systemd.enable = true;
       settings = lib.mkForce {

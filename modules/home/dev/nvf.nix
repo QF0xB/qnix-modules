@@ -424,7 +424,7 @@ in
 
         statusline.lualine = {
           enable = true;
-          disabledFiletypes = [ "alpha" ];
+          disabledFiletypes.statusline = [ "alpha" ];
         };
 
         tabline.nvimBufferline = {
