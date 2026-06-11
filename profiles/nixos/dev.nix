@@ -44,6 +44,10 @@ in
       category = "dev";
       name = "nixfmt";
     })
+    (lib.qnix.mkNixosFeatureImports {
+      category = "runtime";
+      name = "docker";
+    })
   ];
 
   config = {
