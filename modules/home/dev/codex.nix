@@ -13,6 +13,12 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
-    home.packages = [ cfg.package ];
+    programs.codex = {
+      enable = true;
+      package = cfg.package;
+      custom-instructions = ''
+        - Always use conventional commit messages
+      '';
+    };
   };
 }

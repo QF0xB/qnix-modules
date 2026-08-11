@@ -5,12 +5,11 @@
   pkgs,
   qnixLib,
   ...
-}:
-let
+}: let
   qconfig = qnixLib.qnix.getQnixConfig {
     inherit config osConfig;
   };
-  cfg = qconfig.dev.nvf or { enable = false; };
+  cfg = qconfig.dev.nvf or {enable = false;};
 
   treesitterLanguages = [
     "bash"
@@ -34,10 +33,10 @@ let
       value = {
         treesitter.enable = true;
       };
-    }) treesitterLanguages
+    })
+    treesitterLanguages
   );
-in
-{
+in {
   config = lib.mkIf cfg.enable {
     programs.nvf = {
       enable = true;
@@ -173,7 +172,7 @@ in
               lsp_format = "fallback";
             };
             formatters_by_ft = {
-              java = [ "google_java_format" ];
+              java = ["google_java_format"];
             };
           };
         };
@@ -185,92 +184,94 @@ in
           neogit.enable = true;
         };
 
-        languages = lib.recursiveUpdate {
-          enableFormat = true;
-          enableDAP = true;
-          enableTreesitter = true;
-          enableExtraDiagnostics = true;
+        languages =
+          lib.recursiveUpdate {
+            enableFormat = true;
+            enableDAP = true;
+            enableTreesitter = true;
+            enableExtraDiagnostics = true;
 
-          bash = {
-            enable = true;
-            format.enable = true;
-            lsp.enable = true;
-          };
+            bash = {
+              enable = true;
+              format.enable = true;
+              lsp.enable = true;
+            };
 
-          clang = {
-            enable = true;
-            cHeader = true;
-            dap.enable = true;
-            lsp.enable = true;
-          };
+            clang = {
+              enable = true;
+              cHeader = true;
+              dap.enable = true;
+              lsp.enable = true;
+            };
 
-          css = {
-            enable = true;
-            format.enable = true;
-            lsp.enable = true;
-          };
+            css = {
+              enable = true;
+              format.enable = true;
+              lsp.enable = true;
+            };
 
-          go = {
-            enable = true;
-            format.enable = true;
-            lsp.enable = true;
-            dap.enable = true;
-          };
+            go = {
+              enable = true;
+              format.enable = true;
+              lsp.enable = true;
+              dap.enable = true;
+            };
 
-          java = {
-            enable = true;
-            lsp.enable = true;
-            treesitter.enable = true;
-          };
+            java = {
+              enable = true;
+              lsp.enable = true;
+              treesitter.enable = true;
+            };
 
-          lua = {
-            enable = true;
-            format.enable = true;
-            lsp.enable = true;
-          };
+            lua = {
+              enable = true;
+              format.enable = true;
+              lsp.enable = true;
+            };
 
-          nix = {
-            enable = true;
-            format.enable = true;
-            lsp.enable = true;
-            lsp.servers = [ "nixd" ];
-            extraDiagnostics.enable = true;
-            extraDiagnostics.types = [
-              "statix"
-              "deadnix"
-            ];
-          };
+            nix = {
+              enable = true;
+              format.enable = true;
+              lsp.enable = true;
+              lsp.servers = ["nixd"];
+              extraDiagnostics.enable = true;
+              extraDiagnostics.types = [
+                "statix"
+                "deadnix"
+              ];
+            };
 
-          markdown = {
-            enable = true;
-            format.enable = true;
-            lsp.enable = true;
-            extensions.markview-nvim.enable = true;
-            extensions.render-markdown-nvim.enable = true;
-          };
+            markdown = {
+              enable = true;
+              format.enable = true;
+              lsp.enable = true;
+              extensions.markview-nvim.enable = true;
+              extensions.render-markdown-nvim.enable = true;
+            };
 
-          python = {
-            enable = true;
-            format.enable = true;
-          };
+            python = {
+              enable = true;
+              format.enable = true;
+            };
 
-          rust = {
-            enable = true;
-            format.enable = true;
-            lsp.enable = true;
-          };
+            rust = {
+              enable = true;
+              format.enable = true;
+              lsp.enable = true;
+            };
 
-          sql = {
-            enable = true;
-            format.enable = true;
-            lsp.enable = true;
-          };
+            sql = {
+              enable = true;
+              format.enable = true;
+              lsp.enable = true;
+            };
 
-          yaml = {
-            enable = true;
-            lsp.enable = true;
-          };
-        } treeSitterEnables;
+            yaml = {
+              enable = true;
+              lsp.enable = true;
+            };
+          }
+          treeSitterEnables;
 
         lsp = {
           enable = true;
@@ -324,8 +325,8 @@ in
         spellcheck = {
           enable = cfg.spellcheck.enable;
           languages = cfg.spellcheck.languages;
-          vim-dirtytalk.enable = true;
-          programmingWordlist.enable = true;
+          # vim-dirtytalk.enable = true;
+          # programmingWordlist.enable = true;
           extraSpellWords = {
             "en.utf-8" = cfg.spellcheck.additionalWords;
           };
@@ -422,7 +423,7 @@ in
 
         statusline.lualine = {
           enable = true;
-          disabledFiletypes.statusline = [ "alpha" ];
+          disabledFiletypes.statusline = ["alpha"];
         };
 
         tabline.nvimBufferline = {
