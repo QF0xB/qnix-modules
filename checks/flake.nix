@@ -838,6 +838,36 @@
             test "${if homeOnlyEvaluation.config.qnix.apps.music.enable then "yes" else "no"}" = "yes"
             test "${if homeOnlyEvaluation.config.qnix.apps.obs.enable then "yes" else "no"}" = "yes"
             test "${homeOnlyEvaluation.config.home.sessionVariables.NIXOS_OZONE_WL}" = "1"
+            test "${
+              if builtins.hasAttr "$mod" homeOnlyEvaluation.config.wayland.windowManager.hyprland.settings then
+                "yes"
+              else
+                "no"
+            }" = "no"
+            test "${
+              if builtins.hasAttr "$ipc" homeOnlyEvaluation.config.wayland.windowManager.hyprland.settings then
+                "yes"
+              else
+                "no"
+            }" = "no"
+            test "${
+              if builtins.any (line: lib.hasInfix "$mod" line) homeOnlyEvaluation.config.wayland.windowManager.hyprland.settings.bind then
+                "yes"
+              else
+                "no"
+            }" = "no"
+            test "${
+              if builtins.any (line: lib.hasInfix "$ipc" line) homeOnlyEvaluation.config.wayland.windowManager.hyprland.settings.bind then
+                "yes"
+              else
+                "no"
+            }" = "no"
+            test "${
+              if builtins.any (line: lib.hasInfix "$ipc" line) homeOnlyEvaluation.config.wayland.windowManager.hyprland.settings.bindl then
+                "yes"
+              else
+                "no"
+            }" = "no"
             touch $out
           '';
 
