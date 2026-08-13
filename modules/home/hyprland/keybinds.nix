@@ -180,6 +180,8 @@ let
   hyprSpecialExec =
     ws: matchClass: cmd:
     "exec, ${lib.getExe hyprSpecial} ${ws} ${matchClass} -- ${cmd}";
+  mod = if isVm then "ALT" else "SUPER";
+  ipc = "${lib.getExe optionalRunner} -- noctalia-shell ipc call";
 
   workspaces = [
     {
@@ -228,12 +230,12 @@ let
 
   workspaceBindings = builtins.concatLists (
     map (workspace: [
-      "$mod, ${conv workspace.num}, workspace, ${conv workspace.num}"
-      "$mod, code:${workspace.code}, workspace, ${workspace.num}"
-      "$mod+SHIFT+CTRL, ${conv workspace.num}, movetoworkspace, ${conv workspace.num}"
-      "$mod+SHIFT+CTRL, code:${workspace.code}, movetoworkspace, ${workspace.num}"
-      "$mod CTRL, ${conv workspace.num}, movetoworkspacesilent, ${conv workspace.num}"
-      "$mod CTRL, code:${workspace.code}, movetoworkspacesilent, ${workspace.num}"
+      "${mod}, ${conv workspace.num}, workspace, ${conv workspace.num}"
+      "${mod}, code:${workspace.code}, workspace, ${workspace.num}"
+      "${mod}+SHIFT+CTRL, ${conv workspace.num}, movetoworkspace, ${conv workspace.num}"
+      "${mod}+SHIFT+CTRL, code:${workspace.code}, movetoworkspace, ${workspace.num}"
+      "${mod} CTRL, ${conv workspace.num}, movetoworkspacesilent, ${conv workspace.num}"
+      "${mod} CTRL, code:${workspace.code}, movetoworkspacesilent, ${workspace.num}"
     ]) workspaces
   );
 in
@@ -244,46 +246,43 @@ in
     ];
 
     wayland.windowManager.hyprland.settings = {
-      "$mod" = if isVm then "ALT" else "super";
-      "$ipc" = "${lib.getExe optionalRunner} -- noctalia-shell ipc call";
-
       bindl =
         lib.optional (lockExe != null) ",switch:Lid Switch, ${optionalExec lockExe}"
         ++ [
-        ", XF86AudioRaiseVolume, exec, $ipc volume increase"
-        ", XF86AudioLowerVolume, exec, $ipc volume decrease"
-        ", XF86AudioMute, exec, $ipc volume muteOutput"
+        ", XF86AudioRaiseVolume, exec, ${ipc} volume increase"
+        ", XF86AudioLowerVolume, exec, ${ipc} volume decrease"
+        ", XF86AudioMute, exec, ${ipc} volume muteOutput"
       ]
         ++ lib.optionals isLaptop [
-          ", XF86MonBrightnessUp, exec, $ipc brightness increase"
-          ", XF86MonBrightnessDown, exec, $ipc brightness decrease"
+          ", XF86MonBrightnessUp, exec, ${ipc} brightness increase"
+          ", XF86MonBrightnessDown, exec, ${ipc} brightness decrease"
         ];
 
       bindm = [
-        "$mod, mouse:272, movewindow"
-        "$mod, mouse:273, resizewindow"
+        "${mod}, mouse:272, movewindow"
+        "${mod}, mouse:273, resizewindow"
       ];
 
       bind = [
-        "$mod SHIFT, code:53, exec, uwsm stop #x"
-        "$mod, code:42, exec, hyprctl switchxkblayout all next #g"
+        "${mod} SHIFT, code:53, exec, uwsm stop #x"
+        "${mod}, code:42, exec, hyprctl switchxkblayout all next #g"
         "super, Tab, swapnext"
         "ALT, Tab, cyclenext"
         "CTRL, Tab, workspace, e+1"
-        "$mod, mouse_down, workspace, e+1"
-        "$mod, mouse_up, workspace, e-1"
-        "$mod, left, movefocus, l"
-        "$mod, right, movefocus, r"
-        "$mod, up, movefocus, u"
-        "$mod, down, movefocus, d"
-        "$mod, code:25, exec, $ipc launcher toggle"
-        "$mod SHIFT, code:25, exec, $ipc controlCenter toggle"
-        "$mod, code:48, fullscreen #f"
-        "$mod, code:38, killactive #a"
-        "$mod SHIFT, code:48, togglefloating #f"
-        "$mod SHIFT, return, ${uexec terminalExe}"
-        "$mod CTRL, return, ${uexec "${terminalExe} --class floating"}"
-        "$mod, return, ${
+        "${mod}, mouse_down, workspace, e+1"
+        "${mod}, mouse_up, workspace, e-1"
+        "${mod}, left, movefocus, l"
+        "${mod}, right, movefocus, r"
+        "${mod}, up, movefocus, u"
+        "${mod}, down, movefocus, d"
+        "${mod}, code:25, exec, ${ipc} launcher toggle"
+        "${mod} SHIFT, code:25, exec, ${ipc} controlCenter toggle"
+        "${mod}, code:48, fullscreen #f"
+        "${mod}, code:38, killactive #a"
+        "${mod} SHIFT, code:48, togglefloating #f"
+        "${mod} SHIFT, return, ${uexec terminalExe}"
+        "${mod} CTRL, return, ${uexec "${terminalExe} --class floating"}"
+        "${mod}, return, ${
           hyprSpecialExec "scratch" "scratchpad" "${terminalExe} --class scratchpad"
         } #scratchpad"
         ", XF86AudioPlay, exec, playerctl play-pause"
@@ -291,26 +290,26 @@ in
         ", XF86AudioPrev, exec, playerctl previous"
         ", XF86audiostop, exec, playerctl stop"
       ]
-      ++ lib.optional (lockExe != null) "$mod SHIFT, code:46, ${optionalExec lockExe} # L"
-      ++ lib.optional (browserExe != null) "$mod, code:47, ${optionalExec browserExe} #Ö"
+      ++ lib.optional (lockExe != null) "${mod} SHIFT, code:46, ${optionalExec lockExe} # L"
+      ++ lib.optional (browserExe != null) "${mod}, code:47, ${optionalExec browserExe} #Ö"
       ++
         lib.optional (browserExe != null)
-          "$mod SHIFT, code:47, ${
+          "${mod} SHIFT, code:47, ${
             optionalExec (lib.concatStringsSep " " ([ browserExe ] ++ browserCfg.privateArgs))
           } #Ö"
-      ++ lib.optional (fileManagerExe != null) "$mod, code:40, ${uexec fileManagerExe} #d"
+      ++ lib.optional (fileManagerExe != null) "${mod}, code:40, ${uexec fileManagerExe} #d"
       ++
         lib.optional (notesExe != null)
-          "$mod, code:26, ${hyprSpecialExec "notes" "obsidian" notesExe} #e notes"
-      ++ lib.optional (obsExe != null) "$mod, code:29, ${hyprSpecialExec "obs" "obs" obsExe} #z obs"
+          "${mod}, code:26, ${hyprSpecialExec "notes" "obsidian" notesExe} #e notes"
+      ++ lib.optional (obsExe != null) "${mod}, code:29, ${hyprSpecialExec "obs" "obs" obsExe} #z obs"
       ++
         lib.optional (bitwardenExe != null)
-          "$mod, code:57, ${hyprSpecialExec "secrets" "bitwarden" bitwardenExe} #n bitwarden"
+          "${mod}, code:57, ${hyprSpecialExec "secrets" "bitwarden" bitwardenExe} #n bitwarden"
       ++
         lib.optional (musicExe != null)
-          "$mod, code:43, ${hyprSpecialExec "music" "tidal-hifi" musicExe} #d tidal-hifi"
-      ++ [ "$mod, code:39, togglespecialworkspace, messenger #s messenger special workspace" ]
-      ++ lib.optional clipboardCfg.enable "$mod, code:55, exec, ${lib.getExe clipboardPicker}"
+          "${mod}, code:43, ${hyprSpecialExec "music" "tidal-hifi" musicExe} #d tidal-hifi"
+      ++ [ "${mod}, code:39, togglespecialworkspace, messenger #s messenger special workspace" ]
+      ++ lib.optional clipboardCfg.enable "${mod}, code:55, exec, ${lib.getExe clipboardPicker}"
       ++ lib.optional screenshotsCfg.enable ", Print, exec, ${lib.getExe screenshotTool} full"
       ++ lib.optional screenshotsCfg.enable "SHIFT, Print, exec, ${lib.getExe screenshotTool} region"
       ++
