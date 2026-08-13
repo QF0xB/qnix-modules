@@ -46,7 +46,6 @@ in
 
     home.packages = with pkgs; [
       wl-clipboard
-      hyprpolkitagent
     ];
 
     home.sessionVariables = lib.optionalAttrs (cfg.noHardwareCursors || isVm) {
@@ -58,14 +57,21 @@ in
       package = null;
       portalPackage = null;
 
+      # Hyprland 0.55 introduced native Lua configuration, but Home Manager's
+      # generic settings -> Lua conversion is not compatible with legacy
+      # keyword-style settings such as bind/windowrule/gesture/exec-once.
+      # Keep qnix on the supported legacy parser until these modules are
+      # migrated to the native Lua API deliberately.
+      configType = "hyprlang";
+
+      # UWSM owns graphical-session.target and the session environment. The
+      # Home Manager Hyprland systemd integration conflicts with UWSM.
+      systemd.enable = false;
+
       settings = {
         source = [
           "~/.config/hypr/monitors.conf"
           "~/.config/hypr/workspaces.conf"
-        ];
-
-        exec-once = [
-          "systemctl --user start hyprpolkitagent"
         ];
 
         general = {
