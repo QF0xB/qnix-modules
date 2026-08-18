@@ -175,13 +175,46 @@ let
     else
       null;
 
-  uexec = program: "exec, uwsm app -- ${program}";
-  optionalExec = command: "exec, ${lib.getExe optionalRunner} -- ${command}";
+  uexec = program: "uwsm app -- ${program}";
+  optionalExec = command: "${lib.getExe optionalRunner} -- ${command}";
   hyprSpecialExec =
     ws: matchClass: cmd:
-    "exec, ${lib.getExe hyprSpecial} ${ws} ${matchClass} -- ${cmd}";
+    "${lib.getExe hyprSpecial} ${ws} ${matchClass} -- ${cmd}";
   mod = if isVm then "ALT" else "SUPER";
   ipc = "${lib.getExe optionalRunner} -- noctalia-shell ipc call";
+
+  luaInline = lib.generators.mkLuaInline;
+  luaString = builtins.toJSON;
+  execDispatcher = command: "hl.dsp.exec_cmd(${luaString command})";
+  specialAppDispatcher = workspace: command: ''
+    function()
+      local special_workspace = hl.get_workspace(${luaString "special:${workspace}"})
+      if special_workspace == nil or special_workspace.windows == 0 then
+        hl.exec_cmd(${luaString (uexec command)})
+      else
+        hl.dispatch(hl.dsp.workspace.toggle_special(${luaString workspace}))
+      end
+    end
+  '';
+  focusWorkspaceDispatcher = workspace: "hl.dsp.focus({ workspace = ${luaString workspace} })";
+  moveWorkspaceDispatcher =
+    workspace: follow:
+    "hl.dsp.window.move({ workspace = ${luaString workspace}, follow = ${
+      if follow then "true" else "false"
+    } })";
+  mkBind = key: dispatcher: {
+    _args = [
+      key
+      (luaInline dispatcher)
+    ];
+  };
+  mkBindWith = key: dispatcher: options: {
+    _args = [
+      key
+      (luaInline dispatcher)
+      options
+    ];
+  };
 
   workspaces = [
     {
@@ -230,12 +263,18 @@ let
 
   workspaceBindings = builtins.concatLists (
     map (workspace: [
-      "${mod}, ${conv workspace.num}, workspace, ${conv workspace.num}"
-      "${mod}, code:${workspace.code}, workspace, ${workspace.num}"
-      "${mod}+SHIFT+CTRL, ${conv workspace.num}, movetoworkspace, ${conv workspace.num}"
-      "${mod}+SHIFT+CTRL, code:${workspace.code}, movetoworkspace, ${workspace.num}"
-      "${mod} CTRL, ${conv workspace.num}, movetoworkspacesilent, ${conv workspace.num}"
-      "${mod} CTRL, code:${workspace.code}, movetoworkspacesilent, ${workspace.num}"
+      (mkBind "${mod} + ${conv workspace.num}" (focusWorkspaceDispatcher (conv workspace.num)))
+      (mkBind "${mod} + code:${workspace.code}" (focusWorkspaceDispatcher workspace.num))
+      (mkBind "${mod} + SHIFT + CTRL + ${conv workspace.num}" (
+        moveWorkspaceDispatcher (conv workspace.num) true
+      ))
+      (mkBind "${mod} + SHIFT + CTRL + code:${workspace.code}" (
+        moveWorkspaceDispatcher workspace.num true
+      ))
+      (mkBind "${mod} + CTRL + ${conv workspace.num}" (
+        moveWorkspaceDispatcher (conv workspace.num) false
+      ))
+      (mkBind "${mod} + CTRL + code:${workspace.code}" (moveWorkspaceDispatcher workspace.num false))
     ]) workspaces
   );
 in
@@ -245,78 +284,89 @@ in
       hyprSpecial
     ];
 
-    wayland.windowManager.hyprland.settings = {
-      bindl =
-        lib.optional (lockExe != null) ",switch:Lid Switch, ${optionalExec lockExe}"
-        ++ [
-        ", XF86AudioRaiseVolume, exec, ${ipc} volume increase"
-        ", XF86AudioLowerVolume, exec, ${ipc} volume decrease"
-        ", XF86AudioMute, exec, ${ipc} volume muteOutput"
+    wayland.windowManager.hyprland.settings.bind =
+      lib.optional (lockExe != null) (
+        mkBindWith "switch:Lid Switch" (execDispatcher (optionalExec lockExe)) { locked = true; }
+      )
+      ++ [
+        (mkBindWith "XF86AudioRaiseVolume" (execDispatcher "${ipc} volume increase") { locked = true; })
+        (mkBindWith "XF86AudioLowerVolume" (execDispatcher "${ipc} volume decrease") { locked = true; })
+        (mkBindWith "XF86AudioMute" (execDispatcher "${ipc} volume muteOutput") { locked = true; })
       ]
-        ++ lib.optionals isLaptop [
-          ", XF86MonBrightnessUp, exec, ${ipc} brightness increase"
-          ", XF86MonBrightnessDown, exec, ${ipc} brightness decrease"
-        ];
-
-      bindm = [
-        "${mod}, mouse:272, movewindow"
-        "${mod}, mouse:273, resizewindow"
-      ];
-
-      bind = [
-        "${mod} SHIFT, code:53, exec, uwsm stop #x"
-        "${mod}, code:42, exec, hyprctl switchxkblayout all next #g"
-        "super, Tab, swapnext"
-        "ALT, Tab, cyclenext"
-        "CTRL, Tab, workspace, e+1"
-        "${mod}, mouse_down, workspace, e+1"
-        "${mod}, mouse_up, workspace, e-1"
-        "${mod}, left, movefocus, l"
-        "${mod}, right, movefocus, r"
-        "${mod}, up, movefocus, u"
-        "${mod}, down, movefocus, d"
-        "${mod}, code:25, exec, ${ipc} launcher toggle"
-        "${mod} SHIFT, code:25, exec, ${ipc} controlCenter toggle"
-        "${mod}, code:48, fullscreen #f"
-        "${mod}, code:38, killactive #a"
-        "${mod} SHIFT, code:48, togglefloating #f"
-        "${mod} SHIFT, return, ${uexec terminalExe}"
-        "${mod} CTRL, return, ${uexec "${terminalExe} --class floating"}"
-        "${mod}, return, ${
-          hyprSpecialExec "scratch" "scratchpad" "${terminalExe} --class scratchpad"
-        } #scratchpad"
-        ", XF86AudioPlay, exec, playerctl play-pause"
-        ", XF86AudioNext, exec, playerctl next"
-        ", XF86AudioPrev, exec, playerctl previous"
-        ", XF86audiostop, exec, playerctl stop"
+      ++ lib.optionals isLaptop [
+        (mkBindWith "XF86MonBrightnessUp" (execDispatcher "${ipc} brightness increase") { locked = true; })
+        (mkBindWith "XF86MonBrightnessDown" (execDispatcher "${ipc} brightness decrease") {
+          locked = true;
+        })
       ]
-      ++ lib.optional (lockExe != null) "${mod} SHIFT, code:46, ${optionalExec lockExe} # L"
-      ++ lib.optional (browserExe != null) "${mod}, code:47, ${optionalExec browserExe} #Ö"
-      ++
-        lib.optional (browserExe != null)
-          "${mod} SHIFT, code:47, ${
-            optionalExec (lib.concatStringsSep " " ([ browserExe ] ++ browserCfg.privateArgs))
-          } #Ö"
-      ++ lib.optional (fileManagerExe != null) "${mod}, code:40, ${uexec fileManagerExe} #d"
-      ++
-        lib.optional (notesExe != null)
-          "${mod}, code:26, ${hyprSpecialExec "notes" "obsidian" notesExe} #e notes"
-      ++ lib.optional (obsExe != null) "${mod}, code:29, ${hyprSpecialExec "obs" "obs" obsExe} #z obs"
-      ++
-        lib.optional (bitwardenExe != null)
-          "${mod}, code:57, ${hyprSpecialExec "secrets" "bitwarden" bitwardenExe} #n bitwarden"
-      ++
-        lib.optional (musicExe != null)
-          "${mod}, code:43, ${hyprSpecialExec "music" "tidal-hifi" musicExe} #d tidal-hifi"
-      ++ [ "${mod}, code:39, togglespecialworkspace, messenger #s messenger special workspace" ]
-      ++ lib.optional clipboardCfg.enable "${mod}, code:55, exec, ${lib.getExe clipboardPicker}"
-      ++ lib.optional screenshotsCfg.enable ", Print, exec, ${lib.getExe screenshotTool} full"
-      ++ lib.optional screenshotsCfg.enable "SHIFT, Print, exec, ${lib.getExe screenshotTool} region"
-      ++
-        lib.optional
-          (screenshotsCfg.enable && screenshotsCfg.annotationTool != "")
-          "CTRL, Print, exec, ${lib.getExe screenshotTool} region-annotate"
+      ++ [
+        (mkBindWith "${mod} + mouse:272" "hl.dsp.window.drag()" { mouse = true; })
+        (mkBindWith "${mod} + mouse:273" "hl.dsp.window.resize()" { mouse = true; })
+        (mkBind "${mod} + SHIFT + code:53" (execDispatcher "uwsm stop"))
+        (mkBind "${mod} + code:42" (execDispatcher "hyprctl switchxkblayout all next"))
+        (mkBind "SUPER + Tab" "hl.dsp.window.swap({ next = true })")
+        (mkBind "ALT + Tab" "hl.dsp.window.cycle_next()")
+        (mkBind "CTRL + Tab" (focusWorkspaceDispatcher "e+1"))
+        (mkBind "${mod} + mouse_down" (focusWorkspaceDispatcher "e+1"))
+        (mkBind "${mod} + mouse_up" (focusWorkspaceDispatcher "e-1"))
+        (mkBind "${mod} + left" ''hl.dsp.focus({ direction = "left" })'')
+        (mkBind "${mod} + right" ''hl.dsp.focus({ direction = "right" })'')
+        (mkBind "${mod} + up" ''hl.dsp.focus({ direction = "up" })'')
+        (mkBind "${mod} + down" ''hl.dsp.focus({ direction = "down" })'')
+        (mkBind "${mod} + code:25" (execDispatcher "${ipc} launcher toggle"))
+        (mkBind "${mod} + SHIFT + code:25" (execDispatcher "${ipc} controlCenter toggle"))
+        (mkBind "${mod} + code:48" "hl.dsp.window.fullscreen()")
+        (mkBind "${mod} + code:38" "hl.dsp.window.close()")
+        (mkBind "${mod} + SHIFT + code:48" "hl.dsp.window.float()")
+        (mkBind "${mod} + SHIFT + return" (execDispatcher (uexec terminalExe)))
+        (mkBind "${mod} + CTRL + return" (execDispatcher (uexec "${terminalExe} --class floating")))
+        (mkBind "${mod} + return" (specialAppDispatcher "scratch" "${terminalExe} --class scratchpad"))
+        (mkBind "XF86AudioPlay" (execDispatcher "playerctl play-pause"))
+        (mkBind "XF86AudioNext" (execDispatcher "playerctl next"))
+        (mkBind "XF86AudioPrev" (execDispatcher "playerctl previous"))
+        (mkBind "XF86AudioStop" (execDispatcher "playerctl stop"))
+      ]
+      ++ lib.optional (lockExe != null) (
+        mkBind "${mod} + SHIFT + code:46" (execDispatcher (optionalExec lockExe))
+      )
+      ++ lib.optional (browserExe != null) (
+        mkBind "${mod} + code:47" (execDispatcher (optionalExec browserExe))
+      )
+      ++ lib.optional (browserExe != null) (
+        mkBind "${mod} + SHIFT + code:47" (
+          execDispatcher (optionalExec (lib.concatStringsSep " " ([ browserExe ] ++ browserCfg.privateArgs)))
+        )
+      )
+      ++ lib.optional (fileManagerExe != null) (
+        mkBind "${mod} + code:40" (execDispatcher (uexec fileManagerExe))
+      )
+      ++ lib.optional (notesExe != null) (
+        mkBind "${mod} + code:26" (execDispatcher (hyprSpecialExec "notes" "obsidian" notesExe))
+      )
+      ++ lib.optional (obsExe != null) (
+        mkBind "${mod} + code:29" (execDispatcher (hyprSpecialExec "obs" "obs" obsExe))
+      )
+      ++ lib.optional (bitwardenExe != null) (
+        mkBind "${mod} + code:57" (execDispatcher (hyprSpecialExec "secrets" "bitwarden" bitwardenExe))
+      )
+      ++ lib.optional (musicExe != null) (
+        mkBind "${mod} + code:43" (execDispatcher (hyprSpecialExec "music" "tidal-hifi" musicExe))
+      )
+      ++ [
+        (mkBind "${mod} + code:39" ''hl.dsp.workspace.toggle_special("messenger")'')
+      ]
+      ++ lib.optional clipboardCfg.enable (
+        mkBind "${mod} + code:55" (execDispatcher (lib.getExe clipboardPicker))
+      )
+      ++ lib.optional screenshotsCfg.enable (
+        mkBind "Print" (execDispatcher "${lib.getExe screenshotTool} full")
+      )
+      ++ lib.optional screenshotsCfg.enable (
+        mkBind "SHIFT + Print" (execDispatcher "${lib.getExe screenshotTool} region")
+      )
+      ++ lib.optional (screenshotsCfg.enable && screenshotsCfg.annotationTool != "") (
+        mkBind "CTRL + Print" (execDispatcher "${lib.getExe screenshotTool} region-annotate")
+      )
       ++ workspaceBindings;
-    };
   };
 }

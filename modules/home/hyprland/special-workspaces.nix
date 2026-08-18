@@ -17,17 +17,27 @@ in
 {
   config = lib.mkIf (hyprCfg.enable && cfg.enable) {
     wayland.windowManager.hyprland.settings = {
-      workspace = [ "s[true], gapsout:80, gapsin:20" ];
-
-      decoration = {
-        dim_special = 0.7;
-        blur.special = performanceMode;
+      workspace_rule = {
+        workspace = "s[true]";
+        gaps_out = 80;
+        gaps_in = 20;
       };
 
-      animations = {
+      config = {
+        decoration = {
+          dim_special = 0.7;
+          blur.special = performanceMode;
+        };
+
+        animations.workspace_wraparound = false;
+      };
+
+      animation = {
+        leaf = "specialWorkspace";
         enabled = performanceMode;
-        workspace_wraparound = false;
-        animation = [ "specialWorkspace, 1, 8, default, slidevert" ];
+        speed = 8;
+        bezier = "default";
+        style = "slidevert";
       };
     };
   };

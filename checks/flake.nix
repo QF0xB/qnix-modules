@@ -481,7 +481,7 @@
               {
                 home.username = "tester";
                 home.homeDirectory = "/tmp/tester";
-                home.stateVersion = "25.11";
+                home.stateVersion = "26.11";
                 qnix.security.gpg.enable = true;
                 qnix.dev.direnv.enable = true;
                 qnix.system.shell = {
@@ -492,6 +492,42 @@
               }
             ];
           };
+
+          hyprlandLuaEvaluation = home-manager.lib.homeManagerConfiguration {
+            inherit pkgs;
+            extraSpecialArgs = {
+              inherit qnixLib;
+            };
+            modules = [
+              ../modules/shared/qnix-options.nix
+            ]
+            ++ (qnixLib.qnix.mkHomeFeatureImports {
+              category = "hyprland";
+              name = "hyprland";
+            })
+            ++ (qnixLib.qnix.mkHomeFeatureImports {
+              category = "hyprland";
+              name = "keybinds";
+            })
+            ++ (qnixLib.qnix.mkHomeFeatureImports {
+              category = "hyprland";
+              name = "rules";
+            })
+            ++ (qnixLib.qnix.mkHomeFeatureImports {
+              category = "hyprland";
+              name = "special-workspaces";
+            })
+            ++ [
+              {
+                home.username = "tester";
+                home.homeDirectory = "/tmp/tester";
+                home.stateVersion = "26.11";
+                qnix.desktop.hyprland.enable = true;
+              }
+            ];
+          };
+
+          hyprlandLuaConfig = hyprlandLuaEvaluation.config.xdg.configFile."hypr/hyprland.lua".source;
 
           homeOnlyServerEvaluation = home-manager.lib.homeManagerConfiguration {
             inherit pkgs;
@@ -541,7 +577,7 @@
               {
                 home.username = "tester";
                 home.homeDirectory = "/tmp/tester";
-                home.stateVersion = "25.11";
+                home.stateVersion = "26.11";
                 qnix.security.gpg.enable = true;
                 qnix.dev.direnv.enable = true;
                 qnix.system.shell = {
@@ -622,7 +658,7 @@
 
                     home.username = lib.mkForce "tester";
                     home.homeDirectory = lib.mkForce "/home/tester";
-                    home.stateVersion = lib.mkForce "25.11";
+                    home.stateVersion = lib.mkForce "26.11";
                   };
                 };
               }
@@ -659,8 +695,18 @@
             test "${if nixosCorednsEvaluation.config.qnix.network.coredns.enable then "yes" else "no"}" = "yes"
             test "${if nixosCorednsEvaluation.config.qnix.status.server then "yes" else "no"}" = "yes"
             test "${if nixosCorednsEvaluation.config.services.coredns.enable then "yes" else "no"}" = "yes"
-            test "${if lib.elem 53 nixosCorednsEvaluation.config.qnix.network.firewall.allowedTCPPorts then "yes" else "no"}" = "yes"
-            test "${if lib.elem 53 nixosCorednsEvaluation.config.qnix.network.firewall.allowedUDPPorts then "yes" else "no"}" = "yes"
+            test "${
+              if lib.elem 53 nixosCorednsEvaluation.config.qnix.network.firewall.allowedTCPPorts then
+                "yes"
+              else
+                "no"
+            }" = "yes"
+            test "${
+              if lib.elem 53 nixosCorednsEvaluation.config.qnix.network.firewall.allowedUDPPorts then
+                "yes"
+              else
+                "no"
+            }" = "yes"
             touch $out
           '';
 
@@ -700,7 +746,8 @@
               nixosWireguardClientEvaluation.config.networking.networkmanager.ensureProfiles.profiles.work."wireguard-peer.xTIBA5rboUvnH4htodjb6e697QjLERt1NAB4mZqp8Dg=".endpoint
             }" = "vpn.example.test:51820"
             test "${
-              toString nixosWireguardClientEvaluation.config.networking.networkmanager.ensureProfiles.profiles.work."wireguard-peer.xTIBA5rboUvnH4htodjb6e697QjLERt1NAB4mZqp8Dg="."preshared-key-flags"
+              toString
+                nixosWireguardClientEvaluation.config.networking.networkmanager.ensureProfiles.profiles.work."wireguard-peer.xTIBA5rboUvnH4htodjb6e697QjLERt1NAB4mZqp8Dg="."preshared-key-flags"
             }" = "0"
             test "${nixosWireguardClientEvaluation.config.networking.networkmanager.ensureProfiles.profiles.home.connection.interface-name}" = "wg1"
             test "${nixosWireguardClientEvaluation.config.networking.networkmanager.ensureProfiles.profiles.home.ipv4.address1}" = "10.77.0.2/32"
@@ -758,6 +805,117 @@
           '';
 
           home-manager-client-evaluates = homeOnlyEvaluation.activationPackage;
+
+          # Build this check directly to inspect Home Manager's rendered Lua:
+          # nix build ./checks#checks.x86_64-linux.hyprland-lua-config
+          hyprland-lua-config = hyprlandLuaConfig;
+
+          hyprland-lua-syntax = pkgs.runCommand "hyprland-lua-syntax" { } ''
+            ${pkgs.lua}/bin/luac -p ${hyprlandLuaConfig}
+            touch $out
+          '';
+
+          hyprland-lua-runtime = pkgs.runCommand "hyprland-lua-runtime" { } ''
+            mkdir -p "$TMPDIR/config/hypr"
+            touch "$TMPDIR/config/hypr/monitors.lua"
+            touch "$TMPDIR/config/hypr/workspaces.lua"
+
+            XDG_CONFIG_HOME="$TMPDIR/config" ${pkgs.lua}/bin/lua <<'EOF'
+            local events = {}
+            local commands = {}
+            local binds = {}
+            local toggled_special_workspaces = {}
+            local scratch_workspace = nil
+
+            local function make_hyprland_stub()
+              local stub = {}
+              return setmetatable(stub, {
+                __index = function()
+                  return stub
+                end,
+                __call = function()
+                  return stub
+                end,
+              })
+            end
+
+            hl = make_hyprland_stub()
+            hl.on = function(event, callback)
+              events[event] = events[event] or {}
+              table.insert(events[event], callback)
+            end
+            hl.bind = function(key, dispatcher)
+              binds[key] = dispatcher
+            end
+            hl.exec_cmd = function(command)
+              table.insert(commands, command)
+            end
+            hl.get_workspace = function(workspace)
+              assert(workspace == "special:scratch", "unexpected workspace lookup")
+              return scratch_workspace
+            end
+            hl.dispatch = function(dispatcher)
+              dispatcher()
+            end
+            hl.dsp.exec_cmd = function(command)
+              return function()
+                table.insert(commands, command)
+              end
+            end
+            hl.dsp.workspace.toggle_special = function(workspace)
+              return function()
+                table.insert(toggled_special_workspaces, workspace)
+              end
+            end
+
+            dofile("${hyprlandLuaConfig}")
+
+            assert(events["hyprland.start"], "hyprland.start callback was not registered")
+            for _, callback in ipairs(events["hyprland.start"]) do
+              callback()
+            end
+
+            local found_polkit_command = false
+            for _, command in ipairs(commands) do
+              if command == "systemctl --user start hyprpolkitagent" then
+                found_polkit_command = true
+              end
+            end
+            assert(found_polkit_command, "hyprpolkitagent startup command was not submitted")
+
+            local scratch_bind = binds["SUPER + return"]
+            assert(scratch_bind, "scratch workspace keybind was not registered")
+
+            scratch_bind()
+            local found_scratch_command = false
+            for _, command in ipairs(commands) do
+              if string.find(command, "--class scratchpad", 1, true) then
+                found_scratch_command = true
+              end
+            end
+            assert(found_scratch_command, "first scratch keypress did not launch the terminal")
+
+            scratch_workspace = { windows = 1 }
+            scratch_bind()
+            assert(
+              #toggled_special_workspaces == 1 and toggled_special_workspaces[1] == "scratch",
+              "second scratch keypress did not toggle the special workspace"
+            )
+            EOF
+
+            touch $out
+          '';
+
+          hyprland-lua-hyprland-verify = pkgs.runCommand "hyprland-lua-hyprland-verify" { } ''
+            mkdir -p "$TMPDIR/config" "$TMPDIR/runtime"
+            HOME="$TMPDIR" \
+              XDG_CONFIG_HOME="$TMPDIR/config" \
+              XDG_RUNTIME_DIR="$TMPDIR/runtime" \
+              ${pkgs.hyprland}/bin/Hyprland \
+                --verify-config \
+                --config ${hyprlandLuaConfig}
+            touch $out
+          '';
 
           home-manager-server-status-defaults = pkgs.runCommand "home-manager-server-status-defaults" { } ''
             test "${if homeOnlyServerEvaluation.config.qnix.status.server then "yes" else "no"}" = "yes"
@@ -851,23 +1009,28 @@
                 "no"
             }" = "no"
             test "${
-              if builtins.any (line: lib.hasInfix "$mod" line) homeOnlyEvaluation.config.wayland.windowManager.hyprland.settings.bind then
+              if
+                builtins.any (
+                  bind: lib.hasInfix "$mod" (builtins.toJSON bind)
+                ) homeOnlyEvaluation.config.wayland.windowManager.hyprland.settings.bind
+              then
                 "yes"
               else
                 "no"
             }" = "no"
             test "${
-              if builtins.any (line: lib.hasInfix "$ipc" line) homeOnlyEvaluation.config.wayland.windowManager.hyprland.settings.bind then
+              if
+                builtins.any (
+                  bind: lib.hasInfix "$ipc" (builtins.toJSON bind)
+                ) homeOnlyEvaluation.config.wayland.windowManager.hyprland.settings.bind
+              then
                 "yes"
               else
                 "no"
             }" = "no"
             test "${
-              if builtins.any (line: lib.hasInfix "$ipc" line) homeOnlyEvaluation.config.wayland.windowManager.hyprland.settings.bindl then
-                "yes"
-              else
-                "no"
-            }" = "no"
+              if homeOnlyEvaluation.config.wayland.windowManager.hyprland.configType == "lua" then "yes" else "no"
+            }" = "yes"
             touch $out
           '';
 
