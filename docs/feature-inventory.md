@@ -55,7 +55,7 @@ confirmation.
 |--------------------------|--------------------|--------------------------|----------------|----------------|---------|----------------------------------|
 | `security.polkit`        | NixOS              | `desktop`, `workstation` | —              | —              | planned | Desktop dependency               |
 | `security.sops`          | NixOS              | `base`, `workstation`    | —              | `.config/sops` | planned | Secrets and persistence          |
-| `security.gpg`           | NixOS + Home       | `workstation`            | —              | GPG home       | planned | Key setup and Home configuration |
+| `security.gpg`           | NixOS + Home       | Client-selected          | —              | `.gnupg`       | implemented | GPG agent, pinentry, SSH-agent support, and public-key configuration |
 | `security.gnome-keyring` | NixOS + Home       | `hyprland`               | —              | Keyring        | planned | Desktop session integration      |
 | `security.yubikey`       | NixOS + Home       | `workstation`, `laptop`  | `security.gpg` | GPG/U2F state  | planned | Login, sudo, and GPG integration |
 

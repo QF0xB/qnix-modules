@@ -62,6 +62,7 @@
       persistFeature = qnix.features.persist;
       bootFeature = qnix.features."system.boot";
       fontsFeature = qnix.features."appearance.fonts";
+      gpgFeature = qnix.features."security.gpg";
       sopsFeature = qnix.features."security.sops";
       stylixFeature = qnix.features."appearance.stylix";
       fishFeature = qnix.features."shell.fish";
@@ -211,6 +212,29 @@
           }
         ]
       );
+      gpgNixosEvaluation = mkNixos (
+        persistFeature.optionModules
+        ++ gpgFeature.optionModules
+        ++ gpgFeature.nixosModules
+        ++ [ { qnix.security.gpg.enableSSH = false; } ]
+      );
+      gpgHomeEvaluation = mkHome (
+        gpgFeature.optionModules
+        ++ gpgFeature.__homeModuleFor "standalone-home"
+        ++ [
+          {
+            qnix.security.gpg = {
+              enableSSH = false;
+              publicKeys = [
+                {
+                  text = "test-public-key";
+                  trust = "full";
+                }
+              ];
+            };
+          }
+        ]
+      );
       stylixHomeEvaluation = mkHome (
         [ stylix.homeModules.stylix ]
         ++ stylixFeature.optionModules
@@ -316,6 +340,7 @@
             "appearance.fonts"
             "appearance.stylix"
             "persist"
+            "security.gpg"
             "security.sops"
             "shell.fish"
             "shell.packages"
@@ -342,6 +367,23 @@
         assert grubBootEvaluation.config.boot.loader.grub.enable;
         assert grubBootEvaluation.config.boot.loader.grub.enableCryptodisk;
         assert !(grubBootEvaluation.config.boot.supportedFilesystems ? zfs);
+        assert
+          gpgFeature.supportedEnvironments == [
+            "nixos"
+            "integrated-home"
+            "standalone-home"
+          ];
+        assert gpgNixosEvaluation.config.programs.gnupg.agent.enable;
+        assert !gpgNixosEvaluation.config.programs.gnupg.agent.enableSSHSupport;
+        assert gpgNixosEvaluation.config.qnix.persist.users."*".directories == [ ".gnupg" ];
+        assert gpgHomeEvaluation.config.programs.gpg.enable;
+        assert gpgHomeEvaluation.config.services.gpg-agent.enable;
+        assert !gpgHomeEvaluation.config.services.gpg-agent.enableSshSupport;
+        assert gpgHomeEvaluation.config.programs.gpg.settings.use-agent;
+        assert builtins.length gpgHomeEvaluation.config.programs.gpg.publicKeys == 1;
+        assert
+          (builtins.elemAt gpgHomeEvaluation.config.programs.gpg.publicKeys 0).text == "test-public-key";
+        assert (builtins.elemAt gpgHomeEvaluation.config.programs.gpg.publicKeys 0).trust == 4;
         assert sopsFeature.supportedEnvironments == [ "nixos" ];
         assert sopsEvaluation.config.sops.defaultSopsFile == /dev/null;
         assert !sopsEvaluation.config.sops.validateSopsFiles;
