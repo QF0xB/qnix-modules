@@ -52,7 +52,11 @@
     };
 
   nixos =
-    { cfg, ... }:
+    {
+      cfg,
+      lib,
+      ...
+    }:
     let
       usedLocales = lib.unique (builtins.attrValues cfg.localeSettings);
       supportedLocales = map (locale: "${locale}/UTF-8") usedLocales;
