@@ -16,11 +16,57 @@
           hostname = "check";
         };
       };
+
+      testOptions = {
+        options = {
+          services.xserver.xkb.layout = nixpkgs.lib.mkOption {
+            type = nixpkgs.lib.types.str;
+          };
+          services.xserver.xkb.variant = nixpkgs.lib.mkOption {
+            type = nixpkgs.lib.types.str;
+          };
+          console.useXkbConfig = nixpkgs.lib.mkOption {
+            type = nixpkgs.lib.types.bool;
+          };
+          time.timeZone = nixpkgs.lib.mkOption {
+            type = nixpkgs.lib.types.str;
+          };
+          i18n.supportedLocales = nixpkgs.lib.mkOption {
+            type = nixpkgs.lib.types.listOf nixpkgs.lib.types.str;
+          };
+          i18n.extraLocaleSettings = nixpkgs.lib.mkOption {
+            type = nixpkgs.lib.types.attrsOf nixpkgs.lib.types.str;
+          };
+        };
+      };
+
+      defaultEvaluation = nixpkgs.lib.evalModules {
+        modules = [ testOptions ] ++ qnix.modulesFor.nixos [ "base" ];
+      };
+
+      overrideEvaluation = nixpkgs.lib.evalModules {
+        modules = [
+          testOptions
+          {
+            qnix.system.localisation = {
+              timezone = "UTC";
+              xkb.layout = "us";
+            };
+          }
+        ]
+        ++ qnix.modulesFor.nixos [ "base" ];
+      };
     in
     {
-      checks.${system}.factory =
-        assert qnix.featureNames == [ ];
-        assert qnix.profileNames == [ ];
-        pkgs.runCommand "qnix-modules-factory" { } "touch $out";
+      checks.${system}.default =
+        assert qnix.featureNames == [ "system.localisation" ];
+        assert qnix.profileNames == [ "base" ];
+        assert defaultEvaluation.config.qnix.system.localisation.enable;
+        assert defaultEvaluation.config.time.timeZone == "Europe/Berlin";
+        assert defaultEvaluation.config.services.xserver.xkb.layout == "de";
+        assert defaultEvaluation.config.console.useXkbConfig;
+        assert overrideEvaluation.config.time.timeZone == "UTC";
+        assert overrideEvaluation.config.services.xserver.xkb.layout == "us";
+        pkgs.runCommand "qnix-modules-check" { } "touch $out";
     };
 }
