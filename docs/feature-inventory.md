@@ -57,7 +57,7 @@ confirmation.
 | `security.sops`          | NixOS              | `secrets`               | External sops-nix | `.config/sops` | implemented | Age-backed secret declarations and deployment |
 | `security.gpg`           | NixOS + Home       | Client-selected          | —              | `.gnupg`       | implemented | GPG agent, pinentry, SSH-agent support, and public-key configuration |
 | `security.gnome-keyring` | NixOS              | Client-selected          | —              | `.local/share/keyrings` | implemented | GNOME Keyring service, PAM integration, and optional Seahorse |
-| `security.yubikey`       | NixOS + Home       | `workstation`, `laptop`  | `security.gpg` | GPG/U2F state  | planned | Login, sudo, and GPG integration |
+| `security.yubikey`       | NixOS              | Client-selected          | `security.gpg` | U2F mappings and smart-card state | implemented | Optional YubiKey login, sudo, GPG smart-card, and GUI integration |
 
 ## Storage
 

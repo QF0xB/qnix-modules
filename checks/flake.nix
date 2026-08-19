@@ -66,6 +66,7 @@
       gnomeKeyringFeature = qnix.features."security.gnome-keyring";
       polkitFeature = qnix.features."security.polkit";
       sopsFeature = qnix.features."security.sops";
+      yubikeyFeature = qnix.features."security.yubikey";
       stylixFeature = qnix.features."appearance.stylix";
       fishFeature = qnix.features."shell.fish";
       shellPackagesFeature = qnix.features."shell.packages";
@@ -248,6 +249,23 @@
         ++ gnomeKeyringFeature.nixosModules
         ++ [ { qnix.security.gnome-keyring.gui = true; } ]
       );
+      yubikeyEvaluation = mkNixos (
+        yubikeyFeature.optionModules
+        ++ yubikeyFeature.nixosModules
+        ++ [
+          {
+            qnix.security.yubikey = {
+              login = true;
+              sudo = true;
+              u2f = {
+                cue = false;
+                origin = "pam://check";
+                mappings.check = [ "key-handle,public-key,es256,+presence" ];
+              };
+            };
+          }
+        ]
+      );
       polkitEvaluation = mkNixos (polkitFeature.optionModules ++ polkitFeature.nixosModules);
       polkitDisabledEvaluation = mkNixos (
         polkitFeature.optionModules
@@ -368,6 +386,7 @@
             "security.gpg"
             "security.polkit"
             "security.sops"
+            "security.yubikey"
             "shell.fish"
             "shell.packages"
             "shell.starship"
@@ -443,6 +462,14 @@
         assert sopsEvaluation.config.sops.secrets.example.mode == "0440";
         assert sopsEvaluation.config.sops.secrets.example.neededForUsers;
         assert sopsEvaluation.config.sops.secrets.example.restartUnits == [ "example.service" ];
+        assert yubikeyFeature.supportedEnvironments == [ "nixos" ];
+        assert yubikeyEvaluation.config.services.pcscd.enable;
+        assert yubikeyEvaluation.config.hardware.gpgSmartcards.enable;
+        assert yubikeyEvaluation.config.security.pam.u2f.enable;
+        assert yubikeyEvaluation.config.security.pam.u2f.settings.cue == false;
+        assert yubikeyEvaluation.config.security.pam.u2f.settings.origin == "pam://check";
+        assert yubikeyEvaluation.config.security.pam.services.login.u2f.enable;
+        assert yubikeyEvaluation.config.security.pam.services.sudo.u2f.enable;
         assert
           fontsFeature.supportedEnvironments == [
             "nixos"
