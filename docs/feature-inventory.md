@@ -91,7 +91,7 @@ confirmation.
 | Feature             | Likely environment | Profiles     | Dependencies | Persistence  | Status  | Notes   |
 |---------------------|--------------------|--------------|--------------|--------------|---------|---------|
 | `appearance.fonts`  | NixOS + Home       | `base`       | —            | —            | implemented | Installs the default JetBrains Mono Nerd Font and custom font packages |
-| `appearance.stylix` | NixOS + Home       | `appearance` | —            | Theme state? | planned | Theming |
+| `appearance.stylix` | NixOS + Home       | `appearance` | External Stylix module | Theme state? | implemented | Solarized Dark theme, cursor/icons, opacity, fonts, and optional wallpaper sync |
 
 ## Applications
 

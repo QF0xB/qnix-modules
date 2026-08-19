@@ -1,0 +1,3 @@
+{
+  features = [ "appearance.stylix" ];
+}
