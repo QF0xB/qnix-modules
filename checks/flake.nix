@@ -74,6 +74,7 @@
       zshFeature = qnix.features."shell.zsh";
       userFeature = qnix.features."system.users";
       impermanenceFeature = qnix.features."storage.impermanence";
+      firewallFeature = qnix.features."network.firewall";
       zfsFeature = qnix.features."storage.zfs";
 
       persistEvaluation = nixpkgs.lib.evalModules {
@@ -337,6 +338,23 @@
         ++ [ { qnix.storage.impermanence.enable = true; } ]
       );
 
+      firewallEvaluation = mkNixos (
+        firewallFeature.optionModules
+        ++ firewallFeature.nixosModules
+        ++ [
+          {
+            qnix.network.firewall = {
+              allowedTCPPorts = [
+                22
+                443
+              ];
+              allowedUDPPorts = [ 51820 ];
+              allowPing = true;
+            };
+          }
+        ]
+      );
+
       bootEvaluation = mkNixos (bootFeature.optionModules ++ bootFeature.nixosModules);
       grubBootEvaluation = mkNixos (
         bootFeature.optionModules
@@ -381,6 +399,7 @@
           qnix.featureNames == [
             "appearance.fonts"
             "appearance.stylix"
+            "network.firewall"
             "persist"
             "security.gnome-keyring"
             "security.gpg"
@@ -413,6 +432,15 @@
         assert grubBootEvaluation.config.boot.loader.grub.enable;
         assert grubBootEvaluation.config.boot.loader.grub.enableCryptodisk;
         assert !(grubBootEvaluation.config.boot.supportedFilesystems ? zfs);
+        assert firewallFeature.supportedEnvironments == [ "nixos" ];
+        assert firewallEvaluation.config.networking.firewall.enable;
+        assert
+          firewallEvaluation.config.networking.firewall.allowedTCPPorts == [
+            22
+            443
+          ];
+        assert firewallEvaluation.config.networking.firewall.allowedUDPPorts == [ 51820 ];
+        assert firewallEvaluation.config.networking.firewall.allowPing;
         assert
           gpgFeature.supportedEnvironments == [
             "nixos"

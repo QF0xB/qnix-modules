@@ -44,7 +44,7 @@ confirmation.
 | Feature                  | Likely environment | Profiles                        | Dependencies    | Persistence    | Status  | Notes                            |
 |--------------------------|--------------------|---------------------------------|-----------------|----------------|---------|----------------------------------|
 | `network.addressing`     | NixOS              | `base`                          | —               | —              | planned | Hostname, interfaces, and routes |
-| `network.firewall`       | NixOS              | `base`                          | —               | —              | planned | Base firewall                    |
+| `network.firewall`       | NixOS              | Client-selected                | —               | —              | implemented | Firewall enablement, allowed ports, and ping policy |
 | `network.networkmanager` | NixOS              | `desktop`, `workstation`        | —               | —              | planned | Desktop networking               |
 | `network.tailscale`      | NixOS              | `base`, `workstation`, `laptop` | —               | Service state? | planned | VPN/service                      |
 | `network.wireguard`      | NixOS              | `base`, `workstation`, `laptop` | `security.sops` | Keys/config?   | planned | VPN/service and secrets          |
