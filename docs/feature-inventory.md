@@ -25,8 +25,8 @@ confirmation.
 
 | Feature | Likely environment | Profiles | Dependencies | Persistence | Status | Notes |
 |---|---|---|---|---|---|---|
-| `system.shell` | NixOS + Home | `base`, `workstation` | — | Home shell state? | planned | Shell setup |
-| `shell.starship` | Home | `base`, `workstation` | `system.shell` | — | planned | Prompt configuration |
+| `shell.fish` | NixOS + Home | `base`, `workstation` | — | Home shell state? | planned | Fish shell setup |
+| `shell.starship` | Home | `base`, `workstation` | `shell.fish` | — | planned | Prompt configuration |
 
 ## Hardware and power
 
@@ -88,7 +88,7 @@ confirmation.
 
 | Feature | Likely environment | Profiles | Dependencies | Persistence | Status | Notes |
 |---|---|---|---|---|---|---|
-| `desktop.stylix` | NixOS + Home | `appearance` | — | Theme state? | planned | Theming |
+| `appearance.stylix` | NixOS + Home | `appearance` | — | Theme state? | planned | Theming |
 
 ## Applications
 
@@ -110,7 +110,7 @@ confirmation.
 | `dev.codex` | NixOS + Home | `developer` | — | Codex config? | planned | Package/config |
 | `dev.vscode` | NixOS + Home | `developer`, `editor` | — | Editor config | planned | VS Code or another selected editor alternative |
 | `dev.devenv` | NixOS | `developer` | — | — | planned | Development environment |
-| `dev.direnv` | Home | `developer` | `system.shell` | — | planned | Shell integration |
+| `dev.direnv` | Home | `developer` | `shell.fish` | — | planned | Shell integration |
 | `dev.git` | NixOS + Home | `developer`, `workstation` | `security.gpg` | Git config | planned | Git, GitHub CLI (`gh`), and signing |
 | `dev.jetbrains` | NixOS + Home | `developer` | — | IDE config | planned | IDEs |
 | `dev.kubernetes-cli` | NixOS + Home | `developer` | — | Kubernetes config | planned | Local Kubernetes CLI tooling |
@@ -118,7 +118,7 @@ confirmation.
 | `dev.nixfmt` | NixOS + Home | `developer` | — | — | planned | Formatting tools |
 | `dev.nvf` | NixOS + Home | `editor` | — | Editor config | planned | Editor configuration |
 | `dev.postman` | NixOS + Home | `developer` | — | Postman data | planned | API tooling |
-| `runtime.docker` | NixOS + Home | `developer` | — | `/var/lib/docker`? | planned | Local development containers |
+| `dev.docker` | NixOS + Home | `developer` | — | `/var/lib/docker`? | planned | Local development containers |
 
 ## Pentesting
 
