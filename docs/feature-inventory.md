@@ -25,7 +25,7 @@ confirmation.
 
 | Feature          | Likely environment | Profiles              | Dependencies | Persistence       | Status  | Notes                |
 |------------------|--------------------|-----------------------|--------------|-------------------|---------|----------------------|
-| `shell.fish`     | NixOS + Home       | `base`, `workstation` | —            | Home shell state? | planned | Fish shell setup     |
+| `shell.fish`     | Integrated + standalone Home | `base`, `workstation` | —            | `.local/share/fish` | in progress | Fish, fzf, autopair, done, and sudope; aliases configurable |
 | `shell.starship` | Home               | `base`, `workstation` | `shell.fish` | —                 | planned | Prompt configuration |
 
 ## Hardware and power
