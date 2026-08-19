@@ -45,6 +45,24 @@
             type = nixpkgs.lib.types.bool;
             default = false;
           };
+          programs.zsh = {
+            enable = nixpkgs.lib.mkOption {
+              type = nixpkgs.lib.types.bool;
+              default = false;
+            };
+            autosuggestions.enable = nixpkgs.lib.mkOption {
+              type = nixpkgs.lib.types.bool;
+              default = false;
+            };
+            syntaxHighlighting.enable = nixpkgs.lib.mkOption {
+              type = nixpkgs.lib.types.bool;
+              default = false;
+            };
+            enableCompletion = nixpkgs.lib.mkOption {
+              type = nixpkgs.lib.types.bool;
+              default = false;
+            };
+          };
 
           users.mutableUsers = nixpkgs.lib.mkOption {
             type = nixpkgs.lib.types.bool;
@@ -69,6 +87,7 @@
       fishFeature = qnix.features."shell.fish";
       shellPackagesFeature = qnix.features."shell.packages";
       starshipFeature = qnix.features."shell.starship";
+      zshFeature = qnix.features."shell.zsh";
       userFeature = qnix.features."system.users";
       persistFeature = qnix.features.persist;
       impermanenceFeature = qnix.features."storage.impermanence";
@@ -89,6 +108,27 @@
           settings = nixpkgs.lib.mkOption {
             type = nixpkgs.lib.types.attrs;
             default = { };
+          };
+        };
+      };
+
+      zshTestOptions = {
+        options.programs.zsh = {
+          enable = nixpkgs.lib.mkOption {
+            type = nixpkgs.lib.types.bool;
+            default = false;
+          };
+          autosuggestions.enable = nixpkgs.lib.mkOption {
+            type = nixpkgs.lib.types.bool;
+            default = false;
+          };
+          syntaxHighlighting.enable = nixpkgs.lib.mkOption {
+            type = nixpkgs.lib.types.bool;
+            default = false;
+          };
+          enableCompletion = nixpkgs.lib.mkOption {
+            type = nixpkgs.lib.types.bool;
+            default = false;
           };
         };
       };
@@ -349,6 +389,14 @@
         ];
       };
 
+      zshNixosEvaluation = nixpkgs.lib.evalModules {
+        modules = [ zshTestOptions ] ++ persistFeature.optionModules ++ zshFeature.optionModules ++ zshFeature.nixosModules;
+      };
+
+      zshHomeEvaluation = nixpkgs.lib.evalModules {
+        modules = [ zshTestOptions ] ++ persistFeature.optionModules ++ zshFeature.optionModules ++ (zshFeature.__homeModuleFor "standalone-home");
+      };
+
       impermanenceHomeEvaluation = nixpkgs.lib.evalModules {
         specialArgs = { inherit pkgs; };
         modules = [ homePackageTestOptions ] ++ shellPackagesFeature.optionModules ++ impermanenceFeature.optionModules ++ (shellPackagesFeature.__homeModuleFor "standalone-home") ++ (impermanenceFeature.__homeModuleFor "standalone-home") ++ [
@@ -384,7 +432,7 @@
     in
     {
       checks.${system}.default =
-        assert qnix.featureNames == [ "persist" "shell.fish" "shell.packages" "shell.starship" "storage.impermanence" "system.localisation" "system.users" ];
+        assert qnix.featureNames == [ "persist" "shell.fish" "shell.packages" "shell.starship" "shell.zsh" "storage.impermanence" "system.localisation" "system.users" ];
         assert qnix.profileNames == [ "base" "impermanence" ];
         assert impermanenceProfileEvaluation.config.qnix.storage.impermanence.enable;
         assert impermanenceProfileEvaluation.config.qnix.persist.root.directories == [ "/var/lib/nixos" ];
@@ -406,6 +454,13 @@
         assert starshipEvaluation.config.programs.starship.enable;
         assert starshipEvaluation.config.programs.starship.settings.add_newline == false;
         assert starshipEvaluation.config.programs.starship.settings.format == "$directory$character";
+        assert zshFeature.supportedEnvironments == [ "nixos" "integrated-home" "standalone-home" ];
+        assert zshNixosEvaluation.config.programs.zsh.enable;
+        assert zshNixosEvaluation.config.programs.zsh.autosuggestions.enable;
+        assert zshNixosEvaluation.config.programs.zsh.syntaxHighlighting.enable;
+        assert zshNixosEvaluation.config.programs.zsh.enableCompletion;
+        assert zshHomeEvaluation.config.programs.zsh.enable;
+        assert zshNixosEvaluation.config.qnix.persist.users."*".files == [ ".zsh_history" ];
         assert userFeature.supportedEnvironments == [ "nixos" ];
         assert userEvaluation.config.users.mutableUsers == false;
         assert userEvaluation.config.users.defaultUserShell == pkgs.bash;
