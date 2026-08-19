@@ -12,6 +12,10 @@
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     qnix-modules.url = "path:..";
   };
 
@@ -21,6 +25,7 @@
       home-manager,
       impermanence,
       stylix,
+      sops-nix,
       qnix-modules,
       ...
     }:
@@ -57,6 +62,7 @@
       persistFeature = qnix.features.persist;
       bootFeature = qnix.features."system.boot";
       fontsFeature = qnix.features."appearance.fonts";
+      sopsFeature = qnix.features."security.sops";
       stylixFeature = qnix.features."appearance.stylix";
       fishFeature = qnix.features."shell.fish";
       shellPackagesFeature = qnix.features."shell.packages";
@@ -179,6 +185,32 @@
       stylixNixosEvaluation = mkNixos (
         [ stylix.nixosModules.stylix ] ++ stylixFeature.optionModules ++ stylixFeature.nixosModules
       );
+      sopsEvaluation = mkNixos (
+        [ sops-nix.nixosModules.sops ]
+        ++ sopsFeature.optionModules
+        ++ sopsFeature.nixosModules
+        ++ [
+          {
+            qnix.security.sops = {
+              defaultSopsFile = /dev/null;
+              validateSopsFiles = false;
+              age = {
+                generateKey = true;
+                keyFile = "/var/lib/sops/age/keys.txt";
+              };
+              secrets.example = {
+                key = "example";
+                path = "/run/secrets/example";
+                owner = "check";
+                group = "users";
+                mode = "0440";
+                neededForUsers = true;
+                restartUnits = [ "example.service" ];
+              };
+            };
+          }
+        ]
+      );
       stylixHomeEvaluation = mkHome (
         [ stylix.homeModules.stylix ]
         ++ stylixFeature.optionModules
@@ -284,6 +316,7 @@
             "appearance.fonts"
             "appearance.stylix"
             "persist"
+            "security.sops"
             "shell.fish"
             "shell.packages"
             "shell.starship"
@@ -309,6 +342,18 @@
         assert grubBootEvaluation.config.boot.loader.grub.enable;
         assert grubBootEvaluation.config.boot.loader.grub.enableCryptodisk;
         assert !(grubBootEvaluation.config.boot.supportedFilesystems ? zfs);
+        assert sopsFeature.supportedEnvironments == [ "nixos" ];
+        assert sopsEvaluation.config.sops.defaultSopsFile == /dev/null;
+        assert !sopsEvaluation.config.sops.validateSopsFiles;
+        assert sopsEvaluation.config.sops.age.generateKey;
+        assert sopsEvaluation.config.sops.age.keyFile == "/var/lib/sops/age/keys.txt";
+        assert sopsEvaluation.config.sops.secrets.example.key == "example";
+        assert sopsEvaluation.config.sops.secrets.example.path == "/run/secrets/example";
+        assert sopsEvaluation.config.sops.secrets.example.owner == "check";
+        assert sopsEvaluation.config.sops.secrets.example.group == "users";
+        assert sopsEvaluation.config.sops.secrets.example.mode == "0440";
+        assert sopsEvaluation.config.sops.secrets.example.neededForUsers;
+        assert sopsEvaluation.config.sops.secrets.example.restartUnits == [ "example.service" ];
         assert
           fontsFeature.supportedEnvironments == [
             "nixos"
