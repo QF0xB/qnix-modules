@@ -96,6 +96,7 @@ confirmation.
 |---|---|---|---|---|---|---|
 | `apps.browser` | NixOS + Home | `desktop`, `personal` | — | Browser profile | planned | Browser package/config |
 | `apps.file-manager` | Home | `desktop` | — | — | planned | File manager |
+| `apps.chatgpt` | NixOS + Home | `personal`, `developer` | — | ChatGPT app state? | planned | GPT desktop application; package and platform support to confirm |
 | `apps.bitwarden` | NixOS + Home | `personal` | — | Vault/config? | planned | Package/config; package availability uncertain |
 | `apps.music` | NixOS + Home | `personal` | — | Music client state | planned | Music client |
 | `apps.notes` | NixOS + Home | `personal` | — | Notes data | planned | Notes application |
@@ -107,10 +108,10 @@ confirmation.
 | Feature | Likely environment | Profiles | Dependencies | Persistence | Status | Notes |
 |---|---|---|---|---|---|---|
 | `dev.codex` | NixOS + Home | `developer` | — | Codex config? | planned | Package/config |
-| `dev.cursor` | NixOS + Home | `developer` | — | Editor config | planned | Package/config |
+| `dev.vscode` | NixOS + Home | `developer`, `editor` | — | Editor config | planned | VS Code or another selected editor alternative |
 | `dev.devenv` | NixOS | `developer` | — | — | planned | Development environment |
 | `dev.direnv` | Home | `developer` | `system.shell` | — | planned | Shell integration |
-| `dev.git` | NixOS + Home | `developer`, `workstation` | `security.gpg` | Git config | planned | Git and signing |
+| `dev.git` | NixOS + Home | `developer`, `workstation` | `security.gpg` | Git config | planned | Git, GitHub CLI (`gh`), and signing |
 | `dev.jetbrains` | NixOS + Home | `developer` | — | IDE config | planned | IDEs |
 | `dev.kubernetes-cli` | NixOS + Home | `developer` | — | Kubernetes config | planned | Local Kubernetes CLI tooling |
 | `dev.nh` | NixOS | `workstation` | — | — | planned | Nix maintenance |
