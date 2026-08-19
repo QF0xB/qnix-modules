@@ -63,6 +63,7 @@
       bootFeature = qnix.features."system.boot";
       fontsFeature = qnix.features."appearance.fonts";
       gpgFeature = qnix.features."security.gpg";
+      polkitFeature = qnix.features."security.polkit";
       sopsFeature = qnix.features."security.sops";
       stylixFeature = qnix.features."appearance.stylix";
       fishFeature = qnix.features."shell.fish";
@@ -235,6 +236,12 @@
           }
         ]
       );
+      polkitEvaluation = mkNixos (polkitFeature.optionModules ++ polkitFeature.nixosModules);
+      polkitDisabledEvaluation = mkNixos (
+        polkitFeature.optionModules
+        ++ polkitFeature.nixosModules
+        ++ [ { qnix.security.polkit.allowUserPowerCommands = false; } ]
+      );
       stylixHomeEvaluation = mkHome (
         [ stylix.homeModules.stylix ]
         ++ stylixFeature.optionModules
@@ -316,6 +323,11 @@
       );
 
       defaultEvaluation = mkNixos (qnix.modulesFor.nixos [ "base" ]);
+      secretsProfileEvaluation = mkNixos (
+        [ sops-nix.nixosModules.sops ]
+        ++ qnix.modulesFor.nixos [ "secrets" ]
+        ++ [ { qnix.security.sops.validateSopsFiles = false; } ]
+      );
       impermanenceProfileEvaluation = mkNixos (
         [ impermanence.nixosModules.impermanence ]
         ++ qnix.modulesFor.nixos [ "impermanence" ]
@@ -341,6 +353,7 @@
             "appearance.stylix"
             "persist"
             "security.gpg"
+            "security.polkit"
             "security.sops"
             "shell.fish"
             "shell.packages"
@@ -357,6 +370,7 @@
             "appearance"
             "base"
             "impermanence"
+            "secrets"
           ];
         assert persistFeature.supportedEnvironments == [ "nixos" ];
         assert bootFeature.supportedEnvironments == [ "nixos" ];
@@ -384,7 +398,19 @@
         assert
           (builtins.elemAt gpgHomeEvaluation.config.programs.gpg.publicKeys 0).text == "test-public-key";
         assert (builtins.elemAt gpgHomeEvaluation.config.programs.gpg.publicKeys 0).trust == 4;
+        assert polkitFeature.supportedEnvironments == [ "nixos" ];
+        assert polkitEvaluation.config.security.polkit.enable;
+        assert polkitEvaluation.config.qnix.security.polkit.allowUserPowerCommands;
+        assert
+          builtins.match ".*org.freedesktop.login1.reboot.*" polkitEvaluation.config.security.polkit.extraConfig
+          != null;
+        assert !polkitDisabledEvaluation.config.qnix.security.polkit.allowUserPowerCommands;
+        assert
+          builtins.match ".*org.freedesktop.login1.reboot.*" polkitDisabledEvaluation.config.security.polkit.extraConfig
+          == null;
         assert sopsFeature.supportedEnvironments == [ "nixos" ];
+        assert secretsProfileEvaluation.config.qnix.security.sops.validateSopsFiles == false;
+        assert secretsProfileEvaluation.config.sops.validateSopsFiles == false;
         assert sopsEvaluation.config.sops.defaultSopsFile == /dev/null;
         assert !sopsEvaluation.config.sops.validateSopsFiles;
         assert sopsEvaluation.config.sops.age.generateKey;

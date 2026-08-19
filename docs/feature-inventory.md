@@ -53,8 +53,8 @@ confirmation.
 
 | Feature                  | Likely environment | Profiles                 | Dependencies   | Persistence    | Status  | Notes                            |
 |--------------------------|--------------------|--------------------------|----------------|----------------|---------|----------------------------------|
-| `security.polkit`        | NixOS              | `desktop`, `workstation` | —              | —              | planned | Desktop dependency               |
-| `security.sops`          | NixOS              | `base`, `workstation`    | —              | `.config/sops` | planned | Secrets and persistence          |
+| `security.polkit`        | NixOS              | Client-selected          | —              | —              | implemented | Polkit service and user power-action policy |
+| `security.sops`          | NixOS              | `secrets`               | External sops-nix | `.config/sops` | implemented | Age-backed secret declarations and deployment |
 | `security.gpg`           | NixOS + Home       | Client-selected          | —              | `.gnupg`       | implemented | GPG agent, pinentry, SSH-agent support, and public-key configuration |
 | `security.gnome-keyring` | NixOS + Home       | `hyprland`               | —              | Keyring        | planned | Desktop session integration      |
 | `security.yubikey`       | NixOS + Home       | `workstation`, `laptop`  | `security.gpg` | GPG/U2F state  | planned | Login, sudo, and GPG integration |
