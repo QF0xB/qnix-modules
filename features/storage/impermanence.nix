@@ -6,7 +6,10 @@
   ];
 
   requires = {
-    nixos = [ "persist" ];
+    nixos = [
+      "persist"
+      "system.users"
+    ];
     home = [ "shell.packages" ];
   };
 
@@ -42,7 +45,7 @@
         };
 
       managedUserNames = lib.unique (
-        (lib.attrNames config.users.users)
+        (lib.attrNames config.qnix.system.users.users)
         ++ (lib.remove "*" (lib.attrNames persist.users))
       );
       managedUsers = lib.genAttrs managedUserNames mergeUser;

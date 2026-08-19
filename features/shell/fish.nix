@@ -18,7 +18,11 @@
   # Persistence contributions require a NixOS-side implementation so the SDK
   # can attach them to the shared qnix.persist contract. This feature does not
   # enable Fish system-wide here; system.users or the host owns that decision.
-  nixos = { ... }: { };
+  nixos =
+    { ... }:
+    {
+      programs.fish.enable = true;
+    };
 
   home =
     {

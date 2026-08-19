@@ -19,6 +19,10 @@
 
       testOptions = {
         options = {
+          assertions = nixpkgs.lib.mkOption {
+            type = nixpkgs.lib.types.listOf nixpkgs.lib.types.attrs;
+            default = [ ];
+          };
           services.xserver.xkb.layout = nixpkgs.lib.mkOption {
             type = nixpkgs.lib.types.str;
           };
@@ -37,17 +41,35 @@
           i18n.extraLocaleSettings = nixpkgs.lib.mkOption {
             type = nixpkgs.lib.types.attrsOf nixpkgs.lib.types.str;
           };
-
-          qnix.persist.users."*".directories = nixpkgs.lib.mkOption {
-            type = nixpkgs.lib.types.listOf nixpkgs.lib.types.str;
-            default = [ ];
+          programs.fish.enable = nixpkgs.lib.mkOption {
+            type = nixpkgs.lib.types.bool;
+            default = false;
           };
+
+          users.mutableUsers = nixpkgs.lib.mkOption {
+            type = nixpkgs.lib.types.bool;
+            default = true;
+          };
+          users.defaultUserShell = nixpkgs.lib.mkOption {
+            type = nixpkgs.lib.types.nullOr nixpkgs.lib.types.package;
+            default = null;
+          };
+          users.users = nixpkgs.lib.mkOption {
+            type = nixpkgs.lib.types.attrsOf nixpkgs.lib.types.attrs;
+            default = { };
+          };
+          users.groups = nixpkgs.lib.mkOption {
+            type = nixpkgs.lib.types.attrsOf nixpkgs.lib.types.attrs;
+            default = { };
+          };
+
         };
       };
 
       fishFeature = qnix.features."shell.fish";
       shellPackagesFeature = qnix.features."shell.packages";
       starshipFeature = qnix.features."shell.starship";
+      userFeature = qnix.features."system.users";
       persistFeature = qnix.features.persist;
       impermanenceFeature = qnix.features."storage.impermanence";
 
@@ -111,11 +133,32 @@
 
       impermanenceTestOptions = {
         options = {
+          assertions = nixpkgs.lib.mkOption {
+            type = nixpkgs.lib.types.listOf nixpkgs.lib.types.attrs;
+            default = [ ];
+          };
+          programs.fish.enable = nixpkgs.lib.mkOption {
+            type = nixpkgs.lib.types.bool;
+            default = false;
+          };
+          users.mutableUsers = nixpkgs.lib.mkOption {
+            type = nixpkgs.lib.types.bool;
+            default = true;
+          };
+          users.defaultUserShell = nixpkgs.lib.mkOption {
+            type = nixpkgs.lib.types.nullOr nixpkgs.lib.types.package;
+            default = null;
+          };
           users.users = nixpkgs.lib.mkOption {
             type = nixpkgs.lib.types.attrsOf nixpkgs.lib.types.attrs;
             default = {
               tester = { };
             };
+          };
+
+          users.groups = nixpkgs.lib.mkOption {
+            type = nixpkgs.lib.types.attrsOf nixpkgs.lib.types.attrs;
+            default = { };
           };
 
           fileSystems = nixpkgs.lib.mkOption {
@@ -193,9 +236,8 @@
 
       impermanenceEvaluation = nixpkgs.lib.evalModules {
         specialArgs = { inherit pkgs; };
-        modules = [ impermanenceTestOptions ] ++ persistFeature.optionModules ++ impermanenceFeature.optionModules ++ impermanenceFeature.nixosModules ++ [
+        modules = [ impermanenceTestOptions ] ++ persistFeature.optionModules ++ userFeature.optionModules ++ impermanenceFeature.optionModules ++ userFeature.nixosModules ++ impermanenceFeature.nixosModules ++ [
           {
-            users.users.tester = { };
             qnix.persist = {
               root = {
                 directories = [ "/var/lib/example" ];
@@ -214,7 +256,60 @@
                 alice.directories = [ "alice-data" ];
               };
             };
+            qnix.system.users.users.tester = { };
             qnix.storage.impermanence.enable = true;
+          }
+        ];
+      };
+
+      userTestOptions = {
+        options = {
+          assertions = nixpkgs.lib.mkOption {
+            type = nixpkgs.lib.types.listOf nixpkgs.lib.types.attrs;
+            default = [ ];
+          };
+          programs.fish.enable = nixpkgs.lib.mkOption {
+            type = nixpkgs.lib.types.bool;
+            default = false;
+          };
+          users.mutableUsers = nixpkgs.lib.mkOption {
+            type = nixpkgs.lib.types.bool;
+            default = true;
+          };
+          users.defaultUserShell = nixpkgs.lib.mkOption {
+            type = nixpkgs.lib.types.package;
+          };
+          users.users = nixpkgs.lib.mkOption {
+            type = nixpkgs.lib.types.attrsOf nixpkgs.lib.types.attrs;
+            default = { };
+          };
+          users.groups = nixpkgs.lib.mkOption {
+            type = nixpkgs.lib.types.attrsOf nixpkgs.lib.types.attrs;
+            default = { };
+          };
+        };
+      };
+
+      userEvaluation = nixpkgs.lib.evalModules {
+        specialArgs = { inherit pkgs; };
+        modules = [ userTestOptions ] ++ userFeature.optionModules ++ userFeature.nixosModules ++ [
+          {
+            qnix.system.users = {
+              defaultExtraGroups = [ "wheel" ];
+              defaultShell = "bash";
+              root.enable = true;
+              users.alice = {
+                extraGroups = [ "audio" ];
+                home = "/home/alice";
+                description = "Alice";
+                shell = "zsh";
+                openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAA alice" ];
+              };
+              users.service = {
+                kind = "system";
+                group = "svc";
+              };
+            };
           }
         ];
       };
@@ -224,7 +319,7 @@
       );
 
       fishPersistenceEvaluation = nixpkgs.lib.evalModules {
-        modules = [ testOptions ] ++ fishFeature.optionModules ++ fishFeature.nixosModules;
+        modules = [ testOptions ] ++ persistFeature.optionModules ++ fishFeature.optionModules ++ fishFeature.nixosModules;
       };
 
       shellPackagesEvaluation = nixpkgs.lib.evalModules {
@@ -264,6 +359,7 @@
       };
 
       defaultEvaluation = nixpkgs.lib.evalModules {
+        specialArgs = { inherit pkgs; };
         modules = [ testOptions ] ++ qnix.modulesFor.nixos [ "base" ];
       };
 
@@ -273,6 +369,7 @@
       };
 
       overrideEvaluation = nixpkgs.lib.evalModules {
+        specialArgs = { inherit pkgs; };
         modules = [
           testOptions
           {
@@ -287,7 +384,7 @@
     in
     {
       checks.${system}.default =
-        assert qnix.featureNames == [ "persist" "shell.fish" "shell.packages" "shell.starship" "storage.impermanence" "system.localisation" ];
+        assert qnix.featureNames == [ "persist" "shell.fish" "shell.packages" "shell.starship" "storage.impermanence" "system.localisation" "system.users" ];
         assert qnix.profileNames == [ "base" "impermanence" ];
         assert impermanenceProfileEvaluation.config.qnix.storage.impermanence.enable;
         assert impermanenceProfileEvaluation.config.qnix.persist.root.directories == [ "/var/lib/nixos" ];
@@ -309,6 +406,21 @@
         assert starshipEvaluation.config.programs.starship.enable;
         assert starshipEvaluation.config.programs.starship.settings.add_newline == false;
         assert starshipEvaluation.config.programs.starship.settings.format == "$directory$character";
+        assert userFeature.supportedEnvironments == [ "nixos" ];
+        assert userEvaluation.config.users.mutableUsers == false;
+        assert userEvaluation.config.users.defaultUserShell == pkgs.bash;
+        assert userEvaluation.config.users.users.root.isSystemUser;
+        assert userEvaluation.config.users.users.alice.isNormalUser;
+        assert userEvaluation.config.users.users.alice.group == "alice";
+        assert userEvaluation.config.users.users.alice.extraGroups == [ "wheel" "audio" ];
+        assert userEvaluation.config.users.users.alice.home == "/home/alice";
+        assert userEvaluation.config.users.users.alice.description == "Alice";
+        assert userEvaluation.config.users.users.alice.shell == pkgs.zsh;
+        assert userEvaluation.config.users.users.alice.openssh.authorizedKeys.keys == [ "ssh-ed25519 AAAA alice" ];
+        assert userEvaluation.config.users.users.service.isSystemUser;
+        assert userEvaluation.config.users.users.service.group == "svc";
+        assert builtins.hasAttr "alice" userEvaluation.config.users.groups;
+        assert builtins.hasAttr "svc" userEvaluation.config.users.groups;
         assert impermanenceFeature.supportedEnvironments == [ "nixos" "integrated-home" "standalone-home" ];
         assert impermanenceEvaluation.config.fileSystems."/persist".neededForBoot;
         assert impermanenceEvaluation.config.fileSystems."/cache".neededForBoot;
@@ -334,10 +446,14 @@
         assert builtins.elem "/home/tester/.cache/tester.state" impermanenceManifest.files;
         assert builtins.elem "/home/alice/alice-data" impermanenceManifest.directories;
         assert fishFeature.supportedEnvironments == [ "nixos" "integrated-home" "standalone-home" ];
+        assert fishPersistenceEvaluation.config.programs.fish.enable;
         assert
           fishPersistenceEvaluation.config.qnix.persist.users."*".directories
           == [ ".local/share/fish" ];
         assert defaultEvaluation.config.qnix.system.localisation.enable;
+        assert defaultEvaluation.config.qnix.system.users.defaultExtraGroups == [ "wheel" ];
+        assert defaultEvaluation.config.qnix.system.users.defaultShell == "fish";
+        assert defaultEvaluation.config.programs.fish.enable;
         assert defaultEvaluation.config.time.timeZone == "Europe/Berlin";
         assert defaultEvaluation.config.services.xserver.xkb.layout == "de";
         assert defaultEvaluation.config.console.useXkbConfig;
