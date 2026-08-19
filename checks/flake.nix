@@ -55,6 +55,7 @@
         };
 
       persistFeature = qnix.features.persist;
+      bootFeature = qnix.features."system.boot";
       fontsFeature = qnix.features."appearance.fonts";
       stylixFeature = qnix.features."appearance.stylix";
       fishFeature = qnix.features."shell.fish";
@@ -243,6 +244,21 @@
         ++ [ { qnix.storage.impermanence.enable = true; } ]
       );
 
+      bootEvaluation = mkNixos (bootFeature.optionModules ++ bootFeature.nixosModules);
+      grubBootEvaluation = mkNixos (
+        bootFeature.optionModules
+        ++ bootFeature.nixosModules
+        ++ [
+          {
+            qnix.system.boot = {
+              loader = "grub";
+              zfsSupport = false;
+              encrypted = true;
+            };
+          }
+        ]
+      );
+
       defaultEvaluation = mkNixos (qnix.modulesFor.nixos [ "base" ]);
       impermanenceProfileEvaluation = mkNixos (
         [ impermanence.nixosModules.impermanence ]
@@ -274,6 +290,7 @@
             "shell.zsh"
             "storage.impermanence"
             "storage.zfs"
+            "system.boot"
             "system.localisation"
             "system.users"
           ];
@@ -284,6 +301,14 @@
             "impermanence"
           ];
         assert persistFeature.supportedEnvironments == [ "nixos" ];
+        assert bootFeature.supportedEnvironments == [ "nixos" ];
+        assert bootEvaluation.config.boot.loader.systemd-boot.enable;
+        assert bootEvaluation.config.boot.loader.timeout == 3;
+        assert bootEvaluation.config.boot.supportedFilesystems.zfs;
+        assert bootEvaluation.config.boot.initrd.systemd.enable;
+        assert grubBootEvaluation.config.boot.loader.grub.enable;
+        assert grubBootEvaluation.config.boot.loader.grub.enableCryptodisk;
+        assert !(grubBootEvaluation.config.boot.supportedFilesystems ? zfs);
         assert
           fontsFeature.supportedEnvironments == [
             "nixos"
@@ -308,14 +333,12 @@
           zfsImpermanenceEvaluation.config.boot.initrd.systemd.services.qnix-impermanence-reset.before
           == [ "sysroot.mount" ];
         assert
-          zfsImpermanenceEvaluation.config.boot.initrd.systemd.services.qnix-impermanence-reset.after
-          == [
+          zfsImpermanenceEvaluation.config.boot.initrd.systemd.services.qnix-impermanence-reset.after == [
             "zfs-import.target"
             "systemd-cryptsetup@cryptroot.service"
           ];
         assert
-          builtins.match ".*zfs rollback -r zroot/root@blank.*"
-            zfsImpermanenceEvaluation.config.boot.initrd.systemd.services.qnix-impermanence-reset.script
+          builtins.match ".*zfs rollback -r zroot/root@blank.*" zfsImpermanenceEvaluation.config.boot.initrd.systemd.services.qnix-impermanence-reset.script
           != null;
         assert persistEvaluation.config.qnix.persist.root.directories == [ ];
         assert persistEvaluation.config.qnix.persist.users == { };

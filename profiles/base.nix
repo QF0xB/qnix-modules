@@ -1,5 +1,6 @@
 {
   features = [
+    "system.boot"
     "system.localisation"
     "system.users"
     "appearance.fonts"
