@@ -98,6 +98,7 @@
       environment.persistence = {
         "/persist" = {
           hideMounts = true;
+          allowTrash = true;
           files = persist.root.files;
           directories = persist.root.directories;
           users = lib.mapAttrs (_: user: {
@@ -108,6 +109,7 @@
 
         "/cache" = {
           hideMounts = true;
+          allowTrash = true;
           files = persist.root.cache.files;
           directories = persist.root.cache.directories;
           users = lib.mapAttrs (_: user: {

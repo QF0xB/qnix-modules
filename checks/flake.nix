@@ -129,6 +129,10 @@
                     type = nixpkgs.lib.types.bool;
                     default = false;
                   };
+                  allowTrash = nixpkgs.lib.mkOption {
+                    type = nixpkgs.lib.types.bool;
+                    default = false;
+                  };
                   files = nixpkgs.lib.mkOption {
                     type = nixpkgs.lib.types.listOf nixpkgs.lib.types.str;
                     default = [ ];
@@ -282,6 +286,8 @@
         assert impermanenceEvaluation.config.services.journald.storage == "persistent";
         assert impermanenceEvaluation.config.environment.persistence."/persist".directories == [ "/var/lib/nixos" "/var/lib/example" ];
         assert impermanenceEvaluation.config.environment.persistence."/cache".directories == [ "/var/log" "/var/log/journal" "/var/cache/example" ];
+        assert impermanenceEvaluation.config.environment.persistence."/persist".allowTrash;
+        assert impermanenceEvaluation.config.environment.persistence."/cache".allowTrash;
         assert impermanenceEvaluation.config.environment.persistence."/persist".files == [ "/etc/example.conf" ];
         assert impermanenceEvaluation.config.environment.persistence."/cache".files == [ "/var/cache/example.state" ];
         assert impermanenceEvaluation.config.environment.persistence."/persist".users.tester.directories == [ "Projects" ".ssh" ".local/share/example" ];
