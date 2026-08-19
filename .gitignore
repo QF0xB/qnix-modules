@@ -12,6 +12,3 @@ result-*
 
 # Temporary legacy archive
 old/
-
-# CI flake lockfile
-checks/flake.lock

@@ -33,3 +33,11 @@ definitions yet.
 
 External modules belong in the client’s module composition, not in this flake’s
 feature definitions.
+
+## Checks
+
+The nested checks flake evaluates the published factory against this repository:
+
+```bash
+nix flake check ./checks
+```

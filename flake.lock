@@ -1,0 +1,26 @@
+{
+  "nodes": {
+    "qnix-sdk": {
+      "locked": {
+        "lastModified": 1787102200,
+        "narHash": "sha256-KaeD58COy9vej3EPoGIm6qsSI/ETTasLZh7Uw2P8+As=",
+        "owner": "QF0xB",
+        "repo": "qnix-sdk",
+        "rev": "bd8515df06486875e55c7a58d65f04687091c838",
+        "type": "github"
+      },
+      "original": {
+        "owner": "QF0xB",
+        "repo": "qnix-sdk",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "qnix-sdk": "qnix-sdk"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}

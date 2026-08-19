@@ -1,0 +1,57 @@
+{
+  "nodes": {
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1787052956,
+        "narHash": "sha256-fZt7Au28AduGpt7vRfIOcpsHKJ+9cEnuQ2NdWuh0KVc=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "b47ad65d73ab65ded9ab408fe558866d71defee8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "qnix-modules": {
+      "inputs": {
+        "qnix-sdk": "qnix-sdk"
+      },
+      "locked": {
+        "path": "..",
+        "type": "path"
+      },
+      "original": {
+        "path": "..",
+        "type": "path"
+      },
+      "parent": []
+    },
+    "qnix-sdk": {
+      "locked": {
+        "lastModified": 1787102200,
+        "narHash": "sha256-KaeD58COy9vej3EPoGIm6qsSI/ETTasLZh7Uw2P8+As=",
+        "owner": "QF0xB",
+        "repo": "qnix-sdk",
+        "rev": "bd8515df06486875e55c7a58d65f04687091c838",
+        "type": "github"
+      },
+      "original": {
+        "owner": "QF0xB",
+        "repo": "qnix-sdk",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "nixpkgs": "nixpkgs",
+        "qnix-modules": "qnix-modules"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
