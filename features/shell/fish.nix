@@ -1,7 +1,8 @@
 {
-  environments = [
-    "integrated-home"
-    "standalone-home"
+  standaloneHome = true;
+
+  persistence.users."*".directories = [
+    ".local/share/fish"
   ];
 
   options =
@@ -13,6 +14,11 @@
         description = "Whether Fish aliases are enabled.";
       };
     };
+
+  # Persistence contributions require a NixOS-side implementation so the SDK
+  # can attach them to the shared qnix.persist contract. This feature does not
+  # enable Fish system-wide here; system.users or the host owns that decision.
+  nixos = { ... }: { };
 
   home =
     {
