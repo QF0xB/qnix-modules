@@ -74,7 +74,7 @@
       ];
       qnix.persist.users."*" = {
         directories = lib.mkBefore [
-          "projects"
+          "Projects"
           ".ssh"
         ];
         cache.directories = lib.mkBefore [

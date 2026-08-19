@@ -249,11 +249,11 @@
         assert impermanenceEvaluation.config.environment.persistence."/cache".directories == [ "/var/log" "/var/log/journal" "/var/cache/example" ];
         assert impermanenceEvaluation.config.environment.persistence."/persist".files == [ "/etc/example.conf" ];
         assert impermanenceEvaluation.config.environment.persistence."/cache".files == [ "/var/cache/example.state" ];
-        assert impermanenceEvaluation.config.environment.persistence."/persist".users.tester.directories == [ "projects" ".ssh" ".local/share/example" ];
+        assert impermanenceEvaluation.config.environment.persistence."/persist".users.tester.directories == [ "Projects" ".ssh" ".local/share/example" ];
         assert impermanenceEvaluation.config.environment.persistence."/persist".users.tester.files == [ ".config/example.conf" ];
         assert impermanenceEvaluation.config.environment.persistence."/cache".users.tester.directories == [ ".cache" ".gradle" ".cache/example" ];
         assert impermanenceEvaluation.config.environment.persistence."/cache".users.tester.files == [ ".cache/example.state" ".cache/tester.state" ];
-        assert impermanenceEvaluation.config.environment.persistence."/persist".users.alice.directories == [ "projects" ".ssh" ".local/share/example" "alice-data" ];
+        assert impermanenceEvaluation.config.environment.persistence."/persist".users.alice.directories == [ "Projects" ".ssh" ".local/share/example" "alice-data" ];
         assert impermanenceEvaluation.config.environment.persistence."/cache".users.alice.directories == [ ".cache" ".gradle" ".cache/example" ];
         assert impermanenceEvaluation.config.environment.etc."impermanence.json".source != null;
         assert builtins.elem "/var/lib/nixos" impermanenceManifest.directories;
