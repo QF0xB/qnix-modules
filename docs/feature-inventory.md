@@ -61,8 +61,8 @@ confirmation.
 
 | Feature                | Likely environment | Profiles               | Dependencies | Persistence          | Status  | Notes               |
 |------------------------|--------------------|------------------------|--------------|----------------------|---------|---------------------|
-| `persist`              | NixOS              | `base`, `impermanence` | —            | Option-only contract | planned | Persistence schema  |
-| `storage.impermanence` | NixOS              | `impermanence`         | `persist`    | Consumes `persist`   | planned | Persistence backend |
+| `persist`              | NixOS              | `base`, `impermanence` | —            | Option-only contract | implemented | Persistence schema  |
+| `storage.impermanence` | NixOS              | `impermanence`         | `persist`    | Consumes `persist`   | implemented | Persistence backend |
 | `storage.zfs`          | NixOS              | `base`                 | —            | Pool/system state    | planned | Filesystem/storage  |
 
 ## Desktop session
