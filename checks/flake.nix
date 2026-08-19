@@ -47,6 +47,7 @@
         };
 
       persistFeature = qnix.features.persist;
+      fontsFeature = qnix.features."appearance.fonts";
       fishFeature = qnix.features."shell.fish";
       shellPackagesFeature = qnix.features."shell.packages";
       starshipFeature = qnix.features."shell.starship";
@@ -159,6 +160,13 @@
         ]
       );
 
+      fontsNixosEvaluation = mkNixos (
+        fontsFeature.optionModules ++ fontsFeature.nixosModules
+      );
+      fontsHomeEvaluation = mkHome (
+        fontsFeature.optionModules ++ fontsFeature.__homeModuleFor "standalone-home"
+      );
+
       fishNixosEvaluation = mkNixos (
         persistFeature.optionModules ++ fishFeature.optionModules ++ fishFeature.nixosModules
       );
@@ -228,6 +236,7 @@
     {
       checks.${system}.default =
         assert qnix.featureNames == [
+          "appearance.fonts"
           "persist"
           "shell.fish"
           "shell.packages"
@@ -239,6 +248,9 @@
         ];
         assert qnix.profileNames == [ "base" "impermanence" ];
         assert persistFeature.supportedEnvironments == [ "nixos" ];
+        assert fontsFeature.supportedEnvironments == [ "nixos" "integrated-home" "standalone-home" ];
+        assert builtins.elem pkgs.nerd-fonts.jetbrains-mono fontsNixosEvaluation.config.fonts.packages;
+        assert builtins.elem pkgs.nerd-fonts.jetbrains-mono fontsHomeEvaluation.config.home.packages;
         assert persistEvaluation.config.qnix.persist.root.directories == [ ];
         assert persistEvaluation.config.qnix.persist.users == { };
         assert persistConfiguredEvaluation.config.qnix.persist.root.directories == [ "/var/lib/example" ];
@@ -311,6 +323,7 @@
         assert impermanenceProfileEvaluation.config.qnix.storage.impermanence.enable;
         assert impermanenceProfileEvaluation.config.qnix.persist.root.directories == [ "/var/lib/nixos" ];
         assert defaultEvaluation.config.qnix.system.localisation.enable;
+        assert defaultEvaluation.config.qnix.appearance.fonts.packages == [ pkgs.nerd-fonts.jetbrains-mono ];
         assert defaultEvaluation.config.qnix.system.users.defaultExtraGroups == [ "wheel" ];
         assert defaultEvaluation.config.qnix.system.users.defaultShell == "fish";
         assert defaultEvaluation.config.programs.fish.enable;

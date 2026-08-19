@@ -2,6 +2,7 @@
   features = [
     "system.localisation"
     "system.users"
+    "appearance.fonts"
     "shell.fish"
     "shell.zsh"
   ];
