@@ -70,7 +70,7 @@ confirmation.
 | Feature | Likely environment | Profiles | Dependencies | Persistence | Status | Notes |
 |---|---|---|---|---|---|---|
 | `desktop.displaymanager` | NixOS | `hyprland` | `desktop.wayland` | — | planned | Display manager |
-| `desktop.wayland` | NixOS + Home | `wayland`, `hyprland` | Desktop foundation? | — | planned | Session foundation |
+| `desktop.wayland` | NixOS + Home | `hyprland` | Desktop foundation? | — | planned | Session foundation |
 | `desktop.hyprland` | NixOS + Home | `hyprland` | `desktop.wayland` | — | planned | Main compositor |
 | `desktop.hyprland.keybinds` | Home | `hyprland` | `desktop.hyprland` | — | planned | Hyprland subconfiguration |
 | `desktop.hyprland.rules` | Home | `hyprland` | `desktop.hyprland` | — | planned | Hyprland subconfiguration |
@@ -88,7 +88,7 @@ confirmation.
 
 | Feature | Likely environment | Profiles | Dependencies | Persistence | Status | Notes |
 |---|---|---|---|---|---|---|
-| `desktop.stylix` | NixOS + Home | `stylix` | — | Theme state? | planned | Theming |
+| `desktop.stylix` | NixOS + Home | `appearance` | — | Theme state? | planned | Theming |
 
 ## Applications
 
@@ -106,33 +106,32 @@ confirmation.
 
 | Feature | Likely environment | Profiles | Dependencies | Persistence | Status | Notes |
 |---|---|---|---|---|---|---|
-| `dev.codex` | NixOS + Home | `dev` | — | Codex config? | planned | Package/config |
-| `dev.cursor` | NixOS + Home | `dev` | — | Editor config | planned | Package/config |
-| `dev.devenv` | NixOS | `dev` | — | — | planned | Development environment |
-| `dev.direnv` | Home | `dev` | `system.shell` | — | planned | Shell integration |
-| `dev.git` | NixOS + Home | `dev`, `workstation` | `security.gpg` | Git config | planned | Git and signing |
-| `dev.jetbrains` | NixOS + Home | `dev` | — | IDE config | planned | IDEs |
-| `dev.kubernetes-cli` | NixOS + Home | `dev` | — | Kubernetes config | planned | Local Kubernetes CLI tooling |
+| `dev.codex` | NixOS + Home | `developer` | — | Codex config? | planned | Package/config |
+| `dev.cursor` | NixOS + Home | `developer` | — | Editor config | planned | Package/config |
+| `dev.devenv` | NixOS | `developer` | — | — | planned | Development environment |
+| `dev.direnv` | Home | `developer` | `system.shell` | — | planned | Shell integration |
+| `dev.git` | NixOS + Home | `developer`, `workstation` | `security.gpg` | Git config | planned | Git and signing |
+| `dev.jetbrains` | NixOS + Home | `developer` | — | IDE config | planned | IDEs |
+| `dev.kubernetes-cli` | NixOS + Home | `developer` | — | Kubernetes config | planned | Local Kubernetes CLI tooling |
 | `dev.nh` | NixOS | `workstation` | — | — | planned | Nix maintenance |
-| `dev.nixfmt` | NixOS + Home | `dev` | — | — | planned | Formatting tools |
-| `dev.nvf` | NixOS + Home | `nvf` | — | Editor config | planned | Editor configuration |
-| `dev.postman` | NixOS + Home | `dev` | — | Postman data | planned | API tooling |
-| `runtime.docker` | NixOS + Home | `dev` | — | `/var/lib/docker`? | planned | Local development containers |
+| `dev.nixfmt` | NixOS + Home | `developer` | — | — | planned | Formatting tools |
+| `dev.nvf` | NixOS + Home | `editor` | — | Editor config | planned | Editor configuration |
+| `dev.postman` | NixOS + Home | `developer` | — | Postman data | planned | API tooling |
+| `runtime.docker` | NixOS + Home | `developer` | — | `/var/lib/docker`? | planned | Local development containers |
 
 ## Pentesting
 
 | Feature | Likely environment | Profiles | Dependencies | Persistence | Status | Notes |
 |---|---|---|---|---|---|---|
-| `pentest.wireshark` | NixOS + standalone Home | `pentest` | — | Capture data? | planned | Shared host and Kali VM feature; host provides USB/device access |
 | `pentest.gpu-cracking` | NixOS | `pentest-host` | GPU hardware | — | planned | Host-only GPU cracking tasks |
 | `pentest.hash-testing` | NixOS | `pentest-host` | `pentest.gpu-cracking` | — | planned | Host-only hash testing |
 | `pentest.usb-access` | NixOS | `pentest-host` | — | — | planned | Host-side USB/device access for passthrough and capture |
 
 ## Profiles
 
-Profiles compose features into usable roles. The Kali VM itself is not a QNix
-profile: Kali provides its own operating system and pentesting tool suite,
-while standalone Home Manager configures the user environment.
+Profiles compose features into usable roles. The Kali VM is not represented by a
+QNix profile: Kali provides its own operating system, desktop, and pentesting
+tool suite.
 
 | Profile | Environment | Includes | Purpose |
 |---|---|---|---|
@@ -146,19 +145,15 @@ while standalone Home Manager configures the user environment.
 | `editor` | NixOS + Home | NVF/editor features | Optional editor configuration |
 | `personal` | NixOS + Home | Personal applications | Personal user environment |
 | `creator` | NixOS + Home | OBS and creator applications | Creator workstation |
-| `pentest` | NixOS + standalone Home | Shared pentesting features such as Wireshark | Host and Kali VM shared configuration |
-| `pentest-host` | NixOS | `pentest`, GPU cracking, hash testing, and USB access | Host-only hardware-dependent pentesting |
+| `pentest-host` | NixOS | GPU cracking, hash testing, and USB access | Host-only hardware-dependent pentesting |
 | `impermanence` | NixOS | Persistence backend and `persist` contract | Optional host storage policy |
 
-The Kali VM should select shared Home Manager configuration such as:
-
-```nix
-qnix.modulesFor.standaloneHome [ "pentest" "hyprland" ]
-```
-
 Kali’s own installation determines which pentesting packages are available.
-The selected Kali metapackage should be documented with the VM setup rather
-than installed by QNix.
+Kali’s own installation determines which pentesting packages and desktop are
+available. The selected Kali metapackage should be documented with the VM setup
+rather than installed by QNix. If Home Manager is added to the VM later, it can
+select ordinary profiles such as `hyprland` without introducing a VM-specific
+QNix profile.
 
 ## Status values
 

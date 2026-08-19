@@ -38,17 +38,15 @@ feature definitions.
 
 ## Pentesting host and VM split
 
-Pentesting is split into two QNix profiles:
+Pentesting-specific host work is represented by the `pentest-host` profile,
+which contains hardware-dependent features such as GPU cracking, hash testing,
+and USB/device access.
 
-- `pentest` contains shared configuration, such as Wireshark, and can be used
-  by both the host and Kali’s standalone Home Manager setup.
-- `pentest-host` contains host-only hardware features such as GPU cracking,
-  hash testing, and USB/device access.
-
-The Kali VM is not represented by a separate QNix profile. Kali provides the
-operating system and pentesting tool suite; QNix configures the shared user
-environment through standalone Home Manager. The inventory and VM setup should
-document which Kali metapackage is selected.
+The Kali VM is not represented by a QNix profile. Kali provides its operating
+system, desktop, and pentesting tool suite, including tools such as Wireshark.
+If Home Manager is added to the VM later, it can select ordinary profiles such
+as `hyprland`. The inventory and VM setup should document which Kali
+metapackage is selected.
 
 ## Checks
 
