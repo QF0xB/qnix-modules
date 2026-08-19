@@ -63,6 +63,7 @@
       zshFeature = qnix.features."shell.zsh";
       userFeature = qnix.features."system.users";
       impermanenceFeature = qnix.features."storage.impermanence";
+      zfsFeature = qnix.features."storage.zfs";
 
       persistEvaluation = nixpkgs.lib.evalModules {
         modules = persistFeature.optionModules;
@@ -235,6 +236,13 @@
         ++ [ { qnix.storage.impermanence.enable = true; } ]
       );
 
+      zfsImpermanenceEvaluation = mkNixos (
+        zfsFeature.optionModules
+        ++ zfsFeature.nixosModules
+        ++ impermanenceFeature.optionModules
+        ++ [ { qnix.storage.impermanence.enable = true; } ]
+      );
+
       defaultEvaluation = mkNixos (qnix.modulesFor.nixos [ "base" ]);
       impermanenceProfileEvaluation = mkNixos (
         [ impermanence.nixosModules.impermanence ]
@@ -265,6 +273,7 @@
             "shell.starship"
             "shell.zsh"
             "storage.impermanence"
+            "storage.zfs"
             "system.localisation"
             "system.users"
           ];
@@ -294,6 +303,20 @@
         assert stylixNixosEvaluation.config.stylix.cursor.name == "Simp1e-Solarized-Dark";
         assert stylixHomeEvaluation.config.stylix.enable;
         assert stylixHomeEvaluation.config.stylix.targets.kitty.variant256Colors;
+        assert zfsFeature.supportedEnvironments == [ "nixos" ];
+        assert
+          zfsImpermanenceEvaluation.config.boot.initrd.systemd.services.qnix-impermanence-reset.before
+          == [ "sysroot.mount" ];
+        assert
+          zfsImpermanenceEvaluation.config.boot.initrd.systemd.services.qnix-impermanence-reset.after
+          == [
+            "zfs-import.target"
+            "systemd-cryptsetup@cryptroot.service"
+          ];
+        assert
+          builtins.match ".*zfs rollback -r zroot/root@blank.*"
+            zfsImpermanenceEvaluation.config.boot.initrd.systemd.services.qnix-impermanence-reset.script
+          != null;
         assert persistEvaluation.config.qnix.persist.root.directories == [ ];
         assert persistEvaluation.config.qnix.persist.users == { };
         assert persistConfiguredEvaluation.config.qnix.persist.root.directories == [ "/var/lib/example" ];
