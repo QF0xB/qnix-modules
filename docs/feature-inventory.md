@@ -26,6 +26,7 @@ confirmation.
 | Feature          | Likely environment | Profiles              | Dependencies | Persistence       | Status  | Notes                |
 |------------------|--------------------|-----------------------|--------------|-------------------|---------|----------------------|
 | `shell.fish`     | Integrated + standalone Home | `base`, `workstation` | —            | `.local/share/fish` | in progress | Fish, fzf, autopair, done, and sudope; aliases configurable |
+| `shell.packages` | Integrated + standalone Home | `impermanence` | — | — | in progress | Shared helper shell packages |
 | `shell.starship` | Home               | `base`, `workstation` | `shell.fish` | —                 | planned | Prompt configuration |
 
 ## Hardware and power

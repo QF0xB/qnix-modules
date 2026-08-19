@@ -1,7 +1,14 @@
 {
-  environments = [ "nixos" ];
+  environments = [
+    "nixos"
+    "integrated-home"
+    "standalone-home"
+  ];
 
-  requires.nixos = [ "persist" ];
+  requires = {
+    nixos = [ "persist" ];
+    home = [ "shell.packages" ];
+  };
 
   nixos =
     {
@@ -112,5 +119,49 @@
 
       environment.etc."impermanence.json".source = impermanenceJson;
 
+    };
+
+  home =
+    {
+      cfg,
+      lib,
+      pkgs,
+      ...
+    }:
+    {
+      qnix.shell.packages.packages.show-root-filesystem = {
+        runtimeInputs = with pkgs; [
+          fd
+          jq
+          coreutils
+          gnugrep
+          gawk
+        ];
+        text = ''
+          exclude_args=()
+
+          if [[ -f /etc/impermanence.json ]]; then
+            while IFS= read -r path; do
+              [[ -n "$path" ]] && exclude_args+=(--exclude "$path")
+            done < <(jq -r '.directories[], .files[]' /etc/impermanence.json 2>/dev/null)
+          fi
+
+          sudo fd \
+            --one-file-system \
+            --base-directory / \
+            --type f \
+            --hidden \
+            "''${exclude_args[@]}" \
+            --exclude "/etc/{ssh,passwd,shadow}" \
+            --exclude "/var/cache/man" \
+            --exclude "*.timer" \
+            --exclude "/var/lib/NetworkManager" \
+            --exclude "/var/lib/sddm/.cache/" \
+            --exclude "/root/.cache" \
+            --exec stat --printf='%s %n\n' \
+          | sort -rn -k1 \
+          | awk '{ print $1, $2 }'
+        '';
+      };
     };
 }

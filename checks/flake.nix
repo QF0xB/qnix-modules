@@ -46,8 +46,16 @@
       };
 
       fishFeature = qnix.features."shell.fish";
+      shellPackagesFeature = qnix.features."shell.packages";
       persistFeature = qnix.features.persist;
       impermanenceFeature = qnix.features."storage.impermanence";
+
+      homePackageTestOptions = {
+        options.home.packages = nixpkgs.lib.mkOption {
+          type = nixpkgs.lib.types.listOf nixpkgs.lib.types.package;
+          default = [ ];
+        };
+      };
 
       persistEvaluation = nixpkgs.lib.evalModules {
         modules = persistFeature.optionModules;
@@ -201,6 +209,31 @@
         modules = [ testOptions ] ++ fishFeature.optionModules ++ fishFeature.nixosModules;
       };
 
+      shellPackagesEvaluation = nixpkgs.lib.evalModules {
+        specialArgs = { inherit pkgs; };
+        modules = [ homePackageTestOptions ] ++ shellPackagesFeature.optionModules ++ (shellPackagesFeature.__homeModuleFor "standalone-home") ++ [
+          {
+            qnix.shell.packages.packages = {
+              derivation = pkgs.writeText "shell-package-derivation" "derivation";
+              string = "printf '%s\\n' string";
+              attrset = {
+                runtimeInputs = [ pkgs.coreutils ];
+                text = "printf '%s\\n' attrset";
+              };
+            };
+          }
+        ];
+      };
+
+      impermanenceHomeEvaluation = nixpkgs.lib.evalModules {
+        specialArgs = { inherit pkgs; };
+        modules = [ homePackageTestOptions ] ++ shellPackagesFeature.optionModules ++ impermanenceFeature.optionModules ++ (shellPackagesFeature.__homeModuleFor "standalone-home") ++ (impermanenceFeature.__homeModuleFor "standalone-home") ++ [
+          {
+            qnix.storage.impermanence.enable = true;
+          }
+        ];
+      };
+
       defaultEvaluation = nixpkgs.lib.evalModules {
         modules = [ testOptions ] ++ qnix.modulesFor.nixos [ "base" ];
       };
@@ -225,7 +258,7 @@
     in
     {
       checks.${system}.default =
-        assert qnix.featureNames == [ "persist" "shell.fish" "storage.impermanence" "system.localisation" ];
+        assert qnix.featureNames == [ "persist" "shell.fish" "shell.packages" "storage.impermanence" "system.localisation" ];
         assert qnix.profileNames == [ "base" "impermanence" ];
         assert impermanenceProfileEvaluation.config.qnix.storage.impermanence.enable;
         assert impermanenceProfileEvaluation.config.qnix.persist.root.directories == [ "/var/lib/nixos" ];
@@ -241,7 +274,9 @@
         assert persistConfiguredEvaluation.config.qnix.persist.users.tester.cache.directories == [ ".cache/example" ];
         assert persistConfiguredEvaluation.config.qnix.persist.users.tester.cache.files == [ ".cache/example.state" ];
         assert !invalidPersistPath.success;
-        assert impermanenceFeature.supportedEnvironments == [ "nixos" ];
+        assert shellPackagesFeature.supportedEnvironments == [ "integrated-home" "standalone-home" ];
+        assert builtins.length shellPackagesEvaluation.config.home.packages == 3;
+        assert impermanenceFeature.supportedEnvironments == [ "nixos" "integrated-home" "standalone-home" ];
         assert impermanenceEvaluation.config.fileSystems."/persist".neededForBoot;
         assert impermanenceEvaluation.config.fileSystems."/cache".neededForBoot;
         assert impermanenceEvaluation.config.services.journald.storage == "persistent";
@@ -256,6 +291,8 @@
         assert impermanenceEvaluation.config.environment.persistence."/persist".users.alice.directories == [ "Projects" ".ssh" ".local/share/example" "alice-data" ];
         assert impermanenceEvaluation.config.environment.persistence."/cache".users.alice.directories == [ ".cache" ".gradle" ".cache/example" ];
         assert impermanenceEvaluation.config.environment.etc."impermanence.json".source != null;
+        assert builtins.length impermanenceHomeEvaluation.config.home.packages == 1;
+        assert builtins.hasAttr "show-root-filesystem" impermanenceHomeEvaluation.config.qnix.shell.packages.packages;
         assert builtins.elem "/var/lib/nixos" impermanenceManifest.directories;
         assert builtins.elem "/etc/example.conf" impermanenceManifest.files;
         assert builtins.elem "/home/tester/.local/share/example" impermanenceManifest.directories;
