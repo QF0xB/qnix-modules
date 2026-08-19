@@ -27,7 +27,7 @@ confirmation.
 |------------------|--------------------|-----------------------|--------------|-------------------|---------|----------------------|
 | `shell.fish`     | Integrated + standalone Home | `base`, `workstation` | —            | `.local/share/fish` | in progress | Fish, fzf, autopair, done, and sudope; aliases configurable |
 | `shell.packages` | Integrated + standalone Home | `impermanence` | — | — | in progress | Shared helper shell packages |
-| `shell.starship` | Home               | `base`, `workstation` | `shell.fish` | —                 | planned | Prompt configuration |
+| `shell.starship` | Integrated + standalone Home | `base`, `workstation` | `shell.fish` | — | in progress | Compact Git-aware prompt configuration |
 
 ## Hardware and power
 

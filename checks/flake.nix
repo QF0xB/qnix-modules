@@ -47,6 +47,7 @@
 
       fishFeature = qnix.features."shell.fish";
       shellPackagesFeature = qnix.features."shell.packages";
+      starshipFeature = qnix.features."shell.starship";
       persistFeature = qnix.features.persist;
       impermanenceFeature = qnix.features."storage.impermanence";
 
@@ -54,6 +55,19 @@
         options.home.packages = nixpkgs.lib.mkOption {
           type = nixpkgs.lib.types.listOf nixpkgs.lib.types.package;
           default = [ ];
+        };
+      };
+
+      starshipTestOptions = {
+        options.programs.starship = {
+          enable = nixpkgs.lib.mkOption {
+            type = nixpkgs.lib.types.bool;
+            default = false;
+          };
+          settings = nixpkgs.lib.mkOption {
+            type = nixpkgs.lib.types.attrs;
+            default = { };
+          };
         };
       };
 
@@ -229,6 +243,17 @@
         ];
       };
 
+      starshipEvaluation = nixpkgs.lib.evalModules {
+        modules = [ starshipTestOptions ] ++ starshipFeature.optionModules ++ (starshipFeature.__homeModuleFor "standalone-home") ++ [
+          {
+            qnix.shell.starship.settings = {
+              add_newline = false;
+              format = "$directory$character";
+            };
+          }
+        ];
+      };
+
       impermanenceHomeEvaluation = nixpkgs.lib.evalModules {
         specialArgs = { inherit pkgs; };
         modules = [ homePackageTestOptions ] ++ shellPackagesFeature.optionModules ++ impermanenceFeature.optionModules ++ (shellPackagesFeature.__homeModuleFor "standalone-home") ++ (impermanenceFeature.__homeModuleFor "standalone-home") ++ [
@@ -262,7 +287,7 @@
     in
     {
       checks.${system}.default =
-        assert qnix.featureNames == [ "persist" "shell.fish" "shell.packages" "storage.impermanence" "system.localisation" ];
+        assert qnix.featureNames == [ "persist" "shell.fish" "shell.packages" "shell.starship" "storage.impermanence" "system.localisation" ];
         assert qnix.profileNames == [ "base" "impermanence" ];
         assert impermanenceProfileEvaluation.config.qnix.storage.impermanence.enable;
         assert impermanenceProfileEvaluation.config.qnix.persist.root.directories == [ "/var/lib/nixos" ];
@@ -280,6 +305,10 @@
         assert !invalidPersistPath.success;
         assert shellPackagesFeature.supportedEnvironments == [ "integrated-home" "standalone-home" ];
         assert builtins.length shellPackagesEvaluation.config.home.packages == 3;
+        assert starshipFeature.supportedEnvironments == [ "integrated-home" "standalone-home" ];
+        assert starshipEvaluation.config.programs.starship.enable;
+        assert starshipEvaluation.config.programs.starship.settings.add_newline == false;
+        assert starshipEvaluation.config.programs.starship.settings.format == "$directory$character";
         assert impermanenceFeature.supportedEnvironments == [ "nixos" "integrated-home" "standalone-home" ];
         assert impermanenceEvaluation.config.fileSystems."/persist".neededForBoot;
         assert impermanenceEvaluation.config.fileSystems."/cache".neededForBoot;
