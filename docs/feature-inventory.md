@@ -26,13 +26,13 @@ confirmation.
 | Feature | Likely environment | Profiles | Dependencies | Persistence | Status | Notes |
 |---|---|---|---|---|---|---|
 | `system.shell` | NixOS + Home | `base`, `workstation` | — | Home shell state? | planned | Shell setup |
-| `system.starship` | Home | `base`, `workstation` | `system.shell` | — | planned | Prompt configuration |
+| `shell.starship` | Home | `base`, `workstation` | `system.shell` | — | planned | Prompt configuration |
 
 ## Hardware and power
 
 | Feature | Likely environment | Profiles | Dependencies | Persistence | Status | Notes |
 |---|---|---|---|---|---|---|
-| `system.bluetooth` | NixOS | `workstation`, `laptop` | — | — | planned | Hardware/service |
+| `hardware.bluetooth` | NixOS | `workstation`, `laptop` | — | — | planned | Hardware/service |
 | `system.laptop` | NixOS | `laptop` | — | — | planned | Laptop-specific behavior |
 | `system.power-management` | NixOS | `laptop` | `system.laptop` | — | planned | Power, upower, and tuning |
 | `system.thunderbolt` | NixOS | `laptop` | `system.laptop` | — | planned | Hardware/service |
