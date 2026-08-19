@@ -3,135 +3,56 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    impermanence.url = "github:nix-community/impermanence";
     qnix-modules.url = "path:..";
   };
 
   outputs =
-    { nixpkgs, qnix-modules, ... }:
+    {
+      nixpkgs,
+      home-manager,
+      impermanence,
+      qnix-modules,
+      ...
+    }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; };
       qnix = qnix-modules.lib.mkQNix {
-        context = {
-          hostname = "check";
-        };
+        context.hostname = "check";
       };
 
-      testOptions = {
-        options = {
-          assertions = nixpkgs.lib.mkOption {
-            type = nixpkgs.lib.types.listOf nixpkgs.lib.types.attrs;
-            default = [ ];
-          };
-          services.xserver.xkb.layout = nixpkgs.lib.mkOption {
-            type = nixpkgs.lib.types.str;
-          };
-          services.xserver.xkb.variant = nixpkgs.lib.mkOption {
-            type = nixpkgs.lib.types.str;
-          };
-          console.useXkbConfig = nixpkgs.lib.mkOption {
-            type = nixpkgs.lib.types.bool;
-          };
-          time.timeZone = nixpkgs.lib.mkOption {
-            type = nixpkgs.lib.types.str;
-          };
-          i18n.supportedLocales = nixpkgs.lib.mkOption {
-            type = nixpkgs.lib.types.listOf nixpkgs.lib.types.str;
-          };
-          i18n.extraLocaleSettings = nixpkgs.lib.mkOption {
-            type = nixpkgs.lib.types.attrsOf nixpkgs.lib.types.str;
-          };
-          programs.fish.enable = nixpkgs.lib.mkOption {
-            type = nixpkgs.lib.types.bool;
-            default = false;
-          };
-          programs.zsh = {
-            enable = nixpkgs.lib.mkOption {
-              type = nixpkgs.lib.types.bool;
-              default = false;
-            };
-            autosuggestions.enable = nixpkgs.lib.mkOption {
-              type = nixpkgs.lib.types.bool;
-              default = false;
-            };
-            syntaxHighlighting.enable = nixpkgs.lib.mkOption {
-              type = nixpkgs.lib.types.bool;
-              default = false;
-            };
-            enableCompletion = nixpkgs.lib.mkOption {
-              type = nixpkgs.lib.types.bool;
-              default = false;
-            };
-          };
-
-          users.mutableUsers = nixpkgs.lib.mkOption {
-            type = nixpkgs.lib.types.bool;
-            default = true;
-          };
-          users.defaultUserShell = nixpkgs.lib.mkOption {
-            type = nixpkgs.lib.types.nullOr nixpkgs.lib.types.package;
-            default = null;
-          };
-          users.users = nixpkgs.lib.mkOption {
-            type = nixpkgs.lib.types.attrsOf nixpkgs.lib.types.attrs;
-            default = { };
-          };
-          users.groups = nixpkgs.lib.mkOption {
-            type = nixpkgs.lib.types.attrsOf nixpkgs.lib.types.attrs;
-            default = { };
-          };
-
+      mkNixos = modules:
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = { inherit pkgs; };
+          modules = [ { system.stateVersion = "26.11"; } ] ++ modules;
         };
-      };
 
+      mkHome = modules:
+        home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          extraSpecialArgs = { inherit pkgs; };
+          modules = [
+            {
+              home.username = "check";
+              home.homeDirectory = "/home/check";
+              home.stateVersion = "26.11";
+            }
+          ] ++ modules;
+        };
+
+      persistFeature = qnix.features.persist;
       fishFeature = qnix.features."shell.fish";
       shellPackagesFeature = qnix.features."shell.packages";
       starshipFeature = qnix.features."shell.starship";
       zshFeature = qnix.features."shell.zsh";
       userFeature = qnix.features."system.users";
-      persistFeature = qnix.features.persist;
       impermanenceFeature = qnix.features."storage.impermanence";
-
-      homePackageTestOptions = {
-        options.home.packages = nixpkgs.lib.mkOption {
-          type = nixpkgs.lib.types.listOf nixpkgs.lib.types.package;
-          default = [ ];
-        };
-      };
-
-      starshipTestOptions = {
-        options.programs.starship = {
-          enable = nixpkgs.lib.mkOption {
-            type = nixpkgs.lib.types.bool;
-            default = false;
-          };
-          settings = nixpkgs.lib.mkOption {
-            type = nixpkgs.lib.types.attrs;
-            default = { };
-          };
-        };
-      };
-
-      zshTestOptions = {
-        options.programs.zsh = {
-          enable = nixpkgs.lib.mkOption {
-            type = nixpkgs.lib.types.bool;
-            default = false;
-          };
-          autosuggestions.enable = nixpkgs.lib.mkOption {
-            type = nixpkgs.lib.types.bool;
-            default = false;
-          };
-          syntaxHighlighting.enable = nixpkgs.lib.mkOption {
-            type = nixpkgs.lib.types.bool;
-            default = false;
-          };
-          enableCompletion = nixpkgs.lib.mkOption {
-            type = nixpkgs.lib.types.bool;
-            default = false;
-          };
-        };
-      };
 
       persistEvaluation = nixpkgs.lib.evalModules {
         modules = persistFeature.optionModules;
@@ -147,7 +68,7 @@
                 cache.directories = [ "/var/cache/example" ];
                 cache.files = [ "/var/cache/example.state" ];
               };
-              users."tester" = {
+              users.tester = {
                 directories = [ ".local/share/example" ];
                 files = [ ".config/example.conf" ];
                 cache.directories = [ ".cache/example" ];
@@ -159,124 +80,29 @@
       };
 
       invalidPersistPath = builtins.tryEval (
-        let
-          evaluation = nixpkgs.lib.evalModules {
-            modules = persistFeature.optionModules ++ [
-              {
-                qnix.persist.root.directories = [ "/home/invalid" ];
-              }
-            ];
-          };
-        in
-        evaluation.config.qnix.persist.root.directories
+        (nixpkgs.lib.evalModules {
+          modules = persistFeature.optionModules ++ [
+            { qnix.persist.root.directories = [ "/home/invalid" ]; }
+          ];
+        }).config.qnix.persist.root.directories
       );
 
-      impermanenceTestOptions = {
-        options = {
-          assertions = nixpkgs.lib.mkOption {
-            type = nixpkgs.lib.types.listOf nixpkgs.lib.types.attrs;
-            default = [ ];
-          };
-          programs.fish.enable = nixpkgs.lib.mkOption {
-            type = nixpkgs.lib.types.bool;
-            default = false;
-          };
-          users.mutableUsers = nixpkgs.lib.mkOption {
-            type = nixpkgs.lib.types.bool;
-            default = true;
-          };
-          users.defaultUserShell = nixpkgs.lib.mkOption {
-            type = nixpkgs.lib.types.nullOr nixpkgs.lib.types.package;
-            default = null;
-          };
-          users.users = nixpkgs.lib.mkOption {
-            type = nixpkgs.lib.types.attrsOf nixpkgs.lib.types.attrs;
-            default = {
-              tester = { };
-            };
-          };
-
-          users.groups = nixpkgs.lib.mkOption {
-            type = nixpkgs.lib.types.attrsOf nixpkgs.lib.types.attrs;
-            default = { };
-          };
-
-          fileSystems = nixpkgs.lib.mkOption {
-            type = nixpkgs.lib.types.attrsOf (
-              nixpkgs.lib.types.submodule {
-                options.neededForBoot = nixpkgs.lib.mkOption {
-                  type = nixpkgs.lib.types.bool;
-                  default = false;
-                };
-              }
-            );
-            default = { };
-          };
-
-          services.journald.storage = nixpkgs.lib.mkOption {
-            type = nixpkgs.lib.types.str;
-            default = "volatile";
-          };
-
-          environment.persistence = nixpkgs.lib.mkOption {
-            type = nixpkgs.lib.types.attrsOf (
-              nixpkgs.lib.types.submodule {
-                options = {
-                  hideMounts = nixpkgs.lib.mkOption {
-                    type = nixpkgs.lib.types.bool;
-                    default = false;
-                  };
-                  allowTrash = nixpkgs.lib.mkOption {
-                    type = nixpkgs.lib.types.bool;
-                    default = false;
-                  };
-                  files = nixpkgs.lib.mkOption {
-                    type = nixpkgs.lib.types.listOf nixpkgs.lib.types.str;
-                    default = [ ];
-                  };
-                  directories = nixpkgs.lib.mkOption {
-                    type = nixpkgs.lib.types.listOf nixpkgs.lib.types.str;
-                    default = [ ];
-                  };
-                  users = nixpkgs.lib.mkOption {
-                    type = nixpkgs.lib.types.attrsOf (
-                      nixpkgs.lib.types.submodule {
-                        options = {
-                          files = nixpkgs.lib.mkOption {
-                            type = nixpkgs.lib.types.listOf nixpkgs.lib.types.str;
-                            default = [ ];
-                          };
-                          directories = nixpkgs.lib.mkOption {
-                            type = nixpkgs.lib.types.listOf nixpkgs.lib.types.str;
-                            default = [ ];
-                          };
-                        };
-                      }
-                    );
-                    default = { };
-                  };
-                };
-              }
-            );
-            default = { };
-          };
-
-          environment.etc = nixpkgs.lib.mkOption {
-            type = nixpkgs.lib.types.attrsOf (
-              nixpkgs.lib.types.submodule {
-                options.source = nixpkgs.lib.mkOption {
-                  type = nixpkgs.lib.types.path;
-                };
-              }
-            );
-            default = { };
-          };
+      impermanenceFileSystems = {
+        fileSystems."/persist" = {
+          device = "/dev/test-persist";
+          fsType = "ext4";
+        };
+        fileSystems."/cache" = {
+          device = "/dev/test-cache";
+          fsType = "ext4";
         };
       };
 
-      impermanenceEvaluation = nixpkgs.lib.evalModules {
-        specialArgs = { inherit pkgs; };
-        modules = [ impermanenceTestOptions ] ++ persistFeature.optionModules ++ userFeature.optionModules ++ impermanenceFeature.optionModules ++ userFeature.nixosModules ++ impermanenceFeature.nixosModules ++ [
+      impermanenceEvaluation = mkNixos (
+        [ impermanence.nixosModules.impermanence ]
+        ++ qnix.modulesFor.nixos [ "impermanence" ]
+        ++ [
+          impermanenceFileSystems
           {
             qnix.persist = {
               root = {
@@ -299,40 +125,19 @@
             qnix.system.users.users.tester = { };
             qnix.storage.impermanence.enable = true;
           }
-        ];
-      };
+        ]
+      );
 
-      userTestOptions = {
-        options = {
-          assertions = nixpkgs.lib.mkOption {
-            type = nixpkgs.lib.types.listOf nixpkgs.lib.types.attrs;
-            default = [ ];
-          };
-          programs.fish.enable = nixpkgs.lib.mkOption {
-            type = nixpkgs.lib.types.bool;
-            default = false;
-          };
-          users.mutableUsers = nixpkgs.lib.mkOption {
-            type = nixpkgs.lib.types.bool;
-            default = true;
-          };
-          users.defaultUserShell = nixpkgs.lib.mkOption {
-            type = nixpkgs.lib.types.package;
-          };
-          users.users = nixpkgs.lib.mkOption {
-            type = nixpkgs.lib.types.attrsOf nixpkgs.lib.types.attrs;
-            default = { };
-          };
-          users.groups = nixpkgs.lib.mkOption {
-            type = nixpkgs.lib.types.attrsOf nixpkgs.lib.types.attrs;
-            default = { };
-          };
-        };
-      };
+      impermanenceManifest = builtins.fromJSON (
+        builtins.readFile impermanenceEvaluation.config.environment.etc."impermanence.json".source
+      );
+      directoryPaths = map (entry: entry.directory);
+      filePaths = map (entry: entry.file);
 
-      userEvaluation = nixpkgs.lib.evalModules {
-        specialArgs = { inherit pkgs; };
-        modules = [ userTestOptions ] ++ userFeature.optionModules ++ userFeature.nixosModules ++ [
+      userEvaluation = mkNixos (
+        userFeature.optionModules
+        ++ userFeature.nixosModules
+        ++ [
           {
             qnix.system.users = {
               defaultExtraGroups = [ "wheel" ];
@@ -351,20 +156,18 @@
               };
             };
           }
-        ];
-      };
-
-      impermanenceManifest = builtins.fromJSON (
-        builtins.readFile impermanenceEvaluation.config.environment.etc."impermanence.json".source
+        ]
       );
 
-      fishPersistenceEvaluation = nixpkgs.lib.evalModules {
-        modules = [ testOptions ] ++ persistFeature.optionModules ++ fishFeature.optionModules ++ fishFeature.nixosModules;
-      };
+      fishNixosEvaluation = mkNixos (
+        persistFeature.optionModules ++ fishFeature.optionModules ++ fishFeature.nixosModules
+      );
+      fishHomeEvaluation = mkHome (fishFeature.optionModules ++ fishFeature.__homeModuleFor "standalone-home");
 
-      shellPackagesEvaluation = nixpkgs.lib.evalModules {
-        specialArgs = { inherit pkgs; };
-        modules = [ homePackageTestOptions ] ++ shellPackagesFeature.optionModules ++ (shellPackagesFeature.__homeModuleFor "standalone-home") ++ [
+      shellPackagesEvaluation = mkHome (
+        shellPackagesFeature.optionModules
+        ++ shellPackagesFeature.__homeModuleFor "standalone-home"
+        ++ [
           {
             qnix.shell.packages.packages = {
               derivation = pkgs.writeText "shell-package-derivation" "derivation";
@@ -375,51 +178,44 @@
               };
             };
           }
-        ];
-      };
+        ]
+      );
 
-      starshipEvaluation = nixpkgs.lib.evalModules {
-        modules = [ starshipTestOptions ] ++ starshipFeature.optionModules ++ (starshipFeature.__homeModuleFor "standalone-home") ++ [
+      starshipEvaluation = mkHome (
+        starshipFeature.optionModules
+        ++ starshipFeature.__homeModuleFor "standalone-home"
+        ++ [
           {
             qnix.shell.starship.settings = {
               add_newline = false;
               format = "$directory$character";
             };
           }
-        ];
-      };
+        ]
+      );
 
-      zshNixosEvaluation = nixpkgs.lib.evalModules {
-        modules = [ zshTestOptions ] ++ persistFeature.optionModules ++ zshFeature.optionModules ++ zshFeature.nixosModules;
-      };
+      zshNixosEvaluation = mkNixos (
+        persistFeature.optionModules ++ zshFeature.optionModules ++ zshFeature.nixosModules
+      );
+      zshHomeEvaluation = mkHome (zshFeature.optionModules ++ zshFeature.__homeModuleFor "standalone-home");
 
-      zshHomeEvaluation = nixpkgs.lib.evalModules {
-        modules = [ zshTestOptions ] ++ persistFeature.optionModules ++ zshFeature.optionModules ++ (zshFeature.__homeModuleFor "standalone-home");
-      };
+      impermanenceHomeEvaluation = mkHome (
+        shellPackagesFeature.optionModules
+        ++ impermanenceFeature.optionModules
+        ++ shellPackagesFeature.__homeModuleFor "standalone-home"
+        ++ impermanenceFeature.__homeModuleFor "standalone-home"
+        ++ [ { qnix.storage.impermanence.enable = true; } ]
+      );
 
-      impermanenceHomeEvaluation = nixpkgs.lib.evalModules {
-        specialArgs = { inherit pkgs; };
-        modules = [ homePackageTestOptions ] ++ shellPackagesFeature.optionModules ++ impermanenceFeature.optionModules ++ (shellPackagesFeature.__homeModuleFor "standalone-home") ++ (impermanenceFeature.__homeModuleFor "standalone-home") ++ [
-          {
-            qnix.storage.impermanence.enable = true;
-          }
-        ];
-      };
-
-      defaultEvaluation = nixpkgs.lib.evalModules {
-        specialArgs = { inherit pkgs; };
-        modules = [ testOptions ] ++ qnix.modulesFor.nixos [ "base" ];
-      };
-
-      impermanenceProfileEvaluation = nixpkgs.lib.evalModules {
-        specialArgs = { inherit pkgs; };
-        modules = [ impermanenceTestOptions ] ++ qnix.modulesFor.nixos [ "impermanence" ];
-      };
-
-      overrideEvaluation = nixpkgs.lib.evalModules {
-        specialArgs = { inherit pkgs; };
-        modules = [
-          testOptions
+      defaultEvaluation = mkNixos (qnix.modulesFor.nixos [ "base" ]);
+      impermanenceProfileEvaluation = mkNixos (
+        [ impermanence.nixosModules.impermanence ]
+        ++ qnix.modulesFor.nixos [ "impermanence" ]
+        ++ [ impermanenceFileSystems ]
+      );
+      overrideEvaluation = mkNixos (
+        qnix.modulesFor.nixos [ "base" ]
+        ++ [
           {
             qnix.system.localisation = {
               timezone = "UTC";
@@ -427,15 +223,21 @@
             };
           }
         ]
-        ++ qnix.modulesFor.nixos [ "base" ];
-      };
+      );
     in
     {
       checks.${system}.default =
-        assert qnix.featureNames == [ "persist" "shell.fish" "shell.packages" "shell.starship" "shell.zsh" "storage.impermanence" "system.localisation" "system.users" ];
+        assert qnix.featureNames == [
+          "persist"
+          "shell.fish"
+          "shell.packages"
+          "shell.starship"
+          "shell.zsh"
+          "storage.impermanence"
+          "system.localisation"
+          "system.users"
+        ];
         assert qnix.profileNames == [ "base" "impermanence" ];
-        assert impermanenceProfileEvaluation.config.qnix.storage.impermanence.enable;
-        assert impermanenceProfileEvaluation.config.qnix.persist.root.directories == [ "/var/lib/nixos" ];
         assert persistFeature.supportedEnvironments == [ "nixos" ];
         assert persistEvaluation.config.qnix.persist.root.directories == [ ];
         assert persistEvaluation.config.qnix.persist.users == { };
@@ -448,8 +250,36 @@
         assert persistConfiguredEvaluation.config.qnix.persist.users.tester.cache.directories == [ ".cache/example" ];
         assert persistConfiguredEvaluation.config.qnix.persist.users.tester.cache.files == [ ".cache/example.state" ];
         assert !invalidPersistPath.success;
+        assert impermanenceFeature.supportedEnvironments == [ "nixos" "integrated-home" "standalone-home" ];
+        assert impermanenceEvaluation.config.fileSystems."/persist".neededForBoot;
+        assert impermanenceEvaluation.config.fileSystems."/cache".neededForBoot;
+        assert impermanenceEvaluation.config.services.journald.storage == "persistent";
+        assert directoryPaths impermanenceEvaluation.config.environment.persistence."/persist".directories == [ "/var/lib/nixos" "/var/lib/example" ];
+        assert directoryPaths impermanenceEvaluation.config.environment.persistence."/cache".directories == [ "/var/log" "/var/log/journal" "/var/cache/example" ];
+        assert impermanenceEvaluation.config.environment.persistence."/persist".allowTrash;
+        assert impermanenceEvaluation.config.environment.persistence."/cache".allowTrash;
+        assert filePaths impermanenceEvaluation.config.environment.persistence."/persist".files == [ "/etc/example.conf" ];
+        assert filePaths impermanenceEvaluation.config.environment.persistence."/cache".files == [ "/var/cache/example.state" ];
+        assert directoryPaths impermanenceEvaluation.config.environment.persistence."/persist".users.tester.directories == [ "Projects" ".ssh" ".local/share/example" ];
+        assert filePaths impermanenceEvaluation.config.environment.persistence."/persist".users.tester.files == [ ".config/example.conf" ];
+        assert directoryPaths impermanenceEvaluation.config.environment.persistence."/cache".users.tester.directories == [ ".cache" ".gradle" ".cache/example" ];
+        assert filePaths impermanenceEvaluation.config.environment.persistence."/cache".users.tester.files == [ ".cache/example.state" ".cache/tester.state" ];
+        assert directoryPaths impermanenceEvaluation.config.environment.persistence."/persist".users.alice.directories == [ "Projects" ".ssh" ".local/share/example" "alice-data" ];
+        assert directoryPaths impermanenceEvaluation.config.environment.persistence."/cache".users.alice.directories == [ ".cache" ".gradle" ".cache/example" ];
+        assert impermanenceEvaluation.config.environment.etc."impermanence.json".source != null;
+        assert builtins.elem "/var/lib/nixos" impermanenceManifest.directories;
+        assert builtins.elem "/etc/example.conf" impermanenceManifest.files;
+        assert builtins.elem "/home/tester/.local/share/example" impermanenceManifest.directories;
+        assert builtins.elem "/home/tester/.cache/tester.state" impermanenceManifest.files;
+        assert builtins.elem "/home/alice/alice-data" impermanenceManifest.directories;
+        assert fishFeature.supportedEnvironments == [ "nixos" "integrated-home" "standalone-home" ];
+        assert fishNixosEvaluation.config.programs.fish.enable;
+        assert fishHomeEvaluation.config.programs.fish.enable;
+        assert fishNixosEvaluation.config.qnix.persist.users."*".directories == [ ".local/share/fish" ];
         assert shellPackagesFeature.supportedEnvironments == [ "integrated-home" "standalone-home" ];
-        assert builtins.length shellPackagesEvaluation.config.home.packages == 3;
+        assert builtins.hasAttr "derivation" shellPackagesEvaluation.config.qnix.shell.packages.packages;
+        assert builtins.hasAttr "string" shellPackagesEvaluation.config.qnix.shell.packages.packages;
+        assert builtins.hasAttr "attrset" shellPackagesEvaluation.config.qnix.shell.packages.packages;
         assert starshipFeature.supportedEnvironments == [ "integrated-home" "standalone-home" ];
         assert starshipEvaluation.config.programs.starship.enable;
         assert starshipEvaluation.config.programs.starship.settings.add_newline == false;
@@ -460,7 +290,9 @@
         assert zshNixosEvaluation.config.programs.zsh.syntaxHighlighting.enable;
         assert zshNixosEvaluation.config.programs.zsh.enableCompletion;
         assert zshHomeEvaluation.config.programs.zsh.enable;
+        assert zshHomeEvaluation.config.programs.zsh.autosuggestion.enable;
         assert zshNixosEvaluation.config.qnix.persist.users."*".files == [ ".zsh_history" ];
+        assert builtins.hasAttr "show-root-filesystem" impermanenceHomeEvaluation.config.qnix.shell.packages.packages;
         assert userFeature.supportedEnvironments == [ "nixos" ];
         assert userEvaluation.config.users.mutableUsers == false;
         assert userEvaluation.config.users.defaultUserShell == pkgs.bash;
@@ -476,39 +308,13 @@
         assert userEvaluation.config.users.users.service.group == "svc";
         assert builtins.hasAttr "alice" userEvaluation.config.users.groups;
         assert builtins.hasAttr "svc" userEvaluation.config.users.groups;
-        assert impermanenceFeature.supportedEnvironments == [ "nixos" "integrated-home" "standalone-home" ];
-        assert impermanenceEvaluation.config.fileSystems."/persist".neededForBoot;
-        assert impermanenceEvaluation.config.fileSystems."/cache".neededForBoot;
-        assert impermanenceEvaluation.config.services.journald.storage == "persistent";
-        assert impermanenceEvaluation.config.environment.persistence."/persist".directories == [ "/var/lib/nixos" "/var/lib/example" ];
-        assert impermanenceEvaluation.config.environment.persistence."/cache".directories == [ "/var/log" "/var/log/journal" "/var/cache/example" ];
-        assert impermanenceEvaluation.config.environment.persistence."/persist".allowTrash;
-        assert impermanenceEvaluation.config.environment.persistence."/cache".allowTrash;
-        assert impermanenceEvaluation.config.environment.persistence."/persist".files == [ "/etc/example.conf" ];
-        assert impermanenceEvaluation.config.environment.persistence."/cache".files == [ "/var/cache/example.state" ];
-        assert impermanenceEvaluation.config.environment.persistence."/persist".users.tester.directories == [ "Projects" ".ssh" ".local/share/example" ];
-        assert impermanenceEvaluation.config.environment.persistence."/persist".users.tester.files == [ ".config/example.conf" ];
-        assert impermanenceEvaluation.config.environment.persistence."/cache".users.tester.directories == [ ".cache" ".gradle" ".cache/example" ];
-        assert impermanenceEvaluation.config.environment.persistence."/cache".users.tester.files == [ ".cache/example.state" ".cache/tester.state" ];
-        assert impermanenceEvaluation.config.environment.persistence."/persist".users.alice.directories == [ "Projects" ".ssh" ".local/share/example" "alice-data" ];
-        assert impermanenceEvaluation.config.environment.persistence."/cache".users.alice.directories == [ ".cache" ".gradle" ".cache/example" ];
-        assert impermanenceEvaluation.config.environment.etc."impermanence.json".source != null;
-        assert builtins.length impermanenceHomeEvaluation.config.home.packages == 1;
-        assert builtins.hasAttr "show-root-filesystem" impermanenceHomeEvaluation.config.qnix.shell.packages.packages;
-        assert builtins.elem "/var/lib/nixos" impermanenceManifest.directories;
-        assert builtins.elem "/etc/example.conf" impermanenceManifest.files;
-        assert builtins.elem "/home/tester/.local/share/example" impermanenceManifest.directories;
-        assert builtins.elem "/home/tester/.cache/tester.state" impermanenceManifest.files;
-        assert builtins.elem "/home/alice/alice-data" impermanenceManifest.directories;
-        assert fishFeature.supportedEnvironments == [ "nixos" "integrated-home" "standalone-home" ];
-        assert fishPersistenceEvaluation.config.programs.fish.enable;
-        assert
-          fishPersistenceEvaluation.config.qnix.persist.users."*".directories
-          == [ ".local/share/fish" ];
+        assert impermanenceProfileEvaluation.config.qnix.storage.impermanence.enable;
+        assert impermanenceProfileEvaluation.config.qnix.persist.root.directories == [ "/var/lib/nixos" ];
         assert defaultEvaluation.config.qnix.system.localisation.enable;
         assert defaultEvaluation.config.qnix.system.users.defaultExtraGroups == [ "wheel" ];
         assert defaultEvaluation.config.qnix.system.users.defaultShell == "fish";
         assert defaultEvaluation.config.programs.fish.enable;
+        assert defaultEvaluation.config.programs.zsh.enable;
         assert defaultEvaluation.config.time.timeZone == "Europe/Berlin";
         assert defaultEvaluation.config.services.xserver.xkb.layout == "de";
         assert defaultEvaluation.config.console.useXkbConfig;

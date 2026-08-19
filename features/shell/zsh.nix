@@ -45,7 +45,7 @@
     {
       programs.zsh = {
         enable = true;
-        autosuggestions.enable = cfg.autosuggestions;
+        autosuggestion.enable = cfg.autosuggestions;
         syntaxHighlighting.enable = cfg.syntaxHighlighting;
         enableCompletion = cfg.enableCompletion;
       };
