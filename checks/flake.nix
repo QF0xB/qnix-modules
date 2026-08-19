@@ -37,7 +37,18 @@
           i18n.extraLocaleSettings = nixpkgs.lib.mkOption {
             type = nixpkgs.lib.types.attrsOf nixpkgs.lib.types.str;
           };
+
+          qnix.persist.users."*".directories = nixpkgs.lib.mkOption {
+            type = nixpkgs.lib.types.listOf nixpkgs.lib.types.str;
+            default = [ ];
+          };
         };
+      };
+
+      fishFeature = qnix.features."shell.fish";
+
+      fishPersistenceEvaluation = nixpkgs.lib.evalModules {
+        modules = [ testOptions ] ++ fishFeature.optionModules ++ fishFeature.nixosModules;
       };
 
       defaultEvaluation = nixpkgs.lib.evalModules {
@@ -59,8 +70,12 @@
     in
     {
       checks.${system}.default =
-        assert qnix.featureNames == [ "system.localisation" ];
+        assert qnix.featureNames == [ "shell.fish" "system.localisation" ];
         assert qnix.profileNames == [ "base" ];
+        assert fishFeature.supportedEnvironments == [ "nixos" "integrated-home" "standalone-home" ];
+        assert
+          fishPersistenceEvaluation.config.qnix.persist.users."*".directories
+          == [ ".local/share/fish" ];
         assert defaultEvaluation.config.qnix.system.localisation.enable;
         assert defaultEvaluation.config.time.timeZone == "Europe/Berlin";
         assert defaultEvaluation.config.services.xserver.xkb.layout == "de";
