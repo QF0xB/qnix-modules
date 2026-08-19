@@ -63,6 +63,7 @@
       bootFeature = qnix.features."system.boot";
       fontsFeature = qnix.features."appearance.fonts";
       gpgFeature = qnix.features."security.gpg";
+      gnomeKeyringFeature = qnix.features."security.gnome-keyring";
       polkitFeature = qnix.features."security.polkit";
       sopsFeature = qnix.features."security.sops";
       stylixFeature = qnix.features."appearance.stylix";
@@ -236,6 +237,17 @@
           }
         ]
       );
+      gnomeKeyringEvaluation = mkNixos (
+        persistFeature.optionModules
+        ++ gnomeKeyringFeature.optionModules
+        ++ gnomeKeyringFeature.nixosModules
+      );
+      gnomeKeyringGuiEvaluation = mkNixos (
+        persistFeature.optionModules
+        ++ gnomeKeyringFeature.optionModules
+        ++ gnomeKeyringFeature.nixosModules
+        ++ [ { qnix.security.gnome-keyring.gui = true; } ]
+      );
       polkitEvaluation = mkNixos (polkitFeature.optionModules ++ polkitFeature.nixosModules);
       polkitDisabledEvaluation = mkNixos (
         polkitFeature.optionModules
@@ -352,6 +364,7 @@
             "appearance.fonts"
             "appearance.stylix"
             "persist"
+            "security.gnome-keyring"
             "security.gpg"
             "security.polkit"
             "security.sops"
@@ -398,6 +411,14 @@
         assert
           (builtins.elemAt gpgHomeEvaluation.config.programs.gpg.publicKeys 0).text == "test-public-key";
         assert (builtins.elemAt gpgHomeEvaluation.config.programs.gpg.publicKeys 0).trust == 4;
+        assert gnomeKeyringFeature.supportedEnvironments == [ "nixos" ];
+        assert gnomeKeyringEvaluation.config.services.gnome.gnome-keyring.enable;
+        assert gnomeKeyringEvaluation.config.security.pam.services.login.enableGnomeKeyring;
+        assert gnomeKeyringEvaluation.config.security.pam.services.sddm.enableGnomeKeyring;
+        assert
+          gnomeKeyringEvaluation.config.qnix.persist.users."*".directories == [ ".local/share/keyrings" ];
+        assert !(builtins.elem pkgs.seahorse gnomeKeyringEvaluation.config.environment.systemPackages);
+        assert builtins.elem pkgs.seahorse gnomeKeyringGuiEvaluation.config.environment.systemPackages;
         assert polkitFeature.supportedEnvironments == [ "nixos" ];
         assert polkitEvaluation.config.security.polkit.enable;
         assert polkitEvaluation.config.qnix.security.polkit.allowUserPowerCommands;
