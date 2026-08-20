@@ -487,6 +487,8 @@
       );
 
       defaultEvaluation = mkNixos (qnix.modulesFor.nixos [ "base" ]);
+      workstationProfileEvaluation = mkNixos (qnix.modulesFor.nixos [ "workstation" ]);
+      laptopProfileEvaluation = mkNixos (qnix.modulesFor.nixos [ "laptop" ]);
       secretsProfileEvaluation = mkNixos (
         [ sops-nix.nixosModules.sops ]
         ++ qnix.modulesFor.nixos [ "secrets" ]
@@ -543,7 +545,9 @@
             "appearance"
             "base"
             "impermanence"
+            "laptop"
             "secrets"
+            "workstation"
           ];
         assert persistFeature.supportedEnvironments == [ "nixos" ];
         assert bootFeature.supportedEnvironments == [ "nixos" ];
@@ -872,6 +876,12 @@
           defaultEvaluation.config.qnix.appearance.fonts.packages == [ pkgs.nerd-fonts.jetbrains-mono ];
         assert defaultEvaluation.config.qnix.system.users.defaultExtraGroups == [ "wheel" ];
         assert defaultEvaluation.config.qnix.system.users.defaultShell == "fish";
+        assert defaultEvaluation.config.qnix.network.addressing.enable;
+        assert workstationProfileEvaluation.config.qnix.hardware.bluetooth.enable;
+        assert workstationProfileEvaluation.config.qnix.hardware.thunderbolt.enable;
+        assert workstationProfileEvaluation.config.qnix.network.networkmanager.enable;
+        assert laptopProfileEvaluation.config.qnix.hardware.laptop.enable;
+        assert laptopProfileEvaluation.config.qnix.hardware.power-management.enable;
         assert defaultEvaluation.config.programs.fish.enable;
         assert defaultEvaluation.config.programs.zsh.enable;
         assert defaultEvaluation.config.time.timeZone == "Europe/Berlin";
