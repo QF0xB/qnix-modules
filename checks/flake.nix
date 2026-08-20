@@ -74,6 +74,7 @@
       zshFeature = qnix.features."shell.zsh";
       userFeature = qnix.features."system.users";
       impermanenceFeature = qnix.features."storage.impermanence";
+      addressingFeature = qnix.features."network.addressing";
       firewallFeature = qnix.features."network.firewall";
       networkmanagerFeature = qnix.features."network.networkmanager";
       zfsFeature = qnix.features."storage.zfs";
@@ -356,6 +357,43 @@
         ]
       );
 
+      addressingEvaluation = mkNixos (
+        addressingFeature.optionModules
+        ++ addressingFeature.nixosModules
+        ++ [
+          {
+            qnix.network.addressing = {
+              hostname = "addressing-check";
+              hostId = "01234567";
+              nameservers = [
+                "1.1.1.1"
+                "2606:4700:4700::1111"
+              ];
+              defaultGateway = "192.0.2.1";
+              defaultGateway6 = "2001:db8::1";
+              interfaces.enp1s0 = {
+                useDHCP = false;
+                ipv4 = {
+                  addresses = [
+                    {
+                      address = "192.0.2.10";
+                      prefixLength = 24;
+                    }
+                  ];
+                  routes = [
+                    {
+                      address = "198.51.100.0";
+                      prefixLength = 24;
+                      via = "192.0.2.1";
+                    }
+                  ];
+                };
+              };
+            };
+          }
+        ]
+      );
+
       networkmanagerEvaluation = mkNixos (
         persistFeature.optionModules
         ++ networkmanagerFeature.optionModules
@@ -414,6 +452,7 @@
           qnix.featureNames == [
             "appearance.fonts"
             "appearance.stylix"
+            "network.addressing"
             "network.firewall"
             "network.networkmanager"
             "persist"
@@ -457,6 +496,34 @@
           ];
         assert firewallEvaluation.config.networking.firewall.allowedUDPPorts == [ 51820 ];
         assert firewallEvaluation.config.networking.firewall.allowPing;
+        assert addressingFeature.supportedEnvironments == [ "nixos" ];
+        assert addressingEvaluation.config.networking.hostName == "addressing-check";
+        assert addressingEvaluation.config.networking.hostId == "01234567";
+        assert
+          addressingEvaluation.config.networking.nameservers == [
+            "1.1.1.1"
+            "2606:4700:4700::1111"
+          ];
+        assert addressingEvaluation.config.networking.defaultGateway.address == "192.0.2.1";
+        assert addressingEvaluation.config.networking.defaultGateway6.address == "2001:db8::1";
+        assert !addressingEvaluation.config.networking.interfaces.enp1s0.useDHCP;
+        assert
+          addressingEvaluation.config.networking.interfaces.enp1s0.ipv4.addresses == [
+            {
+              address = "192.0.2.10";
+              prefixLength = 24;
+            }
+          ];
+        assert builtins.length addressingEvaluation.config.networking.interfaces.enp1s0.ipv4.routes == 1;
+        assert
+          (builtins.head addressingEvaluation.config.networking.interfaces.enp1s0.ipv4.routes).address
+          == "198.51.100.0";
+        assert
+          (builtins.head addressingEvaluation.config.networking.interfaces.enp1s0.ipv4.routes).prefixLength
+          == 24;
+        assert
+          (builtins.head addressingEvaluation.config.networking.interfaces.enp1s0.ipv4.routes).via
+          == "192.0.2.1";
         assert networkmanagerFeature.supportedEnvironments == [ "nixos" ];
         assert networkmanagerEvaluation.config.networking.networkmanager.enable;
         assert !networkmanagerEvaluation.config.networking.useDHCP;

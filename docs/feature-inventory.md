@@ -43,7 +43,7 @@ confirmation.
 
 | Feature                  | Likely environment | Profiles                        | Dependencies    | Persistence    | Status  | Notes                            |
 |--------------------------|--------------------|---------------------------------|-----------------|----------------|---------|----------------------------------|
-| `network.addressing`     | NixOS              | `base`                          | —               | —              | planned | Hostname, interfaces, and routes |
+| `network.addressing`     | NixOS              | `base`                          | —               | —              | implemented | Hostname, interfaces, routes, DNS, and gateways |
 | `network.firewall`       | NixOS              | Client-selected                | —               | —              | implemented | Firewall enablement, allowed ports, and ping policy |
 | `network.networkmanager` | NixOS              | Client-selected                | —               | NetworkManager connections | implemented | NetworkManager service, plugins, unmanaged interfaces, and GUI applet |
 | `network.tailscale`      | NixOS              | `base`, `workstation`, `laptop` | —               | Service state? | planned | VPN/service                      |
