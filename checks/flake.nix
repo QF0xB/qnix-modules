@@ -607,8 +607,14 @@
             "standalone-home"
           ];
         assert hyprlandNixosEvaluation.config.programs.hyprland.enable;
+        assert hyprlandNixosEvaluation.config.programs.hyprland.withUWSM;
+        assert hyprlandNixosEvaluation.config.programs.uwsm.enable;
+        assert hyprlandNixosEvaluation.config.environment.sessionVariables.NIXOS_OZONE_WL == "1";
         assert hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.enable;
-        assert hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.systemd.enable;
+        assert !hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.systemd.enable;
+        assert hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.general.gaps_in == 5;
+        assert
+          hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.decoration.rounding == 10;
         assert
           hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.cursor.no_hardware_cursors;
         assert bluetoothFeature.supportedEnvironments == [ "nixos" ];
