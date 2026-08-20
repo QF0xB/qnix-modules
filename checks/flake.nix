@@ -68,6 +68,7 @@
       persistFeature = qnix.features.persist;
       bootFeature = qnix.features."system.boot";
       plymouthFeature = qnix.features."system.plymouth";
+      waylandFeature = qnix.features."desktop.wayland";
       laptopFeature = qnix.features."hardware.laptop";
       powerManagementFeature = qnix.features."hardware.power-management";
       bluetoothFeature = qnix.features."hardware.bluetooth";
@@ -424,6 +425,12 @@
       plymouthEvaluation = mkNixos (
         [ stylix.nixosModules.stylix ] ++ plymouthFeature.optionModules ++ plymouthFeature.nixosModules
       );
+      waylandNixosEvaluation = mkNixos (waylandFeature.optionModules ++ waylandFeature.nixosModules);
+      waylandHomeEvaluation = mkHome (
+        waylandFeature.optionModules
+        ++ waylandFeature.__homeModuleFor "standalone-home"
+        ++ [ { qnix.desktop.wayland.xdgOpenUsePortal = true; } ]
+      );
       bluetoothEvaluation = mkNixos (
         bluetoothFeature.optionModules
         ++ bluetoothFeature.nixosModules
@@ -521,6 +528,7 @@
           qnix.featureNames == [
             "appearance.fonts"
             "appearance.stylix"
+            "desktop.wayland"
             "hardware.bluetooth"
             "hardware.laptop"
             "hardware.power-management"
@@ -563,6 +571,20 @@
         assert plymouthEvaluation.config.boot.consoleLogLevel == 3;
         assert !plymouthEvaluation.config.boot.initrd.verbose;
         assert plymouthEvaluation.config.stylix.targets.plymouth.enable == false;
+        assert
+          waylandFeature.supportedEnvironments == [
+            "nixos"
+            "integrated-home"
+            "standalone-home"
+          ];
+        assert waylandNixosEvaluation.config.services.graphical-desktop.enable;
+        assert waylandNixosEvaluation.config.programs.dconf.enable;
+        assert waylandNixosEvaluation.config.programs.xwayland.enable;
+        assert waylandNixosEvaluation.config.xdg.portal.enable;
+        assert waylandNixosEvaluation.config.xdg.portal.wlr.enable;
+        assert builtins.elem pkgs.xdg-desktop-portal-gtk
+          waylandNixosEvaluation.config.xdg.portal.extraPortals;
+        assert waylandHomeEvaluation.config.home.sessionVariables.NIXOS_XDG_OPEN_USE_PORTAL == "1";
         assert bluetoothFeature.supportedEnvironments == [ "nixos" ];
         assert bluetoothEvaluation.config.hardware.bluetooth.enable;
         assert !bluetoothEvaluation.config.hardware.bluetooth.powerOnBoot;
