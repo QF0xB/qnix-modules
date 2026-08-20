@@ -2,11 +2,11 @@
   "nodes": {
     "qnix-sdk": {
       "locked": {
-        "lastModified": 1787102200,
-        "narHash": "sha256-KaeD58COy9vej3EPoGIm6qsSI/ETTasLZh7Uw2P8+As=",
+        "lastModified": 1787184355,
+        "narHash": "sha256-6NW8InN2APt2cXpZK0krU1jRPHAMjZwxH+TvSJyZxjw=",
         "owner": "QF0xB",
         "repo": "qnix-sdk",
-        "rev": "bd8515df06486875e55c7a58d65f04687091c838",
+        "rev": "c82128b18d4b7042fa7a13e50cc1297ad0083309",
         "type": "github"
       },
       "original": {

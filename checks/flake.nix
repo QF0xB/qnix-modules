@@ -75,6 +75,7 @@
       userFeature = qnix.features."system.users";
       impermanenceFeature = qnix.features."storage.impermanence";
       firewallFeature = qnix.features."network.firewall";
+      networkmanagerFeature = qnix.features."network.networkmanager";
       zfsFeature = qnix.features."storage.zfs";
 
       persistEvaluation = nixpkgs.lib.evalModules {
@@ -355,6 +356,20 @@
         ]
       );
 
+      networkmanagerEvaluation = mkNixos (
+        persistFeature.optionModules
+        ++ networkmanagerFeature.optionModules
+        ++ networkmanagerFeature.nixosModules
+        ++ [
+          {
+            qnix.network.networkmanager = {
+              unmanaged = [ "usb0" ];
+              extraPlugins = [ "networkmanager-openvpn" ];
+            };
+          }
+        ]
+      );
+
       bootEvaluation = mkNixos (bootFeature.optionModules ++ bootFeature.nixosModules);
       grubBootEvaluation = mkNixos (
         bootFeature.optionModules
@@ -400,6 +415,7 @@
             "appearance.fonts"
             "appearance.stylix"
             "network.firewall"
+            "network.networkmanager"
             "persist"
             "security.gnome-keyring"
             "security.gpg"
@@ -441,6 +457,17 @@
           ];
         assert firewallEvaluation.config.networking.firewall.allowedUDPPorts == [ 51820 ];
         assert firewallEvaluation.config.networking.firewall.allowPing;
+        assert networkmanagerFeature.supportedEnvironments == [ "nixos" ];
+        assert networkmanagerEvaluation.config.networking.networkmanager.enable;
+        assert !networkmanagerEvaluation.config.networking.useDHCP;
+        assert networkmanagerEvaluation.config.networking.networkmanager.unmanaged == [ "usb0" ];
+        assert
+          networkmanagerEvaluation.config.networking.networkmanager.plugins
+          == [ pkgs.networkmanager-openvpn ];
+        assert networkmanagerEvaluation.config.programs.nm-applet.enable;
+        assert
+          networkmanagerEvaluation.config.qnix.persist.root.directories
+          == [ "/etc/NetworkManager/system-connections" ];
         assert
           gpgFeature.supportedEnvironments == [
             "nixos"
