@@ -18,6 +18,43 @@
         default = false;
         description = "Whether to disable hardware cursors for Hyprland.";
       };
+
+      devices = lib.mkOption {
+        type = lib.types.attrsOf (
+          lib.types.submodule (
+            { ... }:
+            {
+              options = {
+                sensitivity = lib.mkOption {
+                  type = lib.types.nullOr lib.types.number;
+                  default = null;
+                  description = "Pointer sensitivity override for this device.";
+                };
+
+                kbLayout = lib.mkOption {
+                  type = lib.types.nullOr lib.types.str;
+                  default = null;
+                  description = "Keyboard layout override for this device.";
+                };
+
+                kbVariant = lib.mkOption {
+                  type = lib.types.nullOr lib.types.str;
+                  default = null;
+                  description = "Keyboard variant override for this device.";
+                };
+
+                kbOptions = lib.mkOption {
+                  type = lib.types.nullOr lib.types.str;
+                  default = null;
+                  description = "Keyboard options override for this device.";
+                };
+              };
+            }
+          )
+        );
+        default = { };
+        description = "Hyprland per-device input overrides.";
+      };
     };
 
   nixos =
@@ -134,18 +171,24 @@
             focus_on_activate = true;
           };
 
-          device = [
+          device = lib.mapAttrsToList (
+            name: device:
             {
-              name = "epic-mouse-v1";
-              sensitivity = -0.5;
+              inherit name;
             }
-            {
-              name = "yubico-yubikey-otp+fido+ccid";
-              kb_layout = "us";
-              kb_variant = "";
-              kb_options = "";
+            // lib.optionalAttrs (device.sensitivity != null) {
+              sensitivity = device.sensitivity;
             }
-          ];
+            // lib.optionalAttrs (device.kbLayout != null) {
+              kb_layout = device.kbLayout;
+            }
+            // lib.optionalAttrs (device.kbVariant != null) {
+              kb_variant = device.kbVariant;
+            }
+            // lib.optionalAttrs (device.kbOptions != null) {
+              kb_options = device.kbOptions;
+            }
+          ) cfg.devices;
 
           debug.disable_logs = false;
           ecosystem = {

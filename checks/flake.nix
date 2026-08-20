@@ -447,7 +447,14 @@
         ++ waylandFeature.__homeModuleFor "standalone-home"
         ++ hyprlandFeature.optionModules
         ++ hyprlandFeature.__homeModuleFor "standalone-home"
-        ++ [ { qnix.desktop.hyprland.noHardwareCursors = true; } ]
+        ++ [
+          {
+            qnix.desktop.hyprland = {
+              noHardwareCursors = true;
+              devices."test-mouse".sensitivity = -0.5;
+            };
+          }
+        ]
       );
       hyprlandFullHomeEvaluation = mkHome (
         waylandFeature.optionModules
@@ -472,6 +479,7 @@
         ++ hyprlandMonitorsFeature.optionModules
         ++ hyprlandMonitorsFeature.nixosModules
       );
+      hyprlandProfileEvaluation = mkNixos (qnix.modulesFor.nixos [ "hyprland" ]);
       bluetoothEvaluation = mkNixos (
         bluetoothFeature.optionModules
         ++ bluetoothFeature.nixosModules
@@ -603,6 +611,7 @@
           qnix.profileNames == [
             "appearance"
             "base"
+            "hyprland"
             "impermanence"
             "laptop"
             "secrets"
@@ -648,6 +657,13 @@
           hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.decoration.rounding == 10;
         assert
           hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.cursor.no_hardware_cursors;
+        assert
+          hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.device == [
+            {
+              name = "test-mouse";
+              sensitivity = -0.5;
+            }
+          ];
         assert hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind != [ ];
         assert hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.windowrule != [ ];
         assert hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.source != [ ];
@@ -659,6 +675,9 @@
             ".config/hypr/monitors.conf"
             ".config/hypr/workspaces.conf"
           ];
+        assert hyprlandProfileEvaluation.config.qnix.desktop.hyprland.noHardwareCursors;
+        assert
+          hyprlandProfileEvaluation.config.qnix.desktop.hyprland.devices."epic-mouse-v1".sensitivity == -0.5;
         assert bluetoothFeature.supportedEnvironments == [ "nixos" ];
         assert bluetoothEvaluation.config.hardware.bluetooth.enable;
         assert !bluetoothEvaluation.config.hardware.bluetooth.powerOnBoot;
