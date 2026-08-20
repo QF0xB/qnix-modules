@@ -71,6 +71,7 @@
       powerManagementFeature = qnix.features."hardware.power-management";
       bluetoothFeature = qnix.features."hardware.bluetooth";
       laptopBluetoothFeature = laptopQnix.features."hardware.bluetooth";
+      thunderboltFeature = qnix.features."hardware.thunderbolt";
       fontsFeature = qnix.features."appearance.fonts";
       gpgFeature = qnix.features."security.gpg";
       gnomeKeyringFeature = qnix.features."security.gnome-keyring";
@@ -466,6 +467,11 @@
           }
         ]
       );
+      thunderboltEvaluation = mkNixos (
+        thunderboltFeature.optionModules
+        ++ thunderboltFeature.nixosModules
+        ++ [ { qnix.hardware.thunderbolt.package = pkgs.bolt; } ]
+      );
       grubBootEvaluation = mkNixos (
         bootFeature.optionModules
         ++ bootFeature.nixosModules
@@ -512,6 +518,7 @@
             "hardware.bluetooth"
             "hardware.laptop"
             "hardware.power-management"
+            "hardware.thunderbolt"
             "network.addressing"
             "network.firewall"
             "network.networkmanager"
@@ -559,6 +566,9 @@
         assert powerManagementEvaluation.config.services.upower.enable;
         assert powerManagementEvaluation.config.services.power-profiles-daemon.enable;
         assert powerManagementEvaluation.config.powerManagement.cpuFreqGovernor == "schedutil";
+        assert thunderboltFeature.supportedEnvironments == [ "nixos" ];
+        assert thunderboltEvaluation.config.services.hardware.bolt.enable;
+        assert thunderboltEvaluation.config.services.hardware.bolt.package == pkgs.bolt;
         assert bootEvaluation.config.boot.loader.systemd-boot.enable;
         assert bootEvaluation.config.boot.loader.timeout == 3;
         assert bootEvaluation.config.boot.supportedFilesystems.zfs;
