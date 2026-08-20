@@ -145,12 +145,6 @@
               kb_variant = "";
               kb_options = "";
             }
-            {
-              name = "ydotoold-virtual-device";
-              kb_layout = "us";
-              kb_variant = "";
-              kb_options = "";
-            }
           ];
 
           debug.disable_logs = false;
