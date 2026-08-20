@@ -505,6 +505,10 @@
               type = lib.types.bool;
               default = false;
             };
+            settings = lib.mkOption {
+              type = lib.types.attrs;
+              default = { };
+            };
           };
         };
       noctaliaHomeEvaluation = mkHome (
@@ -741,6 +745,34 @@
           ];
         assert noctaliaHomeEvaluation.config.programs.noctalia-shell.enable;
         assert noctaliaHomeEvaluation.config.programs.noctalia-shell.systemd.enable;
+        assert
+          noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.bar.widgets.right == [
+            { id = "Tray"; }
+            { id = "plugin:privacy-indicator"; }
+            { id = "plugin:keybind-cheatsheet"; }
+            { id = "NotificationHistory"; }
+            {
+              id = "Volume";
+              displayMode = "alwaysHide";
+              middleClickCommand = "pwvucontrol || pavucontrol";
+            }
+            { id = "plugin:hyprland-steam-overlay"; }
+            {
+              id = "Battery";
+              displayMode = "graphic-clean";
+              hideIfNotDetected = true;
+              showPowerProfiles = true;
+            }
+            {
+              id = "Brightness";
+              displayMode = "alwaysHide";
+            }
+            {
+              id = "ControlCenter";
+              icon = "noctalia";
+              useDistroLogo = true;
+            }
+          ];
         assert bluetoothFeature.supportedEnvironments == [ "nixos" ];
         assert bluetoothEvaluation.config.hardware.bluetooth.enable;
         assert !bluetoothEvaluation.config.hardware.bluetooth.powerOnBoot;
