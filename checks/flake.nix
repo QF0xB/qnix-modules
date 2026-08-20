@@ -67,6 +67,7 @@
 
       persistFeature = qnix.features.persist;
       bootFeature = qnix.features."system.boot";
+      plymouthFeature = qnix.features."system.plymouth";
       laptopFeature = qnix.features."hardware.laptop";
       powerManagementFeature = qnix.features."hardware.power-management";
       bluetoothFeature = qnix.features."hardware.bluetooth";
@@ -420,6 +421,9 @@
       );
 
       bootEvaluation = mkNixos (bootFeature.optionModules ++ bootFeature.nixosModules);
+      plymouthEvaluation = mkNixos (
+        [ stylix.nixosModules.stylix ] ++ plymouthFeature.optionModules ++ plymouthFeature.nixosModules
+      );
       bluetoothEvaluation = mkNixos (
         bluetoothFeature.optionModules
         ++ bluetoothFeature.nixosModules
@@ -538,6 +542,7 @@
             "storage.zfs"
             "system.boot"
             "system.localisation"
+            "system.plymouth"
             "system.users"
           ];
         assert
@@ -551,6 +556,13 @@
           ];
         assert persistFeature.supportedEnvironments == [ "nixos" ];
         assert bootFeature.supportedEnvironments == [ "nixos" ];
+        assert plymouthFeature.supportedEnvironments == [ "nixos" ];
+        assert plymouthEvaluation.config.boot.plymouth.enable;
+        assert plymouthEvaluation.config.boot.plymouth.theme == "nixos-bgrt";
+        assert plymouthEvaluation.config.boot.plymouth.themePackages == [ pkgs.nixos-bgrt-plymouth ];
+        assert plymouthEvaluation.config.boot.consoleLogLevel == 3;
+        assert !plymouthEvaluation.config.boot.initrd.verbose;
+        assert plymouthEvaluation.config.stylix.targets.plymouth.enable == false;
         assert bluetoothFeature.supportedEnvironments == [ "nixos" ];
         assert bluetoothEvaluation.config.hardware.bluetooth.enable;
         assert !bluetoothEvaluation.config.hardware.bluetooth.powerOnBoot;

@@ -19,7 +19,7 @@ confirmation.
 | `system.localisation` | NixOS              | `base`, `workstation` | —            | —           | finished | Locale, timezone, keyboard          |
 | `system.packages`     | NixOS              | `base`                | —            | —           | planned  | Shared system packages              |
 | `system.users`        | NixOS              | `base`                | —            | —           | implemented | User declarations and defaults      |
-| `system.plymouth`     | NixOS              | `desktop`             | —            | —           | planned  | Boot splash                         |
+| `system.plymouth`     | NixOS              | `desktop`             | —            | —           | implemented | Boot splash and theme               |
 
 ## Shell and user environment
 
