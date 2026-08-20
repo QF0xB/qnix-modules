@@ -75,6 +75,7 @@
       hyprlandMonitorsFeature = qnix.features."desktop.hyprland.monitors";
       hyprlandRulesFeature = qnix.features."desktop.hyprland.rules";
       hyprlandSpecialWorkspacesFeature = qnix.features."desktop.hyprland.special-workspaces";
+      noctaliaFeature = qnix.features."desktop.noctalia";
       laptopFeature = qnix.features."hardware.laptop";
       powerManagementFeature = qnix.features."hardware.power-management";
       bluetoothFeature = qnix.features."hardware.bluetooth";
@@ -492,6 +493,29 @@
         ++ hyprlandMonitorsFeature.nixosModules
       );
       hyprlandProfileEvaluation = mkNixos (qnix.modulesFor.nixos [ "hyprland" ]);
+      noctaliaStub =
+        { lib, ... }:
+        {
+          options.programs.noctalia-shell = {
+            enable = lib.mkOption {
+              type = lib.types.bool;
+              default = false;
+            };
+            systemd.enable = lib.mkOption {
+              type = lib.types.bool;
+              default = false;
+            };
+          };
+        };
+      noctaliaHomeEvaluation = mkHome (
+        [ noctaliaStub ]
+        ++ waylandFeature.optionModules
+        ++ waylandFeature.__homeModuleFor "standalone-home"
+        ++ hyprlandFeature.optionModules
+        ++ hyprlandFeature.__homeModuleFor "standalone-home"
+        ++ noctaliaFeature.optionModules
+        ++ noctaliaFeature.__homeModuleFor "standalone-home"
+      );
       bluetoothEvaluation = mkNixos (
         bluetoothFeature.optionModules
         ++ bluetoothFeature.nixosModules
@@ -594,6 +618,7 @@
             "desktop.hyprland.monitors"
             "desktop.hyprland.rules"
             "desktop.hyprland.special-workspaces"
+            "desktop.noctalia"
             "desktop.wayland"
             "hardware.bluetooth"
             "hardware.laptop"
@@ -709,6 +734,13 @@
         assert hyprlandProfileEvaluation.config.qnix.desktop.hyprland.noHardwareCursors;
         assert
           hyprlandProfileEvaluation.config.qnix.desktop.hyprland.devices."epic-mouse-v1".sensitivity == -0.5;
+        assert
+          noctaliaFeature.supportedEnvironments == [
+            "integrated-home"
+            "standalone-home"
+          ];
+        assert noctaliaHomeEvaluation.config.programs.noctalia-shell.enable;
+        assert noctaliaHomeEvaluation.config.programs.noctalia-shell.systemd.enable;
         assert bluetoothFeature.supportedEnvironments == [ "nixos" ];
         assert bluetoothEvaluation.config.hardware.bluetooth.enable;
         assert !bluetoothEvaluation.config.hardware.bluetooth.powerOnBoot;

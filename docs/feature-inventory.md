@@ -78,7 +78,7 @@ confirmation.
 | `desktop.hyprland.monitors`           | NixOS + Home       | `hyprland` | `desktop.hyprland`  | Monitor files      | implemented | Monitor and workspace persistence |
 | `desktop.hyprland.rules`              | Home               | `hyprland` | `desktop.hyprland`  | —                  | implemented | Hyprland window rules             |
 | `desktop.hyprland.special-workspaces` | Home               | `hyprland` | `desktop.hyprland`  | —                  | implemented | Special workspace helper tooling  |
-| `desktop.noctalia`                    | NixOS + Home       | `hyprland` | `desktop.wayland`   | Shell state?       | planned | Shell/session integration        |
+| `desktop.noctalia`                    | Home               | `hyprland` | `desktop.hyprland` | Shell state?       | implemented | Noctalia desktop shell and autostart |
 | `desktop.sound`                       | NixOS + Home       | `desktop`  | `security.polkit`   | —                  | planned | Audio                            |
 | `desktop.terminal`                    | NixOS + Home       | `desktop`  | —                   | Terminal config    | planned | Terminal package/config          |
 | `desktop.xdg-folders`                 | NixOS + Home       | `desktop`  | —                   | —                  | planned | XDG directories                  |

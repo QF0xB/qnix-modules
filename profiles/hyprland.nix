@@ -7,6 +7,7 @@
     "desktop.hyprland.monitors"
     "desktop.hyprland.rules"
     "desktop.hyprland.special-workspaces"
+    "desktop.noctalia"
   ];
 
   defaults.desktop.hyprland = {
