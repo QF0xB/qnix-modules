@@ -36,7 +36,7 @@ confirmation.
 |---------------------------|--------------------|-------------------------|-----------------|-------------|---------|---------------------------|
 | `hardware.bluetooth`      | NixOS              | `workstation`, `laptop` | —               | —           | implemented | Bluetooth service, BlueZ settings, and optional Blueman GUI |
 | `hardware.laptop`         | NixOS              | `laptop`                | —               | —           | implemented | Touchpad and lid/power-button behavior |
-| `system.power-management` | NixOS              | `laptop`                | `hardware.laptop` | —           | planned | Power, upower, and tuning |
+| `hardware.power-management` | NixOS              | `laptop`                | `hardware.laptop` | —           | implemented | UPower, power profiles, and CPU frequency policy |
 | `system.thunderbolt`      | NixOS              | `laptop`                | `hardware.laptop` | —           | planned | Hardware/service          |
 
 ## Networking

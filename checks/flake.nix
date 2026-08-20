@@ -68,6 +68,7 @@
       persistFeature = qnix.features.persist;
       bootFeature = qnix.features."system.boot";
       laptopFeature = qnix.features."hardware.laptop";
+      powerManagementFeature = qnix.features."hardware.power-management";
       bluetoothFeature = qnix.features."hardware.bluetooth";
       laptopBluetoothFeature = laptopQnix.features."hardware.bluetooth";
       fontsFeature = qnix.features."appearance.fonts";
@@ -452,6 +453,19 @@
           }
         ]
       );
+      powerManagementEvaluation = mkNixos (
+        powerManagementFeature.optionModules
+        ++ powerManagementFeature.nixosModules
+        ++ [
+          {
+            qnix.hardware.power-management = {
+              upower = true;
+              powerProfilesDaemon = true;
+              cpuFreqGovernor = "schedutil";
+            };
+          }
+        ]
+      );
       grubBootEvaluation = mkNixos (
         bootFeature.optionModules
         ++ bootFeature.nixosModules
@@ -497,6 +511,7 @@
             "appearance.stylix"
             "hardware.bluetooth"
             "hardware.laptop"
+            "hardware.power-management"
             "network.addressing"
             "network.firewall"
             "network.networkmanager"
@@ -540,6 +555,10 @@
           laptopEvaluation.config.services.logind.settings.Login.HandleLidSwitchExternalPower == "lock";
         assert laptopEvaluation.config.services.logind.settings.Login.HandleLidSwitchDocked == "ignore";
         assert laptopEvaluation.config.services.logind.settings.Login.HandlePowerKey == "suspend";
+        assert powerManagementFeature.supportedEnvironments == [ "nixos" ];
+        assert powerManagementEvaluation.config.services.upower.enable;
+        assert powerManagementEvaluation.config.services.power-profiles-daemon.enable;
+        assert powerManagementEvaluation.config.powerManagement.cpuFreqGovernor == "schedutil";
         assert bootEvaluation.config.boot.loader.systemd-boot.enable;
         assert bootEvaluation.config.boot.loader.timeout == 3;
         assert bootEvaluation.config.boot.supportedFilesystems.zfs;
