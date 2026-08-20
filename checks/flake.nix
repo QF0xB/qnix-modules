@@ -498,6 +498,8 @@
         assert yubikeyEvaluation.config.security.pam.u2f.settings.origin == "pam://check";
         assert yubikeyEvaluation.config.security.pam.services.login.u2f.enable;
         assert yubikeyEvaluation.config.security.pam.services.sudo.u2f.enable;
+        assert yubikeyEvaluation.config.qnix.security.yubikey.gui;
+        assert builtins.elem pkgs.yubioath-flutter yubikeyEvaluation.config.environment.systemPackages;
         assert
           fontsFeature.supportedEnvironments == [
             "nixos"

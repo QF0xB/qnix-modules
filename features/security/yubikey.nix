@@ -2,11 +2,15 @@
   environments = [ "nixos" ];
 
   options =
-    { lib, ... }:
+    {
+      isGraphical,
+      lib,
+      ...
+    }:
     {
       gui = lib.mkOption {
         type = lib.types.bool;
-        default = false;
+        default = isGraphical;
         description = "Whether to install the YubiKey graphical management tools.";
       };
 
