@@ -15,6 +15,12 @@
         description = "Whether Noctalia should start with the graphical session.";
       };
 
+      location = lib.mkOption {
+        type = lib.types.str;
+        default = "Munich";
+        description = "City used by Noctalia for weather and location-aware features.";
+      };
+
       settings = lib.mkOption {
         type = lib.types.attrs;
         default = {
@@ -165,6 +171,7 @@
         enable = true;
         systemd.enable = cfg.autostart;
         settings = lib.recursiveUpdate cfg.settings {
+          location.name = cfg.location;
           wallpaper.directory =
             cfg.settings.wallpaper.directory or "${config.home.homeDirectory}/Pictures/wallpaper";
         };

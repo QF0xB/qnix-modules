@@ -745,6 +745,7 @@
           ];
         assert noctaliaHomeEvaluation.config.programs.noctalia-shell.enable;
         assert noctaliaHomeEvaluation.config.programs.noctalia-shell.systemd.enable;
+        assert noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.location.name == "Munich";
         assert
           noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.bar.widgets.right == [
             { id = "Tray"; }
