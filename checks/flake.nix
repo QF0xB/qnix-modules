@@ -67,6 +67,7 @@
 
       persistFeature = qnix.features.persist;
       bootFeature = qnix.features."system.boot";
+      laptopFeature = qnix.features."hardware.laptop";
       bluetoothFeature = qnix.features."hardware.bluetooth";
       laptopBluetoothFeature = laptopQnix.features."hardware.bluetooth";
       fontsFeature = qnix.features."appearance.fonts";
@@ -433,6 +434,24 @@
       laptopBluetoothEvaluation = mkNixos (
         laptopBluetoothFeature.optionModules ++ laptopBluetoothFeature.nixosModules
       );
+      laptopEvaluation = mkNixos (
+        laptopFeature.optionModules
+        ++ laptopFeature.nixosModules
+        ++ [
+          {
+            qnix.hardware.laptop = {
+              touchpad = {
+                tapping = false;
+                naturalScrolling = false;
+              };
+              lidSwitch = "hibernate";
+              lidSwitchExternalPower = "lock";
+              lidSwitchDocked = "ignore";
+              powerKey = "suspend";
+            };
+          }
+        ]
+      );
       grubBootEvaluation = mkNixos (
         bootFeature.optionModules
         ++ bootFeature.nixosModules
@@ -477,6 +496,7 @@
             "appearance.fonts"
             "appearance.stylix"
             "hardware.bluetooth"
+            "hardware.laptop"
             "network.addressing"
             "network.firewall"
             "network.networkmanager"
@@ -511,6 +531,15 @@
         assert bluetoothEvaluation.config.hardware.bluetooth.settings.General.Experimental;
         assert bluetoothEvaluation.config.services.blueman.enable;
         assert !laptopBluetoothEvaluation.config.hardware.bluetooth.powerOnBoot;
+        assert laptopFeature.supportedEnvironments == [ "nixos" ];
+        assert laptopEvaluation.config.services.libinput.enable;
+        assert !laptopEvaluation.config.services.libinput.touchpad.tapping;
+        assert !laptopEvaluation.config.services.libinput.touchpad.naturalScrolling;
+        assert laptopEvaluation.config.services.logind.settings.Login.HandleLidSwitch == "hibernate";
+        assert
+          laptopEvaluation.config.services.logind.settings.Login.HandleLidSwitchExternalPower == "lock";
+        assert laptopEvaluation.config.services.logind.settings.Login.HandleLidSwitchDocked == "ignore";
+        assert laptopEvaluation.config.services.logind.settings.Login.HandlePowerKey == "suspend";
         assert bootEvaluation.config.boot.loader.systemd-boot.enable;
         assert bootEvaluation.config.boot.loader.timeout == 3;
         assert bootEvaluation.config.boot.supportedFilesystems.zfs;

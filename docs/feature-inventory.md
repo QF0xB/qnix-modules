@@ -35,9 +35,9 @@ confirmation.
 | Feature                   | Likely environment | Profiles                | Dependencies    | Persistence | Status  | Notes                     |
 |---------------------------|--------------------|-------------------------|-----------------|-------------|---------|---------------------------|
 | `hardware.bluetooth`      | NixOS              | `workstation`, `laptop` | —               | —           | implemented | Bluetooth service, BlueZ settings, and optional Blueman GUI |
-| `system.laptop`           | NixOS              | `laptop`                | —               | —           | planned | Laptop-specific behavior  |
-| `system.power-management` | NixOS              | `laptop`                | `system.laptop` | —           | planned | Power, upower, and tuning |
-| `system.thunderbolt`      | NixOS              | `laptop`                | `system.laptop` | —           | planned | Hardware/service          |
+| `hardware.laptop`         | NixOS              | `laptop`                | —               | —           | implemented | Touchpad and lid/power-button behavior |
+| `system.power-management` | NixOS              | `laptop`                | `hardware.laptop` | —           | planned | Power, upower, and tuning |
+| `system.thunderbolt`      | NixOS              | `laptop`                | `hardware.laptop` | —           | planned | Hardware/service          |
 
 ## Networking
 
