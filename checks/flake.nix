@@ -69,6 +69,7 @@
       bootFeature = qnix.features."system.boot";
       plymouthFeature = qnix.features."system.plymouth";
       waylandFeature = qnix.features."desktop.wayland";
+      hyprlandFeature = qnix.features."desktop.hyprland";
       laptopFeature = qnix.features."hardware.laptop";
       powerManagementFeature = qnix.features."hardware.power-management";
       bluetoothFeature = qnix.features."hardware.bluetooth";
@@ -431,6 +432,19 @@
         ++ waylandFeature.__homeModuleFor "standalone-home"
         ++ [ { qnix.desktop.wayland.xdgOpenUsePortal = true; } ]
       );
+      hyprlandNixosEvaluation = mkNixos (
+        waylandFeature.optionModules
+        ++ waylandFeature.nixosModules
+        ++ hyprlandFeature.optionModules
+        ++ hyprlandFeature.nixosModules
+      );
+      hyprlandHomeEvaluation = mkHome (
+        waylandFeature.optionModules
+        ++ waylandFeature.__homeModuleFor "standalone-home"
+        ++ hyprlandFeature.optionModules
+        ++ hyprlandFeature.__homeModuleFor "standalone-home"
+        ++ [ { qnix.desktop.hyprland.noHardwareCursors = true; } ]
+      );
       bluetoothEvaluation = mkNixos (
         bluetoothFeature.optionModules
         ++ bluetoothFeature.nixosModules
@@ -528,6 +542,7 @@
           qnix.featureNames == [
             "appearance.fonts"
             "appearance.stylix"
+            "desktop.hyprland"
             "desktop.wayland"
             "hardware.bluetooth"
             "hardware.laptop"
@@ -585,6 +600,17 @@
         assert builtins.elem pkgs.xdg-desktop-portal-gtk
           waylandNixosEvaluation.config.xdg.portal.extraPortals;
         assert waylandHomeEvaluation.config.home.sessionVariables.NIXOS_XDG_OPEN_USE_PORTAL == "1";
+        assert
+          hyprlandFeature.supportedEnvironments == [
+            "nixos"
+            "integrated-home"
+            "standalone-home"
+          ];
+        assert hyprlandNixosEvaluation.config.programs.hyprland.enable;
+        assert hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.enable;
+        assert hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.systemd.enable;
+        assert
+          hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.cursor.no_hardware_cursors;
         assert bluetoothFeature.supportedEnvironments == [ "nixos" ];
         assert bluetoothEvaluation.config.hardware.bluetooth.enable;
         assert !bluetoothEvaluation.config.hardware.bluetooth.powerOnBoot;
