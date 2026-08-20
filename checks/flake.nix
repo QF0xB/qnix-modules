@@ -69,6 +69,7 @@
       bootFeature = qnix.features."system.boot";
       plymouthFeature = qnix.features."system.plymouth";
       waylandFeature = qnix.features."desktop.wayland";
+      displayManagerFeature = qnix.features."desktop.displaymanager";
       localisationFeature = qnix.features."system.localisation";
       hyprlandFeature = qnix.features."desktop.hyprland";
       hyprlandKeybindsFeature = qnix.features."desktop.hyprland.keybinds";
@@ -76,6 +77,12 @@
       hyprlandRulesFeature = qnix.features."desktop.hyprland.rules";
       hyprlandSpecialWorkspacesFeature = qnix.features."desktop.hyprland.special-workspaces";
       noctaliaFeature = qnix.features."desktop.noctalia";
+      displayManagerEvaluation = mkNixos (
+        waylandFeature.optionModules
+        ++ waylandFeature.nixosModules
+        ++ displayManagerFeature.optionModules
+        ++ displayManagerFeature.nixosModules
+      );
       laptopFeature = qnix.features."hardware.laptop";
       powerManagementFeature = qnix.features."hardware.power-management";
       bluetoothFeature = qnix.features."hardware.bluetooth";
@@ -617,6 +624,7 @@
           qnix.featureNames == [
             "appearance.fonts"
             "appearance.stylix"
+            "desktop.displaymanager"
             "desktop.hyprland"
             "desktop.hyprland.keybinds"
             "desktop.hyprland.monitors"
@@ -746,6 +754,10 @@
         assert noctaliaHomeEvaluation.config.programs.noctalia-shell.enable;
         assert noctaliaHomeEvaluation.config.programs.noctalia-shell.systemd.enable;
         assert noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.location.name == "Munich";
+        assert displayManagerFeature.supportedEnvironments == [ "nixos" ];
+        assert displayManagerEvaluation.config.services.displayManager.sddm.enable;
+        assert displayManagerEvaluation.config.services.displayManager.sddm.theme == "sddm-astronaut-theme";
+        assert displayManagerEvaluation.config.services.xserver.enable;
         assert
           noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.bar.widgets.right == [
             { id = "Tray"; }

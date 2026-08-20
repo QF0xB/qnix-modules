@@ -71,7 +71,7 @@ confirmation.
 
 | Feature                               | Likely environment | Profiles   | Dependencies        | Persistence        | Status  | Notes                            |
 |---------------------------------------|--------------------|------------|---------------------|--------------------|---------|----------------------------------|
-| `desktop.displaymanager`              | NixOS              | `hyprland` | `desktop.wayland`   | —                  | planned | Display manager                  |
+| `desktop.displaymanager`              | NixOS              | `hyprland` | `desktop.wayland`  | —                  | implemented | SDDM display manager and theme   |
 | `desktop.wayland`                     | NixOS + Home       | `hyprland` | `security.polkit`  | —                  | implemented | Wayland session, XWayland, and desktop portals |
 | `desktop.hyprland`                    | NixOS + Home       | `hyprland` | `desktop.wayland`   | —                  | implemented | Main compositor                  |
 | `desktop.hyprland.keybinds`           | Home               | `hyprland` | `desktop.hyprland`  | —                  | implemented | Hyprland keybindings             |
