@@ -35,6 +35,12 @@
       qnix = qnix-modules.lib.mkQNix {
         context.hostname = "check";
       };
+      laptopQnix = qnix-modules.lib.mkQNix {
+        context = {
+          hostname = "laptop-check";
+          laptop = true;
+        };
+      };
 
       mkNixos =
         modules:
@@ -61,6 +67,8 @@
 
       persistFeature = qnix.features.persist;
       bootFeature = qnix.features."system.boot";
+      bluetoothFeature = qnix.features."hardware.bluetooth";
+      laptopBluetoothFeature = laptopQnix.features."hardware.bluetooth";
       fontsFeature = qnix.features."appearance.fonts";
       gpgFeature = qnix.features."security.gpg";
       gnomeKeyringFeature = qnix.features."security.gnome-keyring";
@@ -409,6 +417,22 @@
       );
 
       bootEvaluation = mkNixos (bootFeature.optionModules ++ bootFeature.nixosModules);
+      bluetoothEvaluation = mkNixos (
+        bluetoothFeature.optionModules
+        ++ bluetoothFeature.nixosModules
+        ++ [
+          {
+            qnix.hardware.bluetooth = {
+              gui = true;
+              powerOnBoot = false;
+              settings.General.Experimental = true;
+            };
+          }
+        ]
+      );
+      laptopBluetoothEvaluation = mkNixos (
+        laptopBluetoothFeature.optionModules ++ laptopBluetoothFeature.nixosModules
+      );
       grubBootEvaluation = mkNixos (
         bootFeature.optionModules
         ++ bootFeature.nixosModules
@@ -452,6 +476,7 @@
           qnix.featureNames == [
             "appearance.fonts"
             "appearance.stylix"
+            "hardware.bluetooth"
             "network.addressing"
             "network.firewall"
             "network.networkmanager"
@@ -480,6 +505,12 @@
           ];
         assert persistFeature.supportedEnvironments == [ "nixos" ];
         assert bootFeature.supportedEnvironments == [ "nixos" ];
+        assert bluetoothFeature.supportedEnvironments == [ "nixos" ];
+        assert bluetoothEvaluation.config.hardware.bluetooth.enable;
+        assert !bluetoothEvaluation.config.hardware.bluetooth.powerOnBoot;
+        assert bluetoothEvaluation.config.hardware.bluetooth.settings.General.Experimental;
+        assert bluetoothEvaluation.config.services.blueman.enable;
+        assert !laptopBluetoothEvaluation.config.hardware.bluetooth.powerOnBoot;
         assert bootEvaluation.config.boot.loader.systemd-boot.enable;
         assert bootEvaluation.config.boot.loader.timeout == 3;
         assert bootEvaluation.config.boot.supportedFilesystems.zfs;

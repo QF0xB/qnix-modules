@@ -18,7 +18,7 @@ confirmation.
 | `system.boot`         | NixOS              | `base`                | —            | —           | implemented | Bootloader, EFI, ZFS support, and initrd systemd settings |
 | `system.localisation` | NixOS              | `base`, `workstation` | —            | —           | finished | Locale, timezone, keyboard          |
 | `system.packages`     | NixOS              | `base`                | —            | —           | planned  | Shared system packages              |
-| `system.users`        | NixOS              | `base`                | —            | —           | planned  | User declarations and defaults      |
+| `system.users`        | NixOS              | `base`                | —            | —           | implemented | User declarations and defaults      |
 | `system.plymouth`     | NixOS              | `desktop`             | —            | —           | planned  | Boot splash                         |
 
 ## Shell and user environment
@@ -34,7 +34,7 @@ confirmation.
 
 | Feature                   | Likely environment | Profiles                | Dependencies    | Persistence | Status  | Notes                     |
 |---------------------------|--------------------|-------------------------|-----------------|-------------|---------|---------------------------|
-| `hardware.bluetooth`      | NixOS              | `workstation`, `laptop` | —               | —           | planned | Hardware/service          |
+| `hardware.bluetooth`      | NixOS              | `workstation`, `laptop` | —               | —           | implemented | Bluetooth service, BlueZ settings, and optional Blueman GUI |
 | `system.laptop`           | NixOS              | `laptop`                | —               | —           | planned | Laptop-specific behavior  |
 | `system.power-management` | NixOS              | `laptop`                | `system.laptop` | —           | planned | Power, upower, and tuning |
 | `system.thunderbolt`      | NixOS              | `laptop`                | `system.laptop` | —           | planned | Hardware/service          |
