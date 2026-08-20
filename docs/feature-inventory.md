@@ -74,9 +74,10 @@ confirmation.
 | `desktop.displaymanager`              | NixOS              | `hyprland` | `desktop.wayland`   | —                  | planned | Display manager                  |
 | `desktop.wayland`                     | NixOS + Home       | `hyprland` | `security.polkit`  | —                  | implemented | Wayland session, XWayland, and desktop portals |
 | `desktop.hyprland`                    | NixOS + Home       | `hyprland` | `desktop.wayland`   | —                  | implemented | Main compositor                  |
-| `desktop.hyprland.keybinds`           | Home               | `hyprland` | `desktop.hyprland`  | —                  | planned | Hyprland subconfiguration        |
-| `desktop.hyprland.rules`              | Home               | `hyprland` | `desktop.hyprland`  | —                  | planned | Hyprland subconfiguration        |
-| `desktop.hyprland.special-workspaces` | Home               | `hyprland` | `desktop.hyprland`  | —                  | planned | Hyprland subconfiguration        |
+| `desktop.hyprland.keybinds`           | Home               | `hyprland` | `desktop.hyprland`  | —                  | implemented | Hyprland keybindings             |
+| `desktop.hyprland.monitors`           | NixOS + Home       | `hyprland` | `desktop.hyprland`  | Monitor files      | implemented | Monitor and workspace persistence |
+| `desktop.hyprland.rules`              | Home               | `hyprland` | `desktop.hyprland`  | —                  | implemented | Hyprland window rules             |
+| `desktop.hyprland.special-workspaces` | Home               | `hyprland` | `desktop.hyprland`  | —                  | implemented | Special workspace helper tooling  |
 | `desktop.noctalia`                    | NixOS + Home       | `hyprland` | `desktop.wayland`   | Shell state?       | planned | Shell/session integration        |
 | `desktop.sound`                       | NixOS + Home       | `desktop`  | `security.polkit`   | —                  | planned | Audio                            |
 | `desktop.terminal`                    | NixOS + Home       | `desktop`  | —                   | Terminal config    | planned | Terminal package/config          |

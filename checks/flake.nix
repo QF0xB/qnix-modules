@@ -70,6 +70,10 @@
       plymouthFeature = qnix.features."system.plymouth";
       waylandFeature = qnix.features."desktop.wayland";
       hyprlandFeature = qnix.features."desktop.hyprland";
+      hyprlandKeybindsFeature = qnix.features."desktop.hyprland.keybinds";
+      hyprlandMonitorsFeature = qnix.features."desktop.hyprland.monitors";
+      hyprlandRulesFeature = qnix.features."desktop.hyprland.rules";
+      hyprlandSpecialWorkspacesFeature = qnix.features."desktop.hyprland.special-workspaces";
       laptopFeature = qnix.features."hardware.laptop";
       powerManagementFeature = qnix.features."hardware.power-management";
       bluetoothFeature = qnix.features."hardware.bluetooth";
@@ -445,6 +449,29 @@
         ++ hyprlandFeature.__homeModuleFor "standalone-home"
         ++ [ { qnix.desktop.hyprland.noHardwareCursors = true; } ]
       );
+      hyprlandFullHomeEvaluation = mkHome (
+        waylandFeature.optionModules
+        ++ waylandFeature.__homeModuleFor "standalone-home"
+        ++ hyprlandFeature.optionModules
+        ++ hyprlandFeature.__homeModuleFor "standalone-home"
+        ++ hyprlandKeybindsFeature.optionModules
+        ++ hyprlandKeybindsFeature.__homeModuleFor "standalone-home"
+        ++ hyprlandMonitorsFeature.optionModules
+        ++ hyprlandMonitorsFeature.__homeModuleFor "standalone-home"
+        ++ hyprlandRulesFeature.optionModules
+        ++ hyprlandRulesFeature.__homeModuleFor "standalone-home"
+        ++ hyprlandSpecialWorkspacesFeature.optionModules
+        ++ hyprlandSpecialWorkspacesFeature.__homeModuleFor "standalone-home"
+      );
+      hyprlandPersistenceEvaluation = mkNixos (
+        persistFeature.optionModules
+        ++ waylandFeature.optionModules
+        ++ waylandFeature.nixosModules
+        ++ hyprlandFeature.optionModules
+        ++ hyprlandFeature.nixosModules
+        ++ hyprlandMonitorsFeature.optionModules
+        ++ hyprlandMonitorsFeature.nixosModules
+      );
       bluetoothEvaluation = mkNixos (
         bluetoothFeature.optionModules
         ++ bluetoothFeature.nixosModules
@@ -543,6 +570,10 @@
             "appearance.fonts"
             "appearance.stylix"
             "desktop.hyprland"
+            "desktop.hyprland.keybinds"
+            "desktop.hyprland.monitors"
+            "desktop.hyprland.rules"
+            "desktop.hyprland.special-workspaces"
             "desktop.wayland"
             "hardware.bluetooth"
             "hardware.laptop"
@@ -617,6 +648,17 @@
           hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.decoration.rounding == 10;
         assert
           hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.cursor.no_hardware_cursors;
+        assert hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind != [ ];
+        assert hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.windowrule != [ ];
+        assert hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.source != [ ];
+        assert builtins.elem "hypr-special" (
+          map (package: package.pname or package.name) hyprlandFullHomeEvaluation.config.home.packages
+        );
+        assert
+          hyprlandPersistenceEvaluation.config.qnix.persist.users."*".files == [
+            ".config/hypr/monitors.conf"
+            ".config/hypr/workspaces.conf"
+          ];
         assert bluetoothFeature.supportedEnvironments == [ "nixos" ];
         assert bluetoothEvaluation.config.hardware.bluetooth.enable;
         assert !bluetoothEvaluation.config.hardware.bluetooth.powerOnBoot;
