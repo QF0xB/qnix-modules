@@ -7,12 +7,55 @@
 
   requires = {
     nixos = [ "desktop.wayland" ];
-    home = [ "desktop.wayland" ];
+    home = [
+      "desktop.wayland"
+      "system.localisation"
+    ];
   };
 
   options =
-    { lib, ... }:
     {
+      context,
+      lib,
+      ...
+    }:
+    {
+      gapsIn = lib.mkOption {
+        type = lib.types.number;
+        default = 5;
+        description = "Inner gaps between Hyprland windows.";
+      };
+
+      gapsOut = lib.mkOption {
+        type = lib.types.number;
+        default = 20;
+        description = "Outer gaps between Hyprland windows and the monitor edge.";
+      };
+
+      allowTearing = lib.mkOption {
+        type = lib.types.bool;
+        default = false;
+        description = "Whether Hyprland may use tearing for individual windows.";
+      };
+
+      animations = lib.mkOption {
+        type = lib.types.bool;
+        default = !(context.vm or false);
+        description = "Whether Hyprland animations are enabled.";
+      };
+
+      vrr = lib.mkOption {
+        type = lib.types.ints.between 0 2;
+        default = 1;
+        description = "Hyprland variable refresh rate mode.";
+      };
+
+      swallowRegex = lib.mkOption {
+        type = lib.types.str;
+        default = "'^(kitty)$'";
+        description = "Regular expression for terminal windows that may be swallowed.";
+      };
+
       noHardwareCursors = lib.mkOption {
         type = lib.types.bool;
         default = false;
@@ -81,6 +124,7 @@
       context,
       lib,
       pkgs,
+      qnix,
       ...
     }:
     {
@@ -100,12 +144,12 @@
           ];
 
           general = {
-            gaps_in = 5;
-            gaps_out = 20;
+            gaps_in = cfg.gapsIn;
+            gaps_out = cfg.gapsOut;
             border_size = 2;
             layout = "dwindle";
             resize_on_border = true;
-            allow_tearing = false;
+            allow_tearing = cfg.allowTearing;
           };
 
           decoration = {
@@ -121,7 +165,7 @@
           };
 
           animations = {
-            enabled = true;
+            enabled = cfg.animations;
             workspace_wraparound = true;
             animation = [
               "specialWorkspace, 1, 8, default, slidevert"
@@ -134,8 +178,8 @@
           };
 
           input = {
-            kb_layout = "us,de";
-            kb_variant = ",koy";
+            kb_layout = qnix.system.localisation.xkb.layout;
+            kb_variant = qnix.system.localisation.xkb.variant;
             kb_model = "";
             kb_rules = "";
             follow_mouse = 1;
@@ -165,9 +209,9 @@
             force_default_wallpaper = 0;
             disable_splash_rendering = true;
             vfr = true;
-            vrr = 1;
+            vrr = cfg.vrr;
             enable_swallow = true;
-            swallow_regex = "'^(kitty)$'";
+            swallow_regex = cfg.swallowRegex;
             focus_on_activate = true;
           };
 

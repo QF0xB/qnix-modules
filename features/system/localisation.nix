@@ -1,5 +1,9 @@
 {
-  environments = [ "nixos" ];
+  environments = [
+    "nixos"
+    "integrated-home"
+    "standalone-home"
+  ];
 
   options =
     { lib, ... }:
@@ -76,4 +80,8 @@
         extraLocaleSettings = cfg.localeSettings;
       };
     };
+
+  home =
+    { ... }:
+    { };
 }

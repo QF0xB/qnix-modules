@@ -9,9 +9,20 @@
     "desktop.hyprland.special-workspaces"
   ];
 
+  options =
+    { lib, ... }:
+    {
+      additionalKeybinds = lib.mkOption {
+        type = lib.types.listOf lib.types.str;
+        default = [ ];
+        description = "Additional Hyprland keybind definitions.";
+      };
+    };
+
   home =
     {
       context,
+      cfg,
       lib,
       ...
     }:
@@ -136,7 +147,8 @@
           ", XF86AudioPrev, exec, playerctl previous"
           ", XF86audiostop, exec, playerctl stop"
         ]
-        ++ workspaceBindings;
+        ++ workspaceBindings
+        ++ cfg.additionalKeybinds;
       };
 
       home.file.".config/hypr/scripts/reload.sh" = {

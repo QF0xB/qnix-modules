@@ -69,6 +69,7 @@
       bootFeature = qnix.features."system.boot";
       plymouthFeature = qnix.features."system.plymouth";
       waylandFeature = qnix.features."desktop.wayland";
+      localisationFeature = qnix.features."system.localisation";
       hyprlandFeature = qnix.features."desktop.hyprland";
       hyprlandKeybindsFeature = qnix.features."desktop.hyprland.keybinds";
       hyprlandMonitorsFeature = qnix.features."desktop.hyprland.monitors";
@@ -443,7 +444,9 @@
         ++ hyprlandFeature.nixosModules
       );
       hyprlandHomeEvaluation = mkHome (
-        waylandFeature.optionModules
+        localisationFeature.optionModules
+        ++ localisationFeature.__homeModuleFor "standalone-home"
+        ++ waylandFeature.optionModules
         ++ waylandFeature.__homeModuleFor "standalone-home"
         ++ hyprlandFeature.optionModules
         ++ hyprlandFeature.__homeModuleFor "standalone-home"
@@ -457,7 +460,9 @@
         ]
       );
       hyprlandFullHomeEvaluation = mkHome (
-        waylandFeature.optionModules
+        localisationFeature.optionModules
+        ++ localisationFeature.__homeModuleFor "standalone-home"
+        ++ waylandFeature.optionModules
         ++ waylandFeature.__homeModuleFor "standalone-home"
         ++ hyprlandFeature.optionModules
         ++ hyprlandFeature.__homeModuleFor "standalone-home"
@@ -469,6 +474,13 @@
         ++ hyprlandRulesFeature.__homeModuleFor "standalone-home"
         ++ hyprlandSpecialWorkspacesFeature.optionModules
         ++ hyprlandSpecialWorkspacesFeature.__homeModuleFor "standalone-home"
+        ++ [
+          {
+            qnix.desktop.hyprland.keybinds.additionalKeybinds = [ "SUPER, F12, exec, true" ];
+            qnix.desktop.hyprland.rules.additionalRules = [ "match:class ^test$, float on" ];
+            qnix.system.localisation.xkb.layout = "de,de,us";
+          }
+        ]
       );
       hyprlandPersistenceEvaluation = mkNixos (
         persistFeature.optionModules
@@ -620,6 +632,12 @@
         assert persistFeature.supportedEnvironments == [ "nixos" ];
         assert bootFeature.supportedEnvironments == [ "nixos" ];
         assert plymouthFeature.supportedEnvironments == [ "nixos" ];
+        assert
+          localisationFeature.supportedEnvironments == [
+            "nixos"
+            "integrated-home"
+            "standalone-home"
+          ];
         assert plymouthEvaluation.config.boot.plymouth.enable;
         assert plymouthEvaluation.config.boot.plymouth.theme == "nixos-bgrt";
         assert plymouthEvaluation.config.boot.plymouth.themePackages == [ pkgs.nixos-bgrt-plymouth ];
@@ -653,6 +671,15 @@
         assert hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.enable;
         assert !hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.systemd.enable;
         assert hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.general.gaps_in == 5;
+        assert hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.general.gaps_out == 20;
+        assert !hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.general.allow_tearing;
+        assert hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.animations.enabled;
+        assert
+          hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.input.kb_layout == "de";
+        assert hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.misc.vrr == 1;
+        assert
+          hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.misc.swallow_regex
+          == "'^(kitty)$'";
         assert
           hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.decoration.rounding == 10;
         assert
@@ -665,7 +692,11 @@
             }
           ];
         assert hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind != [ ];
+        assert builtins.elem "SUPER, F12, exec, true"
+          hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind;
         assert hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.windowrule != [ ];
+        assert builtins.elem "match:class ^test$, float on"
+          hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.windowrule;
         assert hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.source != [ ];
         assert builtins.elem "hypr-special" (
           map (package: package.pname or package.name) hyprlandFullHomeEvaluation.config.home.packages

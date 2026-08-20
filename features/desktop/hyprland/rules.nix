@@ -6,8 +6,18 @@
 
   requires.home = [ "desktop.hyprland" ];
 
+  options =
+    { lib, ... }:
+    {
+      additionalRules = lib.mkOption {
+        type = lib.types.listOf lib.types.str;
+        default = [ ];
+        description = "Additional Hyprland window rules.";
+      };
+    };
+
   home =
-    { ... }:
+    { cfg, ... }:
     {
       wayland.windowManager.hyprland.settings.windowrule = [
         "match:modal true, float on, center on, dim_around on, stay_focused on"
@@ -42,6 +52,7 @@
         "match:tag notes, workspace special:notes"
         "match:tag obs, workspace special:obs"
         "match:class ^(Bitwarden)$, workspace special:secrets"
-      ];
+      ]
+      ++ cfg.additionalRules;
     };
 }
