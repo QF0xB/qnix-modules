@@ -1,0 +1,147 @@
+{ ctx }:
+with ctx;
+assert
+  waylandFeature.supportedEnvironments == [
+    "nixos"
+    "integrated-home"
+    "standalone-home"
+  ];
+assert waylandNixosEvaluation.config.services.graphical-desktop.enable;
+assert waylandNixosEvaluation.config.programs.dconf.enable;
+assert waylandNixosEvaluation.config.programs.xwayland.enable;
+assert waylandNixosEvaluation.config.xdg.portal.enable;
+assert waylandNixosEvaluation.config.xdg.portal.wlr.enable;
+assert builtins.elem pkgs.xdg-desktop-portal-gtk
+  waylandNixosEvaluation.config.xdg.portal.extraPortals;
+assert waylandHomeEvaluation.config.home.sessionVariables.NIXOS_XDG_OPEN_USE_PORTAL == "1";
+assert
+  hyprlandFeature.supportedEnvironments == [
+    "nixos"
+    "integrated-home"
+    "standalone-home"
+  ];
+assert hyprlandNixosEvaluation.config.programs.hyprland.enable;
+assert hyprlandNixosEvaluation.config.programs.hyprland.withUWSM;
+assert hyprlandNixosEvaluation.config.programs.uwsm.enable;
+assert hyprlandNixosEvaluation.config.environment.sessionVariables.NIXOS_OZONE_WL == "1";
+assert hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.enable;
+assert !hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.systemd.enable;
+assert hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.general.gaps_in == 5;
+assert hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.general.gaps_out == 20;
+assert !hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.general.allow_tearing;
+assert hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.animations.enabled;
+assert
+  hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.input.kb_layout == "de";
+assert hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.misc.vrr == 1;
+assert
+  hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.misc.swallow_regex
+  == "'^(kitty)$'";
+assert
+  hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.decoration.rounding == 10;
+assert
+  hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.cursor.no_hardware_cursors;
+assert
+  hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.device == [
+    {
+      name = "test-mouse";
+      sensitivity = -0.5;
+    }
+  ];
+assert hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind != [ ];
+assert builtins.elem "SUPER, F12, exec, true"
+  hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind;
+assert hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.windowrule != [ ];
+assert builtins.elem "match:class ^test$, float on"
+  hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.windowrule;
+assert hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.source != [ ];
+assert builtins.elem "hypr-special" (
+  map (package: package.pname or package.name) hyprlandFullHomeEvaluation.config.home.packages
+);
+assert
+  hyprlandPersistenceEvaluation.config.qnix.persist.users."*".files == [
+    ".config/hypr/monitors.conf"
+    ".config/hypr/workspaces.conf"
+  ];
+assert hyprlandProfileEvaluation.config.qnix.desktop.hyprland.noHardwareCursors;
+assert
+  hyprlandProfileEvaluation.config.qnix.desktop.hyprland.devices."epic-mouse-v1".sensitivity == -0.5;
+assert
+  noctaliaFeature.supportedEnvironments == [
+    "integrated-home"
+    "standalone-home"
+  ];
+assert noctaliaHomeEvaluation.config.programs.noctalia-shell.enable;
+assert noctaliaHomeEvaluation.config.programs.noctalia-shell.systemd.enable;
+assert
+  builtins.baseNameOf
+    noctaliaHomeEvaluation.config.home.file."Pictures/wallpaper/solarized-dark.png".source
+  == "solarized-dark.png";
+assert noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.location.name == "Munich";
+assert displayManagerFeature.supportedEnvironments == [ "nixos" ];
+assert displayManagerEvaluation.config.services.displayManager.sddm.enable;
+assert displayManagerEvaluation.config.services.displayManager.sddm.theme == "sddm-astronaut-theme";
+assert displayManagerEvaluation.config.services.xserver.enable;
+assert
+  lockFeature.supportedEnvironments == [
+    "nixos"
+    "integrated-home"
+    "standalone-home"
+  ];
+assert
+  soundFeature.supportedEnvironments == [
+    "nixos"
+    "integrated-home"
+  ];
+assert soundNixosEvaluation.config.services.pipewire.enable;
+assert soundNixosEvaluation.config.services.pipewire.alsa.enable;
+assert soundNixosEvaluation.config.services.pipewire.alsa.support32Bit;
+assert soundNixosEvaluation.config.services.pipewire.pulse.enable;
+assert soundNixosEvaluation.config.security.rtkit.enable;
+assert builtins.elem pkgs.playerctl
+  soundIntegratedEvaluation.config.home-manager.users.check.home.packages;
+assert builtins.elem pkgs.easyeffects
+  soundIntegratedEvaluation.config.home-manager.users.check.home.packages;
+assert builtins.elem pkgs.pamixer
+  soundIntegratedEvaluation.config.home-manager.users.check.home.packages;
+assert builtins.elem pkgs.pavucontrol
+  soundIntegratedEvaluation.config.home-manager.users.check.home.packages;
+assert lockNixosEvaluation.config.security.pam.services.hyprlock.enable;
+assert lockHomeEvaluation.config.programs.hyprlock.enable;
+assert
+  builtins.baseNameOf (
+    toString (builtins.elemAt lockHomeEvaluation.config.programs.hyprlock.settings.background 0).path
+  ) == "solarized-dark.png";
+assert
+  (builtins.elemAt lockHomeEvaluation.config.programs.hyprlock.settings.background 0).blur_passes
+  == 3;
+assert
+  (builtins.elemAt lockHomeEvaluation.config.programs.hyprlock.settings.input-field 0).rounding == 10;
+assert
+  noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.bar.widgets.right == [
+    { id = "Tray"; }
+    { id = "plugin:privacy-indicator"; }
+    { id = "plugin:keybind-cheatsheet"; }
+    { id = "NotificationHistory"; }
+    {
+      id = "Volume";
+      displayMode = "alwaysHide";
+      middleClickCommand = "pwvucontrol || pavucontrol";
+    }
+    { id = "plugin:hyprland-steam-overlay"; }
+    {
+      id = "Battery";
+      displayMode = "graphic-clean";
+      hideIfNotDetected = true;
+      showPowerProfiles = true;
+    }
+    {
+      id = "Brightness";
+      displayMode = "alwaysHide";
+    }
+    {
+      id = "ControlCenter";
+      icon = "noctalia";
+      useDistroLogo = true;
+    }
+  ];
+pkgs.runCommand "qnix-desktop-check" { } "touch $out"
