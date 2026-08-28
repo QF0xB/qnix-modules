@@ -13,6 +13,7 @@ assert
     "desktop.lock"
     "desktop.noctalia"
     "desktop.sound"
+    "desktop.terminal"
     "desktop.wayland"
     "hardware.bluetooth"
     "hardware.laptop"

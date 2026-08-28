@@ -18,5 +18,5 @@ assert stylixNixosEvaluation.config.stylix.enable;
 assert stylixNixosEvaluation.config.stylix.polarity == "dark";
 assert stylixNixosEvaluation.config.stylix.cursor.name == "Simp1e-Solarized-Dark";
 assert stylixHomeEvaluation.config.stylix.enable;
-assert stylixHomeEvaluation.config.stylix.targets.kitty.variant256Colors;
+assert stylixHomeEvaluation.config.stylix.targets.foot.enable;
 pkgs.runCommand "qnix-appearance-check" { } "touch $out"

@@ -52,7 +52,7 @@
 
       swallowRegex = lib.mkOption {
         type = lib.types.str;
-        default = "'^(kitty)$'";
+        default = "'^(foot)$'";
         description = "Regular expression for terminal windows that may be swallowed.";
       };
 

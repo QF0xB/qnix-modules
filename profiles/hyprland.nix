@@ -11,6 +11,7 @@
     "desktop.lock"
     "desktop.noctalia"
     "desktop.sound"
+    "desktop.terminal"
   ];
 
   defaults.desktop.hyprland = {

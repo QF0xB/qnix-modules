@@ -57,6 +57,7 @@ let
   hyprlandSpecialWorkspacesFeature = qnix.features."desktop.hyprland.special-workspaces";
   noctaliaFeature = qnix.features."desktop.noctalia";
   soundFeature = qnix.features."desktop.sound";
+  terminalFeature = qnix.features."desktop.terminal";
   displayManagerEvaluation = mkNixos (
     waylandFeature.optionModules
     ++ waylandFeature.nixosModules
@@ -468,6 +469,8 @@ let
     ++ waylandFeature.__homeModuleFor "standalone-home"
     ++ hyprlandFeature.optionModules
     ++ hyprlandFeature.__homeModuleFor "standalone-home"
+    ++ terminalFeature.optionModules
+    ++ terminalFeature.__homeModuleFor "standalone-home"
     ++ hyprlandKeybindsFeature.optionModules
     ++ hyprlandKeybindsFeature.__homeModuleFor "standalone-home"
     ++ hyprlandMonitorsFeature.optionModules
@@ -518,6 +521,8 @@ let
     ++ waylandFeature.__homeModuleFor "standalone-home"
     ++ hyprlandFeature.optionModules
     ++ hyprlandFeature.__homeModuleFor "standalone-home"
+    ++ terminalFeature.optionModules
+    ++ terminalFeature.__homeModuleFor "standalone-home"
     ++ noctaliaFeature.optionModules
     ++ noctaliaFeature.__homeModuleFor "standalone-home"
   );
@@ -541,6 +546,14 @@ let
         };
       }
     ]
+  );
+  terminalHomeEvaluation = mkHome (
+    terminalFeature.optionModules ++ terminalFeature.__homeModuleFor "standalone-home"
+  );
+  terminalFallbackHomeEvaluation = mkHome (
+    terminalFeature.optionModules
+    ++ terminalFeature.__homeModuleFor "standalone-home"
+    ++ [ { qnix.desktop.terminal.server = false; } ]
   );
   bluetoothEvaluation = mkNixos (
     bluetoothFeature.optionModules
@@ -655,6 +668,7 @@ in
     hyprlandSpecialWorkspacesFeature
     noctaliaFeature
     soundFeature
+    terminalFeature
     displayManagerEvaluation
     lockNixosEvaluation
     lockHomeEvaluation
@@ -725,6 +739,8 @@ in
     noctaliaHomeEvaluation
     soundNixosEvaluation
     soundIntegratedEvaluation
+    terminalHomeEvaluation
+    terminalFallbackHomeEvaluation
     bluetoothEvaluation
     laptopBluetoothEvaluation
     laptopEvaluation

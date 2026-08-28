@@ -35,7 +35,7 @@ assert
 assert hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.misc.vrr == 1;
 assert
   hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.misc.swallow_regex
-  == "'^(kitty)$'";
+  == "'^(foot)$'";
 assert
   hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.decoration.rounding == 10;
 assert
@@ -105,6 +105,22 @@ assert builtins.elem pkgs.pamixer
   soundIntegratedEvaluation.config.home-manager.users.check.home.packages;
 assert builtins.elem pkgs.pavucontrol
   soundIntegratedEvaluation.config.home-manager.users.check.home.packages;
+assert
+  terminalFeature.supportedEnvironments == [
+    "integrated-home"
+    "standalone-home"
+  ];
+assert terminalHomeEvaluation.config.programs.foot.enable;
+assert terminalHomeEvaluation.config.programs.foot.server.enable;
+assert terminalHomeEvaluation.config.home.sessionVariables.TERMINAL == "footclient";
+assert !terminalFallbackHomeEvaluation.config.programs.foot.server.enable;
+assert
+  terminalFallbackHomeEvaluation.config.home.sessionVariables.TERMINAL == pkgs.lib.getExe pkgs.foot;
+assert builtins.elem "super SHIFT, return, exec, uwsm app -- footclient"
+  hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind;
+assert
+  noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.appLauncher.terminalCommand
+  == "footclient -e";
 assert lockNixosEvaluation.config.security.pam.services.hyprlock.enable;
 assert lockHomeEvaluation.config.programs.hyprlock.enable;
 assert

@@ -7,6 +7,7 @@
   requires.home = [
     "desktop.hyprland"
     "desktop.hyprland.special-workspaces"
+    "desktop.terminal"
   ];
 
   options =
@@ -21,6 +22,7 @@
 
   home =
     {
+      config,
       context,
       cfg,
       lib,
@@ -28,6 +30,7 @@
     }:
     let
       mod = if context.vm or false then "ALT" else "super";
+      terminal = if config.qnix.desktop.terminal.server then "footclient" else "foot";
       uexec = command: "exec, uwsm app -- ${command}";
       workspaces = [
         {
@@ -128,9 +131,9 @@
           "${mod}, right, movefocus, r"
           "${mod}, up, movefocus, u"
           "${mod}, down, movefocus, d"
-          "${mod}, return, exec, hypr-special scratch scratchpad -- kitty --class scratchpad"
-          "${mod} SHIFT, return, ${uexec "kitty"}"
-          "${mod} CTRL, return, ${uexec "kitty --class floating"}"
+          "${mod}, return, exec, hypr-special scratch scratchpad -- ${terminal} --app-id scratchpad"
+          "${mod} SHIFT, return, ${uexec terminal}"
+          "${mod} CTRL, return, ${uexec "${terminal} --app-id floating"}"
           "${mod}, code:47, ${uexec "brave"} #;"
           "${mod} CTRL, code:47, ${uexec "brave --private-window"} #;"
           "${mod}, code:25, ${uexec "rofi -show drun"} #w"

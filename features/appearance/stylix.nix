@@ -176,7 +176,7 @@
         polarity = "dark";
         override = cfg.colorSchemeOverrides;
         targets = {
-          kitty.variant256Colors = true;
+          foot.enable = true;
           vencord.enable = false;
           vesktop.enable = false;
           nixcord.enable = false;

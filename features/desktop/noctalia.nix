@@ -4,7 +4,10 @@
     "standalone-home"
   ];
 
-  requires.home = [ "desktop.hyprland" ];
+  requires.home = [
+    "desktop.hyprland"
+    "desktop.terminal"
+  ];
 
   options =
     { lib, ... }:
@@ -27,7 +30,7 @@
           appLauncher = {
             iconMode = "tabler";
             position = "center";
-            terminalCommand = "alacritty -e";
+            terminalCommand = "foot -e";
             viewMode = "grid";
           };
 
@@ -166,6 +169,9 @@
       lib,
       ...
     }:
+    let
+      terminal = if config.qnix.desktop.terminal.server then "footclient" else "foot";
+    in
     {
       home.file."Pictures/wallpaper/solarized-dark.png".source =
         ../../old/assets/wallpapers/solarized-dark.png;
@@ -174,6 +180,7 @@
         enable = true;
         systemd.enable = cfg.autostart;
         settings = lib.recursiveUpdate cfg.settings {
+          appLauncher.terminalCommand = "${terminal} -e";
           location.name = cfg.location;
           wallpaper.directory =
             cfg.settings.wallpaper.directory or "${config.home.homeDirectory}/Pictures/wallpaper";

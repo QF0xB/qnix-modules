@@ -80,7 +80,7 @@ confirmation.
 | `desktop.hyprland.special-workspaces` | Home               | `hyprland` | `desktop.hyprland`  | —                  | implemented | Special workspace helper tooling  |
 | `desktop.noctalia`                    | Home               | `hyprland` | `desktop.hyprland` | Shell state?       | implemented | Noctalia desktop shell and autostart |
 | `desktop.sound`                       | NixOS + integrated Home | `hyprland` | —                   | `.local/state/wireplumber` | finished | PipeWire audio, playerctl, and optional graphical audio tools |
-| `desktop.terminal`                    | NixOS + Home       | `desktop`  | —                   | Terminal config    | planned | Terminal package/config          |
+| `desktop.terminal`                    | Integrated + standalone Home | `hyprland` | —                   | — | finished | Foot terminal with an optional persistent server |
 | `desktop.xdg-folders`                 | NixOS + Home       | `desktop`  | —                   | —                  | planned | XDG directories                  |
 | `desktop.clipboard`                   | Home               | `desktop`  | `desktop.wayland`   | —                  | planned | Clipboard manager                |
 | `desktop.lock`                        | NixOS + Home       | `hyprland` | `desktop.hyprland` | —                  | implemented | Hyprlock screen locking           |
