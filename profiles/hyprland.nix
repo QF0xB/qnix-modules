@@ -10,6 +10,7 @@
     "desktop.displaymanager"
     "desktop.lock"
     "desktop.noctalia"
+    "desktop.sound"
   ];
 
   defaults.desktop.hyprland = {

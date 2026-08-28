@@ -78,6 +78,7 @@
       hyprlandRulesFeature = qnix.features."desktop.hyprland.rules";
       hyprlandSpecialWorkspacesFeature = qnix.features."desktop.hyprland.special-workspaces";
       noctaliaFeature = qnix.features."desktop.noctalia";
+      soundFeature = qnix.features."desktop.sound";
       displayManagerEvaluation = mkNixos (
         waylandFeature.optionModules
         ++ waylandFeature.nixosModules
@@ -542,6 +543,27 @@
         ++ noctaliaFeature.optionModules
         ++ noctaliaFeature.__homeModuleFor "standalone-home"
       );
+      soundNixosEvaluation = mkNixos (
+        persistFeature.optionModules
+        ++ soundFeature.optionModules
+        ++ soundFeature.nixosModules
+        ++ [ { qnix.desktop.sound.gui = true; } ]
+      );
+      soundIntegratedEvaluation = mkNixos (
+        [ home-manager.nixosModules.home-manager ]
+        ++ persistFeature.optionModules
+        ++ soundFeature.optionModules
+        ++ soundFeature.nixosModules
+        ++ [
+          {
+            home-manager.extraSpecialArgs = { inherit pkgs; };
+            home-manager.users.check = {
+              home.stateVersion = "26.11";
+              imports = soundFeature.__homeModuleFor "integrated-home";
+            };
+          }
+        ]
+      );
       bluetoothEvaluation = mkNixos (
         bluetoothFeature.optionModules
         ++ bluetoothFeature.nixosModules
@@ -647,6 +669,7 @@
             "desktop.hyprland.special-workspaces"
             "desktop.lock"
             "desktop.noctalia"
+            "desktop.sound"
             "desktop.wayland"
             "hardware.bluetooth"
             "hardware.laptop"
@@ -784,6 +807,24 @@
             "integrated-home"
             "standalone-home"
           ];
+        assert
+          soundFeature.supportedEnvironments == [
+            "nixos"
+            "integrated-home"
+          ];
+        assert soundNixosEvaluation.config.services.pipewire.enable;
+        assert soundNixosEvaluation.config.services.pipewire.alsa.enable;
+        assert soundNixosEvaluation.config.services.pipewire.alsa.support32Bit;
+        assert soundNixosEvaluation.config.services.pipewire.pulse.enable;
+        assert soundNixosEvaluation.config.security.rtkit.enable;
+        assert builtins.elem pkgs.playerctl
+          soundIntegratedEvaluation.config.home-manager.users.check.home.packages;
+        assert builtins.elem pkgs.easyeffects
+          soundIntegratedEvaluation.config.home-manager.users.check.home.packages;
+        assert builtins.elem pkgs.pamixer
+          soundIntegratedEvaluation.config.home-manager.users.check.home.packages;
+        assert builtins.elem pkgs.pavucontrol
+          soundIntegratedEvaluation.config.home-manager.users.check.home.packages;
         assert lockNixosEvaluation.config.security.pam.services.hyprlock.enable;
         assert lockHomeEvaluation.config.programs.hyprlock.enable;
         assert
