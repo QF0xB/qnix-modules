@@ -769,6 +769,10 @@
           ];
         assert noctaliaHomeEvaluation.config.programs.noctalia-shell.enable;
         assert noctaliaHomeEvaluation.config.programs.noctalia-shell.systemd.enable;
+        assert
+          builtins.baseNameOf
+            noctaliaHomeEvaluation.config.home.file."Pictures/wallpaper/solarized-dark.png".source
+          == "solarized-dark.png";
         assert noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.location.name == "Munich";
         assert displayManagerFeature.supportedEnvironments == [ "nixos" ];
         assert displayManagerEvaluation.config.services.displayManager.sddm.enable;
@@ -783,8 +787,9 @@
         assert lockNixosEvaluation.config.security.pam.services.hyprlock.enable;
         assert lockHomeEvaluation.config.programs.hyprlock.enable;
         assert
-          (builtins.elemAt lockHomeEvaluation.config.programs.hyprlock.settings.background 0).path
-          == "screenshot";
+          builtins.baseNameOf (
+            toString (builtins.elemAt lockHomeEvaluation.config.programs.hyprlock.settings.background 0).path
+          ) == "solarized-dark.png";
         assert
           (builtins.elemAt lockHomeEvaluation.config.programs.hyprlock.settings.background 0).blur_passes
           == 3;

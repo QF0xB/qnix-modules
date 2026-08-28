@@ -14,8 +14,11 @@
     { lib, ... }:
     {
       background = lib.mkOption {
-        type = lib.types.str;
-        default = "screenshot";
+        type = lib.types.oneOf [
+          lib.types.str
+          lib.types.path
+        ];
+        default = ../../old/assets/wallpapers/solarized-dark.png;
         description = "Hyprlock background path; 'screenshot' uses the current screen.";
       };
 

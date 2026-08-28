@@ -167,6 +167,9 @@
       ...
     }:
     {
+      home.file."Pictures/wallpaper/solarized-dark.png".source =
+        ../../old/assets/wallpapers/solarized-dark.png;
+
       programs.noctalia-shell = {
         enable = true;
         systemd.enable = cfg.autostart;
