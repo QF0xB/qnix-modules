@@ -4,6 +4,7 @@ assert
   qnix.featureNames == [
     "appearance.fonts"
     "appearance.stylix"
+    "desktop.clipboard"
     "desktop.displaymanager"
     "desktop.hyprland"
     "desktop.hyprland.keybinds"

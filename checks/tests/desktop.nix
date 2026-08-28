@@ -130,6 +130,13 @@ assert xdgFoldersHomeEvaluation.config.xdg.userDirs.enable;
 assert xdgFoldersHomeEvaluation.config.xdg.userDirs.createDirectories;
 assert xdgFoldersHomeEvaluation.config.xdg.userDirs.setSessionVariables;
 assert xdgFoldersHomeEvaluation.config.xdg.userDirs.projects == "/home/check/Projects";
+assert
+  clipboardFeature.supportedEnvironments == [
+    "integrated-home"
+    "standalone-home"
+  ];
+assert clipboardHomeEvaluation.config.services.cliphist.enable;
+assert clipboardHomeEvaluation.config.services.cliphist.allowImages;
 assert lockNixosEvaluation.config.security.pam.services.hyprlock.enable;
 assert lockHomeEvaluation.config.programs.hyprlock.enable;
 assert

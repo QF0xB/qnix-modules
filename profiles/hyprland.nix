@@ -2,6 +2,7 @@
   imports = [ "workstation" ];
 
   features = [
+    "desktop.clipboard"
     "desktop.hyprland"
     "desktop.hyprland.keybinds"
     "desktop.hyprland.monitors"
