@@ -116,6 +116,12 @@ assert terminalHomeEvaluation.config.home.sessionVariables.TERMINAL == "footclie
 assert !terminalFallbackHomeEvaluation.config.programs.foot.server.enable;
 assert
   terminalFallbackHomeEvaluation.config.home.sessionVariables.TERMINAL == pkgs.lib.getExe pkgs.foot;
+assert
+  browserFeature.supportedEnvironments == [
+    "integrated-home"
+    "standalone-home"
+  ];
+assert builtins.elem pkgs.brave-origin browserHomeEvaluation.config.home.packages;
 assert builtins.elem "super SHIFT, return, exec, uwsm app -- footclient"
   hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind;
 assert

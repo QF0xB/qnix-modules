@@ -44,6 +44,7 @@ let
     };
 
   persistFeature = qnix.features.persist;
+  browserFeature = qnix.features."apps.browser";
   bootFeature = qnix.features."system.boot";
   plymouthFeature = qnix.features."system.plymouth";
   waylandFeature = qnix.features."desktop.wayland";
@@ -561,6 +562,9 @@ let
   xdgFoldersHomeEvaluation = mkHome (
     xdgFoldersFeature.optionModules ++ xdgFoldersFeature.__homeModuleFor "standalone-home"
   );
+  browserHomeEvaluation = mkHome (
+    browserFeature.optionModules ++ browserFeature.__homeModuleFor "standalone-home"
+  );
   clipboardHomeEvaluation = mkHome (
     waylandFeature.optionModules
     ++ waylandFeature.__homeModuleFor "standalone-home"
@@ -679,6 +683,7 @@ in
     mkNixos
     mkHome
     persistFeature
+    browserFeature
     bootFeature
     plymouthFeature
     waylandFeature
@@ -769,6 +774,7 @@ in
     terminalHomeEvaluation
     terminalFallbackHomeEvaluation
     xdgFoldersHomeEvaluation
+    browserHomeEvaluation
     clipboardHomeEvaluation
     screenshotsHomeEvaluation
     bluetoothEvaluation

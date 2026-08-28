@@ -98,7 +98,7 @@ confirmation.
 
 | Feature             | Likely environment | Profiles                | Dependencies | Persistence        | Status  | Notes                                                            |
 |---------------------|--------------------|-------------------------|--------------|--------------------|---------|------------------------------------------------------------------|
-| `apps.browser`      | NixOS + Home       | `desktop`, `personal`   | —            | Browser profile    | planned | Browser package/config                                           |
+| `apps.browser`      | Integrated + standalone Home | `hyprland` | — | Browser profile | finished | Brave Origin browser package |
 | `apps.file-manager` | Home               | `desktop`               | —            | —                  | planned | File manager                                                     |
 | `apps.chatgpt`      | NixOS + Home       | `personal`, `developer` | —            | ChatGPT app state? | planned | GPT desktop application; package and platform support to confirm |
 | `apps.bitwarden`    | NixOS + Home       | `personal`              | —            | Vault/config?      | planned | Package/config; package availability uncertain                   |
