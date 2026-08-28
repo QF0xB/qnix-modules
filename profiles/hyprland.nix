@@ -11,6 +11,7 @@
     "desktop.displaymanager"
     "desktop.lock"
     "desktop.noctalia"
+    "desktop.screenshots"
     "desktop.sound"
     "desktop.terminal"
     "desktop.xdg-folders"

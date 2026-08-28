@@ -84,7 +84,7 @@ confirmation.
 | `desktop.xdg-folders`                 | Integrated + standalone Home | `hyprland` | — | — | finished | Standard XDG directories plus the `Projects` directory |
 | `desktop.clipboard`                   | Integrated + standalone Home | `hyprland` | `desktop.wayland` | — | finished | ClipHist clipboard history with image support |
 | `desktop.lock`                        | NixOS + Home       | `hyprland` | `desktop.hyprland` | —                  | implemented | Hyprlock screen locking           |
-| `desktop.screenshots`                 | Home               | `desktop`  | `desktop.wayland`   | Screenshot config? | planned | Screenshot tooling               |
+| `desktop.screenshots`                 | Integrated + standalone Home | `hyprland` | `desktop.hyprland`, `desktop.xdg-folders` | — | finished | Grim and Slurp screenshots with save-and-copy bindings |
 | `desktop.client-pr-notify`            | Home               | `hyprland` | `security.sops`     | —                  | planned | Repository-specific notification |
 
 ## Appearance and theming

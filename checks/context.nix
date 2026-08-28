@@ -56,6 +56,7 @@ let
   hyprlandRulesFeature = qnix.features."desktop.hyprland.rules";
   hyprlandSpecialWorkspacesFeature = qnix.features."desktop.hyprland.special-workspaces";
   clipboardFeature = qnix.features."desktop.clipboard";
+  screenshotsFeature = qnix.features."desktop.screenshots";
   noctaliaFeature = qnix.features."desktop.noctalia";
   soundFeature = qnix.features."desktop.sound";
   terminalFeature = qnix.features."desktop.terminal";
@@ -566,6 +567,18 @@ let
     ++ clipboardFeature.optionModules
     ++ clipboardFeature.__homeModuleFor "standalone-home"
   );
+  screenshotsHomeEvaluation = mkHome (
+    localisationFeature.optionModules
+    ++ localisationFeature.__homeModuleFor "standalone-home"
+    ++ waylandFeature.optionModules
+    ++ waylandFeature.__homeModuleFor "standalone-home"
+    ++ hyprlandFeature.optionModules
+    ++ hyprlandFeature.__homeModuleFor "standalone-home"
+    ++ xdgFoldersFeature.optionModules
+    ++ xdgFoldersFeature.__homeModuleFor "standalone-home"
+    ++ screenshotsFeature.optionModules
+    ++ screenshotsFeature.__homeModuleFor "standalone-home"
+  );
   bluetoothEvaluation = mkNixos (
     bluetoothFeature.optionModules
     ++ bluetoothFeature.nixosModules
@@ -678,6 +691,7 @@ in
     hyprlandRulesFeature
     hyprlandSpecialWorkspacesFeature
     clipboardFeature
+    screenshotsFeature
     noctaliaFeature
     soundFeature
     terminalFeature
@@ -756,6 +770,7 @@ in
     terminalFallbackHomeEvaluation
     xdgFoldersHomeEvaluation
     clipboardHomeEvaluation
+    screenshotsHomeEvaluation
     bluetoothEvaluation
     laptopBluetoothEvaluation
     laptopEvaluation

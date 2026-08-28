@@ -141,7 +141,6 @@
           "${mod}, code:40, ${uexec "nemo"} #d"
           "${mod}, code:57, exec, hypr-special secrets Bitwarden -- bitwarden #m"
           "${mod}, code:26, exec, hypr-special notes obsidian -- obsidian #e"
-          ", Print, ${uexec "rofi -show drun"}"
           ", xf86audioraisevolume, exec, pamixer -i 5"
           ", xf86audiolowervolume, exec, pamixer -d 5"
           ", xf86AudioMute, exec, pamixer -t"

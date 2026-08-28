@@ -13,6 +13,7 @@ assert
     "desktop.hyprland.special-workspaces"
     "desktop.lock"
     "desktop.noctalia"
+    "desktop.screenshots"
     "desktop.sound"
     "desktop.terminal"
     "desktop.wayland"

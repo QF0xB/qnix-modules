@@ -137,6 +137,26 @@ assert
   ];
 assert clipboardHomeEvaluation.config.services.cliphist.enable;
 assert clipboardHomeEvaluation.config.services.cliphist.allowImages;
+assert
+  screenshotsFeature.supportedEnvironments == [
+    "integrated-home"
+    "standalone-home"
+  ];
+assert
+  screenshotsHomeEvaluation.config.qnix.desktop.screenshots.outputDirectory
+  == "/home/check/Pictures/Screenshots";
+assert builtins.elem "qnix-screenshot-region" (
+  map (package: package.pname or package.name) screenshotsHomeEvaluation.config.home.packages
+);
+assert builtins.elem "qnix-screenshot-full" (
+  map (package: package.pname or package.name) screenshotsHomeEvaluation.config.home.packages
+);
+assert builtins.any (
+  binding: builtins.match ".*qnix-screenshot-region.*" binding != null
+) screenshotsHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind;
+assert builtins.any (
+  binding: builtins.match ".*qnix-screenshot-full.*" binding != null
+) screenshotsHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind;
 assert lockNixosEvaluation.config.security.pam.services.hyprlock.enable;
 assert lockHomeEvaluation.config.programs.hyprlock.enable;
 assert
