@@ -567,7 +567,10 @@ let
     browserFeature.optionModules ++ browserFeature.__homeModuleFor "standalone-home"
   );
   fileManagerHomeEvaluation = mkHome (
-    fileManagerFeature.optionModules ++ fileManagerFeature.__homeModuleFor "standalone-home"
+    xdgFoldersFeature.optionModules
+    ++ xdgFoldersFeature.__homeModuleFor "standalone-home"
+    ++ fileManagerFeature.optionModules
+    ++ fileManagerFeature.__homeModuleFor "standalone-home"
   );
   clipboardHomeEvaluation = mkHome (
     waylandFeature.optionModules

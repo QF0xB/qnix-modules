@@ -99,7 +99,7 @@ confirmation.
 | Feature             | Likely environment | Profiles                | Dependencies | Persistence        | Status  | Notes                                                            |
 |---------------------|--------------------|-------------------------|--------------|--------------------|---------|------------------------------------------------------------------|
 | `apps.browser`      | Integrated + standalone Home | `hyprland` | — | Browser profile | finished | Brave Origin browser package |
-| `apps.file-manager` | Integrated + standalone Home | `hyprland` | — | — | finished | Yazi terminal file manager and Nemo graphical file manager |
+| `apps.file-manager` | Integrated + standalone Home | `hyprland` | `desktop.xdg-folders` | — | finished | Yazi terminal file manager and Nemo with XDG directory pins |
 | `apps.chatgpt`      | NixOS + Home       | `personal`, `developer` | —            | ChatGPT app state? | planned | GPT desktop application; package and platform support to confirm |
 | `apps.bitwarden`    | NixOS + Home       | `personal`              | —            | Vault/config?      | planned | Package/config; package availability uncertain                   |
 | `apps.music`        | NixOS + Home       | `personal`              | —            | Music client state | planned | Music client                                                     |

@@ -129,6 +129,16 @@ assert
   ];
 assert builtins.elem pkgs.nemo fileManagerHomeEvaluation.config.home.packages;
 assert builtins.elem pkgs.yazi fileManagerHomeEvaluation.config.home.packages;
+assert
+  fileManagerHomeEvaluation.config.gtk.gtk3.bookmarks == [
+    "file:///home/check Home"
+    "file:///home/check/Projects Projects"
+    "file:///home/check/Documents Documents"
+    "file:///home/check/Downloads Downloads"
+    "file:///home/check/Music Music"
+    "file:///home/check/Pictures Pictures"
+    "file:///home/check/Videos Videos"
+  ];
 assert builtins.elem "super SHIFT, return, exec, uwsm app -- footclient"
   hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind;
 assert builtins.elem "super, code:40, exec, uwsm app -- footclient -e yazi #d"
