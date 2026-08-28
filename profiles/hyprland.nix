@@ -8,6 +8,7 @@
     "desktop.hyprland.rules"
     "desktop.hyprland.special-workspaces"
     "desktop.displaymanager"
+    "desktop.lock"
     "desktop.noctalia"
   ];
 

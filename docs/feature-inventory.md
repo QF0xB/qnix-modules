@@ -83,7 +83,7 @@ confirmation.
 | `desktop.terminal`                    | NixOS + Home       | `desktop`  | —                   | Terminal config    | planned | Terminal package/config          |
 | `desktop.xdg-folders`                 | NixOS + Home       | `desktop`  | —                   | —                  | planned | XDG directories                  |
 | `desktop.clipboard`                   | Home               | `desktop`  | `desktop.wayland`   | —                  | planned | Clipboard manager                |
-| `desktop.lock`                        | Home               | `desktop`  | `desktop.wayland`   | —                  | planned | Screen locking                   |
+| `desktop.lock`                        | NixOS + Home       | `hyprland` | `desktop.hyprland` | —                  | implemented | Hyprlock screen locking           |
 | `desktop.screenshots`                 | Home               | `desktop`  | `desktop.wayland`   | Screenshot config? | planned | Screenshot tooling               |
 | `desktop.client-pr-notify`            | Home               | `hyprland` | `security.sops`     | —                  | planned | Repository-specific notification |
 

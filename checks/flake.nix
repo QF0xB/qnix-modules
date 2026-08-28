@@ -70,6 +70,7 @@
       plymouthFeature = qnix.features."system.plymouth";
       waylandFeature = qnix.features."desktop.wayland";
       displayManagerFeature = qnix.features."desktop.displaymanager";
+      lockFeature = qnix.features."desktop.lock";
       localisationFeature = qnix.features."system.localisation";
       hyprlandFeature = qnix.features."desktop.hyprland";
       hyprlandKeybindsFeature = qnix.features."desktop.hyprland.keybinds";
@@ -82,6 +83,20 @@
         ++ waylandFeature.nixosModules
         ++ displayManagerFeature.optionModules
         ++ displayManagerFeature.nixosModules
+      );
+      lockNixosEvaluation = mkNixos (
+        waylandFeature.optionModules
+        ++ waylandFeature.nixosModules
+        ++ lockFeature.optionModules
+        ++ lockFeature.nixosModules
+      );
+      lockHomeEvaluation = mkHome (
+        waylandFeature.optionModules
+        ++ waylandFeature.__homeModuleFor "standalone-home"
+        ++ hyprlandFeature.optionModules
+        ++ hyprlandFeature.__homeModuleFor "standalone-home"
+        ++ lockFeature.optionModules
+        ++ lockFeature.__homeModuleFor "standalone-home"
       );
       laptopFeature = qnix.features."hardware.laptop";
       powerManagementFeature = qnix.features."hardware.power-management";
@@ -630,6 +645,7 @@
             "desktop.hyprland.monitors"
             "desktop.hyprland.rules"
             "desktop.hyprland.special-workspaces"
+            "desktop.lock"
             "desktop.noctalia"
             "desktop.wayland"
             "hardware.bluetooth"
@@ -758,6 +774,14 @@
         assert displayManagerEvaluation.config.services.displayManager.sddm.enable;
         assert displayManagerEvaluation.config.services.displayManager.sddm.theme == "sddm-astronaut-theme";
         assert displayManagerEvaluation.config.services.xserver.enable;
+        assert
+          lockFeature.supportedEnvironments == [
+            "nixos"
+            "integrated-home"
+            "standalone-home"
+          ];
+        assert lockNixosEvaluation.config.security.pam.services.hyprlock.enable;
+        assert lockHomeEvaluation.config.programs.hyprlock.enable;
         assert
           noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.bar.widgets.right == [
             { id = "Tray"; }
