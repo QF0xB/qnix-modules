@@ -783,6 +783,14 @@
         assert lockNixosEvaluation.config.security.pam.services.hyprlock.enable;
         assert lockHomeEvaluation.config.programs.hyprlock.enable;
         assert
+          (builtins.elemAt lockHomeEvaluation.config.programs.hyprlock.settings.background 0).path
+          == "screenshot";
+        assert
+          (builtins.elemAt lockHomeEvaluation.config.programs.hyprlock.settings.background 0).blur_passes
+          == 3;
+        assert
+          (builtins.elemAt lockHomeEvaluation.config.programs.hyprlock.settings.input-field 0).rounding == 10;
+        assert
           noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.bar.widgets.right == [
             { id = "Tray"; }
             { id = "plugin:privacy-indicator"; }
