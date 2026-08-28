@@ -12,6 +12,7 @@
     "desktop.noctalia"
     "desktop.sound"
     "desktop.terminal"
+    "desktop.xdg-folders"
   ];
 
   defaults.desktop.hyprland = {

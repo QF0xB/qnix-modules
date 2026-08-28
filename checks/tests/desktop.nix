@@ -121,6 +121,15 @@ assert builtins.elem "super SHIFT, return, exec, uwsm app -- footclient"
 assert
   noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.appLauncher.terminalCommand
   == "footclient -e";
+assert
+  xdgFoldersFeature.supportedEnvironments == [
+    "integrated-home"
+    "standalone-home"
+  ];
+assert xdgFoldersHomeEvaluation.config.xdg.userDirs.enable;
+assert xdgFoldersHomeEvaluation.config.xdg.userDirs.createDirectories;
+assert xdgFoldersHomeEvaluation.config.xdg.userDirs.setSessionVariables;
+assert xdgFoldersHomeEvaluation.config.xdg.userDirs.projects == "/home/check/Projects";
 assert lockNixosEvaluation.config.security.pam.services.hyprlock.enable;
 assert lockHomeEvaluation.config.programs.hyprlock.enable;
 assert

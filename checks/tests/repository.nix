@@ -15,6 +15,7 @@ assert
     "desktop.sound"
     "desktop.terminal"
     "desktop.wayland"
+    "desktop.xdg-folders"
     "hardware.bluetooth"
     "hardware.laptop"
     "hardware.power-management"

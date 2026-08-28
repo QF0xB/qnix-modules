@@ -58,6 +58,7 @@ let
   noctaliaFeature = qnix.features."desktop.noctalia";
   soundFeature = qnix.features."desktop.sound";
   terminalFeature = qnix.features."desktop.terminal";
+  xdgFoldersFeature = qnix.features."desktop.xdg-folders";
   displayManagerEvaluation = mkNixos (
     waylandFeature.optionModules
     ++ waylandFeature.nixosModules
@@ -555,6 +556,9 @@ let
     ++ terminalFeature.__homeModuleFor "standalone-home"
     ++ [ { qnix.desktop.terminal.server = false; } ]
   );
+  xdgFoldersHomeEvaluation = mkHome (
+    xdgFoldersFeature.optionModules ++ xdgFoldersFeature.__homeModuleFor "standalone-home"
+  );
   bluetoothEvaluation = mkNixos (
     bluetoothFeature.optionModules
     ++ bluetoothFeature.nixosModules
@@ -669,6 +673,7 @@ in
     noctaliaFeature
     soundFeature
     terminalFeature
+    xdgFoldersFeature
     displayManagerEvaluation
     lockNixosEvaluation
     lockHomeEvaluation
@@ -741,6 +746,7 @@ in
     soundIntegratedEvaluation
     terminalHomeEvaluation
     terminalFallbackHomeEvaluation
+    xdgFoldersHomeEvaluation
     bluetoothEvaluation
     laptopBluetoothEvaluation
     laptopEvaluation

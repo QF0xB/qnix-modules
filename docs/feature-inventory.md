@@ -81,7 +81,7 @@ confirmation.
 | `desktop.noctalia`                    | Home               | `hyprland` | `desktop.hyprland` | Shell state?       | implemented | Noctalia desktop shell and autostart |
 | `desktop.sound`                       | NixOS + integrated Home | `hyprland` | —                   | `.local/state/wireplumber` | finished | PipeWire audio, playerctl, and optional graphical audio tools |
 | `desktop.terminal`                    | Integrated + standalone Home | `hyprland` | —                   | — | finished | Foot terminal with an optional persistent server |
-| `desktop.xdg-folders`                 | NixOS + Home       | `desktop`  | —                   | —                  | planned | XDG directories                  |
+| `desktop.xdg-folders`                 | Integrated + standalone Home | `hyprland` | — | — | finished | Standard XDG directories plus the `Projects` directory |
 | `desktop.clipboard`                   | Home               | `desktop`  | `desktop.wayland`   | —                  | planned | Clipboard manager                |
 | `desktop.lock`                        | NixOS + Home       | `hyprland` | `desktop.hyprland` | —                  | implemented | Hyprlock screen locking           |
 | `desktop.screenshots`                 | Home               | `desktop`  | `desktop.wayland`   | Screenshot config? | planned | Screenshot tooling               |
