@@ -127,6 +127,7 @@ assert
     "integrated-home"
     "standalone-home"
   ];
+assert builtins.elem pkgs.nemo fileManagerHomeEvaluation.config.home.packages;
 assert builtins.elem pkgs.yazi fileManagerHomeEvaluation.config.home.packages;
 assert builtins.elem "super SHIFT, return, exec, uwsm app -- footclient"
   hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind;

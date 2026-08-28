@@ -7,6 +7,9 @@
   home =
     { pkgs, ... }:
     {
-      home.packages = [ pkgs.yazi ];
+      home.packages = [
+        pkgs.nemo
+        pkgs.yazi
+      ];
     };
 }
