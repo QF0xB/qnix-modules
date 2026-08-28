@@ -3,6 +3,7 @@
 
   features = [
     "apps.browser"
+    "apps.file-manager"
     "desktop.clipboard"
     "desktop.hyprland"
     "desktop.hyprland.keybinds"

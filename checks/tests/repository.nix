@@ -5,6 +5,7 @@ assert
     "appearance.fonts"
     "appearance.stylix"
     "apps.browser"
+    "apps.file-manager"
     "desktop.clipboard"
     "desktop.displaymanager"
     "desktop.hyprland"

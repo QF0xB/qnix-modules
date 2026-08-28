@@ -122,7 +122,15 @@ assert
     "standalone-home"
   ];
 assert builtins.elem pkgs.brave-origin browserHomeEvaluation.config.home.packages;
+assert
+  fileManagerFeature.supportedEnvironments == [
+    "integrated-home"
+    "standalone-home"
+  ];
+assert builtins.elem pkgs.yazi fileManagerHomeEvaluation.config.home.packages;
 assert builtins.elem "super SHIFT, return, exec, uwsm app -- footclient"
+  hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind;
+assert builtins.elem "super, code:40, exec, uwsm app -- footclient -e yazi #d"
   hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind;
 assert
   noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.appLauncher.terminalCommand

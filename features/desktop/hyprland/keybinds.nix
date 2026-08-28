@@ -138,7 +138,7 @@
           "${mod} CTRL, code:47, ${uexec "brave-origin --private-window"} #;"
           "${mod}, code:25, ${uexec "rofi -show drun"} #w"
           "${mod}, code:29, exec, hypr-special recording obs -- obs #y"
-          "${mod}, code:40, ${uexec "nemo"} #d"
+          "${mod}, code:40, ${uexec "${terminal} -e yazi"} #d"
           "${mod}, code:57, exec, hypr-special secrets Bitwarden -- bitwarden #m"
           "${mod}, code:26, exec, hypr-special notes obsidian -- obsidian #e"
           ", xf86audioraisevolume, exec, pamixer -i 5"
