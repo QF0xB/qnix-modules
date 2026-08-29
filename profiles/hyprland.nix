@@ -1,8 +1,5 @@
 {
-  imports = [
-    "workstation"
-    "developer"
-  ];
+  imports = [ "workstation" ];
 
   features = {
     nixos = [

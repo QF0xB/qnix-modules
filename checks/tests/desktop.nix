@@ -64,7 +64,6 @@ assert
   ];
 assert hyprlandProfileEvaluation.config.qnix.desktop.hyprland.noHardwareCursors;
 assert hyprlandStandaloneProfileEvaluation.config.wayland.windowManager.hyprland.enable;
-assert hyprlandStandaloneProfileEvaluation.config.programs.nvf.enable;
 assert
   hyprlandProfileEvaluation.config.qnix.desktop.hyprland.devices."epic-mouse-v1".sensitivity == -0.5;
 assert

@@ -536,11 +536,7 @@ let
   );
   hyprlandProfileEvaluation = mkNixos (qnix.modulesFor.nixos [ "hyprland" ]);
   hyprlandStandaloneProfileEvaluation = mkHome (
-    [
-      noctaliaStub
-      nvf.homeManagerModules.default
-    ]
-    ++ qnix.modulesFor.standaloneHome [ "hyprland" ]
+    [ noctaliaStub ] ++ qnix.modulesFor.standaloneHome [ "hyprland" ]
   );
   noctaliaStub =
     { lib, ... }:
@@ -762,6 +758,9 @@ let
 
   defaultEvaluation = mkNixos (qnix.modulesFor.nixos [ "base" ]);
   shellHomeProfileEvaluation = mkHome (qnix.modulesFor.standaloneHome [ "shell" ]);
+  developerHomeProfileEvaluation = mkHome (
+    [ nvf.homeManagerModules.default ] ++ qnix.modulesFor.standaloneHome [ "developer" ]
+  );
   workstationProfileEvaluation = mkNixos (qnix.modulesFor.nixos [ "workstation" ]);
   laptopProfileEvaluation = mkNixos (qnix.modulesFor.nixos [ "laptop" ]);
   secretsProfileEvaluation = mkNixos (
@@ -925,6 +924,7 @@ in
     grubBootEvaluation
     defaultEvaluation
     shellHomeProfileEvaluation
+    developerHomeProfileEvaluation
     workstationProfileEvaluation
     laptopProfileEvaluation
     secretsProfileEvaluation
