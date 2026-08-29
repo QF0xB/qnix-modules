@@ -69,9 +69,24 @@
         full
       ];
 
-      wayland.windowManager.hyprland.settings.bind = [
-        ", Print, exec, ${lib.getExe region}"
-        "SHIFT, Print, exec, ${lib.getExe full}"
+      wayland.windowManager.hyprland.settings.on = [
+        {
+          _args = [
+            "hyprland.start"
+            (lib.generators.mkLuaInline ''
+              function()
+                hl.exec_cmd(${
+                  lib.generators.toLua { }
+                    "hyprctl keyword bind ${lib.escapeShellArg ", Print, exec, ${lib.getExe region}"}"
+                })
+                hl.exec_cmd(${
+                  lib.generators.toLua { }
+                    "hyprctl keyword bind ${lib.escapeShellArg "SHIFT, Print, exec, ${lib.getExe full}"}"
+                })
+              end
+            '')
+          ];
+        }
       ];
     };
 }

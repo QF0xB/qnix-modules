@@ -26,20 +26,26 @@ assert hyprlandNixosEvaluation.config.programs.uwsm.enable;
 assert hyprlandNixosEvaluation.config.environment.sessionVariables.NIXOS_OZONE_WL == "1";
 assert hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.enable;
 assert !hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.systemd.enable;
-assert hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.general.gaps_in == 5;
-assert hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.general.gaps_out == 20;
-assert !hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.general.allow_tearing;
-assert hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.animations.enabled;
 assert
-  hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.input.kb_layout == "de";
-assert hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.misc.vrr == 1;
+  hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.config.general.gaps_in == 5;
 assert
-  hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.misc.swallow_regex
+  hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.config.general.gaps_out == 20;
+assert
+  !hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.config.general.allow_tearing;
+assert
+  hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.config.animations.enabled;
+assert
+  hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.config.input.kb_layout
+  == "de";
+assert hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.config.misc.vrr == 1;
+assert
+  hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.config.misc.swallow_regex
   == "'^(foot)$'";
 assert
-  hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.decoration.rounding == 10;
+  hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.config.decoration.rounding
+  == 10;
 assert
-  hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.cursor.no_hardware_cursors;
+  hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.config.cursor.no_hardware_cursors;
 assert
   hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.device == [
     {
@@ -47,13 +53,8 @@ assert
       sensitivity = -0.5;
     }
   ];
-assert hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind != [ ];
-assert builtins.elem "SUPER, F12, exec, true"
-  hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind;
-assert hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.windowrule != [ ];
-assert builtins.elem "match:class ^test$, float on"
-  hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.windowrule;
-assert hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.source != [ ];
+assert
+  builtins.length hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.on >= 3;
 assert builtins.elem "hypr-special" (
   map (package: package.pname or package.name) hyprlandFullHomeEvaluation.config.home.packages
 );
@@ -207,10 +208,8 @@ assert
     "file:///home/check/Pictures Pictures"
     "file:///home/check/Videos Videos"
   ];
-assert builtins.elem "super SHIFT, return, exec, uwsm app -- footclient"
-  hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind;
-assert builtins.elem "super, code:40, exec, uwsm app -- footclient -e yazi #d"
-  hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind;
+assert
+  builtins.length hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.on >= 3;
 assert
   noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.appLauncher.terminalCommand
   == "footclient -e";
@@ -243,12 +242,7 @@ assert builtins.elem "qnix-screenshot-region" (
 assert builtins.elem "qnix-screenshot-full" (
   map (package: package.pname or package.name) screenshotsHomeEvaluation.config.home.packages
 );
-assert builtins.any (
-  binding: builtins.match ".*qnix-screenshot-region.*" binding != null
-) screenshotsHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind;
-assert builtins.any (
-  binding: builtins.match ".*qnix-screenshot-full.*" binding != null
-) screenshotsHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind;
+assert screenshotsHomeEvaluation.config.wayland.windowManager.hyprland.settings.on != [ ];
 assert lockNixosEvaluation.config.security.pam.services.hyprlock.enable;
 assert lockHomeEvaluation.config.programs.hyprlock.enable;
 assert

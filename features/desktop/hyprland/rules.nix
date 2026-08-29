@@ -17,9 +17,9 @@
     };
 
   home =
-    { cfg, ... }:
-    {
-      wayland.windowManager.hyprland.settings.windowrule = [
+    { cfg, lib, ... }:
+    let
+      rules = [
         "match:modal true, float on, center on, dim_around on, stay_focused on"
         "match:title ^(Open File|Save File|Choose File|File Upload|Open|Save As).*$, float on"
         "match:title ^(Authentication Required|Permission required).*$, float on, center on, stay_focused on"
@@ -54,5 +54,24 @@
         "match:class ^(Bitwarden)$, workspace special:secrets"
       ]
       ++ cfg.additionalRules;
+    in
+    {
+      wayland.windowManager.hyprland.settings.on = [
+        {
+          _args = [
+            "hyprland.start"
+            (lib.generators.mkLuaInline ''
+              function()
+              ${lib.concatMapStrings (
+                rule:
+                "  hl.exec_cmd(${
+                    lib.generators.toLua { } "hyprctl keyword windowrule ${lib.escapeShellArg rule}"
+                  })\n"
+              ) rules}
+              end
+            '')
+          ];
+        }
+      ];
     };
 }
