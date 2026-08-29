@@ -276,6 +276,24 @@
         "type": "github"
       }
     },
+    "mcp-servers-nix": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_3"
+      },
+      "locked": {
+        "lastModified": 1787940114,
+        "narHash": "sha256-ybvciJGvmcm0ohOGK8hpZq4dAW3F++bAGlrW2LAuQbE=",
+        "owner": "natsukium",
+        "repo": "mcp-servers-nix",
+        "rev": "dbb2006631de0bfb1e1a976ee83ce3e84704480e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "natsukium",
+        "repo": "mcp-servers-nix",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1768564909,
@@ -309,6 +327,22 @@
       }
     },
     "nixpkgs_3": {
+      "locked": {
+        "lastModified": 1787209939,
+        "narHash": "sha256-WvvHR4kSQLAbtouMC/ruZ5UpLwlUcY3K4FAllMN+yGk=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "391b592eb44808b3bd0cb80bb71b63a5a118b8bb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_4": {
       "locked": {
         "lastModified": 1787052956,
         "narHash": "sha256-fZt7Au28AduGpt7vRfIOcpsHKJ+9cEnuQ2NdWuh0KVc=",
@@ -383,7 +417,8 @@
         "home-manager": "home-manager",
         "impermanence": "impermanence",
         "llm-agents": "llm-agents",
-        "nixpkgs": "nixpkgs_3",
+        "mcp-servers-nix": "mcp-servers-nix",
+        "nixpkgs": "nixpkgs_4",
         "qnix-modules": "qnix-modules",
         "sops-nix": "sops-nix",
         "stylix": "stylix"

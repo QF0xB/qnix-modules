@@ -113,6 +113,8 @@ confirmation.
 |----------------------|--------------------|----------------------------|----------------|--------------------|---------|------------------------------------------------|
 | `dev.codex`          | NixOS + Home       | `developer`                | —              | Codex config?      | planned | Package/config                                 |
 | `dev.vscode`         | Integrated + standalone Home | `hyprland`      | —              | Editor config      | implemented | Visual Studio Code |
+| `dev.mcp`            | Integrated + standalone Home | `hyprland`      | `mcp-servers-nix`, `desktop.xdg-folders` | Server credentials? | implemented | Filesystem, Git, GitHub, and NixOS MCP servers; NixOS server is host-only |
+| `dev.ai-tools`       | Integrated + standalone Home | `hyprland`      | `llm-agents.nix` | Agent state, indexes, and caches | implemented | CodeGraph, local search/knowledge tools, agent observability, skills, sandboxing, Git provenance, browser/PDF/Office utilities |
 | `dev.devenv`         | NixOS              | `developer`                | —              | —                  | planned | Development environment                        |
 | `dev.direnv`         | Home               | `developer`                | `shell.fish`   | —                  | planned | Shell integration                              |
 | `dev.git`            | NixOS + Home       | `developer`, `workstation` | `security.gpg` | Git config         | planned | Git, GitHub CLI (`gh`), and signing            |

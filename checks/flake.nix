@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     llm-agents.url = "github:numtide/llm-agents.nix";
+    mcp-servers-nix.url = "github:natsukium/mcp-servers-nix";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";

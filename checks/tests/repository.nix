@@ -21,6 +21,8 @@ assert
     "desktop.terminal"
     "desktop.wayland"
     "desktop.xdg-folders"
+    "dev.ai-tools"
+    "dev.mcp"
     "dev.vscode"
     "hardware.bluetooth"
     "hardware.laptop"

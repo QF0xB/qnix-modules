@@ -5,6 +5,7 @@
   stylix,
   sops-nix,
   llm-agents,
+  mcp-servers-nix,
   qnix-modules,
   ...
 }:
@@ -16,12 +17,16 @@ let
     overlays = [ llm-agents.overlays.shared-nixpkgs ];
   };
   qnix = qnix-modules.lib.mkQNix {
-    context.hostname = "check";
+    context = {
+      hostname = "check";
+      inherit mcp-servers-nix;
+    };
   };
   laptopQnix = qnix-modules.lib.mkQNix {
     context = {
       hostname = "laptop-check";
       laptop = true;
+      inherit mcp-servers-nix;
     };
   };
 
@@ -52,6 +57,8 @@ let
   browserFeature = qnix.features."apps.browser";
   chatgptFeature = qnix.features."apps.chatgpt";
   vscodeFeature = qnix.features."dev.vscode";
+  mcpFeature = qnix.features."dev.mcp";
+  aiToolsFeature = qnix.features."dev.ai-tools";
   fileManagerFeature = qnix.features."apps.file-manager";
   bootFeature = qnix.features."system.boot";
   plymouthFeature = qnix.features."system.plymouth";
@@ -579,6 +586,15 @@ let
   vscodeHomeEvaluation = mkHome (
     vscodeFeature.optionModules ++ vscodeFeature.__homeModuleFor "standalone-home"
   );
+  mcpHomeEvaluation = mkHome (
+    xdgFoldersFeature.optionModules
+    ++ xdgFoldersFeature.__homeModuleFor "standalone-home"
+    ++ mcpFeature.optionModules
+    ++ mcpFeature.__homeModuleFor "standalone-home"
+  );
+  aiToolsHomeEvaluation = mkHome (
+    aiToolsFeature.optionModules ++ aiToolsFeature.__homeModuleFor "standalone-home"
+  );
   fileManagerHomeEvaluation = mkHome (
     xdgFoldersFeature.optionModules
     ++ xdgFoldersFeature.__homeModuleFor "standalone-home"
@@ -706,6 +722,8 @@ in
     browserFeature
     chatgptFeature
     vscodeFeature
+    mcpFeature
+    aiToolsFeature
     fileManagerFeature
     bootFeature
     plymouthFeature
@@ -800,6 +818,8 @@ in
     browserHomeEvaluation
     chatgptHomeEvaluation
     vscodeHomeEvaluation
+    mcpHomeEvaluation
+    aiToolsHomeEvaluation
     fileManagerHomeEvaluation
     clipboardHomeEvaluation
     screenshotsHomeEvaluation

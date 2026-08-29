@@ -136,6 +136,44 @@ assert
     "standalone-home"
   ];
 assert builtins.elem pkgs.vscode vscodeHomeEvaluation.config.home.packages;
+assert mcpHomeEvaluation.config.programs.mcp.enable;
+assert builtins.hasAttr "filesystem" mcpHomeEvaluation.config.programs.mcp.servers;
+assert builtins.hasAttr "git" mcpHomeEvaluation.config.programs.mcp.servers;
+assert builtins.hasAttr "github" mcpHomeEvaluation.config.programs.mcp.servers;
+assert !(builtins.hasAttr "nixos" mcpHomeEvaluation.config.programs.mcp.servers);
+assert
+  aiToolsFeature.supportedEnvironments == [
+    "integrated-home"
+    "standalone-home"
+  ];
+assert builtins.all
+  (
+    package:
+    builtins.elem (package.pname or null) (
+      map (installed: installed.pname or null) aiToolsHomeEvaluation.config.home.packages
+    )
+  )
+  (
+    with pkgs.llm-agents;
+    [
+      agent-browser
+      agentsview
+      ccusage
+      ck
+      codegraph
+      ctx
+      fence
+      git-ai
+      gitnexus
+      gno
+      nono
+      officecli
+      pdfvision
+      qmd
+      rtk
+      skills
+    ]
+  );
 assert
   fileManagerFeature.supportedEnvironments == [
     "integrated-home"

@@ -18,7 +18,9 @@
     "desktop.sound"
     "desktop.terminal"
     "desktop.xdg-folders"
+    "dev.ai-tools"
     "dev.vscode"
+    "dev.mcp"
   ];
 
   defaults.desktop.hyprland = {

@@ -3,10 +3,17 @@
 
   inputs = {
     qnix-sdk.url = "github:QF0xB/qnix-sdk";
+    mcp-servers-nix = {
+      url = "github:natsukium/mcp-servers-nix";
+    };
   };
 
   outputs =
-    { qnix-sdk, ... }:
+    {
+      qnix-sdk,
+      mcp-servers-nix ? null,
+      ...
+    }:
     {
       lib.mkQNix =
         {
@@ -15,7 +22,8 @@
         }:
         let
           sdk = qnix-sdk.lib.mkSdk {
-            inherit namespace context;
+            inherit namespace;
+            context = if mcp-servers-nix == null then context else context // { inherit mcp-servers-nix; };
           };
         in
         sdk.mkRepository {
