@@ -244,10 +244,28 @@
           };
 
           exec = [ "hyprctl switchxkblayout all 1" ];
-          exec-once = [
-            "systemctl --user start hyprpolkitagent"
+          on = [
+            {
+              _args = [
+                "hyprland.start"
+                (lib.generators.mkLuaInline ''
+                  function()
+                    hl.exec_cmd("systemctl --user start hyprpolkitagent")
+                  end
+                '')
+              ];
+            }
           ]
-          ++ lib.optional (context.laptop or false) "light -I";
+          ++ lib.optional (context.laptop or false) {
+            _args = [
+              "hyprland.start"
+              (lib.generators.mkLuaInline ''
+                function()
+                  hl.exec_cmd("light -I")
+                end
+              '')
+            ];
+          };
         };
       };
     };

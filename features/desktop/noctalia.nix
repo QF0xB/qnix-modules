@@ -186,8 +186,17 @@
         };
       };
 
-      wayland.windowManager.hyprland.settings.exec-once = lib.mkIf cfg.autostart [
-        "qs -c noctalia-shell"
+      wayland.windowManager.hyprland.settings.on = lib.mkIf cfg.autostart [
+        {
+          _args = [
+            "hyprland.start"
+            (lib.generators.mkLuaInline ''
+              function()
+                hl.exec_cmd("qs -c noctalia-shell")
+              end
+            '')
+          ];
+        }
       ];
     };
 }
