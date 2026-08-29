@@ -28,6 +28,7 @@ assert
     "dev.mcp"
     "dev.nh"
     "dev.nixfmt"
+    "dev.nvf"
     "dev.vscode"
     "hardware.bluetooth"
     "hardware.laptop"

@@ -122,7 +122,7 @@ confirmation.
 | `dev.kubernetes-cli` | NixOS + Home       | `developer`                | —              | Kubernetes config  | planned | Local Kubernetes CLI tooling                   |
 | `dev.nh`             | NixOS              | Client-selected            | —              | —                  | finished | Nix maintenance and optional periodic garbage collection |
 | `dev.nixfmt`         | NixOS + integrated and standalone Home | Client-selected | — | — | finished | Nix formatting with nixfmt |
-| `dev.nvf`            | NixOS + Home       | `editor`                   | —              | Editor config      | planned | Editor configuration                           |
+| `dev.nvf`            | NixOS + integrated and standalone Home | Client-selected | NVF Home Manager module | `.local/share/nvf` | implemented | Lean NVF editor configuration with Nix-focused language tooling |
 | `dev.postman`        | NixOS + Home       | `developer`                | —              | Postman data       | planned | API tooling                                    |
 | `dev.docker`         | NixOS + Home       | `developer`                | —              | `/var/lib/docker`? | planned | Local development containers                   |
 

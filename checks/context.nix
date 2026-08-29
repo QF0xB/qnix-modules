@@ -6,6 +6,7 @@
   sops-nix,
   llm-agents,
   mcp-servers-nix,
+  nvf,
   qnix-modules,
   ...
 }:
@@ -64,6 +65,7 @@ let
   nhFeature = qnix.features."dev.nh";
   nixfmtFeature = qnix.features."dev.nixfmt";
   devenvFeature = qnix.features."dev.devenv";
+  nvfFeature = qnix.features."dev.nvf";
   fileManagerFeature = qnix.features."apps.file-manager";
   bootFeature = qnix.features."system.boot";
   plymouthFeature = qnix.features."system.plymouth";
@@ -655,6 +657,11 @@ let
   devenvHomeEvaluation = mkHome (
     devenvFeature.optionModules ++ devenvFeature.__homeModuleFor "standalone-home"
   );
+  nvfHomeEvaluation = mkHome (
+    [ nvf.homeManagerModules.default ]
+    ++ nvfFeature.optionModules
+    ++ nvfFeature.__homeModuleFor "standalone-home"
+  );
   fileManagerHomeEvaluation = mkHome (
     xdgFoldersFeature.optionModules
     ++ xdgFoldersFeature.__homeModuleFor "standalone-home"
@@ -790,6 +797,7 @@ in
     nhFeature
     nixfmtFeature
     devenvFeature
+    nvfFeature
     fileManagerFeature
     bootFeature
     plymouthFeature
@@ -896,6 +904,7 @@ in
     nixfmtNixosEvaluation
     nixfmtHomeEvaluation
     devenvHomeEvaluation
+    nvfHomeEvaluation
     fileManagerHomeEvaluation
     clipboardHomeEvaluation
     screenshotsHomeEvaluation

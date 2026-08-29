@@ -60,4 +60,12 @@ assert
     "standalone-home"
   ];
 assert builtins.elem pkgs.devenv devenvHomeEvaluation.config.home.packages;
+assert
+  nvfFeature.supportedEnvironments == [
+    "nixos"
+    "integrated-home"
+    "standalone-home"
+  ];
+assert nvfHomeEvaluation.config.programs.nvf.enable;
+assert nvfHomeEvaluation.config.programs.nvf.defaultEditor;
 pkgs.runCommand "qnix-system-check" { } "touch $out"
