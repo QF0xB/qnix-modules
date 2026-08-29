@@ -528,8 +528,19 @@ let
     ++ hyprlandSpecialWorkspacesFeature.__homeModuleFor "standalone-home"
     ++ [
       {
-        qnix.desktop.hyprland.keybinds.additionalKeybinds = [ "SUPER, F12, exec, true" ];
-        qnix.desktop.hyprland.rules.additionalRules = [ "match:class ^test$, float on" ];
+        qnix.desktop.hyprland.keybinds.additionalKeybinds = [
+          {
+            key = "SUPER + F12";
+            dispatcher = ''hl.dsp.exec_cmd("true")'';
+          }
+        ];
+        qnix.desktop.hyprland.rules.additionalRules = [
+          {
+            name = "test-rule";
+            match.class = "^test$";
+            float = true;
+          }
+        ];
         qnix.system.localisation.xkb.layout = "de,de,us";
       }
     ]

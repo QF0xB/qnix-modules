@@ -54,28 +54,23 @@ assert
     }
   ];
 assert
-  builtins.length hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.on >= 3;
+  builtins.length hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.on == 1;
 assert
-  map (
-    binding: builtins.head binding._args
-  ) hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind == [
-    "SUPER + return"
-    "SUPER + SHIFT + return"
-  ];
+  builtins.length hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind > 40;
 assert
-  map (
-    binding: builtins.head binding._args
-  ) vmHyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind == [
-    "ALT + return"
-    "ALT + SHIFT + return"
-  ];
+  vmHyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.mod._var == "ALT";
+assert
+  hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.mod._var == "SUPER";
+assert builtins.any (
+  rule: rule.name == "test-rule"
+) hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.window_rule;
 assert builtins.elem "hypr-special" (
   map (package: package.pname or package.name) hyprlandFullHomeEvaluation.config.home.packages
 );
 assert
   hyprlandPersistenceEvaluation.config.qnix.persist.users."*".files == [
-    ".config/hypr/monitors.conf"
-    ".config/hypr/workspaces.conf"
+    ".config/hypr/monitors.lua"
+    ".config/hypr/workspaces.lua"
   ];
 assert hyprlandProfileEvaluation.config.qnix.desktop.hyprland.noHardwareCursors;
 assert hyprlandStandaloneProfileEvaluation.config.wayland.windowManager.hyprland.enable;
@@ -223,7 +218,7 @@ assert
     "file:///home/check/Videos Videos"
   ];
 assert
-  builtins.length hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.on >= 3;
+  builtins.length hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.on == 1;
 assert
   noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.appLauncher.terminalCommand
   == "footclient -e";
@@ -256,7 +251,11 @@ assert builtins.elem "qnix-screenshot-region" (
 assert builtins.elem "qnix-screenshot-full" (
   map (package: package.pname or package.name) screenshotsHomeEvaluation.config.home.packages
 );
-assert screenshotsHomeEvaluation.config.wayland.windowManager.hyprland.settings.on != [ ];
+assert builtins.elem "Print" (
+  map (
+    binding: builtins.head binding._args
+  ) screenshotsHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind
+);
 assert lockNixosEvaluation.config.security.pam.services.hyprlock.enable;
 assert lockHomeEvaluation.config.programs.hyprlock.enable;
 assert

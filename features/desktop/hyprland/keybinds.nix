@@ -14,9 +14,27 @@
     { lib, ... }:
     {
       additionalKeybinds = lib.mkOption {
-        type = lib.types.listOf lib.types.str;
+        type = lib.types.listOf (
+          lib.types.submodule {
+            options = {
+              key = lib.mkOption {
+                type = lib.types.str;
+                description = "Key combination in Hyprland Lua syntax.";
+              };
+              dispatcher = lib.mkOption {
+                type = lib.types.str;
+                description = "Lua dispatcher expression, such as hl.dsp.window.close().";
+              };
+              options = lib.mkOption {
+                type = lib.types.attrs;
+                default = { };
+                description = "Optional native Hyprland bind options.";
+              };
+            };
+          }
+        );
         default = [ ];
-        description = "Additional Hyprland keybind definitions.";
+        description = "Additional native Hyprland Lua key bindings.";
       };
     };
 
@@ -29,165 +47,136 @@
       ...
     }:
     let
-      mod = if context.vm or false then "ALT" else "SUPER";
       terminal =
-        if context.vm or false || !config.programs.foot.server.enable then "foot" else "footclient";
-      uexec = command: "exec, uwsm app -- ${command}";
-      hyprctl = command: "hyprctl keyword ${command}";
-      luaString = lib.generators.toLua { };
-      mkBind = key: dispatcher: {
+        if (context.vm or false) || !config.programs.foot.server.enable then "foot" else "footclient";
+      lua = lib.generators.toLua { };
+      inline = lib.generators.mkLuaInline;
+      modKey = key: inline ''mod .. " + ${key}"'';
+      mkBind = key: dispatcher: options: {
         _args = [
           key
-          (lib.generators.mkLuaInline dispatcher)
-        ];
+          (inline dispatcher)
+        ]
+        ++ lib.optional (options != { }) options;
       };
+      mkModBind =
+        key: dispatcher: options:
+        mkBind (modKey key) dispatcher options;
+      exec = command: "hl.dsp.exec_cmd(${lua command})";
+      focusWorkspace = workspace: "hl.dsp.focus({ workspace = ${lua workspace} })";
+      moveWorkspace =
+        workspace: follow:
+        "hl.dsp.window.move({ workspace = ${lua workspace}, follow = ${
+          if follow then "true" else "false"
+        } })";
       workspaces = [
         {
           num = "1";
           code = "58";
-          comment = "m";
         }
         {
           num = "2";
           code = "59";
-          comment = ",";
         }
         {
           num = "3";
           code = "60";
-          comment = ".";
         }
         {
           num = "4";
           code = "44";
-          comment = "j";
         }
         {
           num = "5";
           code = "45";
-          comment = "k";
         }
         {
           num = "6";
           code = "46";
-          comment = "l";
         }
         {
           num = "7";
           code = "30";
-          comment = "u";
         }
         {
           num = "8";
           code = "31";
-          comment = "i";
         }
         {
           num = "9";
           code = "32";
-          comment = "o";
         }
         {
           num = "10";
           code = "65";
-          comment = "space";
         }
       ];
-      workspaceBindings = builtins.concatLists (
+      visibleWorkspace = workspace: if workspace == "10" then "0" else workspace;
+      workspaceBinds = builtins.concatLists (
         map (
           workspace:
           let
-            shown = if workspace.num == "10" then "0" else workspace.num;
+            visible = visibleWorkspace workspace.num;
           in
           [
-            "${mod}, ${shown}, workspace, ${shown}"
-            "${mod}, code:${workspace.code}, workspace, ${workspace.num} #${workspace.comment}"
-            "${mod}+SHIFT+CTRL, ${shown}, movetoworkspace, ${shown}"
-            "${mod}+SHIFT+CTRL, code:${workspace.code}, movetoworkspace, ${workspace.num} #${workspace.comment}"
-            "${mod} CTRL, ${shown}, movetoworkspacesilent, ${shown}"
-            "${mod} CTRL, code:${workspace.code}, movetoworkspacesilent, ${workspace.num} #${workspace.comment}"
+            (mkModBind visible (focusWorkspace visible) { })
+            (mkModBind "code:${workspace.code}" (focusWorkspace workspace.num) { })
+            (mkModBind "SHIFT + CTRL + ${visible}" (moveWorkspace visible true) { })
+            (mkModBind "SHIFT + CTRL + code:${workspace.code}" (moveWorkspace workspace.num true) { })
+            (mkModBind "CTRL + ${visible}" (moveWorkspace visible false) { })
+            (mkModBind "CTRL + code:${workspace.code}" (moveWorkspace workspace.num false) { })
           ]
         ) workspaces
       );
+      additionalBinds = map (
+        binding: mkBind binding.key binding.dispatcher binding.options
+      ) cfg.additionalKeybinds;
     in
     {
       wayland.windowManager.hyprland.settings = {
+        mod._var = if context.vm or false then "ALT" else "SUPER";
+
         bind = [
-          (mkBind "${mod} + return" "hl.dsp.exec_cmd(${luaString "uwsm app -- ${terminal}"})")
-          (mkBind "${mod} + SHIFT + return" "hl.dsp.exec_cmd(${luaString "uwsm app -- ${terminal}"})")
-        ];
-
-        on = [
-          {
-            _args = [
-              "hyprland.start"
-              (lib.generators.mkLuaInline ''
-                function()
-                ${lib.concatMapStrings (command: "  hl.exec_cmd(${luaString command})\n") (
-                  map hyprctl (
-                    (map (binding: "bindl ${lib.escapeShellArg binding}") [
-                      ",switch:Lid Switch, ${uexec "hyprlock"}"
-                    ])
-                    ++ (map (binding: "bindm ${lib.escapeShellArg binding}") [
-                      "${mod}, mouse:272, movewindow"
-                      "${mod}, mouse:273, resizewindow"
-                    ])
-                    ++ (map (binding: "bind ${lib.escapeShellArg binding}") (
-                      [
-                        "${mod} SHIFT, code:26, exec, ~/.config/hypr/scripts/reload.sh #e"
-                        "${mod} SHIFT, code:53, exec, uwsm stop #x"
-                        "${mod}, code:42, exec, hyprctl switchxkblayout all next #g"
-                        "${mod}, mouse_down, workspace, e+1"
-                        "${mod}, mouse_up, workspace, e-1"
-                        "${mod}, code:48, fullscreen #;"
-                        "${mod}, code:38, killactive #A"
-                        "${mod} SHIFT, code:48, togglefloating #;"
-                        "${mod}, code:61, togglesplit, #?"
-                        "${mod}, Tab, cyclenext"
-                        "super, Tab, swapnext"
-                        "CTRL, Tab, workspace, e+"
-                        "${mod}, left, movefocus, l"
-                        "${mod}, right, movefocus, r"
-                        "${mod}, up, movefocus, u"
-                        "${mod}, down, movefocus, d"
-                        "${mod} CTRL, return, ${uexec "${terminal} --app-id floating"}"
-                        "${mod}, code:47, ${uexec "brave-origin"} #;"
-                        "${mod} CTRL, code:47, ${uexec "brave-origin --private-window"} #;"
-                        "${mod}, code:25, ${uexec "rofi -show drun"} #w"
-                        "${mod}, code:29, exec, hypr-special recording obs -- obs #y"
-                        "${mod}, code:40, ${uexec "${terminal} -e yazi"} #d"
-                        "${mod}, code:57, exec, hypr-special secrets Bitwarden -- bitwarden #m"
-                        "${mod}, code:26, exec, hypr-special notes obsidian -- obsidian #e"
-                        ", xf86audioraisevolume, exec, pamixer -i 5"
-                        ", xf86audiolowervolume, exec, pamixer -d 5"
-                        ", xf86AudioMute, exec, pamixer -t"
-                        ", XF86AudioPlay, exec, playerctl play-pause"
-                        ", XF86AudioNext, exec, playerctl next"
-                        ", XF86AudioPrev, exec, playerctl previous"
-                        ", XF86audiostop, exec, playerctl stop"
-                      ]
-                      ++ workspaceBindings
-                      ++ cfg.additionalKeybinds
-                    ))
-                  )
-                )}
-                end
-              '')
-            ];
-          }
-        ];
-      };
-
-      home.file.".config/hypr/scripts/reload.sh" = {
-        executable = true;
-        text = ''
-          #!/bin/sh
-          killall waybar || true
-          waybar &
-          hyprctl reload
-          killall hyprpaper || true
-          hyprpaper
-        '';
+          (mkBind "switch:Lid Switch" (exec "uwsm app -- hyprlock") { locked = true; })
+          (mkBind "XF86AudioRaiseVolume" (exec "pamixer -i 5") { locked = true; })
+          (mkBind "XF86AudioLowerVolume" (exec "pamixer -d 5") { locked = true; })
+          (mkBind "XF86AudioMute" (exec "pamixer -t") { locked = true; })
+          (mkBind "XF86AudioPlay" (exec "playerctl play-pause") { locked = true; })
+          (mkBind "XF86AudioNext" (exec "playerctl next") { locked = true; })
+          (mkBind "XF86AudioPrev" (exec "playerctl previous") { locked = true; })
+          (mkBind "XF86AudioStop" (exec "playerctl stop") { locked = true; })
+          (mkModBind "mouse:272" "hl.dsp.window.drag()" { mouse = true; })
+          (mkModBind "mouse:273" "hl.dsp.window.resize()" { mouse = true; })
+          (mkModBind "return" (exec "uwsm app -- ${terminal}") { })
+          (mkModBind "SHIFT + return" (exec "uwsm app -- ${terminal}") { })
+          (mkModBind "CTRL + return" (exec "uwsm app -- ${terminal} --app-id floating") { })
+          (mkModBind "SHIFT + code:53" (exec "uwsm stop") { })
+          (mkModBind "SHIFT + code:26" (exec "hyprctl reload") { })
+          (mkModBind "code:42" (exec "hyprctl switchxkblayout all next") { })
+          (mkModBind "mouse_down" (focusWorkspace "e+1") { })
+          (mkModBind "mouse_up" (focusWorkspace "e-1") { })
+          (mkModBind "code:48" "hl.dsp.window.fullscreen()" { })
+          (mkModBind "code:38" "hl.dsp.window.close()" { })
+          (mkModBind "SHIFT + code:48" ''hl.dsp.window.float({ action = "toggle" })'' { })
+          (mkModBind "code:61" ''hl.dsp.layout("togglesplit")'' { })
+          (mkModBind "left" ''hl.dsp.focus({ direction = "left" })'' { })
+          (mkModBind "right" ''hl.dsp.focus({ direction = "right" })'' { })
+          (mkModBind "up" ''hl.dsp.focus({ direction = "up" })'' { })
+          (mkModBind "down" ''hl.dsp.focus({ direction = "down" })'' { })
+          (mkModBind "code:47" (exec "uwsm app -- brave-origin") { })
+          (mkModBind "CTRL + code:47" (exec "uwsm app -- brave-origin --private-window") { })
+          (mkModBind "code:25" (exec "uwsm app -- rofi -show drun") { })
+          (mkModBind "code:29" (exec "hypr-special recording obs -- obs") { })
+          (mkModBind "code:40" (exec "uwsm app -- ${terminal} -e yazi") { })
+          (mkModBind "code:57" (exec "hypr-special secrets Bitwarden -- bitwarden") { })
+          (mkModBind "code:26" (exec "hypr-special notes obsidian -- obsidian") { })
+          (mkModBind "code:39" ''hl.dsp.workspace.toggle_special("messenger")'' { })
+          (mkBind "SUPER + Tab" "hl.dsp.window.swap({ next = true })" { })
+          (mkBind "ALT + Tab" "hl.dsp.window.cycle_next()" { })
+          (mkBind "CTRL + Tab" (focusWorkspace "e+1") { })
+        ]
+        ++ workspaceBinds
+        ++ additionalBinds;
       };
     };
 }

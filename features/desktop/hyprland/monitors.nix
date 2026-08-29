@@ -8,8 +8,8 @@
   requires.home = [ "desktop.hyprland" ];
 
   persistence.users."*".files = [
-    ".config/hypr/monitors.conf"
-    ".config/hypr/workspaces.conf"
+    ".config/hypr/monitors.lua"
+    ".config/hypr/workspaces.lua"
   ];
 
   nixos =
@@ -22,33 +22,27 @@
       ...
     }:
     {
-      home.activation.createHyprMonitorConf = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        if [ ! -f "$HOME/.config/hypr/monitors.conf" ]; then
+      home.activation.createHyprMonitorConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        if [ ! -f "$HOME/.config/hypr/monitors.lua" ]; then
           mkdir -p "$HOME/.config/hypr"
-          cat > "$HOME/.config/hypr/monitors.conf" << EOF
-        # Default Hyprland monitor configuration
-        # You can customize this file after it is created.
-        monitor = , preferred, auto, 1
+          cat > "$HOME/.config/hypr/monitors.lua" <<'EOF'
+        hl.monitor({
+          output = "",
+          mode = "preferred",
+          position = "auto",
+          scale = 1,
+        })
         EOF
         fi
-        if [ ! -f "$HOME/.config/hypr/workspaces.conf" ]; then
+        if [ ! -f "$HOME/.config/hypr/workspaces.lua" ]; then
           mkdir -p "$HOME/.config/hypr"
-          touch "$HOME/.config/hypr/workspaces.conf"
+          touch "$HOME/.config/hypr/workspaces.lua"
         fi
       '';
 
-      wayland.windowManager.hyprland.settings.on = [
-        {
-          _args = [
-            "hyprland.start"
-            (lib.generators.mkLuaInline ''
-              function()
-                hl.exec_cmd("hyprctl keyword source ~/.config/hypr/monitors.conf")
-                hl.exec_cmd("hyprctl keyword source ~/.config/hypr/workspaces.conf")
-              end
-            '')
-          ];
-        }
-      ];
+      wayland.windowManager.hyprland.extraLuaFiles.userConfig.content = ''
+        require("monitors")
+        require("workspaces")
+      '';
     };
 }
