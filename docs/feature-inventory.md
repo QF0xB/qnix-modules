@@ -116,7 +116,7 @@ confirmation.
 | `dev.mcp`            | Integrated + standalone Home | `hyprland`      | `mcp-servers-nix`, `desktop.xdg-folders` | Server credentials? | implemented | Filesystem, Git, GitHub, and NixOS MCP servers; NixOS server is host-only |
 | `dev.ai-tools`       | Integrated + standalone Home | `hyprland`      | `llm-agents.nix` | Agent state, indexes, and caches | implemented | CodeGraph, local search/knowledge tools, agent observability, skills, sandboxing, Git provenance, browser/PDF/Office utilities |
 | `dev.devenv`         | NixOS              | `developer`                | —              | —                  | planned | Development environment                        |
-| `dev.direnv`         | Home               | `developer`                | `shell.fish`   | —                  | planned | Shell integration                              |
+| `dev.direnv`         | NixOS + integrated and standalone Home | Client-selected | `shell.fish` | `.local/share/direnv` | finished | Direnv, nix-direnv, and Fish/Zsh shell integration |
 | `dev.git`            | NixOS + integrated and standalone Home | Client-selected | `security.gpg` | `.config/git`, `.config/gh` | finished | Git, GitHub CLI (`gh`), GPG signing, and Git LFS |
 | `dev.jetbrains`      | NixOS + Home       | `developer`                | —              | IDE config         | planned | IDEs                                           |
 | `dev.kubernetes-cli` | NixOS + Home       | `developer`                | —              | Kubernetes config  | planned | Local Kubernetes CLI tooling                   |

@@ -61,4 +61,15 @@ assert gitHomeEvaluation.config.programs.git.settings.user.email == "check@examp
 assert gitHomeEvaluation.config.programs.git.settings.push.autoSetupRemote;
 assert gitHomeEvaluation.config.programs.git.settings.alias.ci == "commit";
 assert gitHomeEvaluation.config.programs.gh.enable;
+assert
+  direnvFeature.supportedEnvironments == [
+    "nixos"
+    "integrated-home"
+    "standalone-home"
+  ];
+assert direnvNixosEvaluation.config.qnix.persist.users."*".directories == [ ".local/share/direnv" ];
+assert direnvHomeEvaluation.config.programs.direnv.enable;
+assert direnvHomeEvaluation.config.programs.direnv.enableFishIntegration;
+assert direnvHomeEvaluation.config.programs.direnv.enableZshIntegration;
+assert direnvHomeEvaluation.config.programs.direnv.nix-direnv.enable;
 pkgs.runCommand "qnix-shell-check" { } "touch $out"

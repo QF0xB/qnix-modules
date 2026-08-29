@@ -22,6 +22,7 @@ assert
     "desktop.wayland"
     "desktop.xdg-folders"
     "dev.ai-tools"
+    "dev.direnv"
     "dev.git"
     "dev.mcp"
     "dev.vscode"

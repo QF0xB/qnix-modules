@@ -60,6 +60,7 @@ let
   mcpFeature = qnix.features."dev.mcp";
   aiToolsFeature = qnix.features."dev.ai-tools";
   gitFeature = qnix.features."dev.git";
+  direnvFeature = qnix.features."dev.direnv";
   fileManagerFeature = qnix.features."apps.file-manager";
   bootFeature = qnix.features."system.boot";
   plymouthFeature = qnix.features."system.plymouth";
@@ -626,6 +627,12 @@ let
       }
     ]
   );
+  direnvNixosEvaluation = mkNixos (
+    persistFeature.optionModules ++ direnvFeature.optionModules ++ direnvFeature.nixosModules
+  );
+  direnvHomeEvaluation = mkHome (
+    direnvFeature.optionModules ++ direnvFeature.__homeModuleFor "standalone-home"
+  );
   fileManagerHomeEvaluation = mkHome (
     xdgFoldersFeature.optionModules
     ++ xdgFoldersFeature.__homeModuleFor "standalone-home"
@@ -757,6 +764,7 @@ in
     mcpFeature
     aiToolsFeature
     gitFeature
+    direnvFeature
     fileManagerFeature
     bootFeature
     plymouthFeature
@@ -857,6 +865,8 @@ in
     aiToolsHomeEvaluation
     gitNixosEvaluation
     gitHomeEvaluation
+    direnvNixosEvaluation
+    direnvHomeEvaluation
     fileManagerHomeEvaluation
     clipboardHomeEvaluation
     screenshotsHomeEvaluation
