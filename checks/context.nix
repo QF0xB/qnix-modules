@@ -62,6 +62,7 @@ let
   gitFeature = qnix.features."dev.git";
   direnvFeature = qnix.features."dev.direnv";
   nhFeature = qnix.features."dev.nh";
+  nixfmtFeature = qnix.features."dev.nixfmt";
   fileManagerFeature = qnix.features."apps.file-manager";
   bootFeature = qnix.features."system.boot";
   plymouthFeature = qnix.features."system.plymouth";
@@ -646,6 +647,10 @@ let
       }
     ]
   );
+  nixfmtNixosEvaluation = mkNixos (nixfmtFeature.optionModules ++ nixfmtFeature.nixosModules);
+  nixfmtHomeEvaluation = mkHome (
+    nixfmtFeature.optionModules ++ nixfmtFeature.__homeModuleFor "standalone-home"
+  );
   fileManagerHomeEvaluation = mkHome (
     xdgFoldersFeature.optionModules
     ++ xdgFoldersFeature.__homeModuleFor "standalone-home"
@@ -779,6 +784,7 @@ in
     gitFeature
     direnvFeature
     nhFeature
+    nixfmtFeature
     fileManagerFeature
     bootFeature
     plymouthFeature
@@ -882,6 +888,8 @@ in
     direnvNixosEvaluation
     direnvHomeEvaluation
     nhEvaluation
+    nixfmtNixosEvaluation
+    nixfmtHomeEvaluation
     fileManagerHomeEvaluation
     clipboardHomeEvaluation
     screenshotsHomeEvaluation

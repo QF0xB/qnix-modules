@@ -46,4 +46,12 @@ assert nhFeature.supportedEnvironments == [ "nixos" ];
 assert nhEvaluation.config.programs.nh.enable;
 assert nhEvaluation.config.programs.nh.clean.enable;
 assert nhEvaluation.config.programs.nh.clean.dates == "daily";
+assert
+  nixfmtFeature.supportedEnvironments == [
+    "nixos"
+    "integrated-home"
+    "standalone-home"
+  ];
+assert builtins.elem pkgs.nixfmt nixfmtNixosEvaluation.config.environment.systemPackages;
+assert builtins.elem pkgs.nixfmt nixfmtHomeEvaluation.config.home.packages;
 pkgs.runCommand "qnix-system-check" { } "touch $out"

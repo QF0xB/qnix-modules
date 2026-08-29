@@ -26,6 +26,7 @@ assert
     "dev.git"
     "dev.mcp"
     "dev.nh"
+    "dev.nixfmt"
     "dev.vscode"
     "hardware.bluetooth"
     "hardware.laptop"

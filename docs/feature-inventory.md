@@ -121,7 +121,7 @@ confirmation.
 | `dev.jetbrains`      | NixOS + Home       | `developer`                | —              | IDE config         | planned | IDEs                                           |
 | `dev.kubernetes-cli` | NixOS + Home       | `developer`                | —              | Kubernetes config  | planned | Local Kubernetes CLI tooling                   |
 | `dev.nh`             | NixOS              | Client-selected            | —              | —                  | finished | Nix maintenance and optional periodic garbage collection |
-| `dev.nixfmt`         | NixOS + Home       | `developer`                | —              | —                  | planned | Formatting tools                               |
+| `dev.nixfmt`         | NixOS + integrated and standalone Home | Client-selected | — | — | finished | Nix formatting with nixfmt |
 | `dev.nvf`            | NixOS + Home       | `editor`                   | —              | Editor config      | planned | Editor configuration                           |
 | `dev.postman`        | NixOS + Home       | `developer`                | —              | Postman data       | planned | API tooling                                    |
 | `dev.docker`         | NixOS + Home       | `developer`                | —              | `/var/lib/docker`? | planned | Local development containers                   |
