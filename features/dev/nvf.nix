@@ -46,7 +46,7 @@
     { };
 
   home =
-    { cfg, ... }:
+    { cfg, pkgs, ... }:
     {
       programs.nvf = {
         enable = true;
@@ -141,6 +141,38 @@
             inlayHints.enable = true;
           };
 
+          binds.whichKey = {
+            enable = true;
+            register = {
+              "<leader>f" = "+files";
+              "<leader>b" = "+buffers";
+              "<leader>g" = "+git";
+            };
+            setupOpts.win.border = "rounded";
+          };
+
+          notify.nvim-notify.enable = true;
+
+          statusline.lualine = {
+            enable = true;
+            disabledFiletypes.statusline = [ "alpha" ];
+          };
+
+          tabline.nvimBufferline = {
+            enable = true;
+            setupOpts.options = {
+              show_buffer_close_icons = true;
+              show_close_icon = false;
+              show_filename_only = true;
+              numbers = "none";
+              modified_icon = "●";
+              show_tab_indicators = false;
+              separator_style = "thin";
+              diagnostics = false;
+              indicator.style = "none";
+            };
+          };
+
           spellcheck = {
             enable = cfg.spellcheck.enable;
             languages = cfg.spellcheck.languages;
@@ -153,7 +185,25 @@
             highlight.enable = true;
             indent.enable = true;
             addDefaultGrammars = true;
+            context = {
+              enable = true;
+              setupOpts.line_numbers = true;
+            };
           };
+
+          startPlugins = with pkgs.vimPlugins; [
+            barbecue-nvim
+            nvim-navic
+          ];
+
+          pluginRC.barbecue-nvim = ''
+            vim.opt.updatetime = 200
+            require("barbecue").setup({
+              attach_navic = true,
+              theme = "auto",
+              show_modified = true,
+            })
+          '';
         };
       };
     };
