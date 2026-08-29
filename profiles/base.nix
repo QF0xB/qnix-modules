@@ -1,7 +1,7 @@
 {
   imports = [ "shell" ];
 
-  features = [
+  features.nixos = [
     "system.boot"
     "system.localisation"
     "system.users"
@@ -10,6 +10,8 @@
     "storage.zfs"
   ];
 
-  defaults.system.users.defaultExtraGroups = [ "wheel" ];
-  defaults.system.users.defaultShell = "fish";
+  defaults.__qnixEnvironment.nixos.system.users = {
+    defaultExtraGroups = [ "wheel" ];
+    defaultShell = "fish";
+  };
 }

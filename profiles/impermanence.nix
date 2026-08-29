@@ -1,5 +1,5 @@
 {
-  features = [
+  features.nixos = [
     "storage.impermanence"
   ];
 }

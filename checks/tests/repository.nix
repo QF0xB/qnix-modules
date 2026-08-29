@@ -58,6 +58,7 @@ assert
   qnix.profileNames == [
     "appearance"
     "base"
+    "developer"
     "hyprland"
     "impermanence"
     "laptop"

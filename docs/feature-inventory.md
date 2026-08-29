@@ -142,7 +142,8 @@ tool suite.
 
 | Profile        | Environment             | Includes                                                                     | Purpose                                 |
 |----------------|-------------------------|------------------------------------------------------------------------------|-----------------------------------------|
-| `base`         | NixOS                   | System, shell, networking, and secrets foundation                            | Common host baseline                    |
+| `base`         | NixOS                   | System, shell, networking, and storage foundation                            | Common host baseline                    |
+| `developer`    | NixOS + standalone Home | Nix maintenance plus development and AI tooling                              | Reusable development environment        |
 | `shell`        | NixOS + standalone Home | Fish, Starship, and Zsh                                                     | Reusable interactive shell environment  |
 | `workstation`  | NixOS                   | `base`, hardware basics, NetworkManager, desktop security                    | General workstation                     |
 | `laptop`       | NixOS                   | `workstation`, laptop, power, and Thunderbolt features                       | Physical laptop host                    |

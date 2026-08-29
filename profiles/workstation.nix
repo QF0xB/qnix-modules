@@ -1,7 +1,7 @@
 {
   imports = [ "base" ];
 
-  features = [
+  features.nixos = [
     "hardware.bluetooth"
     "hardware.thunderbolt"
     "network.networkmanager"

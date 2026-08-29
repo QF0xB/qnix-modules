@@ -1,3 +1,3 @@
 {
-  features = [ "appearance.stylix" ];
+  features.shared = [ "appearance.stylix" ];
 }

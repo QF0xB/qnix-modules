@@ -535,6 +535,13 @@ let
     ++ hyprlandMonitorsFeature.nixosModules
   );
   hyprlandProfileEvaluation = mkNixos (qnix.modulesFor.nixos [ "hyprland" ]);
+  hyprlandStandaloneProfileEvaluation = mkHome (
+    [
+      noctaliaStub
+      nvf.homeManagerModules.default
+    ]
+    ++ qnix.modulesFor.standaloneHome [ "hyprland" ]
+  );
   noctaliaStub =
     { lib, ... }:
     {
@@ -885,6 +892,7 @@ in
     hyprlandFullHomeEvaluation
     hyprlandPersistenceEvaluation
     hyprlandProfileEvaluation
+    hyprlandStandaloneProfileEvaluation
     noctaliaStub
     noctaliaHomeEvaluation
     soundNixosEvaluation

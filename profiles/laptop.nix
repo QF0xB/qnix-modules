@@ -1,7 +1,7 @@
 {
   imports = [ "workstation" ];
 
-  features = [
+  features.nixos = [
     "hardware.laptop"
     "hardware.power-management"
   ];
