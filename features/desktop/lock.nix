@@ -57,10 +57,10 @@
       programs.hyprlock = {
         enable = true;
         settings = {
-          background = [
+          background = lib.mkForce [
             (
               {
-                path = cfg.background;
+                path = toString cfg.background;
                 noise = 0.0117;
                 contrast = 0.8916;
                 brightness = 0.8172;
@@ -81,7 +81,7 @@
             no_fade_out = false;
           };
 
-          input-field = [
+          input-field = lib.mkForce [
             {
               size = "250, 50";
               position = "0, -80";
@@ -104,7 +104,7 @@
             }
           ];
 
-          label =
+          label = lib.mkForce (
             lib.optional cfg.showClock {
               text = "$TIME";
               font_size = 96;
@@ -122,7 +122,8 @@
               position = "0, 80";
               halign = "center";
               valign = "center";
-            };
+            }
+          );
         };
       };
     };

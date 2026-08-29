@@ -14,8 +14,8 @@
     {
       outputDirectory = lib.mkOption {
         type = lib.types.str;
-        default = "${config.xdg.userDirs.pictures}/Screenshots";
-        description = "Directory in which screenshots are saved.";
+        default = "Pictures/Screenshots";
+        description = "Screenshot directory, relative to the home directory unless absolute.";
       };
 
       copyToClipboard = lib.mkOption {
@@ -28,11 +28,17 @@
   home =
     {
       cfg,
+      config,
       lib,
       pkgs,
       ...
     }:
     let
+      outputDirectory =
+        if lib.hasPrefix "/" cfg.outputDirectory then
+          cfg.outputDirectory
+        else
+          "${config.home.homeDirectory}/${cfg.outputDirectory}";
       mkScreenshot =
         name: capture:
         pkgs.writeShellApplication {
@@ -44,7 +50,7 @@
             pkgs.wl-clipboard
           ];
           text = ''
-            directory=${lib.escapeShellArg cfg.outputDirectory}
+            directory=${lib.escapeShellArg outputDirectory}
             filename="$directory/$(date +%Y-%m-%d_%H-%M-%S).png"
 
             mkdir -p "$directory"

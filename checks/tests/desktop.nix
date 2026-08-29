@@ -234,8 +234,7 @@ assert
     "standalone-home"
   ];
 assert
-  screenshotsHomeEvaluation.config.qnix.desktop.screenshots.outputDirectory
-  == "/home/check/Pictures/Screenshots";
+  screenshotsHomeEvaluation.config.qnix.desktop.screenshots.outputDirectory == "Pictures/Screenshots";
 assert builtins.elem "qnix-screenshot-region" (
   map (package: package.pname or package.name) screenshotsHomeEvaluation.config.home.packages
 );

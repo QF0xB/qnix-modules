@@ -30,7 +30,7 @@
     }:
     let
       mod = if context.vm or false then "ALT" else "super";
-      terminal = if config.qnix.desktop.terminal.server then "footclient" else "foot";
+      terminal = if config.programs.foot.server.enable then "footclient" else "foot";
       uexec = command: "exec, uwsm app -- ${command}";
       workspaces = [
         {

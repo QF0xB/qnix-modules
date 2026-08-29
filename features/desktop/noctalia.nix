@@ -144,7 +144,7 @@
           ui = {
             fontDefault = "Fira Sans";
             fontFixed = "JetBrains Mono Nerd Font";
-            panelBackgroundOpacity = 1;
+            panelBackgroundOpacity = 1.0;
             panelsAttachedToBar = true;
             tooltipsEnabled = true;
           };
@@ -170,7 +170,7 @@
       ...
     }:
     let
-      terminal = if config.qnix.desktop.terminal.server then "footclient" else "foot";
+      terminal = if config.programs.foot.server.enable then "footclient" else "foot";
     in
     {
       home.file."Pictures/wallpaper/solarized-dark.png".source =
