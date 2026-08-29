@@ -12,6 +12,7 @@ let
   system = "x86_64-linux";
   pkgs = import nixpkgs {
     inherit system;
+    config.allowUnfree = true;
     overlays = [ llm-agents.overlays.shared-nixpkgs ];
   };
   qnix = qnix-modules.lib.mkQNix {
