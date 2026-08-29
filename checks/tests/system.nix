@@ -54,4 +54,6 @@ assert
   ];
 assert builtins.elem pkgs.nixfmt nixfmtNixosEvaluation.config.environment.systemPackages;
 assert builtins.elem pkgs.nixfmt nixfmtHomeEvaluation.config.home.packages;
+assert devenvFeature.supportedEnvironments == [ "nixos" ];
+assert builtins.elem pkgs.devenv devenvEvaluation.config.environment.systemPackages;
 pkgs.runCommand "qnix-system-check" { } "touch $out"
