@@ -34,6 +34,8 @@
     {
       home.packages = [ pkgs.fzf ];
 
+      programs.lsd.enable = true;
+
       programs.fish = {
         enable = true;
         preferAbbrs = false;

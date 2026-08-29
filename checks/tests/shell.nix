@@ -8,6 +8,7 @@ assert
   ];
 assert fishNixosEvaluation.config.programs.fish.enable;
 assert fishHomeEvaluation.config.programs.fish.enable;
+assert fishHomeEvaluation.config.programs.lsd.enable;
 assert fishNixosEvaluation.config.qnix.persist.users."*".directories == [ ".local/share/fish" ];
 assert
   shellPackagesFeature.supportedEnvironments == [

@@ -25,7 +25,7 @@ confirmation.
 
 | Feature          | Likely environment | Profiles              | Dependencies | Persistence       | Status  | Notes                |
 |------------------|--------------------|-----------------------|--------------|-------------------|---------|----------------------|
-| `shell.fish`     | NixOS + integrated and standalone Home | `base`, `workstation` | — | `.local/share/fish` | in progress | Fish system support and Home Manager configuration; fzf, autopair, done, and sudope |
+| `shell.fish`     | NixOS + integrated and standalone Home | `base`, `workstation` | — | `.local/share/fish` | finished | Fish system support and Home Manager configuration; fzf, lsd, autopair, done, and sudope |
 | `shell.packages` | Integrated + standalone Home | `impermanence` | — | — | in progress | Shared helper shell packages |
 | `shell.starship` | Integrated + standalone Home | `base`, `workstation` | `shell.fish` | — | in progress | Compact Git-aware prompt configuration |
 | `shell.zsh`      | NixOS + integrated and standalone Home | `base` | — | `.zsh_history` | in progress | Zsh fallback with completion, autosuggestions, and syntax highlighting |
