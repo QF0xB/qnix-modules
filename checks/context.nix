@@ -698,6 +698,7 @@ let
   );
 
   defaultEvaluation = mkNixos (qnix.modulesFor.nixos [ "base" ]);
+  shellHomeProfileEvaluation = mkHome (qnix.modulesFor.standaloneHome [ "shell" ]);
   workstationProfileEvaluation = mkNixos (qnix.modulesFor.nixos [ "workstation" ]);
   laptopProfileEvaluation = mkNixos (qnix.modulesFor.nixos [ "laptop" ]);
   secretsProfileEvaluation = mkNixos (
@@ -844,6 +845,7 @@ in
     thunderboltEvaluation
     grubBootEvaluation
     defaultEvaluation
+    shellHomeProfileEvaluation
     workstationProfileEvaluation
     laptopProfileEvaluation
     secretsProfileEvaluation

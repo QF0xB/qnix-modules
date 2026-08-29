@@ -15,6 +15,7 @@ assert laptopProfileEvaluation.config.qnix.hardware.laptop.enable;
 assert laptopProfileEvaluation.config.qnix.hardware.power-management.enable;
 assert defaultEvaluation.config.programs.fish.enable;
 assert defaultEvaluation.config.programs.zsh.enable;
+assert shellHomeProfileEvaluation.config.programs.starship.enable;
 assert defaultEvaluation.config.time.timeZone == "Europe/Berlin";
 assert defaultEvaluation.config.services.xserver.xkb.layout == "de";
 assert defaultEvaluation.config.console.useXkbConfig;

@@ -25,10 +25,10 @@ confirmation.
 
 | Feature          | Likely environment | Profiles              | Dependencies | Persistence       | Status  | Notes                |
 |------------------|--------------------|-----------------------|--------------|-------------------|---------|----------------------|
-| `shell.fish`     | NixOS + integrated and standalone Home | `base`, `workstation` | — | `.local/share/fish` | finished | Fish system support and Home Manager configuration; fzf, lsd, autopair, done, and sudope |
-| `shell.packages` | Integrated + standalone Home | `impermanence` | — | — | in progress | Shared helper shell packages |
-| `shell.starship` | Integrated + standalone Home | `base`, `workstation` | `shell.fish` | — | in progress | Compact Git-aware prompt configuration |
-| `shell.zsh`      | NixOS + integrated and standalone Home | `base` | — | `.zsh_history` | in progress | Zsh fallback with completion, autosuggestions, and syntax highlighting |
+| `shell.fish`     | NixOS + integrated and standalone Home | `shell`, `base` | — | `.local/share/fish` | finished | Fish system support and Home Manager configuration; fzf, lsd, autopair, done, and sudope |
+| `shell.packages` | Integrated + standalone Home | Client-selected | — | — | in progress | Shared helper shell packages |
+| `shell.starship` | Integrated + standalone Home | `shell` | `shell.fish` | — | implemented | Compact Git-aware prompt configuration |
+| `shell.zsh`      | NixOS + integrated and standalone Home | `shell`, `base` | — | `.zsh_history` | finished | Zsh fallback with completion, autosuggestions, and syntax highlighting |
 
 ## Hardware and power
 
@@ -143,6 +143,7 @@ tool suite.
 | Profile        | Environment             | Includes                                                                     | Purpose                                 |
 |----------------|-------------------------|------------------------------------------------------------------------------|-----------------------------------------|
 | `base`         | NixOS                   | System, shell, networking, and secrets foundation                            | Common host baseline                    |
+| `shell`        | NixOS + standalone Home | Fish, Starship, and Zsh                                                     | Reusable interactive shell environment  |
 | `workstation`  | NixOS                   | `base`, hardware basics, NetworkManager, desktop security                    | General workstation                     |
 | `laptop`       | NixOS                   | `workstation`, laptop, power, and Thunderbolt features                       | Physical laptop host                    |
 | `desktop`      | NixOS                   | `workstation`, desktop session foundations, sound, terminal, and XDG folders | Graphical host baseline                 |

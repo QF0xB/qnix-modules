@@ -1,12 +1,12 @@
 {
+  imports = [ "shell" ];
+
   features = [
     "system.boot"
     "system.localisation"
     "system.users"
     "network.addressing"
     "appearance.fonts"
-    "shell.fish"
-    "shell.zsh"
     "storage.zfs"
   ];
 

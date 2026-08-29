@@ -56,6 +56,7 @@ assert
     "impermanence"
     "laptop"
     "secrets"
+    "shell"
     "workstation"
   ];
 pkgs.runCommand "qnix-repository-check" { } "touch $out"
