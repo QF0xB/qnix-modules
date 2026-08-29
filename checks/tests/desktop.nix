@@ -128,7 +128,20 @@ assert
     "standalone-home"
   ];
 assert builtins.elem pkgs.nemo fileManagerHomeEvaluation.config.home.packages;
-assert builtins.elem pkgs.yazi fileManagerHomeEvaluation.config.home.packages;
+assert fileManagerHomeEvaluation.config.programs.yazi.enable;
+assert fileManagerHomeEvaluation.config.programs.yazi.enableFishIntegration;
+assert fileManagerHomeEvaluation.config.programs.yazi.enableZshIntegration;
+assert fileManagerHomeEvaluation.config.programs.yazi.plugins.gvfs.setup;
+assert fileManagerHomeEvaluation.config.programs.yazi.plugins.recycle-bin.setup;
+assert builtins.elem pkgs.gvfs fileManagerHomeEvaluation.config.programs.yazi.extraPackages;
+assert builtins.elem pkgs.ouch fileManagerHomeEvaluation.config.programs.yazi.extraPackages;
+assert builtins.elem pkgs.trash-cli fileManagerHomeEvaluation.config.programs.yazi.extraPackages;
+assert builtins.elem "plugin gvfs -- select-then-mount --jump" (
+  map (binding: binding.run) fileManagerHomeEvaluation.config.programs.yazi.keymap.mgr.prepend_keymap
+);
+assert builtins.elem "plugin recycle-bin" (
+  map (binding: binding.run) fileManagerHomeEvaluation.config.programs.yazi.keymap.mgr.prepend_keymap
+);
 assert
   fileManagerHomeEvaluation.config.gtk.gtk3.bookmarks == [
     "file:///home/check Home"
