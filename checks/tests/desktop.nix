@@ -55,6 +55,20 @@ assert
   ];
 assert
   builtins.length hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.on >= 3;
+assert
+  map (
+    binding: builtins.head binding._args
+  ) hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind == [
+    "SUPER + return"
+    "SUPER + SHIFT + return"
+  ];
+assert
+  map (
+    binding: builtins.head binding._args
+  ) vmHyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind == [
+    "ALT + return"
+    "ALT + SHIFT + return"
+  ];
 assert builtins.elem "hypr-special" (
   map (package: package.pname or package.name) hyprlandFullHomeEvaluation.config.home.packages
 );

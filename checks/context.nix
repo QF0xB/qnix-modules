@@ -23,6 +23,13 @@ let
       inherit mcp-servers-nix;
     };
   };
+  vmQnix = qnix-modules.lib.mkQNix {
+    context = {
+      hostname = "vm-check";
+      vm = true;
+      inherit mcp-servers-nix;
+    };
+  };
   laptopQnix = qnix-modules.lib.mkQNix {
     context = {
       hostname = "laptop-check";
@@ -75,6 +82,8 @@ let
   localisationFeature = qnix.features."system.localisation";
   hyprlandFeature = qnix.features."desktop.hyprland";
   hyprlandKeybindsFeature = qnix.features."desktop.hyprland.keybinds";
+  vmHyprlandFeature = vmQnix.features."desktop.hyprland";
+  vmHyprlandKeybindsFeature = vmQnix.features."desktop.hyprland.keybinds";
   hyprlandMonitorsFeature = qnix.features."desktop.hyprland.monitors";
   hyprlandRulesFeature = qnix.features."desktop.hyprland.rules";
   hyprlandSpecialWorkspacesFeature = qnix.features."desktop.hyprland.special-workspaces";
@@ -525,6 +534,18 @@ let
       }
     ]
   );
+  vmHyprlandFullHomeEvaluation = mkHome (
+    localisationFeature.optionModules
+    ++ localisationFeature.__homeModuleFor "standalone-home"
+    ++ waylandFeature.optionModules
+    ++ waylandFeature.__homeModuleFor "standalone-home"
+    ++ vmHyprlandFeature.optionModules
+    ++ vmHyprlandFeature.__homeModuleFor "standalone-home"
+    ++ terminalFeature.optionModules
+    ++ terminalFeature.__homeModuleFor "standalone-home"
+    ++ vmHyprlandKeybindsFeature.optionModules
+    ++ vmHyprlandKeybindsFeature.__homeModuleFor "standalone-home"
+  );
   hyprlandPersistenceEvaluation = mkNixos (
     persistFeature.optionModules
     ++ waylandFeature.optionModules
@@ -889,6 +910,7 @@ in
     hyprlandNixosEvaluation
     hyprlandHomeEvaluation
     hyprlandFullHomeEvaluation
+    vmHyprlandFullHomeEvaluation
     hyprlandPersistenceEvaluation
     hyprlandProfileEvaluation
     hyprlandStandaloneProfileEvaluation

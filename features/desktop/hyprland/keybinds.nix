@@ -29,10 +29,18 @@
       ...
     }:
     let
-      mod = if context.vm or false then "ALT" else "super";
-      terminal = if config.programs.foot.server.enable then "footclient" else "foot";
+      mod = if context.vm or false then "ALT" else "SUPER";
+      terminal =
+        if context.vm or false || !config.programs.foot.server.enable then "foot" else "footclient";
       uexec = command: "exec, uwsm app -- ${command}";
       hyprctl = command: "hyprctl keyword ${command}";
+      luaString = lib.generators.toLua { };
+      mkBind = key: dispatcher: {
+        _args = [
+          key
+          (lib.generators.mkLuaInline dispatcher)
+        ];
+      };
       workspaces = [
         {
           num = "1";
@@ -103,67 +111,72 @@
       );
     in
     {
-      wayland.windowManager.hyprland.settings.on = [
-        {
-          _args = [
-            "hyprland.start"
-            (lib.generators.mkLuaInline ''
-              function()
-              ${lib.concatMapStrings (command: "  hl.exec_cmd(${lib.generators.toLua { } command})\n") (
-                map hyprctl (
-                  (map (binding: "bindl ${lib.escapeShellArg binding}") [
-                    ",switch:Lid Switch, ${uexec "hyprlock"}"
-                  ])
-                  ++ (map (binding: "bindm ${lib.escapeShellArg binding}") [
-                    "${mod}, mouse:272, movewindow"
-                    "${mod}, mouse:273, resizewindow"
-                  ])
-                  ++ (map (binding: "bind ${lib.escapeShellArg binding}") (
-                    [
-                      "${mod} SHIFT, code:26, exec, ~/.config/hypr/scripts/reload.sh #e"
-                      "${mod} SHIFT, code:53, exec, uwsm stop #x"
-                      "${mod}, code:42, exec, hyprctl switchxkblayout all next #g"
-                      "${mod}, mouse_down, workspace, e+1"
-                      "${mod}, mouse_up, workspace, e-1"
-                      "${mod}, code:48, fullscreen #;"
-                      "${mod}, code:38, killactive #A"
-                      "${mod} SHIFT, code:48, togglefloating #;"
-                      "${mod}, code:61, togglesplit, #?"
-                      "${mod}, Tab, cyclenext"
-                      "super, Tab, swapnext"
-                      "CTRL, Tab, workspace, e+"
-                      "${mod}, left, movefocus, l"
-                      "${mod}, right, movefocus, r"
-                      "${mod}, up, movefocus, u"
-                      "${mod}, down, movefocus, d"
-                      "${mod}, return, exec, hypr-special scratch scratchpad -- ${terminal} --app-id scratchpad"
-                      "${mod} SHIFT, return, ${uexec terminal}"
-                      "${mod} CTRL, return, ${uexec "${terminal} --app-id floating"}"
-                      "${mod}, code:47, ${uexec "brave-origin"} #;"
-                      "${mod} CTRL, code:47, ${uexec "brave-origin --private-window"} #;"
-                      "${mod}, code:25, ${uexec "rofi -show drun"} #w"
-                      "${mod}, code:29, exec, hypr-special recording obs -- obs #y"
-                      "${mod}, code:40, ${uexec "${terminal} -e yazi"} #d"
-                      "${mod}, code:57, exec, hypr-special secrets Bitwarden -- bitwarden #m"
-                      "${mod}, code:26, exec, hypr-special notes obsidian -- obsidian #e"
-                      ", xf86audioraisevolume, exec, pamixer -i 5"
-                      ", xf86audiolowervolume, exec, pamixer -d 5"
-                      ", xf86AudioMute, exec, pamixer -t"
-                      ", XF86AudioPlay, exec, playerctl play-pause"
-                      ", XF86AudioNext, exec, playerctl next"
-                      ", XF86AudioPrev, exec, playerctl previous"
-                      ", XF86audiostop, exec, playerctl stop"
-                    ]
-                    ++ workspaceBindings
-                    ++ cfg.additionalKeybinds
-                  ))
-                )
-              )}
-              end
-            '')
-          ];
-        }
-      ];
+      wayland.windowManager.hyprland.settings = {
+        bind = [
+          (mkBind "${mod} + return" "hl.dsp.exec_cmd(${luaString "uwsm app -- ${terminal}"})")
+          (mkBind "${mod} + SHIFT + return" "hl.dsp.exec_cmd(${luaString "uwsm app -- ${terminal}"})")
+        ];
+
+        on = [
+          {
+            _args = [
+              "hyprland.start"
+              (lib.generators.mkLuaInline ''
+                function()
+                ${lib.concatMapStrings (command: "  hl.exec_cmd(${luaString command})\n") (
+                  map hyprctl (
+                    (map (binding: "bindl ${lib.escapeShellArg binding}") [
+                      ",switch:Lid Switch, ${uexec "hyprlock"}"
+                    ])
+                    ++ (map (binding: "bindm ${lib.escapeShellArg binding}") [
+                      "${mod}, mouse:272, movewindow"
+                      "${mod}, mouse:273, resizewindow"
+                    ])
+                    ++ (map (binding: "bind ${lib.escapeShellArg binding}") (
+                      [
+                        "${mod} SHIFT, code:26, exec, ~/.config/hypr/scripts/reload.sh #e"
+                        "${mod} SHIFT, code:53, exec, uwsm stop #x"
+                        "${mod}, code:42, exec, hyprctl switchxkblayout all next #g"
+                        "${mod}, mouse_down, workspace, e+1"
+                        "${mod}, mouse_up, workspace, e-1"
+                        "${mod}, code:48, fullscreen #;"
+                        "${mod}, code:38, killactive #A"
+                        "${mod} SHIFT, code:48, togglefloating #;"
+                        "${mod}, code:61, togglesplit, #?"
+                        "${mod}, Tab, cyclenext"
+                        "super, Tab, swapnext"
+                        "CTRL, Tab, workspace, e+"
+                        "${mod}, left, movefocus, l"
+                        "${mod}, right, movefocus, r"
+                        "${mod}, up, movefocus, u"
+                        "${mod}, down, movefocus, d"
+                        "${mod} CTRL, return, ${uexec "${terminal} --app-id floating"}"
+                        "${mod}, code:47, ${uexec "brave-origin"} #;"
+                        "${mod} CTRL, code:47, ${uexec "brave-origin --private-window"} #;"
+                        "${mod}, code:25, ${uexec "rofi -show drun"} #w"
+                        "${mod}, code:29, exec, hypr-special recording obs -- obs #y"
+                        "${mod}, code:40, ${uexec "${terminal} -e yazi"} #d"
+                        "${mod}, code:57, exec, hypr-special secrets Bitwarden -- bitwarden #m"
+                        "${mod}, code:26, exec, hypr-special notes obsidian -- obsidian #e"
+                        ", xf86audioraisevolume, exec, pamixer -i 5"
+                        ", xf86audiolowervolume, exec, pamixer -d 5"
+                        ", xf86AudioMute, exec, pamixer -t"
+                        ", XF86AudioPlay, exec, playerctl play-pause"
+                        ", XF86AudioNext, exec, playerctl next"
+                        ", XF86AudioPrev, exec, playerctl previous"
+                        ", XF86audiostop, exec, playerctl stop"
+                      ]
+                      ++ workspaceBindings
+                      ++ cfg.additionalKeybinds
+                    ))
+                  )
+                )}
+                end
+              '')
+            ];
+          }
+        ];
+      };
 
       home.file.".config/hypr/scripts/reload.sh" = {
         executable = true;
