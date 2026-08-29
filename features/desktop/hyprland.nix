@@ -212,14 +212,16 @@
             misc = {
               force_default_wallpaper = 0;
               disable_splash_rendering = true;
-              vfr = true;
               vrr = cfg.vrr;
               enable_swallow = true;
               swallow_regex = cfg.swallowRegex;
               focus_on_activate = true;
             };
 
-            debug.disable_logs = false;
+            debug = {
+              disable_logs = false;
+              vfr = true;
+            };
             ecosystem = {
               no_update_news = true;
               no_donation_nag = true;
