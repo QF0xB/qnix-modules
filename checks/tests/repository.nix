@@ -25,6 +25,7 @@ assert
     "dev.direnv"
     "dev.git"
     "dev.mcp"
+    "dev.nh"
     "dev.vscode"
     "hardware.bluetooth"
     "hardware.laptop"

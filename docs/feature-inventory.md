@@ -120,7 +120,7 @@ confirmation.
 | `dev.git`            | NixOS + integrated and standalone Home | Client-selected | `security.gpg` | `.config/git`, `.config/gh` | finished | Git, GitHub CLI (`gh`), GPG signing, and Git LFS |
 | `dev.jetbrains`      | NixOS + Home       | `developer`                | —              | IDE config         | planned | IDEs                                           |
 | `dev.kubernetes-cli` | NixOS + Home       | `developer`                | —              | Kubernetes config  | planned | Local Kubernetes CLI tooling                   |
-| `dev.nh`             | NixOS              | `workstation`              | —              | —                  | planned | Nix maintenance                                |
+| `dev.nh`             | NixOS              | Client-selected            | —              | —                  | finished | Nix maintenance and optional periodic garbage collection |
 | `dev.nixfmt`         | NixOS + Home       | `developer`                | —              | —                  | planned | Formatting tools                               |
 | `dev.nvf`            | NixOS + Home       | `editor`                   | —              | Editor config      | planned | Editor configuration                           |
 | `dev.postman`        | NixOS + Home       | `developer`                | —              | Postman data       | planned | API tooling                                    |

@@ -42,4 +42,8 @@ assert userEvaluation.config.users.users.service.isSystemUser;
 assert userEvaluation.config.users.users.service.group == "svc";
 assert builtins.hasAttr "alice" userEvaluation.config.users.groups;
 assert builtins.hasAttr "svc" userEvaluation.config.users.groups;
+assert nhFeature.supportedEnvironments == [ "nixos" ];
+assert nhEvaluation.config.programs.nh.enable;
+assert nhEvaluation.config.programs.nh.clean.enable;
+assert nhEvaluation.config.programs.nh.clean.dates == "daily";
 pkgs.runCommand "qnix-system-check" { } "touch $out"

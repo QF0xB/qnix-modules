@@ -61,6 +61,7 @@ let
   aiToolsFeature = qnix.features."dev.ai-tools";
   gitFeature = qnix.features."dev.git";
   direnvFeature = qnix.features."dev.direnv";
+  nhFeature = qnix.features."dev.nh";
   fileManagerFeature = qnix.features."apps.file-manager";
   bootFeature = qnix.features."system.boot";
   plymouthFeature = qnix.features."system.plymouth";
@@ -633,6 +634,18 @@ let
   direnvHomeEvaluation = mkHome (
     direnvFeature.optionModules ++ direnvFeature.__homeModuleFor "standalone-home"
   );
+  nhEvaluation = mkNixos (
+    nhFeature.optionModules
+    ++ nhFeature.nixosModules
+    ++ [
+      {
+        qnix.dev.nh.clean = {
+          enable = true;
+          dates = "daily";
+        };
+      }
+    ]
+  );
   fileManagerHomeEvaluation = mkHome (
     xdgFoldersFeature.optionModules
     ++ xdgFoldersFeature.__homeModuleFor "standalone-home"
@@ -765,6 +778,7 @@ in
     aiToolsFeature
     gitFeature
     direnvFeature
+    nhFeature
     fileManagerFeature
     bootFeature
     plymouthFeature
@@ -867,6 +881,7 @@ in
     gitHomeEvaluation
     direnvNixosEvaluation
     direnvHomeEvaluation
+    nhEvaluation
     fileManagerHomeEvaluation
     clipboardHomeEvaluation
     screenshotsHomeEvaluation
