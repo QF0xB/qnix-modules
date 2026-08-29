@@ -627,6 +627,7 @@ let
           userName = "QNix Check";
           userEmail = "check@example.test";
           signingKey = "0123456789ABCDEF";
+          githubTokenPath = "/run/secrets/github-token";
           aliases.ci = "commit";
         };
       }

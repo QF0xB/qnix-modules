@@ -58,6 +58,12 @@
         };
         description = "Additional Git configuration.";
       };
+
+      githubTokenPath = lib.mkOption {
+        type = lib.types.nullOr lib.types.str;
+        default = null;
+        description = "Runtime path to a GitHub token file used by the gh wrapper.";
+      };
     };
 
   nixos =
@@ -65,7 +71,22 @@
     { };
 
   home =
-    { cfg, lib, ... }:
+    {
+      cfg,
+      lib,
+      pkgs,
+      ...
+    }:
+    let
+      ghPackage =
+        if cfg.githubTokenPath == null then
+          pkgs.gh
+        else
+          pkgs.writeShellScriptBin "gh" ''
+            export GH_TOKEN="$(<${lib.escapeShellArg cfg.githubTokenPath})"
+            exec ${pkgs.gh}/bin/gh "$@"
+          '';
+    in
     {
       programs.git = {
         enable = true;
@@ -85,6 +106,10 @@
         };
       };
 
-      programs.gh.enable = true;
+      programs.gh = {
+        enable = true;
+        package = ghPackage;
+        settings.git_protocol = "ssh";
+      };
     };
 }

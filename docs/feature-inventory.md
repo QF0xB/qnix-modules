@@ -117,7 +117,7 @@ confirmation.
 | `dev.ai-tools`       | Integrated + standalone Home | `hyprland`      | `llm-agents.nix` | Agent state, indexes, and caches | implemented | CodeGraph, local search/knowledge tools, agent observability, skills, sandboxing, Git provenance, browser/PDF/Office utilities |
 | `dev.devenv`         | Integrated + standalone Home | Client-selected | — | — | finished | Devenv development environments                |
 | `dev.direnv`         | NixOS + integrated and standalone Home | Client-selected | `shell.fish` | `.local/share/direnv` | finished | Direnv, nix-direnv, and Fish/Zsh shell integration |
-| `dev.git`            | NixOS + integrated and standalone Home | Client-selected | `security.gpg` | `.config/git`, `.config/gh` | finished | Git, GitHub CLI (`gh`), GPG signing, and Git LFS |
+| `dev.git`            | NixOS + integrated and standalone Home | Client-selected | `security.gpg` | `.config/git`, `.config/gh` | finished | Git, GitHub CLI (`gh`), GPG signing, Git LFS, and runtime-token authentication |
 | `dev.jetbrains`      | NixOS + Home       | `developer`                | —              | IDE config         | planned | IDEs                                           |
 | `dev.kubernetes-cli` | NixOS + Home       | `developer`                | —              | Kubernetes config  | planned | Local Kubernetes CLI tooling                   |
 | `dev.nh`             | NixOS              | Client-selected            | —              | —                  | finished | Nix maintenance and optional periodic garbage collection |

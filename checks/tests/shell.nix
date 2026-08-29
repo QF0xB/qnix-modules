@@ -61,6 +61,7 @@ assert gitHomeEvaluation.config.programs.git.settings.user.email == "check@examp
 assert gitHomeEvaluation.config.programs.git.settings.push.autoSetupRemote;
 assert gitHomeEvaluation.config.programs.git.settings.alias.ci == "commit";
 assert gitHomeEvaluation.config.programs.gh.enable;
+assert gitHomeEvaluation.config.programs.gh.settings.git_protocol == "ssh";
 assert
   direnvFeature.supportedEnvironments == [
     "nixos"
