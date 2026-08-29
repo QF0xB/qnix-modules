@@ -178,7 +178,6 @@
 
       programs.noctalia-shell = {
         enable = true;
-        systemd.enable = cfg.autostart;
         settings = lib.recursiveUpdate cfg.settings {
           appLauncher.terminalCommand = "${terminal} -e";
           location.name = cfg.location;
@@ -186,5 +185,9 @@
             cfg.settings.wallpaper.directory or "${config.home.homeDirectory}/Pictures/wallpaper";
         };
       };
+
+      wayland.windowManager.hyprland.settings.exec-once = lib.mkIf cfg.autostart [
+        "qs -c noctalia-shell"
+      ];
     };
 }
