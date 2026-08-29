@@ -32,9 +32,10 @@
       ...
     }:
     {
-      home.packages = [ pkgs.fzf ];
-
-      programs.lsd.enable = true;
+      home.packages = [
+        pkgs.fzf
+        pkgs.lsd
+      ];
 
       programs.fish = {
         enable = true;
