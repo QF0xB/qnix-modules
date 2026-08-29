@@ -652,7 +652,9 @@ let
   nixfmtHomeEvaluation = mkHome (
     nixfmtFeature.optionModules ++ nixfmtFeature.__homeModuleFor "standalone-home"
   );
-  devenvEvaluation = mkNixos (devenvFeature.optionModules ++ devenvFeature.nixosModules);
+  devenvHomeEvaluation = mkHome (
+    devenvFeature.optionModules ++ devenvFeature.__homeModuleFor "standalone-home"
+  );
   fileManagerHomeEvaluation = mkHome (
     xdgFoldersFeature.optionModules
     ++ xdgFoldersFeature.__homeModuleFor "standalone-home"
@@ -893,7 +895,7 @@ in
     nhEvaluation
     nixfmtNixosEvaluation
     nixfmtHomeEvaluation
-    devenvEvaluation
+    devenvHomeEvaluation
     fileManagerHomeEvaluation
     clipboardHomeEvaluation
     screenshotsHomeEvaluation

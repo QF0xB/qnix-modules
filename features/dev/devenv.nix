@@ -1,9 +1,12 @@
 {
-  environments = [ "nixos" ];
+  environments = [
+    "integrated-home"
+    "standalone-home"
+  ];
 
-  nixos =
+  home =
     { pkgs, ... }:
     {
-      environment.systemPackages = [ pkgs.devenv ];
+      home.packages = [ pkgs.devenv ];
     };
 }
