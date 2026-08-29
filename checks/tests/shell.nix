@@ -41,4 +41,24 @@ assert zshHomeEvaluation.config.programs.zsh.autosuggestion.enable;
 assert zshNixosEvaluation.config.qnix.persist.users."*".files == [ ".zsh_history" ];
 assert builtins.hasAttr "show-root-filesystem"
   impermanenceHomeEvaluation.config.qnix.shell.packages.packages;
+assert
+  gitFeature.supportedEnvironments == [
+    "nixos"
+    "integrated-home"
+    "standalone-home"
+  ];
+assert
+  gitNixosEvaluation.config.qnix.persist.users."*".directories == [
+    ".config/git"
+    ".config/gh"
+  ];
+assert gitHomeEvaluation.config.programs.git.enable;
+assert gitHomeEvaluation.config.programs.git.lfs.enable;
+assert gitHomeEvaluation.config.programs.git.signing.signByDefault;
+assert gitHomeEvaluation.config.programs.git.signing.key == "0123456789ABCDEF";
+assert gitHomeEvaluation.config.programs.git.settings.user.name == "QNix Check";
+assert gitHomeEvaluation.config.programs.git.settings.user.email == "check@example.test";
+assert gitHomeEvaluation.config.programs.git.settings.push.autoSetupRemote;
+assert gitHomeEvaluation.config.programs.git.settings.alias.ci == "commit";
+assert gitHomeEvaluation.config.programs.gh.enable;
 pkgs.runCommand "qnix-shell-check" { } "touch $out"

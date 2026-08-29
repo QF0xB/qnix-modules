@@ -59,6 +59,7 @@ let
   vscodeFeature = qnix.features."dev.vscode";
   mcpFeature = qnix.features."dev.mcp";
   aiToolsFeature = qnix.features."dev.ai-tools";
+  gitFeature = qnix.features."dev.git";
   fileManagerFeature = qnix.features."apps.file-manager";
   bootFeature = qnix.features."system.boot";
   plymouthFeature = qnix.features."system.plymouth";
@@ -607,6 +608,24 @@ let
   aiToolsHomeEvaluation = mkHome (
     aiToolsFeature.optionModules ++ aiToolsFeature.__homeModuleFor "standalone-home"
   );
+  gitNixosEvaluation = mkNixos (
+    persistFeature.optionModules ++ gitFeature.optionModules ++ gitFeature.nixosModules
+  );
+  gitHomeEvaluation = mkHome (
+    gitFeature.optionModules
+    ++ gitFeature.__homeModuleFor "standalone-home"
+    ++ [
+      {
+        qnix.dev.git = {
+          lfs = true;
+          userName = "QNix Check";
+          userEmail = "check@example.test";
+          signingKey = "0123456789ABCDEF";
+          aliases.ci = "commit";
+        };
+      }
+    ]
+  );
   fileManagerHomeEvaluation = mkHome (
     xdgFoldersFeature.optionModules
     ++ xdgFoldersFeature.__homeModuleFor "standalone-home"
@@ -737,6 +756,7 @@ in
     vscodeFeature
     mcpFeature
     aiToolsFeature
+    gitFeature
     fileManagerFeature
     bootFeature
     plymouthFeature
@@ -835,6 +855,8 @@ in
     vscodeHomeEvaluation
     mcpHomeEvaluation
     aiToolsHomeEvaluation
+    gitNixosEvaluation
+    gitHomeEvaluation
     fileManagerHomeEvaluation
     clipboardHomeEvaluation
     screenshotsHomeEvaluation
