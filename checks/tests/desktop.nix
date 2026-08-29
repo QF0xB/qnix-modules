@@ -123,6 +123,20 @@ assert
   ];
 assert builtins.elem pkgs.brave-origin browserHomeEvaluation.config.home.packages;
 assert
+  chatgptFeature.supportedEnvironments == [
+    "integrated-home"
+    "standalone-home"
+  ];
+assert builtins.any (
+  package: (package.pname or null) == "chatgpt"
+) chatgptHomeEvaluation.config.home.packages;
+assert
+  vscodeFeature.supportedEnvironments == [
+    "integrated-home"
+    "standalone-home"
+  ];
+assert builtins.elem pkgs.vscode vscodeHomeEvaluation.config.home.packages;
+assert
   fileManagerFeature.supportedEnvironments == [
     "integrated-home"
     "standalone-home"

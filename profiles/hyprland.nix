@@ -3,6 +3,7 @@
 
   features = [
     "apps.browser"
+    "apps.chatgpt"
     "apps.file-manager"
     "desktop.clipboard"
     "desktop.hyprland"
@@ -17,6 +18,7 @@
     "desktop.sound"
     "desktop.terminal"
     "desktop.xdg-folders"
+    "dev.vscode"
   ];
 
   defaults.desktop.hyprland = {

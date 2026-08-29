@@ -4,12 +4,16 @@
   impermanence,
   stylix,
   sops-nix,
+  llm-agents,
   qnix-modules,
   ...
 }:
 let
   system = "x86_64-linux";
-  pkgs = import nixpkgs { inherit system; };
+  pkgs = import nixpkgs {
+    inherit system;
+    overlays = [ llm-agents.overlays.shared-nixpkgs ];
+  };
   qnix = qnix-modules.lib.mkQNix {
     context.hostname = "check";
   };
@@ -45,6 +49,8 @@ let
 
   persistFeature = qnix.features.persist;
   browserFeature = qnix.features."apps.browser";
+  chatgptFeature = qnix.features."apps.chatgpt";
+  vscodeFeature = qnix.features."dev.vscode";
   fileManagerFeature = qnix.features."apps.file-manager";
   bootFeature = qnix.features."system.boot";
   plymouthFeature = qnix.features."system.plymouth";
@@ -566,6 +572,12 @@ let
   browserHomeEvaluation = mkHome (
     browserFeature.optionModules ++ browserFeature.__homeModuleFor "standalone-home"
   );
+  chatgptHomeEvaluation = mkHome (
+    chatgptFeature.optionModules ++ chatgptFeature.__homeModuleFor "standalone-home"
+  );
+  vscodeHomeEvaluation = mkHome (
+    vscodeFeature.optionModules ++ vscodeFeature.__homeModuleFor "standalone-home"
+  );
   fileManagerHomeEvaluation = mkHome (
     xdgFoldersFeature.optionModules
     ++ xdgFoldersFeature.__homeModuleFor "standalone-home"
@@ -691,6 +703,8 @@ in
     mkHome
     persistFeature
     browserFeature
+    chatgptFeature
+    vscodeFeature
     fileManagerFeature
     bootFeature
     plymouthFeature
@@ -783,6 +797,8 @@ in
     terminalFallbackHomeEvaluation
     xdgFoldersHomeEvaluation
     browserHomeEvaluation
+    chatgptHomeEvaluation
+    vscodeHomeEvaluation
     fileManagerHomeEvaluation
     clipboardHomeEvaluation
     screenshotsHomeEvaluation

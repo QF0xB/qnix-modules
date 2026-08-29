@@ -100,7 +100,7 @@ confirmation.
 |---------------------|--------------------|-------------------------|--------------|--------------------|---------|------------------------------------------------------------------|
 | `apps.browser`      | Integrated + standalone Home | `hyprland` | — | Browser profile | finished | Brave Origin browser package |
 | `apps.file-manager` | Integrated + standalone Home | `hyprland` | `desktop.xdg-folders` | — | finished | Nemo with XDG directory pins; Yazi with Git, GVfs mounting, archive, trash, and navigation tooling |
-| `apps.chatgpt`      | NixOS + Home       | `personal`, `developer` | —            | ChatGPT app state? | planned | GPT desktop application; package and platform support to confirm |
+| `apps.chatgpt`      | Integrated + standalone Home | `hyprland` | `llm-agents.nix` overlay | ChatGPT/Codex state | implemented | ChatGPT desktop application from `pkgs.llm-agents.chatgpt` |
 | `apps.bitwarden`    | NixOS + Home       | `personal`              | —            | Vault/config?      | planned | Package/config; package availability uncertain                   |
 | `apps.music`        | NixOS + Home       | `personal`              | —            | Music client state | planned | Music client                                                     |
 | `apps.notes`        | NixOS + Home       | `personal`              | —            | Notes data         | planned | Notes application                                                |
@@ -112,7 +112,7 @@ confirmation.
 | Feature              | Likely environment | Profiles                   | Dependencies   | Persistence        | Status  | Notes                                          |
 |----------------------|--------------------|----------------------------|----------------|--------------------|---------|------------------------------------------------|
 | `dev.codex`          | NixOS + Home       | `developer`                | —              | Codex config?      | planned | Package/config                                 |
-| `dev.vscode`         | NixOS + Home       | `developer`, `editor`      | —              | Editor config      | planned | VS Code or another selected editor alternative |
+| `dev.vscode`         | Integrated + standalone Home | `hyprland`      | —              | Editor config      | implemented | Visual Studio Code |
 | `dev.devenv`         | NixOS              | `developer`                | —              | —                  | planned | Development environment                        |
 | `dev.direnv`         | Home               | `developer`                | `shell.fish`   | —                  | planned | Shell integration                              |
 | `dev.git`            | NixOS + Home       | `developer`, `workstation` | `security.gpg` | Git config         | planned | Git, GitHub CLI (`gh`), and signing            |
