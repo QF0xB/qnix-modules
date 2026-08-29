@@ -127,6 +127,9 @@
       qnix,
       ...
     }:
+    let
+      modifier = if context.vm or false then "ALT" else "super";
+    in
     {
       home.packages = with pkgs; [
         wl-clipboard
@@ -200,7 +203,7 @@
                 "4, up, scale: 1.5, fullscreen"
                 "4, down, close"
                 "2, pinch, resize"
-                "2, pinch, mod: $mod, float"
+                "2, pinch, mod: ${modifier}, float"
               ];
             };
           };

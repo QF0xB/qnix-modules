@@ -103,8 +103,6 @@
     in
     {
       wayland.windowManager.hyprland.settings = {
-        "$mod" = mod;
-
         bindl = [
           ",switch:Lid Switch, ${uexec "hyprlock"}"
         ];
