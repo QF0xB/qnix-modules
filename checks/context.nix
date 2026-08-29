@@ -380,6 +380,18 @@ let
     ++ impermanenceFeature.optionModules
     ++ [ { qnix.storage.impermanence.enable = true; } ]
   );
+  zfsWithoutImpermanenceEvaluation = mkNixos (zfsFeature.optionModules ++ zfsFeature.nixosModules);
+  zfsResetDisabledEvaluation = mkNixos (
+    zfsFeature.optionModules
+    ++ zfsFeature.nixosModules
+    ++ impermanenceFeature.optionModules
+    ++ [
+      {
+        qnix.storage.impermanence.enable = true;
+        qnix.storage.zfs.impermanenceReset.enable = false;
+      }
+    ]
+  );
 
   firewallEvaluation = mkNixos (
     firewallFeature.optionModules
@@ -796,6 +808,8 @@ in
     zshHomeEvaluation
     impermanenceHomeEvaluation
     zfsImpermanenceEvaluation
+    zfsWithoutImpermanenceEvaluation
+    zfsResetDisabledEvaluation
     firewallEvaluation
     addressingEvaluation
     networkmanagerEvaluation

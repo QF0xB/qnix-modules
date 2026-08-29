@@ -65,7 +65,7 @@ confirmation.
 |------------------------|--------------------|------------------------|--------------|----------------------|---------|---------------------|
 | `persist`              | NixOS              | `base`, `impermanence` | —            | Option-only contract | implemented | Persistence schema  |
 | `storage.impermanence` | NixOS              | `impermanence`         | `persist`    | Consumes `persist`   | implemented | Persistence backend |
-| `storage.zfs`          | NixOS              | `base`                 | —            | Pool/system state    | in progress | ZFS maintenance and optional impermanence root rollback |
+| `storage.zfs`          | NixOS              | `base`                 | —            | Pool/system state    | finished | ZFS maintenance and optional impermanence root rollback |
 
 ## Desktop session
 

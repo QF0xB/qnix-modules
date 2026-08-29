@@ -1,6 +1,13 @@
 { ctx }:
 with ctx;
 assert zfsFeature.supportedEnvironments == [ "nixos" ];
+assert zfsImpermanenceEvaluation.config.services.zfs.autoScrub.enable;
+assert zfsImpermanenceEvaluation.config.services.zfs.autoScrub.interval == "daily";
+assert zfsImpermanenceEvaluation.config.services.zfs.trim.enable;
+assert zfsImpermanenceEvaluation.config.services.zfs.trim.interval == "daily";
+assert
+  !(zfsWithoutImpermanenceEvaluation.config.boot.initrd.systemd.services ? qnix-impermanence-reset);
+assert !(zfsResetDisabledEvaluation.config.boot.initrd.systemd.services ? qnix-impermanence-reset);
 assert
   zfsImpermanenceEvaluation.config.boot.initrd.systemd.services.qnix-impermanence-reset.before
   == [ "sysroot.mount" ];

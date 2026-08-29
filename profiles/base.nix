@@ -7,6 +7,7 @@
     "appearance.fonts"
     "shell.fish"
     "shell.zsh"
+    "storage.zfs"
   ];
 
   defaults.system.users.defaultExtraGroups = [ "wheel" ];
