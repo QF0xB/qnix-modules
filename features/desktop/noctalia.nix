@@ -192,7 +192,7 @@
             "hyprland.start"
             (lib.generators.mkLuaInline ''
               function()
-                hl.exec_cmd("qs -c noctalia-shell")
+                hl.exec_cmd("noctalia-shell")
               end
             '')
           ];

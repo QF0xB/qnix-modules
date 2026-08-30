@@ -88,6 +88,9 @@ assert noctaliaHomeEvaluation.config.programs.noctalia-shell.enable;
 assert !noctaliaHomeEvaluation.config.programs.noctalia-shell.systemd.enable;
 assert
   builtins.length noctaliaHomeEvaluation.config.wayland.windowManager.hyprland.settings.on == 2;
+assert builtins.any (
+  hook: pkgs.lib.hasInfix "noctalia-shell" (builtins.elemAt hook._args 1).expr
+) noctaliaHomeEvaluation.config.wayland.windowManager.hyprland.settings.on;
 assert
   builtins.baseNameOf
     noctaliaHomeEvaluation.config.home.file."Pictures/wallpaper/solarized-dark.png".source
