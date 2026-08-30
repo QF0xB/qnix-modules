@@ -1,0 +1,3 @@
+{
+  features.shared = [ "appearance.stylix" ];
+}
