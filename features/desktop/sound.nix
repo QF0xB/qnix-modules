@@ -5,8 +5,10 @@
   ];
 
   persistence.users."*".directories = [
+    ".config/easyeffects"
     ".local/state/wireplumber"
   ];
+  persistence.users."*".files = [ ".config/pavucontrol.ini" ];
 
   options =
     {
