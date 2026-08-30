@@ -36,7 +36,7 @@ assert
   hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.config.animations.enabled;
 assert
   hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.config.input.kb_layout
-  == "de";
+  == "us,de";
 assert hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.config.misc.vrr == 1;
 assert
   hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.config.misc.swallow_regex

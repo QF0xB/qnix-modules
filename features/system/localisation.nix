@@ -5,7 +5,7 @@
     "standalone-home"
   ];
 
-  options = {lib, ...}: {
+  options = { lib, ... }: {
     timezone = lib.mkOption {
       type = lib.types.str;
       default = "Europe/Berlin";
@@ -15,7 +15,7 @@
     xkb = {
       layout = lib.mkOption {
         type = lib.types.str;
-        default = "en,de";
+        default = "us,de";
         description = "The keyboard layout or layouts.";
       };
 
@@ -53,28 +53,31 @@
     };
   };
 
-  nixos = {
-    cfg,
-    lib,
-    ...
-  }: let
-    usedLocales = lib.unique (builtins.attrValues cfg.localeSettings);
-    supportedLocales = map (locale: "${locale}/UTF-8") usedLocales;
-  in {
-    services.xserver.xkb = {
-      layout = cfg.xkb.layout;
-      variant = cfg.xkb.variant;
+  nixos =
+    {
+      cfg,
+      lib,
+      ...
+    }:
+    let
+      usedLocales = lib.unique (builtins.attrValues cfg.localeSettings);
+      supportedLocales = map (locale: "${locale}/UTF-8") usedLocales;
+    in
+    {
+      services.xserver.xkb = {
+        layout = cfg.xkb.layout;
+        variant = cfg.xkb.variant;
+      };
+
+      console.useXkbConfig = cfg.xkb.console-bridge;
+
+      time.timeZone = cfg.timezone;
+
+      i18n = {
+        supportedLocales = supportedLocales;
+        extraLocaleSettings = cfg.localeSettings;
+      };
     };
 
-    console.useXkbConfig = cfg.xkb.console-bridge;
-
-    time.timeZone = cfg.timezone;
-
-    i18n = {
-      supportedLocales = supportedLocales;
-      extraLocaleSettings = cfg.localeSettings;
-    };
-  };
-
-  home = {...}: {};
+  home = { ... }: { };
 }
