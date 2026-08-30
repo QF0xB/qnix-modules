@@ -7,10 +7,7 @@
 
   requires = {
     nixos = [ "desktop.wayland" ];
-    home = [
-      "desktop.wayland"
-      "system.localisation"
-    ];
+    home = [ "desktop.wayland" ];
   };
 
   options =
@@ -60,6 +57,20 @@
         type = lib.types.bool;
         default = false;
         description = "Whether to disable hardware cursors for Hyprland.";
+      };
+
+      xkb = {
+        layout = lib.mkOption {
+          type = lib.types.str;
+          default = "us,de";
+          description = "Hyprland keyboard layout or layouts.";
+        };
+
+        variant = lib.mkOption {
+          type = lib.types.str;
+          default = ",koy";
+          description = "Hyprland keyboard variant or variants.";
+        };
       };
 
       devices = lib.mkOption {
@@ -124,7 +135,6 @@
       context,
       lib,
       pkgs,
-      qnix,
       ...
     }:
     let
@@ -193,8 +203,8 @@
             };
 
             input = {
-              kb_layout = qnix.system.localisation.xkb.layout;
-              kb_variant = qnix.system.localisation.xkb.variant;
+              kb_layout = cfg.xkb.layout;
+              kb_variant = cfg.xkb.variant;
               kb_model = "";
               kb_rules = "";
               follow_mouse = 1;

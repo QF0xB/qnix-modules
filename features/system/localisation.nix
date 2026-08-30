@@ -15,13 +15,13 @@
     xkb = {
       layout = lib.mkOption {
         type = lib.types.str;
-        default = "us,de";
+        default = "de";
         description = "The keyboard layout or layouts.";
       };
 
       variant = lib.mkOption {
         type = lib.types.str;
-        default = ",koy";
+        default = "koy";
         description = "The keyboard variant or variants.";
       };
 
