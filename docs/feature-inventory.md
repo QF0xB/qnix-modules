@@ -100,7 +100,7 @@ confirmation.
 |---------------------|--------------------|-------------------------|--------------|--------------------|---------|------------------------------------------------------------------|
 | `apps.browser`      | Integrated + standalone Home | `hyprland` | — | Browser profile | finished | Brave Origin browser package |
 | `apps.file-manager` | Integrated + standalone Home | `hyprland` | `desktop.xdg-folders` | — | finished | Nemo with XDG directory pins; Yazi with Git, GVfs mounting, archive, trash, and navigation tooling |
-| `apps.chatgpt`      | Integrated + standalone Home | `hyprland` | `llm-agents.nix` overlay | ChatGPT/Codex state | implemented | ChatGPT desktop application from `pkgs.llm-agents.chatgpt` |
+| `apps.opencode`     | NixOS + integrated + standalone Home | `hyprland` | Home Manager OpenCode module | OpenCode session and authentication data | implemented | OpenCode terminal agent with the configured MCP servers |
 | `apps.bitwarden`    | NixOS + Home       | `personal`              | —            | Vault/config?      | planned | Package/config; package availability uncertain                   |
 | `apps.music`        | NixOS + Home       | `personal`              | —            | Music client state | planned | Music client                                                     |
 | `apps.notes`        | NixOS + Home       | `personal`              | —            | Notes data         | planned | Notes application                                                |

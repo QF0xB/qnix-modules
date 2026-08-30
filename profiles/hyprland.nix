@@ -11,7 +11,7 @@
     ];
     home = [
       "apps.browser"
-      "apps.chatgpt"
+      "apps.opencode"
       "apps.file-manager"
       "desktop.clipboard"
       "desktop.hyprland"

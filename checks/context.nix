@@ -63,7 +63,7 @@ let
 
   persistFeature = qnix.features.persist;
   browserFeature = qnix.features."apps.browser";
-  chatgptFeature = qnix.features."apps.chatgpt";
+  opencodeFeature = qnix.features."apps.opencode";
   vscodeFeature = qnix.features."dev.vscode";
   mcpFeature = qnix.features."dev.mcp";
   aiToolsFeature = qnix.features."dev.ai-tools";
@@ -634,8 +634,13 @@ let
   browserHomeEvaluation = mkHome (
     browserFeature.optionModules ++ browserFeature.__homeModuleFor "standalone-home"
   );
-  chatgptHomeEvaluation = mkHome (
-    chatgptFeature.optionModules ++ chatgptFeature.__homeModuleFor "standalone-home"
+  opencodeHomeEvaluation = mkHome (
+    xdgFoldersFeature.optionModules
+    ++ xdgFoldersFeature.__homeModuleFor "standalone-home"
+    ++ mcpFeature.optionModules
+    ++ mcpFeature.__homeModuleFor "standalone-home"
+    ++ opencodeFeature.optionModules
+    ++ opencodeFeature.__homeModuleFor "standalone-home"
   );
   vscodeHomeEvaluation = mkHome (
     vscodeFeature.optionModules ++ vscodeFeature.__homeModuleFor "standalone-home"
@@ -828,7 +833,7 @@ in
     mkHome
     persistFeature
     browserFeature
-    chatgptFeature
+    opencodeFeature
     vscodeFeature
     mcpFeature
     aiToolsFeature
@@ -934,7 +939,7 @@ in
     terminalFallbackHomeEvaluation
     xdgFoldersHomeEvaluation
     browserHomeEvaluation
-    chatgptHomeEvaluation
+    opencodeHomeEvaluation
     vscodeHomeEvaluation
     mcpHomeEvaluation
     aiToolsHomeEvaluation

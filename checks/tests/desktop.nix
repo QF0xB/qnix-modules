@@ -140,14 +140,13 @@ assert
   ];
 assert builtins.elem pkgs.brave-origin browserHomeEvaluation.config.home.packages;
 assert
-  chatgptFeature.supportedEnvironments == [
+  opencodeFeature.supportedEnvironments == [
     "nixos"
     "integrated-home"
     "standalone-home"
   ];
-assert builtins.any (
-  package: (package.pname or null) == "chatgpt"
-) chatgptHomeEvaluation.config.home.packages;
+assert opencodeHomeEvaluation.config.programs.opencode.enable;
+assert opencodeHomeEvaluation.config.programs.opencode.enableMcpIntegration;
 assert
   vscodeFeature.supportedEnvironments == [
     "nixos"
@@ -268,7 +267,7 @@ assert builtins.all
   (path: builtins.elem path hyprlandProfileEvaluation.config.qnix.persist.users."*".directories)
   [
     ".config/BraveSoftware"
-    ".config/ChatGPT"
+    ".local/share/opencode"
     ".local/share/yazi"
     ".local/state/yazi"
     "Pictures/Screenshots"
