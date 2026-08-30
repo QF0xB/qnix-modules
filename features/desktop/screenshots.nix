@@ -1,5 +1,6 @@
 {
   environments = [
+    "nixos"
     "integrated-home"
     "standalone-home"
   ];
@@ -8,6 +9,8 @@
     "desktop.hyprland"
     "desktop.xdg-folders"
   ];
+
+  persistence.users."*".directories = [ "Pictures/Screenshots" ];
 
   options =
     { config, lib, ... }:
