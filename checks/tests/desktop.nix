@@ -134,12 +134,14 @@ assert
   terminalFallbackHomeEvaluation.config.home.sessionVariables.TERMINAL == pkgs.lib.getExe pkgs.foot;
 assert
   browserFeature.supportedEnvironments == [
+    "nixos"
     "integrated-home"
     "standalone-home"
   ];
 assert builtins.elem pkgs.brave-origin browserHomeEvaluation.config.home.packages;
 assert
   chatgptFeature.supportedEnvironments == [
+    "nixos"
     "integrated-home"
     "standalone-home"
   ];
@@ -148,6 +150,7 @@ assert builtins.any (
 ) chatgptHomeEvaluation.config.home.packages;
 assert
   vscodeFeature.supportedEnvironments == [
+    "nixos"
     "integrated-home"
     "standalone-home"
   ];
@@ -192,6 +195,7 @@ assert builtins.all
   );
 assert
   fileManagerFeature.supportedEnvironments == [
+    "nixos"
     "integrated-home"
     "standalone-home"
   ];
@@ -243,6 +247,7 @@ assert clipboardHomeEvaluation.config.services.cliphist.enable;
 assert clipboardHomeEvaluation.config.services.cliphist.allowImages;
 assert
   screenshotsFeature.supportedEnvironments == [
+    "nixos"
     "integrated-home"
     "standalone-home"
   ];
@@ -259,6 +264,19 @@ assert builtins.elem "Print" (
     binding: builtins.head binding._args
   ) screenshotsHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind
 );
+assert builtins.all
+  (path: builtins.elem path hyprlandProfileEvaluation.config.qnix.persist.users."*".directories)
+  [
+    ".config/BraveSoftware"
+    ".config/ChatGPT"
+    ".local/share/yazi"
+    ".local/state/yazi"
+    "Pictures/Screenshots"
+    ".config/easyeffects"
+    ".local/state/wireplumber"
+  ];
+assert builtins.elem ".config/pavucontrol.ini"
+  hyprlandProfileEvaluation.config.qnix.persist.users."*".files;
 assert lockNixosEvaluation.config.security.pam.services.hyprlock.enable;
 assert lockHomeEvaluation.config.programs.hyprlock.enable;
 assert

@@ -790,6 +790,7 @@ let
 
   defaultEvaluation = mkNixos (qnix.modulesFor.nixos [ "base" ]);
   shellHomeProfileEvaluation = mkHome (qnix.modulesFor.standaloneHome [ "shell" ]);
+  developerProfileEvaluation = mkNixos (qnix.modulesFor.nixos [ "developer" ]);
   developerHomeProfileEvaluation = mkHome (
     [ nvf.homeManagerModules.default ] ++ qnix.modulesFor.standaloneHome [ "developer" ]
   );
@@ -957,6 +958,7 @@ in
     grubBootEvaluation
     defaultEvaluation
     shellHomeProfileEvaluation
+    developerProfileEvaluation
     developerHomeProfileEvaluation
     workstationProfileEvaluation
     laptopProfileEvaluation

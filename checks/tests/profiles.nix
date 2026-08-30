@@ -18,6 +18,13 @@ assert defaultEvaluation.config.programs.zsh.enable;
 assert shellHomeProfileEvaluation.config.programs.starship.enable;
 assert developerHomeProfileEvaluation.config.programs.nvf.enable;
 assert developerHomeProfileEvaluation.config.programs.git.enable;
+assert builtins.all
+  (path: builtins.elem path developerProfileEvaluation.config.qnix.persist.users."*".directories)
+  [
+    ".config/Code"
+    ".vscode/extensions"
+    ".local/share/nvf"
+  ];
 assert defaultEvaluation.config.time.timeZone == "Europe/Berlin";
 assert defaultEvaluation.config.services.xserver.xkb.layout == "de";
 assert defaultEvaluation.config.services.xserver.xkb.variant == "koy";
