@@ -1,10 +1,16 @@
 {
   environments = [
+    "nixos"
     "integrated-home"
     "standalone-home"
   ];
 
   requires.home = [ "desktop.xdg-folders" ];
+
+  persistence.users."*".directories = [
+    ".local/share/yazi"
+    ".local/state/yazi"
+  ];
 
   home =
     {
