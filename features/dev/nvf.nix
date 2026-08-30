@@ -5,10 +5,7 @@
     "standalone-home"
   ];
 
-  persistence.users."*".directories = [
-    ".local/share/nvim"
-    ".local/state/nvim"
-  ];
+  persistence.users."*".directories = [ ".local/share/nvf" ];
 
   options =
     { lib, ... }:
