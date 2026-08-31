@@ -47,7 +47,6 @@
           codegraph
           ctx
           fence
-          git-ai
           officecli
           pdfvision
           rtk
