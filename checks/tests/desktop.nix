@@ -155,17 +155,25 @@ assert opencodeHomeEvaluation.config.programs.opencode.enable;
 assert opencodeHomeEvaluation.config.programs.opencode.package == pkgs.llm-agents.opencode;
 assert opencodeHomeEvaluation.config.programs.opencode.enableMcpIntegration;
 assert builtins.all
-  (package: builtins.elem package opencodeHomeEvaluation.config.programs.opencode.extraPackages)
   (
-    with pkgs.llm-agents;
-    [
-      codegraph
-      gitnexus
-      qmd
-      rtk
-      skills
-    ]
-  );
+    expected:
+    builtins.any (
+      package: pkgs.lib.hasInfix "-${expected}-" (builtins.baseNameOf (toString package))
+    ) opencodeHomeEvaluation.config.programs.opencode.extraPackages
+  )
+  [
+    "agent-browser"
+    "agentsview"
+    "ccusage"
+    "codegraph"
+    "ctx"
+    "fence"
+    "git-ai"
+    "officecli"
+    "pdfvision"
+    "rtk"
+    "skills"
+  ];
 assert
   vscodeFeature.supportedEnvironments == [
     "nixos"
@@ -178,39 +186,6 @@ assert builtins.hasAttr "filesystem" mcpHomeEvaluation.config.programs.mcp.serve
 assert builtins.hasAttr "git" mcpHomeEvaluation.config.programs.mcp.servers;
 assert builtins.hasAttr "github" mcpHomeEvaluation.config.programs.mcp.servers;
 assert !(builtins.hasAttr "nixos" mcpHomeEvaluation.config.programs.mcp.servers);
-assert
-  aiToolsFeature.supportedEnvironments == [
-    "integrated-home"
-    "standalone-home"
-  ];
-assert builtins.all
-  (
-    package:
-    builtins.elem (package.pname or null) (
-      map (installed: installed.pname or null) aiToolsHomeEvaluation.config.home.packages
-    )
-  )
-  (
-    with pkgs.llm-agents;
-    [
-      agent-browser
-      agentsview
-      ccusage
-      ck
-      codegraph
-      ctx
-      fence
-      git-ai
-      gitnexus
-      gno
-      nono
-      officecli
-      pdfvision
-      qmd
-      rtk
-      skills
-    ]
-  );
 assert
   fileManagerFeature.supportedEnvironments == [
     "nixos"

@@ -100,7 +100,7 @@ confirmation.
 |---------------------|--------------------|-------------------------|--------------|--------------------|---------|------------------------------------------------------------------|
 | `apps.browser`      | Integrated + standalone Home | `hyprland` | — | Browser profile | finished | Brave Origin browser package |
 | `apps.file-manager` | Integrated + standalone Home | `hyprland` | `desktop.xdg-folders` | — | finished | Nemo with XDG directory pins; Yazi with Git, GVfs mounting, archive, trash, and navigation tooling |
-| `apps.opencode`     | NixOS + integrated + standalone Home | `hyprland` | Home Manager OpenCode module | OpenCode session and authentication data | implemented | OpenCode terminal agent with the configured MCP servers |
+| `apps.opencode`     | NixOS + integrated + standalone Home | `hyprland` | Home Manager OpenCode module, `llm-agents.nix` | OpenCode session and authentication data | implemented | OpenCode with MCP servers and its bundled AI development tools |
 | `apps.bitwarden`    | NixOS + Home       | `personal`              | —            | Vault/config?      | planned | Package/config; package availability uncertain                   |
 | `apps.music`        | NixOS + Home       | `personal`              | —            | Music client state | planned | Music client                                                     |
 | `apps.notes`        | NixOS + Home       | `personal`              | —            | Notes data         | planned | Notes application                                                |
@@ -114,7 +114,6 @@ confirmation.
 | `dev.codex`          | NixOS + Home       | `developer`                | —              | Codex config?      | planned | Package/config                                 |
 | `dev.vscode`         | Integrated + standalone Home | `hyprland`      | —              | Editor config      | implemented | Visual Studio Code |
 | `dev.mcp`            | Integrated + standalone Home | `hyprland`      | `mcp-servers-nix`, `desktop.xdg-folders` | Server credentials? | implemented | Filesystem, Git, GitHub, and NixOS MCP servers; NixOS server is host-only |
-| `dev.ai-tools`       | Integrated + standalone Home | `hyprland`      | `llm-agents.nix` | Agent state, indexes, and caches | implemented | CodeGraph, local search/knowledge tools, agent observability, skills, sandboxing, Git provenance, browser/PDF/Office utilities |
 | `dev.devenv`         | Integrated + standalone Home | Client-selected | — | — | finished | Devenv development environments                |
 | `dev.direnv`         | NixOS + integrated and standalone Home | Client-selected | `shell.fish` | `.local/share/direnv` | finished | Direnv, nix-direnv, and Fish/Zsh shell integration |
 | `dev.git`            | NixOS + integrated and standalone Home | Client-selected | `security.gpg` | `.config/git`, `.config/gh` | finished | Git, GitHub CLI (`gh`), GPG signing, Git LFS, and runtime-token authentication |

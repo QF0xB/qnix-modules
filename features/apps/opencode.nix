@@ -16,9 +16,15 @@
         enable = true;
         package = pkgs.llm-agents.opencode;
         extraPackages = with pkgs.llm-agents; [
+          agent-browser
+          agentsview
+          ccusage
           codegraph
-          gitnexus
-          qmd
+          ctx
+          fence
+          git-ai
+          officecli
+          pdfvision
           rtk
           skills
         ];
