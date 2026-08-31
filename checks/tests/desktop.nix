@@ -155,8 +155,17 @@ assert opencodeHomeEvaluation.config.programs.opencode.enable;
 assert opencodeHomeEvaluation.config.programs.opencode.package == pkgs.llm-agents.opencode;
 assert builtins.elem pkgs.llm-agents.rtk
   opencodeHomeEvaluation.config.programs.opencode.extraPackages;
+assert builtins.elem pkgs.llm-agents.agent-browser
+  opencodeHomeEvaluation.config.programs.opencode.extraPackages;
+assert builtins.elem pkgs.llm-agents.officecli
+  opencodeHomeEvaluation.config.programs.opencode.extraPackages;
+assert builtins.elem pkgs.llm-agents.pdfvision
+  opencodeHomeEvaluation.config.programs.opencode.extraPackages;
 assert opencodeHomeEvaluation.config.programs.opencode.enableMcpIntegration;
 assert builtins.hasAttr "installRtkOpenCodeHook" opencodeHomeEvaluation.config.home.activation;
+assert builtins.hasAttr "agent-browser" opencodeHomeEvaluation.config.programs.opencode.skills;
+assert builtins.hasAttr "officecli" opencodeHomeEvaluation.config.programs.opencode.skills;
+assert builtins.hasAttr "pdfvision" opencodeHomeEvaluation.config.programs.opencode.skills;
 assert builtins.all
   (
     expected:

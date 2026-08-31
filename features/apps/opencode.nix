@@ -18,9 +18,21 @@
       programs.opencode = {
         enable = true;
         package = pkgs.llm-agents.opencode;
-        # Keeps RTK in OpenCode's PATH even when the developer profile is not selected.
-        extraPackages = [ pkgs.llm-agents.rtk ];
+        # These skills invoke their matching CLIs, so they must be available to
+        # OpenCode even when the developer profile is not selected.
+        extraPackages = with pkgs.llm-agents; [
+          agent-browser
+          officecli
+          pdfvision
+          rtk
+        ];
         enableMcpIntegration = true;
+
+        skills = {
+          agent-browser = "${pkgs.llm-agents.agent-browser.src}/skills/agent-browser";
+          officecli = "${pkgs.llm-agents.officecli.src}/skills/officecli";
+          pdfvision = "${pkgs.llm-agents.pdfvision.src}/skills/pdfvision";
+        };
       };
 
       # RTK owns and updates its OpenCode hook. This is equivalent to running
