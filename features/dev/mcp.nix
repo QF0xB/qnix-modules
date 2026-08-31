@@ -43,12 +43,33 @@
         export GITHUB_PERSONAL_ACCESS_TOKEN="$token"
         exec ${lib.escapeShellArgs ([ githubServer.command ] ++ githubServer.args)}
       '';
+      codegraphMcp = pkgs.writeShellApplication {
+        name = "qnix-codegraph-mcp";
+        runtimeInputs = [
+          pkgs.git
+          pkgs.llm-agents.codegraph
+        ];
+        text = ''
+          if project_root="$(git rev-parse --show-toplevel 2>/dev/null)"; then
+            if [[ ! -d "$project_root/.codegraph" ]]; then
+              codegraph init "$project_root" --yes >&2
+            fi
+
+            cd "$project_root"
+          fi
+
+          exec codegraph serve --mcp
+        '';
+      };
     in
     {
       programs.mcp.servers = servers // {
         github = githubServer // {
           command = "${githubMcp}/bin/qnix-github-mcp-server";
           args = [ ];
+        };
+        codegraph = {
+          command = "${codegraphMcp}/bin/qnix-codegraph-mcp";
         };
       };
 

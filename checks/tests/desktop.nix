@@ -188,9 +188,12 @@ assert mcpHomeEvaluation.config.programs.mcp.enable;
 assert builtins.hasAttr "filesystem" mcpHomeEvaluation.config.programs.mcp.servers;
 assert builtins.hasAttr "git" mcpHomeEvaluation.config.programs.mcp.servers;
 assert builtins.hasAttr "github" mcpHomeEvaluation.config.programs.mcp.servers;
+assert builtins.hasAttr "codegraph" mcpHomeEvaluation.config.programs.mcp.servers;
 assert pkgs.lib.hasInfix "qnix-github-mcp-server"
   mcpHomeEvaluation.config.programs.mcp.servers.github.command;
 assert mcpHomeEvaluation.config.programs.mcp.servers.github.args == [ ];
+assert pkgs.lib.hasInfix "qnix-codegraph-mcp"
+  mcpHomeEvaluation.config.programs.mcp.servers.codegraph.command;
 assert !(builtins.hasAttr "nixos" mcpHomeEvaluation.config.programs.mcp.servers);
 assert
   fileManagerFeature.supportedEnvironments == [
