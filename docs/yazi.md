@@ -28,7 +28,7 @@ into the current directory when a file is selected.
 | `T` | Maximise or restore the preview pane |
 | `c m` | Change permissions for selected files |
 | `C` | Create an archive with Ouch |
-| `R b` | Open the recycle-bin management menu |
+| `g t` | Open Yazi's native Trash view |
 | `M m` | Choose a GVFS device, mount it, and enter it |
 | `M u` | Choose a GVFS device to unmount |
 | `M U` | Choose a GVFS device to unmount and eject |
@@ -42,13 +42,10 @@ Archives are previewed and can be extracted with the `extract` action using
 Ouch. `C` opens Ouch's compression flow, which lets you choose the archive
 format and destination.
 
-`d` moves selected items to the Trash. Press `R b` to open the recycle-bin
-menu, then `o` to open it. In the Trash directory, select one or more files
-and press `R b`, then `r`, to restore them to their original locations. The
-same menu offers permanent deletion and emptying actions. It is configured
-explicitly for `~/.local/share/Trash`, so it does not depend on automatic
-trash-directory discovery. `trash-cli` remains available for terminal use
-outside Yazi.
+`d` moves selected items to the Trash. Use `g t` to browse it, select one or
+more files, and use Yazi's shown actions to restore or permanently delete them.
+The native Trash view replaces the unreliable `recycle-bin` plugin. `trash-cli`
+remains available for terminal use outside Yazi.
 
 Mounted devices are managed through GVFS, the same desktop mounting layer used
 by graphical applications. This is appropriate for USB drives, phones, network

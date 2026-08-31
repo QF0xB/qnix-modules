@@ -70,11 +70,6 @@
           };
           jump-to-char.package = pkgs.yaziPlugins.jump-to-char;
           ouch.package = pkgs.yaziPlugins.ouch;
-          recycle-bin = {
-            package = pkgs.yaziPlugins.recycle-bin;
-            setup = true;
-            settings.trash_dir = "${config.home.homeDirectory}/.local/share/Trash";
-          };
           smart-paste.package = pkgs.yaziPlugins.smart-paste;
           toggle-pane.package = pkgs.yaziPlugins.toggle-pane;
         };
@@ -148,14 +143,6 @@
             on = [ "C" ];
             run = "plugin ouch";
             desc = "Compress with ouch";
-          }
-          {
-            on = [
-              "R"
-              "b"
-            ];
-            run = "plugin recycle-bin -- menu";
-            desc = "Manage the recycle bin";
           }
           {
             on = [

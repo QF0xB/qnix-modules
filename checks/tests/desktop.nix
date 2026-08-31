@@ -206,17 +206,10 @@ assert fileManagerHomeEvaluation.config.programs.yazi.enable;
 assert fileManagerHomeEvaluation.config.programs.yazi.enableFishIntegration;
 assert fileManagerHomeEvaluation.config.programs.yazi.enableZshIntegration;
 assert fileManagerHomeEvaluation.config.programs.yazi.plugins.gvfs.setup;
-assert fileManagerHomeEvaluation.config.programs.yazi.plugins.recycle-bin.setup;
-assert
-  fileManagerHomeEvaluation.config.programs.yazi.plugins.recycle-bin.settings.trash_dir
-  == "/home/check/.local/share/Trash";
 assert builtins.elem pkgs.gvfs fileManagerHomeEvaluation.config.programs.yazi.extraPackages;
 assert builtins.elem pkgs.ouch fileManagerHomeEvaluation.config.programs.yazi.extraPackages;
 assert builtins.elem pkgs.trash-cli fileManagerHomeEvaluation.config.programs.yazi.extraPackages;
 assert builtins.elem "plugin gvfs -- select-then-mount --jump" (
-  map (binding: binding.run) fileManagerHomeEvaluation.config.programs.yazi.keymap.mgr.prepend_keymap
-);
-assert builtins.elem "plugin recycle-bin -- menu" (
   map (binding: binding.run) fileManagerHomeEvaluation.config.programs.yazi.keymap.mgr.prepend_keymap
 );
 assert
