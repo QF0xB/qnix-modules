@@ -153,7 +153,10 @@ assert
   ];
 assert opencodeHomeEvaluation.config.programs.opencode.enable;
 assert opencodeHomeEvaluation.config.programs.opencode.package == pkgs.llm-agents.opencode;
+assert builtins.elem pkgs.llm-agents.rtk
+  opencodeHomeEvaluation.config.programs.opencode.extraPackages;
 assert opencodeHomeEvaluation.config.programs.opencode.enableMcpIntegration;
+assert builtins.hasAttr "installRtkOpenCodeHook" opencodeHomeEvaluation.config.home.activation;
 assert builtins.all
   (
     expected:
