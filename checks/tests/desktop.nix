@@ -177,6 +177,11 @@ assert builtins.all
     "rtk"
     "skills"
   ];
+assert builtins.elem "qnix-dev" (
+  map (package: package.pname or package.name) aiToolsHomeEvaluation.config.home.packages
+);
+assert builtins.hasAttr "qnix-ctx" aiToolsHomeEvaluation.config.systemd.user.services;
+assert builtins.hasAttr "qnix-agentsview" aiToolsHomeEvaluation.config.systemd.user.services;
 assert
   vscodeFeature.supportedEnvironments == [
     "nixos"
