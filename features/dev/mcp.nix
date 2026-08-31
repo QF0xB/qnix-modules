@@ -32,9 +32,25 @@
           nixos.enable = true;
         };
       };
+      servers = evaluated.config.settings.servers or { };
+      githubServer = servers.github;
+      githubMcp = pkgs.writeShellScriptBin "qnix-github-mcp-server" ''
+        if ! token="$(${config.programs.gh.package}/bin/gh auth token)"; then
+          echo "qnix GitHub MCP: authenticate gh before starting OpenCode" >&2
+          exit 1
+        fi
+
+        export GITHUB_PERSONAL_ACCESS_TOKEN="$token"
+        exec ${lib.escapeShellArgs ([ githubServer.command ] ++ githubServer.args)}
+      '';
     in
     {
-      programs.mcp.servers = evaluated.config.settings.servers or { };
+      programs.mcp.servers = servers // {
+        github = githubServer // {
+          command = "${githubMcp}/bin/qnix-github-mcp-server";
+          args = [ ];
+        };
+      };
 
       programs.mcp.enable = true;
     };

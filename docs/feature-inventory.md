@@ -113,7 +113,7 @@ confirmation.
 |----------------------|--------------------|----------------------------|----------------|--------------------|---------|------------------------------------------------|
 | `dev.codex`          | NixOS + Home       | `developer`                | —              | Codex config?      | planned | Package/config                                 |
 | `dev.vscode`         | Integrated + standalone Home | `hyprland`      | —              | Editor config      | implemented | Visual Studio Code |
-| `dev.mcp`            | Integrated + standalone Home | `hyprland`      | `mcp-servers-nix`, `desktop.xdg-folders` | Server credentials? | implemented | Filesystem, Git, GitHub, and NixOS MCP servers; NixOS server is host-only |
+| `dev.mcp`            | Integrated + standalone Home | `hyprland`      | `mcp-servers-nix`, `desktop.xdg-folders`, GitHub CLI | Server credentials? | implemented | Filesystem, Git, GitHub, and NixOS MCP servers; GitHub reuses the active `gh` token and NixOS is host-only |
 | `dev.devenv`         | Integrated + standalone Home | Client-selected | — | — | finished | Devenv development environments                |
 | `dev.direnv`         | NixOS + integrated and standalone Home | Client-selected | `shell.fish` | `.local/share/direnv` | finished | Direnv, nix-direnv, and Fish/Zsh shell integration |
 | `dev.git`            | NixOS + integrated and standalone Home | Client-selected | `security.gpg` | `.config/git`, `.config/gh` | finished | Git, GitHub CLI (`gh`), GPG signing, Git LFS, and runtime-token authentication |
