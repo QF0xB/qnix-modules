@@ -9,10 +9,20 @@
 
   persistence.users."*".directories = [ ".local/share/opencode" ];
 
-  home = { ... }: {
-    programs.opencode = {
-      enable = true;
-      enableMcpIntegration = true;
+  home =
+    { pkgs, ... }:
+    {
+      programs.opencode = {
+        enable = true;
+        package = pkgs.llm-agents.opencode;
+        extraPackages = with pkgs.llm-agents; [
+          codegraph
+          gitnexus
+          qmd
+          rtk
+          skills
+        ];
+        enableMcpIntegration = true;
+      };
     };
-  };
 }

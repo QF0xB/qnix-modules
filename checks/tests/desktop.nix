@@ -152,7 +152,20 @@ assert
     "standalone-home"
   ];
 assert opencodeHomeEvaluation.config.programs.opencode.enable;
+assert opencodeHomeEvaluation.config.programs.opencode.package == pkgs.llm-agents.opencode;
 assert opencodeHomeEvaluation.config.programs.opencode.enableMcpIntegration;
+assert builtins.all
+  (package: builtins.elem package opencodeHomeEvaluation.config.programs.opencode.extraPackages)
+  (
+    with pkgs.llm-agents;
+    [
+      codegraph
+      gitnexus
+      qmd
+      rtk
+      skills
+    ]
+  );
 assert
   vscodeFeature.supportedEnvironments == [
     "nixos"
