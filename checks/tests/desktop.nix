@@ -152,7 +152,9 @@ assert
     "standalone-home"
   ];
 assert opencodeHomeEvaluation.config.programs.opencode.enable;
-assert opencodeHomeEvaluation.config.programs.opencode.package == pkgs.llm-agents.opencode;
+assert pkgs.lib.hasInfix "qnix-opencode" (
+  builtins.baseNameOf (toString opencodeHomeEvaluation.config.programs.opencode.package)
+);
 assert builtins.elem pkgs.llm-agents.rtk
   opencodeHomeEvaluation.config.programs.opencode.extraPackages;
 assert builtins.elem pkgs.llm-agents.agent-browser
