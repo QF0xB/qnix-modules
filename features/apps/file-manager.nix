@@ -10,6 +10,7 @@
   persistence.users."*".directories = [
     ".local/share/yazi"
     ".local/state/yazi"
+    ".local/share/Trash"
   ];
 
   home =
@@ -72,6 +73,7 @@
           recycle-bin = {
             package = pkgs.yaziPlugins.recycle-bin;
             setup = true;
+            settings.trash_dir = "${config.home.homeDirectory}/.local/share/Trash";
           };
           smart-paste.package = pkgs.yaziPlugins.smart-paste;
           toggle-pane.package = pkgs.yaziPlugins.toggle-pane;
@@ -152,8 +154,8 @@
               "R"
               "b"
             ];
-            run = "plugin recycle-bin";
-            desc = "Open recycle bin";
+            run = "plugin recycle-bin -- menu";
+            desc = "Manage the recycle bin";
           }
           {
             on = [

@@ -32,6 +32,8 @@ profile descriptors that select those features. Neither directory contains
 definitions yet.
 
 The migration scope is tracked in [`docs/feature-inventory.md`](./docs/feature-inventory.md).
+The configured file-manager workflow is described in
+[`docs/yazi.md`](./docs/yazi.md).
 
 External modules belong in the client’s module composition, not in this flake’s
 feature definitions.
