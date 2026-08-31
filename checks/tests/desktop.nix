@@ -91,6 +91,9 @@ assert
 assert builtins.any (
   hook: pkgs.lib.hasInfix "noctalia-shell" (builtins.elemAt hook._args 1).expr
 ) noctaliaHomeEvaluation.config.wayland.windowManager.hyprland.settings.on;
+assert builtins.any (
+  binding: pkgs.lib.hasInfix "launcher toggle" (builtins.elemAt binding._args 1).expr
+) hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind;
 assert
   builtins.baseNameOf
     noctaliaHomeEvaluation.config.home.file."Pictures/wallpaper/solarized-dark.png".source

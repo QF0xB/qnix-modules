@@ -165,7 +165,7 @@
           (mkModBind "down" ''hl.dsp.focus({ direction = "down" })'' { })
           (mkModBind "code:47" (exec "uwsm app -- brave-origin") { })
           (mkModBind "CTRL + code:47" (exec "uwsm app -- brave-origin --private-window") { })
-          (mkModBind "code:25" (exec "uwsm app -- rofi -show drun") { })
+          (mkModBind "code:25" (exec "noctalia-shell ipc call launcher toggle") { })
           (mkModBind "code:29" (exec "hypr-special recording obs -- obs") { })
           (mkModBind "code:40" (exec "uwsm app -- ${terminal} -e yazi") { })
           (mkModBind "code:57" (exec "hypr-special secrets Bitwarden -- bitwarden") { })
