@@ -19,6 +19,7 @@
         text = ''
           case "''${1:-}" in
             start)
+              ${pkgs.llm-agents.ctx}/bin/ctx setup --quiet --no-daemon
               systemctl --user start qnix-ctx.service qnix-agentsview.service
               ;;
             stop)
