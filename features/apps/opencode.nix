@@ -14,6 +14,16 @@
 
   home =
     { lib, pkgs, ... }:
+    let
+      gitAiOpenCodePlugin = pkgs.runCommand "qnix-git-ai-opencode-plugin" { } ''
+        substitute \
+          ${pkgs.llm-agents.git-ai.src}/agent-support/opencode/git-ai.ts \
+          "$out" \
+          --replace-fail \
+          "__GIT_AI_BINARY_PATH__" \
+          "${pkgs.llm-agents.git-ai}/bin/git-ai"
+      '';
+    in
     {
       programs.opencode = {
         enable = true;
@@ -28,5 +38,9 @@
       home.activation.installRtkOpenCodeHook = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         ${pkgs.llm-agents.rtk}/bin/rtk init -g --opencode --auto-patch
       '';
+
+      # Use Git AI's maintained OpenCode plugin with the immutable Nix path
+      # substituted in place of the path normally written by `install-hooks`.
+      xdg.configFile."opencode/plugins/git-ai.ts".source = gitAiOpenCodePlugin;
     };
 }

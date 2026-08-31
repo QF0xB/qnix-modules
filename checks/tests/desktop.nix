@@ -157,6 +157,7 @@ assert builtins.elem pkgs.llm-agents.rtk
   opencodeHomeEvaluation.config.programs.opencode.extraPackages;
 assert opencodeHomeEvaluation.config.programs.opencode.enableMcpIntegration;
 assert builtins.hasAttr "installRtkOpenCodeHook" opencodeHomeEvaluation.config.home.activation;
+assert builtins.hasAttr "opencode/plugins/git-ai.ts" opencodeHomeEvaluation.config.xdg.configFile;
 assert builtins.all
   (
     expected:
