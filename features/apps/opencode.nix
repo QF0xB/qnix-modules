@@ -7,7 +7,10 @@
 
   requires.home = [ "dev.mcp" ];
 
-  persistence.users."*".directories = [ ".local/share/opencode" ];
+  persistence.users."*".directories = [
+    ".config/opencode/skills"
+    ".local/share/opencode"
+  ];
 
   home =
     { pkgs, ... }:
@@ -15,19 +18,6 @@
       programs.opencode = {
         enable = true;
         package = pkgs.llm-agents.opencode;
-        extraPackages = with pkgs.llm-agents; [
-          agent-browser
-          agentsview
-          ccusage
-          codegraph
-          ctx
-          fence
-          git-ai
-          officecli
-          pdfvision
-          rtk
-          skills
-        ];
         enableMcpIntegration = true;
       };
     };

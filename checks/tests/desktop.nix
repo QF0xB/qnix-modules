@@ -159,7 +159,7 @@ assert builtins.all
     expected:
     builtins.any (
       package: pkgs.lib.hasInfix "-${expected}-" (builtins.baseNameOf (toString package))
-    ) opencodeHomeEvaluation.config.programs.opencode.extraPackages
+    ) aiToolsHomeEvaluation.config.home.packages
   )
   [
     "agent-browser"
@@ -260,6 +260,7 @@ assert builtins.all
   (path: builtins.elem path hyprlandProfileEvaluation.config.qnix.persist.users."*".directories)
   [
     ".config/BraveSoftware"
+    ".config/opencode/skills"
     ".local/share/opencode"
     ".local/share/yazi"
     ".local/state/yazi"

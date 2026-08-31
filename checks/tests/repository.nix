@@ -21,6 +21,7 @@ assert
     "desktop.terminal"
     "desktop.wayland"
     "desktop.xdg-folders"
+    "dev.ai-tools"
     "dev.devenv"
     "dev.direnv"
     "dev.git"

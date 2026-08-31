@@ -66,6 +66,7 @@ let
   opencodeFeature = qnix.features."apps.opencode";
   vscodeFeature = qnix.features."dev.vscode";
   mcpFeature = qnix.features."dev.mcp";
+  aiToolsFeature = qnix.features."dev.ai-tools";
   gitFeature = qnix.features."dev.git";
   direnvFeature = qnix.features."dev.direnv";
   nhFeature = qnix.features."dev.nh";
@@ -650,6 +651,9 @@ let
     ++ mcpFeature.optionModules
     ++ mcpFeature.__homeModuleFor "standalone-home"
   );
+  aiToolsHomeEvaluation = mkHome (
+    aiToolsFeature.optionModules ++ aiToolsFeature.__homeModuleFor "standalone-home"
+  );
   gitNixosEvaluation = mkNixos (
     persistFeature.optionModules ++ gitFeature.optionModules ++ gitFeature.nixosModules
   );
@@ -832,6 +836,7 @@ in
     opencodeFeature
     vscodeFeature
     mcpFeature
+    aiToolsFeature
     gitFeature
     direnvFeature
     nhFeature
@@ -937,6 +942,7 @@ in
     opencodeHomeEvaluation
     vscodeHomeEvaluation
     mcpHomeEvaluation
+    aiToolsHomeEvaluation
     gitNixosEvaluation
     gitHomeEvaluation
     direnvNixosEvaluation
