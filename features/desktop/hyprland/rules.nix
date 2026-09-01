@@ -114,7 +114,7 @@
         }
         {
           name = "tag-browsers";
-          match.class = "^(brave|Brave|brave-browser|Brave-browser|google-chrome|Google-chrome)$";
+          match.class = "^(brave-origin|brave|Brave|brave-browser|Brave-browser|google-chrome|Google-chrome)$";
           tag = "+browser";
         }
         {
