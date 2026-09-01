@@ -64,9 +64,9 @@ assert
   vmHyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.mod._var == "ALT";
 assert
   hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.mod._var == "SUPER";
-assert builtins.elem "match:class ^test$, float on" (
-  hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.window_rule
-);
+assert builtins.any (
+  rule: rule.name == "test-rule"
+) hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.window_rule;
 assert builtins.elem "hypr-special" (
   map (package: package.pname or package.name) hyprlandFullHomeEvaluation.config.home.packages
 );

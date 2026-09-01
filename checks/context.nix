@@ -535,7 +535,11 @@ let
           }
         ];
         qnix.desktop.hyprland.rules.additionalRules = [
-          "match:class ^test$, float on"
+          {
+            name = "test-rule";
+            match.class = "^test$";
+            float = true;
+          }
         ];
         qnix.system.localisation.xkb.layout = "de,de,us";
       }
