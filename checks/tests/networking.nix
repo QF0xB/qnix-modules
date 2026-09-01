@@ -40,6 +40,8 @@ assert
 assert networkmanagerFeature.supportedEnvironments == [ "nixos" ];
 assert networkmanagerEvaluation.config.networking.networkmanager.enable;
 assert !networkmanagerEvaluation.config.networking.useDHCP;
+assert networkmanagerEvaluation.config.networking.networkmanager.dns == "systemd-resolved";
+assert networkmanagerEvaluation.config.services.resolved.enable;
 assert networkmanagerEvaluation.config.networking.networkmanager.unmanaged == [ "usb0" ];
 assert
   networkmanagerEvaluation.config.networking.networkmanager.plugins

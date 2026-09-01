@@ -62,10 +62,13 @@
           useDHCP = lib.mkDefault false;
           networkmanager = {
             enable = true;
+            dns = "systemd-resolved";
             unmanaged = cfg.unmanaged;
             plugins = map resolvePlugin cfg.extraPlugins;
           };
         };
+
+        services.resolved.enable = true;
       }
       (lib.mkIf cfg.gui nmAppletConfig)
     ];
