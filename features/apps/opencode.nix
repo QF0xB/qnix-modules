@@ -22,7 +22,7 @@
         }
       );
       fencedOpenCode = pkgs.writeShellApplication {
-        name = "qnix-opencode";
+        name = "opencode";
         text = ''
           exec ${pkgs.llm-agents.fence}/bin/fence \
             --settings ${fenceConfig} \
