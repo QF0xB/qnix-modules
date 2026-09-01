@@ -14,26 +14,10 @@
 
   home =
     { lib, pkgs, ... }:
-    let
-      fenceConfig = pkgs.writeText "qnix-opencode-fence.json" (
-        builtins.toJSON {
-          extends = "code";
-          command.runtimeExecPolicy = "argv";
-        }
-      );
-      fencedOpenCode = pkgs.writeShellApplication {
-        name = "opencode";
-        text = ''
-          exec ${pkgs.llm-agents.fence}/bin/fence \
-            --settings ${fenceConfig} \
-            -- ${pkgs.llm-agents.opencode}/bin/opencode "$@"
-        '';
-      };
-    in
     {
       programs.opencode = {
         enable = true;
-        package = fencedOpenCode;
+        package = pkgs.llm-agents.opencode;
         # These skills invoke their matching CLIs, so they must be available to
         # OpenCode even when the developer profile is not selected.
         extraPackages = with pkgs.llm-agents; [

@@ -47,7 +47,6 @@
           ccusage
           codegraph
           ctx
-          fence
           officecli
           pdfvision
           rtk

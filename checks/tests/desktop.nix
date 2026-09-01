@@ -152,12 +152,7 @@ assert
     "standalone-home"
   ];
 assert opencodeHomeEvaluation.config.programs.opencode.enable;
-assert pkgs.lib.hasInfix "opencode" (
-  builtins.baseNameOf (toString opencodeHomeEvaluation.config.programs.opencode.package)
-);
-assert pkgs.lib.hasInfix "/bin/opencode" (
-  pkgs.lib.getExe opencodeHomeEvaluation.config.programs.opencode.package
-);
+assert opencodeHomeEvaluation.config.programs.opencode.package == pkgs.llm-agents.opencode;
 assert builtins.elem pkgs.llm-agents.rtk
   opencodeHomeEvaluation.config.programs.opencode.extraPackages;
 assert builtins.elem pkgs.llm-agents.agent-browser
@@ -184,7 +179,6 @@ assert builtins.all
     "ccusage"
     "codegraph"
     "ctx"
-    "fence"
     "officecli"
     "pdfvision"
     "rtk"
