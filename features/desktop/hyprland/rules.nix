@@ -19,7 +19,7 @@
   home =
     { cfg, ... }:
     {
-      wayland.windowManager.hyprland.settings.windowrule = [
+      wayland.windowManager.hyprland.settings.window_rule = [
         "match:modal true, float on, center on, dim_around on, stay_focused on"
         "match:title ^(Open File|Save File|Choose File|File Upload|Open|Save As).*$, float on"
         "match:title ^(Authentication Required|Permission required).*$, float on, center on, stay_focused on"
