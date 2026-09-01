@@ -10,7 +10,7 @@
   ];
 
   options =
-    { lib, ... }:
+    { context, lib, ... }:
     {
       autostart = lib.mkOption {
         type = lib.types.bool;
@@ -27,6 +27,8 @@
       settings = lib.mkOption {
         type = lib.types.attrs;
         default = {
+          settingsVersion = 49;
+
           appLauncher = {
             iconMode = "tabler";
             position = "center";
@@ -42,18 +44,37 @@
 
           bar = {
             barType = "floating";
+            capsuleColorKey = "none";
             density = "comfortable";
             displayMode = "always_visible";
+            frameRadius = 10;
+            frameThickness = 2;
             floating = true;
+            hideOnOverview = false;
             marginHorizontal = 8;
             marginVertical = 16;
+            outerCorners = true;
             position = "left";
+            showCapsule = true;
+            showOutline = false;
             widgets = {
               center = [
                 {
+                  characterCount = 2;
+                  colorizeIcons = false;
+                  emptyColor = "secondary";
+                  enableScrollWheel = true;
+                  focusedColor = "primary";
+                  hideUnoccupied = true;
                   id = "Workspace";
+                  iconScale = 0.8;
                   labelMode = "index";
+                  occupiedColor = "secondary";
+                  pillSize = 0.6;
+                  reverseScroll = true;
                   showApplications = false;
+                  showBadge = true;
+                  showLabelsOnlyWhenOccupied = true;
                 }
               ];
               left = [
@@ -63,12 +84,15 @@
                 }
                 {
                   id = "Clock";
+                  clockColor = "none";
                   formatHorizontal = "HH:mm";
                   formatVertical = "HH mm";
+                  tooltipFormat = "HH:mm ddd, MMM dd";
                 }
                 {
                   id = "KeyboardLayout";
                   displayMode = "forceOpen";
+                  showIcon = true;
                 }
                 {
                   id = "Network";
@@ -87,19 +111,26 @@
                 }
                 { id = "plugin:hyprland-steam-overlay"; }
                 {
+                  id = "ControlCenter";
+                  colorizeDistroLogo = false;
+                  colorizeSystemIcon = "primary";
+                  icon = "noctalia";
+                  useDistroLogo = true;
+                }
+              ]
+              ++ lib.optionals (context.laptop or false) [
+                {
                   id = "Battery";
+                  deviceNativePath = "__default__";
                   displayMode = "graphic-clean";
+                  hideIfIdle = false;
                   hideIfNotDetected = true;
+                  showNoctaliaPerformance = true;
                   showPowerProfiles = true;
                 }
                 {
                   id = "Brightness";
                   displayMode = "alwaysHide";
-                }
-                {
-                  id = "ControlCenter";
-                  icon = "noctalia";
-                  useDistroLogo = true;
                 }
               ];
             };
@@ -113,12 +144,16 @@
           general = {
             animationDisabled = false;
             animationSpeed = 1;
+            autoStartAuth = false;
             clockFormat = "hh\\nmmddd, MMM dd ";
             clockStyle = "custom";
+            compactLockScreen = false;
             dimmerOpacity = 0.2;
             enableLockScreenCountdown = true;
             enableShadows = true;
+            lockScreenAnimations = true;
             lockOnSuspend = true;
+            showSessionButtonsOnLockScreen = true;
             telemetryEnabled = false;
           };
 
@@ -144,8 +179,11 @@
           ui = {
             fontDefault = "Fira Sans";
             fontFixed = "JetBrains Mono Nerd Font";
+            fontDefaultScale = 1;
+            fontFixedScale = 1;
             panelBackgroundOpacity = 1.0;
             panelsAttachedToBar = true;
+            settingsPanelMode = "attached";
             tooltipsEnabled = true;
           };
 

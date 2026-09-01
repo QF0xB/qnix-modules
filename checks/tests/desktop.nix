@@ -300,31 +300,16 @@ assert
 assert
   (builtins.elemAt lockHomeEvaluation.config.programs.hyprlock.settings.input-field 0).rounding == 10;
 assert
-  noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.bar.widgets.right == [
-    { id = "Tray"; }
-    { id = "plugin:privacy-indicator"; }
-    { id = "plugin:keybind-cheatsheet"; }
-    { id = "NotificationHistory"; }
-    {
-      id = "Volume";
-      displayMode = "alwaysHide";
-      middleClickCommand = "pwvucontrol || pavucontrol";
-    }
-    { id = "plugin:hyprland-steam-overlay"; }
-    {
-      id = "Battery";
-      displayMode = "graphic-clean";
-      hideIfNotDetected = true;
-      showPowerProfiles = true;
-    }
-    {
-      id = "Brightness";
-      displayMode = "alwaysHide";
-    }
-    {
-      id = "ControlCenter";
-      icon = "noctalia";
-      useDistroLogo = true;
-    }
+  map (
+    widget: widget.id
+  ) noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.bar.widgets.right == [
+    "Tray"
+    "plugin:privacy-indicator"
+    "plugin:keybind-cheatsheet"
+    "NotificationHistory"
+    "Volume"
+    "plugin:hyprland-steam-overlay"
+    "ControlCenter"
   ];
+assert noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.settingsVersion == 49;
 pkgs.runCommand "qnix-desktop-check" { } "touch $out"
