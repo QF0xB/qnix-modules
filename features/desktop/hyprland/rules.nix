@@ -101,20 +101,20 @@
         }
         {
           name = "tag-terminals";
-          match.class = "^(ghostty|footclient|kitty|Alacritty)$";
+          match.class = "^(foot|footclient|ghostty|kitty|Alacritty)$";
           tag = "+term";
         }
         {
           name = "tag-editors";
           match = {
-            class = "^(code|cursor|codium|jetbrains-.*)$";
+            class = "^(code|Code|codium|Codium|cursor|Cursor|jetbrains-.*)$";
             float = false;
           };
           tag = "+code";
         }
         {
           name = "tag-browsers";
-          match.class = "^(brave-browser|google-chrome)$";
+          match.class = "^(brave|Brave|brave-browser|Brave-browser|google-chrome|Google-chrome)$";
           tag = "+browser";
         }
         {
