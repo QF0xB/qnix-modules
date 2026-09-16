@@ -30,8 +30,15 @@
         }
         {
           name = "file-dialogs";
-          match.title = "^(Open File|Save File|Choose File|File Upload|Open|Save As).*$";
+          match.title = "^(Open File|Open Folder|Save File|Choose File|Choose Folder|File Upload|Open|Save As|Select File|Select Folder).*$";
           float = true;
+          center = true;
+        }
+        {
+          name = "portal-dialogs";
+          match.class = "^(xdg-desktop-portal-gtk|org\.freedesktop\.impl\.portal\.desktop\.gtk)$";
+          float = true;
+          center = true;
         }
         {
           name = "authentication-dialogs";
@@ -42,7 +49,7 @@
         }
         {
           name = "authentication-prompters";
-          match.class = "^(pinentry-|gcr-prompter).*$";
+          match.class = "^(pinentry-|gcr-prompter|polkit-gnome-authentication-agent-1|org\.freedesktop\.PolicyKit1\.AuthenticationAgent).*$";
           stay_focused = true;
           float = true;
           center = true;
@@ -89,6 +96,22 @@
           size = "900 650";
         }
         {
+          name = "yubico-authenticator";
+          match.class = "^(yubioath-flutter|com\.yubico\.yubioath)$";
+          float = true;
+          center = true;
+          size = "700 600";
+          no_screen_share = true;
+        }
+        {
+          name = "seahorse";
+          match.class = "^(org\.gnome\.Seahorse|seahorse)$";
+          float = true;
+          center = true;
+          size = "900 650";
+          no_screen_share = true;
+        }
+        {
           name = "steam-friends";
           match = {
             class = "^steam$";
@@ -107,7 +130,15 @@
         {
           name = "tag-editors";
           match = {
-            class = "^(code|Code|codium|Codium|cursor|Cursor|jetbrains-.*)$";
+            class = "^(code|Code|codium|Codium|cursor|Cursor)$";
+            float = false;
+          };
+          tag = "+code";
+        }
+        {
+          name = "tag-jetbrains";
+          match = {
+            class = "^jetbrains-.*$";
             float = false;
           };
           tag = "+code";

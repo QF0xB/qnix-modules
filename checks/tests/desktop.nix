@@ -84,6 +84,15 @@ assert builtins.any (
 assert builtins.any (
   rule: rule.name == "test-rule"
 ) hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.window_rule;
+assert builtins.any (
+  rule:
+  rule.name == "yubico-authenticator"
+  && rule.float
+  && rule.match.class == "^(yubioath-flutter|com\\.yubico\\.yubioath)$"
+) hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.window_rule;
+assert builtins.any (
+  rule: rule.name == "tag-jetbrains" && !rule.match.float && rule.tag == "+code"
+) hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.window_rule;
 assert builtins.elem "hypr-special" (
   map (package: package.pname or package.name) hyprlandFullHomeEvaluation.config.home.packages
 );
