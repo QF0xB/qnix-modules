@@ -16,6 +16,19 @@ assert laptopProfileEvaluation.config.qnix.hardware.power-management.enable;
 assert defaultEvaluation.config.programs.fish.enable;
 assert defaultEvaluation.config.programs.zsh.enable;
 assert shellHomeProfileEvaluation.config.programs.starship.enable;
+assert builtins.all
+  (
+    name:
+    builtins.elem name (
+      map (package: package.pname or package.name) shellHomeProfileEvaluation.config.home.packages
+    )
+  )
+  [
+    "qnix-dev-modules"
+    "qnix-use-release"
+    "qnix-sync-modules"
+    "qnix-release"
+  ];
 assert developerHomeProfileEvaluation.config.programs.nvf.enable;
 assert developerHomeProfileEvaluation.config.programs.git.enable;
 assert builtins.all

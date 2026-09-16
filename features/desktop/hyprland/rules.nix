@@ -129,7 +129,7 @@
         }
         {
           name = "tag-bitwarden";
-          match.class = "^(Bitwarden)$";
+          match.class = "^([Bb]itwarden)$";
           tag = "+passwords";
           no_screen_share = true;
         }

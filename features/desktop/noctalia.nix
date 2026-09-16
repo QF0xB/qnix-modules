@@ -212,7 +212,7 @@
     in
     {
       home.file."Pictures/wallpaper/solarized-dark.png".source =
-        ../../old/assets/wallpapers/solarized-dark.png;
+        ../../assets/wallpapers/solarized-dark.png;
 
       programs.noctalia-shell = {
         enable = true;

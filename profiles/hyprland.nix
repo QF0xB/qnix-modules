@@ -5,6 +5,7 @@
     nixos = [
       "desktop.displaymanager"
       "desktop.hyprland"
+      "desktop.hyprland.monitors"
       "desktop.lock"
       "desktop.sound"
       "desktop.wayland"

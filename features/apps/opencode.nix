@@ -13,7 +13,11 @@
   ];
 
   home =
-    { lib, pkgs, ... }:
+    {
+      lib,
+      pkgs,
+      ...
+    }:
     {
       programs.opencode = {
         enable = true;
@@ -41,5 +45,17 @@
         ${pkgs.llm-agents.rtk}/bin/rtk init -g --opencode --auto-patch
       '';
 
+      xdg.desktopEntries.opencode = {
+        name = "OpenCode";
+        genericName = "AI coding agent";
+        comment = "OpenCode terminal interface";
+        exec = "${lib.getExe pkgs.llm-agents.opencode}";
+        icon = "utilities-terminal";
+        terminal = true;
+        categories = [
+          "Development"
+          "Utility"
+        ];
+      };
     };
 }

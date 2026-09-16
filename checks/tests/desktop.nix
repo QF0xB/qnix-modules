@@ -35,6 +35,8 @@ assert
 assert
   hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.config.animations.enabled;
 assert
+  !hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.config.animations.workspace_wraparound;
+assert
   hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.config.input.kb_layout
   == "us,de";
 assert
@@ -64,6 +66,19 @@ assert
   vmHyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.mod._var == "ALT";
 assert
   hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.mod._var == "SUPER";
+assert builtins.any (
+  binding:
+  builtins.isAttrs (builtins.elemAt binding._args 0)
+  && pkgs.lib.hasInfix " + return" (builtins.elemAt binding._args 0).expr
+  && pkgs.lib.hasInfix "hypr-special scratch scratchpad -- foot --app-id=scratchpad" (builtins.elemAt binding._args 1)
+  .expr
+) hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind;
+assert builtins.any (
+  binding: pkgs.lib.hasInfix "hypr-special obs obs -- obs" (builtins.elemAt binding._args 1).expr
+) hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind;
+assert builtins.any (
+  binding: (builtins.elemAt binding._args 1).expr == ''hl.dsp.workspace.toggle_special("messenger")''
+) hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind;
 assert builtins.any (
   rule: rule.name == "test-rule"
 ) hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.window_rule;
@@ -152,6 +167,8 @@ assert
     "standalone-home"
   ];
 assert opencodeHomeEvaluation.config.programs.opencode.enable;
+assert opencodeHomeEvaluation.config.xdg.desktopEntries.opencode.name == "OpenCode";
+assert opencodeHomeEvaluation.config.xdg.desktopEntries.opencode.terminal;
 assert opencodeHomeEvaluation.config.programs.opencode.package == pkgs.llm-agents.opencode;
 assert builtins.elem pkgs.llm-agents.rtk
   opencodeHomeEvaluation.config.programs.opencode.extraPackages;

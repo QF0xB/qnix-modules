@@ -6,6 +6,7 @@
     ];
     home = [
       "shell.fish"
+      "shell.qnix-workflow"
       "shell.starship"
       "shell.zsh"
     ];

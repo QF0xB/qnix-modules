@@ -27,10 +27,14 @@
   home =
     {
       cfg,
+      config,
       lib,
       pkgs,
       ...
     }:
+    let
+      qnixRoot = "${config.home.homeDirectory}/Projects/qnix";
+    in
     {
       home.packages = [
         pkgs.fzf
@@ -55,11 +59,26 @@
           mount = "mount --mkdir";
           open = "xdg-open";
 
+          # Git workflow shortcuts retained from the pre-SDK configuration.
+          ga = "git add .";
+          gc = "git commit";
+          gp = "git push";
+          gacp = "git add . && git commit && git push";
+
+          # QNix maintenance shortcuts. Point these at the client flake so they
+          # work regardless of the current directory.
+          nuq = "nix flake update qnix-modules --flake ${qnixRoot}/client";
+          nhs = "nh os switch ${qnixRoot}/client";
+          nbv = "nix build ${qnixRoot}/client#nixosConfigurations.QTestVM.config.system.build.vm";
+          qnix = "cd ${qnixRoot}";
+
           ".." = "cd ..";
           "..." = "cd ../..";
           "...." = "cd ../../..";
           "....." = "cd ../../../..";
           "......" = "cd ../../../../..";
+
+          dots = "cd ${qnixRoot}";
         };
 
         plugins = with pkgs.fishPlugins; [

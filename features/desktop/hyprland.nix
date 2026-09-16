@@ -194,7 +194,10 @@
 
             animations = {
               enabled = cfg.animations;
-              workspace_wraparound = true;
+              # Preserve the spatial direction of numbered workspaces. With
+              # wraparound enabled Hyprland chooses the shorter animation via
+              # the opposite edge (most noticeably between 1 and 10).
+              workspace_wraparound = false;
             };
 
             cursor = {
@@ -293,7 +296,6 @@
                 "hyprland.start"
                 (lib.generators.mkLuaInline ''
                   function()
-                    hl.exec_cmd("hyprctl switchxkblayout all 1")
                     hl.exec_cmd("systemctl --user start hyprpolkitagent")
                   end
                 '')

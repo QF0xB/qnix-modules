@@ -8,6 +8,13 @@ assert
   ];
 assert fishNixosEvaluation.config.programs.fish.enable;
 assert fishHomeEvaluation.config.programs.fish.enable;
+assert
+  fishHomeEvaluation.config.programs.fish.shellAliases.nuq
+  == "nix flake update qnix-modules --flake /home/check/Projects/qnix/client";
+assert
+  fishHomeEvaluation.config.programs.fish.shellAliases.nhs
+  == "nh os switch /home/check/Projects/qnix/client";
+assert fishHomeEvaluation.config.programs.fish.shellAliases.ga == "git add .";
 assert builtins.elem pkgs.lsd fishHomeEvaluation.config.home.packages;
 assert fishNixosEvaluation.config.qnix.persist.users."*".directories == [ ".local/share/fish" ];
 assert

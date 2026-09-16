@@ -45,6 +45,7 @@ assert
     "security.yubikey"
     "shell.fish"
     "shell.packages"
+    "shell.qnix-workflow"
     "shell.starship"
     "shell.zsh"
     "storage.impermanence"

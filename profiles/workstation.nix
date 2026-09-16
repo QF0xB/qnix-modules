@@ -5,5 +5,6 @@
     "hardware.bluetooth"
     "hardware.thunderbolt"
     "network.networkmanager"
+    "security.yubikey"
   ];
 }
