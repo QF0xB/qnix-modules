@@ -70,11 +70,13 @@ assert builtins.any (
   binding:
   builtins.isAttrs (builtins.elemAt binding._args 0)
   && pkgs.lib.hasInfix " + return" (builtins.elemAt binding._args 0).expr
-  && pkgs.lib.hasInfix "hypr-special scratch scratchpad -- foot --app-id=scratchpad" (builtins.elemAt binding._args 1)
-  .expr
+  && pkgs.lib.hasInfix "hl.get_workspace(\"special:scratch\")" (builtins.elemAt binding._args 1).expr
+  && pkgs.lib.hasInfix "toggle_special(\"scratch\")" (builtins.elemAt binding._args 1).expr
 ) hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind;
 assert builtins.any (
-  binding: pkgs.lib.hasInfix "hypr-special obs obs -- obs" (builtins.elemAt binding._args 1).expr
+  binding:
+  pkgs.lib.hasInfix "hl.get_workspace(\"special:obs\")" (builtins.elemAt binding._args 1).expr
+  && pkgs.lib.hasInfix "toggle_special(\"obs\")" (builtins.elemAt binding._args 1).expr
 ) hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind;
 assert builtins.any (
   binding: (builtins.elemAt binding._args 1).expr == ''hl.dsp.workspace.toggle_special("messenger")''
@@ -169,6 +171,8 @@ assert
 assert opencodeHomeEvaluation.config.programs.opencode.enable;
 assert opencodeHomeEvaluation.config.xdg.desktopEntries.opencode.name == "OpenCode";
 assert opencodeHomeEvaluation.config.xdg.desktopEntries.opencode.terminal;
+assert pkgs.lib.hasInfix "opencode-launcher"
+  opencodeHomeEvaluation.config.xdg.desktopEntries.opencode.exec;
 assert opencodeHomeEvaluation.config.programs.opencode.package == pkgs.llm-agents.opencode;
 assert builtins.elem pkgs.llm-agents.rtk
   opencodeHomeEvaluation.config.programs.opencode.extraPackages;
@@ -179,6 +183,10 @@ assert builtins.elem pkgs.llm-agents.officecli
 assert builtins.elem pkgs.llm-agents.pdfvision
   opencodeHomeEvaluation.config.programs.opencode.extraPackages;
 assert opencodeHomeEvaluation.config.programs.opencode.enableMcpIntegration;
+assert builtins.elem "@satas/opencode-usage-bar@0.2.0"
+  opencodeHomeEvaluation.config.programs.opencode.tui.plugin;
+assert pkgs.lib.hasInfix "enabled = true"
+  opencodeHomeEvaluation.config.xdg.configFile."opencode/usage-bar.toml".text;
 assert builtins.hasAttr "installRtkOpenCodeHook" opencodeHomeEvaluation.config.home.activation;
 assert builtins.hasAttr "agent-browser" opencodeHomeEvaluation.config.programs.opencode.skills;
 assert builtins.hasAttr "officecli" opencodeHomeEvaluation.config.programs.opencode.skills;

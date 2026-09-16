@@ -18,6 +18,34 @@
       pkgs,
       ...
     }:
+    let
+      opencodeLauncher = pkgs.writeShellApplication {
+        name = "opencode-launcher";
+        runtimeInputs = [
+          pkgs.fd
+          pkgs.fzf
+          pkgs.llm-agents.opencode
+        ];
+        text = ''
+          set -eu
+
+          project="$({
+            printf '%s\n' "$HOME"
+            fd --type directory --hidden \
+              --exclude .cache \
+              --exclude .config \
+              --exclude .git \
+              --exclude .local \
+              --exclude .nix-profile \
+              --exclude node_modules \
+              . "$HOME"
+          } | fzf --prompt="OpenCode folder> ")" || exit 0
+
+          [ -n "$project" ] || exit 0
+          exec opencode "$project"
+        '';
+      };
+    in
     {
       programs.opencode = {
         enable = true;
@@ -32,12 +60,24 @@
         ];
         enableMcpIntegration = true;
 
+        tui.plugin = [ "@satas/opencode-usage-bar@0.2.0" ];
+
         skills = {
           agent-browser = "${pkgs.llm-agents.agent-browser.src}/skills/agent-browser";
           officecli = "${pkgs.llm-agents.officecli.src}/skills/officecli";
           pdfvision = "${pkgs.llm-agents.pdfvision.src}/skills/pdfvision";
         };
       };
+
+      xdg.configFile."opencode/usage-bar.toml".text = ''
+        [anthropic]
+        enabled = false
+
+        [openai]
+        enabled = true
+        show_5h = true
+        show_7d = true
+      '';
 
       # RTK owns and updates its OpenCode hook. This is equivalent to running
       # `rtk init -g --opencode --auto-patch` manually after each activation.
@@ -48,8 +88,8 @@
       xdg.desktopEntries.opencode = {
         name = "OpenCode";
         genericName = "AI coding agent";
-        comment = "OpenCode terminal interface";
-        exec = "${lib.getExe pkgs.llm-agents.opencode}";
+        comment = "Choose a folder and start OpenCode";
+        exec = lib.getExe opencodeLauncher;
         icon = "utilities-terminal";
         terminal = true;
         categories = [

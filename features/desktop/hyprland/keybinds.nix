@@ -63,6 +63,16 @@
         key: dispatcher: options:
         mkBind (modKey key) dispatcher options;
       exec = command: "hl.dsp.exec_cmd(${lua command})";
+      specialApp = workspace: command: ''
+        function()
+          local specialWorkspace = hl.get_workspace(${lua "special:${workspace}"})
+          if specialWorkspace == nil or specialWorkspace.windows == 0 then
+            hl.exec_cmd(${lua "uwsm app -- ${command}"})
+          else
+            hl.dispatch(hl.dsp.workspace.toggle_special(${lua workspace}))
+          end
+        end
+      '';
       focusWorkspace = workspace: "hl.dsp.focus({ workspace = ${lua workspace} })";
       moveWorkspace =
         workspace: follow:
@@ -147,7 +157,7 @@
           (mkBind "XF86AudioStop" (exec "playerctl stop") { locked = true; })
           (mkModBind "mouse:272" "hl.dsp.window.drag()" { mouse = true; })
           (mkModBind "mouse:273" "hl.dsp.window.resize()" { mouse = true; })
-          (mkModBind "return" (exec "hypr-special scratch scratchpad -- foot --app-id=scratchpad") { })
+          (mkModBind "return" (specialApp "scratch" "foot --app-id=scratchpad") { })
           (mkModBind "SHIFT + return" (exec "uwsm app -- ${terminal}") { })
           (mkModBind "CTRL + return" (exec "uwsm app -- ${terminal} --app-id floating") { })
           (mkModBind "SHIFT + code:53" (exec "uwsm stop") { })
@@ -166,10 +176,11 @@
           (mkModBind "code:47" (exec "uwsm app -- brave-origin") { })
           (mkModBind "CTRL + code:47" (exec "uwsm app -- brave-origin --private-window") { })
           (mkModBind "code:25" (exec "noctalia-shell ipc call launcher toggle") { })
-          (mkModBind "code:29" (exec "hypr-special obs obs -- obs") { })
+          (mkModBind "code:29" (specialApp "obs" "obs") { })
           (mkModBind "code:40" (exec "uwsm app -- ${terminal} -e yazi") { })
-          (mkModBind "code:57" (exec "hypr-special secrets bitwarden -- bitwarden") { })
-          (mkModBind "code:26" (exec "hypr-special notes obsidian -- obsidian") { })
+          (mkModBind "code:57" (specialApp "secrets" "bitwarden") { })
+          (mkModBind "code:26" (specialApp "notes" "obsidian") { })
+          (mkModBind "code:43" (specialApp "music" "tidal-hifi") { })
           (mkModBind "code:39" ''hl.dsp.workspace.toggle_special("messenger")'' { })
           (mkBind "SUPER + Tab" "hl.dsp.window.swap({ next = true })" { })
           (mkBind "ALT + Tab" "hl.dsp.window.cycle_next()" { })

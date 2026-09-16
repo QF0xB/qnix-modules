@@ -4,7 +4,10 @@
     "standalone-home"
   ];
 
-  requires.home = [ "desktop.xdg-folders" ];
+  requires.home = [
+    "desktop.xdg-folders"
+    "dev.git"
+  ];
 
   home =
     {
