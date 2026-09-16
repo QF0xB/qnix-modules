@@ -125,7 +125,7 @@ assert
     noctaliaHomeEvaluation.config.home.file."Pictures/wallpaper/solarized-dark.png".source
   == "solarized-dark.png";
 assert noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.location.name == "Munich";
-assert !noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.notifications.sounds.enabled;
+assert noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.notifications.sounds.enabled;
 assert
   noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.appLauncher.enableClipboardHistory;
 assert noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.appLauncher.enableClipPreview;

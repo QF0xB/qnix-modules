@@ -20,7 +20,7 @@
 
       notificationSounds = lib.mkOption {
         type = lib.types.bool;
-        default = false;
+        default = !(context.laptop or false);
         description = "Whether Noctalia notification sounds are enabled.";
       };
 
