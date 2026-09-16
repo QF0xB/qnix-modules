@@ -115,7 +115,7 @@
         };
         Service = {
           Type = "oneshot";
-          ExecStart = lib.getExe check;
+          ExecStart = "${check}/bin/qnix-client-pr-notify";
           Environment = lib.optional (tokenPath != null) "GITHUB_TOKEN_FILE=${tokenPath}";
         };
       };
