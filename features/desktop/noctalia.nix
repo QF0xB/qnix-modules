@@ -18,6 +18,12 @@
         description = "Whether Noctalia should start with the graphical session.";
       };
 
+      notificationSounds = lib.mkOption {
+        type = lib.types.bool;
+        default = false;
+        description = "Whether Noctalia notification sounds are enabled.";
+      };
+
       location = lib.mkOption {
         type = lib.types.str;
         default = "Munich";
@@ -219,6 +225,7 @@
         settings = lib.recursiveUpdate cfg.settings {
           appLauncher.terminalCommand = "${terminal} -e";
           location.name = cfg.location;
+          notifications.sounds.enabled = cfg.notificationSounds;
           wallpaper.directory =
             cfg.settings.wallpaper.directory or "${config.home.homeDirectory}/Pictures/wallpaper";
         };

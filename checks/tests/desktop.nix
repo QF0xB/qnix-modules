@@ -125,6 +125,7 @@ assert
     noctaliaHomeEvaluation.config.home.file."Pictures/wallpaper/solarized-dark.png".source
   == "solarized-dark.png";
 assert noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.location.name == "Munich";
+assert !noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.notifications.sounds.enabled;
 assert displayManagerFeature.supportedEnvironments == [ "nixos" ];
 assert displayManagerEvaluation.config.services.displayManager.sddm.enable;
 assert displayManagerEvaluation.config.services.displayManager.sddm.theme == "sddm-astronaut-theme";
@@ -355,6 +356,12 @@ assert
   ];
 assert clipboardHomeEvaluation.config.services.cliphist.enable;
 assert clipboardHomeEvaluation.config.services.cliphist.allowImages;
+assert builtins.elem "qnix-clipboard-history" (
+  map (package: package.pname or package.name) clipboardHomeEvaluation.config.home.packages
+);
+assert builtins.any (
+  binding: builtins.head binding._args == "SUPER + V"
+) clipboardHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind;
 assert
   screenshotsFeature.supportedEnvironments == [
     "nixos"
