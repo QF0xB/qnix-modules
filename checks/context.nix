@@ -114,6 +114,7 @@ let
     ++ lockFeature.__homeModuleFor "standalone-home"
   );
   laptopFeature = qnix.features."hardware.laptop";
+  nvidiaFeature = qnix.features."hardware.nvidia";
   powerManagementFeature = qnix.features."hardware.power-management";
   bluetoothFeature = qnix.features."hardware.bluetooth";
   laptopBluetoothFeature = laptopQnix.features."hardware.bluetooth";
@@ -761,6 +762,7 @@ let
       }
     ]
   );
+  nvidiaEvaluation = mkNixos (nvidiaFeature.optionModules ++ nvidiaFeature.nixosModules);
   powerManagementEvaluation = mkNixos (
     powerManagementFeature.optionModules
     ++ powerManagementFeature.nixosModules
@@ -865,6 +867,7 @@ in
     lockNixosEvaluation
     lockHomeEvaluation
     laptopFeature
+    nvidiaFeature
     powerManagementFeature
     bluetoothFeature
     laptopBluetoothFeature
@@ -958,6 +961,7 @@ in
     bluetoothEvaluation
     laptopBluetoothEvaluation
     laptopEvaluation
+    nvidiaEvaluation
     powerManagementEvaluation
     thunderboltEvaluation
     grubBootEvaluation

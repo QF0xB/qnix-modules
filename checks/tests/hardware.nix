@@ -15,6 +15,17 @@ assert
   laptopEvaluation.config.services.logind.settings.Login.HandleLidSwitchExternalPower == "lock";
 assert laptopEvaluation.config.services.logind.settings.Login.HandleLidSwitchDocked == "ignore";
 assert laptopEvaluation.config.services.logind.settings.Login.HandlePowerKey == "suspend";
+assert nvidiaFeature.supportedEnvironments == [ "nixos" ];
+assert nvidiaEvaluation.config.hardware.graphics.enable;
+assert nvidiaEvaluation.config.hardware.graphics.enable32Bit;
+assert nvidiaEvaluation.config.services.xserver.videoDrivers == [ "nvidia" ];
+assert nvidiaEvaluation.config.hardware.nvidia.modesetting.enable;
+assert nvidiaEvaluation.config.hardware.nvidia.open;
+assert nvidiaEvaluation.config.hardware.nvidia.nvidiaSettings;
+assert !nvidiaEvaluation.config.hardware.nvidia.powerManagement.enable;
+assert
+  nvidiaEvaluation.config.hardware.nvidia.package
+  == nvidiaEvaluation.config.boot.kernelPackages.nvidiaPackages.stable;
 assert powerManagementFeature.supportedEnvironments == [ "nixos" ];
 assert powerManagementEvaluation.config.services.upower.enable;
 assert powerManagementEvaluation.config.services.power-profiles-daemon.enable;
