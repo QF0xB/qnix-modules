@@ -98,10 +98,16 @@
     {
       cfg,
       lib,
+      osConfig ? null,
       pkgs,
       ...
     }:
     let
+      pinentryPackage =
+        if osConfig == null then
+          cfg.pinentryPackage
+        else
+          lib.attrByPath [ "qnix" "security" "gpg" "pinentryPackage" ] cfg.pinentryPackage osConfig;
       toHMPublicKey =
         key:
         let
@@ -141,7 +147,7 @@
         enable = true;
         enableSshSupport = cfg.enableSSH;
         enableExtraSocket = cfg.enableSSH;
-        pinentry.package = cfg.pinentryPackage;
+        pinentry.package = pinentryPackage;
         defaultCacheTtl = 3600;
         defaultCacheTtlSsh = 3600;
         maxCacheTtl = 86400;
