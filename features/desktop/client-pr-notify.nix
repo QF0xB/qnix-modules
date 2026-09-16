@@ -79,7 +79,7 @@
           filtered=$(printf '%s' "$json" | jq \
             --argjson authors '${builtins.toJSON cfg.matchAuthors}' \
             --argjson labels '${builtins.toJSON cfg.matchAnyLabel}' \
-            --arg title '${cfg.titleContains or ""}' \
+            --arg title '${if cfg.titleContains == null then "" else cfg.titleContains}' \
             '[.[] | select((($authors|length) == 0 or (.user.login as $u | $authors | index($u) != null)) and (($labels|length) == 0 or (.labels | map(.name) | any(. as $n | $labels | index($n) != null))) and (($title|length) == 0 or (.title | contains($title)))]')
           count=$(printf '%s' "$filtered" | jq 'length')
           [ "$count" -gt 0 ] || exit 0
