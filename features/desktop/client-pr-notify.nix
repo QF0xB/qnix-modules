@@ -111,12 +111,16 @@
       systemd.user.services.qnix-client-pr-notify = lib.mkIf cfg.enable {
         Unit = {
           Description = "Notify about matching GitHub pull requests";
+          Requires = [ "graphical-session.target" ];
           After = [ "graphical-session.target" ];
         };
         Service = {
           Type = "oneshot";
           ExecStart = "${check}/bin/qnix-client-pr-notify";
-          Environment = if tokenPath == null then [ ] else [ "GITHUB_TOKEN_FILE=${tokenPath}" ];
+          Environment = [
+            "DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/%U/bus"
+          ]
+          ++ (if tokenPath == null then [ ] else [ "GITHUB_TOKEN_FILE=${tokenPath}" ]);
         };
       };
 
