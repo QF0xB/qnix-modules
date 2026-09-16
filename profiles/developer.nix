@@ -1,6 +1,9 @@
 {
   features = {
-    nixos = [ "dev.nh" ];
+    nixos = [
+      "dev.git"
+      "dev.nh"
+    ];
     home = [
       "dev.ai-tools"
       "dev.devenv"

@@ -74,16 +74,22 @@
     {
       cfg,
       lib,
+      osConfig ? null,
       pkgs,
       ...
     }:
     let
+      githubTokenPath =
+        if osConfig == null then
+          cfg.githubTokenPath
+        else
+          lib.attrByPath [ "qnix" "dev" "git" "githubTokenPath" ] cfg.githubTokenPath osConfig;
       ghPackage =
-        if cfg.githubTokenPath == null then
+        if githubTokenPath == null then
           pkgs.gh
         else
           pkgs.writeShellScriptBin "gh" ''
-            export GH_TOKEN="$(<${lib.escapeShellArg cfg.githubTokenPath})"
+            export GH_TOKEN="$(<${lib.escapeShellArg githubTokenPath})"
             exec ${pkgs.gh}/bin/gh "$@"
           '';
     in
