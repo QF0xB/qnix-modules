@@ -30,7 +30,12 @@
           set -eu
 
           if [ "$#" -ne 1 ]; then
-            echo "usage: qnix-signed-commit <message>" >&2
+            echo "usage: qnix-signed-commit '<type>(<scope>)!: <summary>'" >&2
+            exit 2
+          fi
+
+          if ! [[ "$1" =~ ^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)\([[:alnum:]][[:alnum:]./_-]*\)!?:\ .+ ]]; then
+            echo "qnix-signed-commit: use a scoped Conventional Commit subject" >&2
             exit 2
           fi
 
