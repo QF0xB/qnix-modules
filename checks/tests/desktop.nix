@@ -88,7 +88,7 @@ assert builtins.any (
   rule:
   rule.name == "yubico-authenticator"
   && rule.float
-  && rule.match.class == "^(yubioath-flutter|com\\.yubico\\.yubioath)$"
+  && pkgs.lib.hasInfix "yubioath-flutter" rule.match.class
 ) hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.window_rule;
 assert builtins.any (
   rule: rule.name == "tag-jetbrains" && !rule.match.float && rule.tag == "+code"

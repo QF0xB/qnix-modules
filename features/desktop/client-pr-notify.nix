@@ -80,7 +80,7 @@
             --argjson authors '${builtins.toJSON cfg.matchAuthors}' \
             --argjson labels '${builtins.toJSON cfg.matchAnyLabel}' \
             --arg title '${if cfg.titleContains == null then "" else cfg.titleContains}' \
-            '[.[] | select((($authors|length) == 0 or (.user.login as $u | $authors | index($u) != null)) and (($labels|length) == 0 or (.labels | map(.name) | any(. as $n | $labels | index($n) != null))) and (($title|length) == 0 or (.title | contains($title)))]')
+            '[.[] | . as $pr | select(($authors | length) == 0 or any($authors[]; . == $pr.user.login)) | select(($labels | length) == 0 or any($pr.labels[]; .name as $label | any($labels[]; . == $label))) | select(($title | length) == 0 or ($pr.title | contains($title)))]')
           count=$(printf '%s' "$filtered" | jq 'length')
           [ "$count" -gt 0 ] || exit 0
           max_pr=$(printf '%s' "$filtered" | jq 'map(.number) | max')
