@@ -163,6 +163,31 @@ assert
   ];
 assert builtins.elem pkgs.brave-origin browserHomeEvaluation.config.home.packages;
 assert
+  (builtins.fromJSON (
+    builtins.readFile
+      browserNixosEvaluation.config.environment.etc."brave/policies/managed/extensions.json".source
+  )).ExtensionSettings."nngceckbapebfimnlniiiahkandclblb".installation_mode == "normal_installed";
+assert
+  (builtins.fromJSON (
+    builtins.readFile
+      browserNixosEvaluation.config.environment.etc."brave/policies/managed/extensions.json".source
+  )).ExtensionSettings."mjcnijlhddpbdemagnpefmlkjdagkogk".installation_mode == "normal_installed";
+assert
+  (builtins.fromJSON (
+    builtins.readFile
+      browserNixosEvaluation.config.environment.etc."brave/policies/managed/extensions.json".source
+  )).ExtensionSettings."eimadpbcbfnmbkopoojfekhnkhdbieeh".installation_mode == "normal_installed";
+assert
+  (builtins.fromJSON (
+    builtins.readFile
+      browserNixosEvaluation.config.environment.etc."brave/policies/managed/extensions.json".source
+  )).ExtensionSettings."mdjildafknihdffpkfmmpnpoiajfjnjd".installation_mode == "normal_installed";
+assert
+  (builtins.fromJSON (
+    builtins.readFile
+      browserNixosEvaluation.config.environment.etc."brave/policies/managed/extensions.json".source
+  )).ExtensionSettings."hfjbmagddngcpeloejdejnfgbamkjaeg".installation_mode == "normal_installed";
+assert
   opencodeFeature.supportedEnvironments == [
     "nixos"
     "integrated-home"
@@ -186,6 +211,9 @@ assert builtins.elem "qnix-signed-commit" (
   map (
     package: package.pname or package.name
   ) opencodeHomeEvaluation.config.programs.opencode.extraPackages
+);
+assert builtins.elem "qnix-signed-commit" (
+  map (package: package.pname or package.name) opencodeHomeEvaluation.config.home.packages
 );
 assert opencodeHomeEvaluation.config.programs.opencode.enableMcpIntegration;
 assert builtins.elem "@satas/opencode-usage-bar@0.2.0"

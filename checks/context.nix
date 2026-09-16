@@ -635,6 +635,7 @@ let
   browserHomeEvaluation = mkHome (
     browserFeature.optionModules ++ browserFeature.__homeModuleFor "standalone-home"
   );
+  browserNixosEvaluation = mkNixos (browserFeature.optionModules ++ browserFeature.nixosModules);
   opencodeHomeEvaluation = mkHome (
     xdgFoldersFeature.optionModules
     ++ xdgFoldersFeature.__homeModuleFor "standalone-home"
@@ -942,6 +943,7 @@ in
     terminalFallbackHomeEvaluation
     xdgFoldersHomeEvaluation
     browserHomeEvaluation
+    browserNixosEvaluation
     opencodeHomeEvaluation
     vscodeHomeEvaluation
     mcpHomeEvaluation
