@@ -116,7 +116,7 @@
         Service = {
           Type = "oneshot";
           ExecStart = "${check}/bin/qnix-client-pr-notify";
-          Environment = lib.optional (tokenPath != null) "GITHUB_TOKEN_FILE=${tokenPath}";
+          Environment = if tokenPath == null then [ ] else [ "GITHUB_TOKEN_FILE=${tokenPath}" ];
         };
       };
 
