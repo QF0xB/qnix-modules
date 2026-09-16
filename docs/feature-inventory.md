@@ -104,9 +104,9 @@ confirmation.
 | `apps.opencode`     | NixOS + integrated + standalone Home | `hyprland` | Home Manager OpenCode module, `llm-agents.nix` | OpenCode session, authentication data, installed skills | implemented | OpenCode with MCP servers, CodeGraph, RTK, Fence, and upstream Agent Browser, OfficeCLI, and PDFVision skills |
 | `apps.bitwarden`    | NixOS + Home       | `personal`              | —            | Vault/config?      | planned | Package/config; package availability uncertain                   |
 | `apps.music`        | NixOS + Home       | `hyprland`              | —            | `.config/tidal-hifi` | implemented | Tidal HiFi client with persisted profile state                  |
-| `apps.notes`        | NixOS + Home       | `personal`              | —            | Notes data         | planned | Notes application                                                |
-| `apps.obs`          | NixOS + Home       | `creator`               | —            | OBS config         | planned | Creator tooling                                                  |
-| `apps.social`       | NixOS + Home       | `personal`              | —            | Application state  | planned | Social application                                               |
+| `apps.notes`        | NixOS + Home       | `hyprland`              | —            | `.config/obsidian`  | implemented | Obsidian notes application                                      |
+| `apps.obs`          | NixOS + Home       | `hyprland`              | —            | `.config/obs-studio` | implemented | OBS Studio creator tooling                                      |
+| `apps.social`       | NixOS + Home       | `hyprland`              | —            | `.config/Signal`, `.config/Element` | implemented | Signal Desktop and Element Desktop                              |
 
 ## Development tools
 

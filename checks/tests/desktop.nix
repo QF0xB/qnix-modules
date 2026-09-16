@@ -179,6 +179,19 @@ assert
   ];
 assert builtins.elem pkgs.tidal-hifi musicHomeEvaluation.config.home.packages;
 assert musicNixosEvaluation.config.qnix.persist.users."*".directories == [ ".config/tidal-hifi" ];
+assert builtins.elem pkgs.obsidian notesHomeEvaluation.config.home.packages;
+assert notesNixosEvaluation.config.qnix.persist.users."*".directories == [ ".config/obsidian" ];
+assert builtins.elem pkgs.obs-studio obsHomeEvaluation.config.home.packages;
+assert obsNixosEvaluation.config.qnix.persist.users."*".directories == [ ".config/obs-studio" ];
+assert builtins.all (package: builtins.elem package socialHomeEvaluation.config.home.packages) [
+  pkgs.signal-desktop
+  pkgs.element-desktop
+];
+assert
+  socialNixosEvaluation.config.qnix.persist.users."*".directories == [
+    ".config/Signal"
+    ".config/Element"
+  ];
 assert
   (builtins.fromJSON (
     builtins.readFile

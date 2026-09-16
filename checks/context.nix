@@ -64,6 +64,9 @@ let
   persistFeature = qnix.features.persist;
   browserFeature = qnix.features."apps.browser";
   musicFeature = qnix.features."apps.music";
+  notesFeature = qnix.features."apps.notes";
+  obsFeature = qnix.features."apps.obs";
+  socialFeature = qnix.features."apps.social";
   opencodeFeature = qnix.features."apps.opencode";
   vscodeFeature = qnix.features."dev.vscode";
   mcpFeature = qnix.features."dev.mcp";
@@ -641,6 +644,18 @@ let
   musicHomeEvaluation = mkHome (
     musicFeature.optionModules ++ musicFeature.__homeModuleFor "standalone-home"
   );
+  notesHomeEvaluation = mkHome (
+    notesFeature.optionModules ++ notesFeature.__homeModuleFor "standalone-home"
+  );
+  notesNixosEvaluation = mkNixos (notesFeature.optionModules ++ notesFeature.nixosModules);
+  obsHomeEvaluation = mkHome (
+    obsFeature.optionModules ++ obsFeature.__homeModuleFor "standalone-home"
+  );
+  obsNixosEvaluation = mkNixos (obsFeature.optionModules ++ obsFeature.nixosModules);
+  socialHomeEvaluation = mkHome (
+    socialFeature.optionModules ++ socialFeature.__homeModuleFor "standalone-home"
+  );
+  socialNixosEvaluation = mkNixos (socialFeature.optionModules ++ socialFeature.nixosModules);
   opencodeHomeEvaluation = mkHome (
     xdgFoldersFeature.optionModules
     ++ xdgFoldersFeature.__homeModuleFor "standalone-home"
@@ -951,6 +966,12 @@ in
     browserNixosEvaluation
     musicNixosEvaluation
     musicHomeEvaluation
+    notesHomeEvaluation
+    notesNixosEvaluation
+    obsHomeEvaluation
+    obsNixosEvaluation
+    socialHomeEvaluation
+    socialNixosEvaluation
     opencodeHomeEvaluation
     vscodeHomeEvaluation
     mcpHomeEvaluation

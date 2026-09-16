@@ -14,8 +14,11 @@
     home = [
       "apps.browser"
       "apps.music"
+      "apps.notes"
+      "apps.obs"
       "apps.opencode"
       "apps.file-manager"
+      "apps.social"
       "desktop.clipboard"
       "desktop.hyprland"
       "desktop.hyprland.keybinds"
