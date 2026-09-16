@@ -84,6 +84,16 @@
           cfg.githubTokenPath
         else
           lib.attrByPath [ "qnix" "dev" "git" "githubTokenPath" ] cfg.githubTokenPath osConfig;
+      userName =
+        if osConfig == null then
+          cfg.userName
+        else
+          lib.attrByPath [ "qnix" "dev" "git" "userName" ] cfg.userName osConfig;
+      userEmail =
+        if osConfig == null then
+          cfg.userEmail
+        else
+          lib.attrByPath [ "qnix" "dev" "git" "userEmail" ] cfg.userEmail osConfig;
       ghPackage =
         if githubTokenPath == null then
           pkgs.gh
@@ -102,8 +112,8 @@
           // {
             user =
               { }
-              // lib.optionalAttrs (cfg.userName != null) { name = cfg.userName; }
-              // lib.optionalAttrs (cfg.userEmail != null) { email = cfg.userEmail; };
+              // lib.optionalAttrs (userName != null) { name = userName; }
+              // lib.optionalAttrs (userEmail != null) { email = userEmail; };
           }
           // lib.optionalAttrs (cfg.aliases != { }) { alias = cfg.aliases; };
         signing = {
