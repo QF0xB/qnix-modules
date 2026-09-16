@@ -172,6 +172,14 @@ assert
   ];
 assert builtins.elem pkgs.brave-origin browserHomeEvaluation.config.home.packages;
 assert
+  musicFeature.supportedEnvironments == [
+    "nixos"
+    "integrated-home"
+    "standalone-home"
+  ];
+assert builtins.elem pkgs.tidal-hifi musicHomeEvaluation.config.home.packages;
+assert musicNixosEvaluation.config.qnix.persist.users."*".directories == [ ".config/tidal-hifi" ];
+assert
   (builtins.fromJSON (
     builtins.readFile
       browserNixosEvaluation.config.environment.etc."brave/policies/managed/extensions.json".source

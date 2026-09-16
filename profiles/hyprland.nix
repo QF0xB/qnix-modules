@@ -13,6 +13,7 @@
     ];
     home = [
       "apps.browser"
+      "apps.music"
       "apps.opencode"
       "apps.file-manager"
       "desktop.clipboard"

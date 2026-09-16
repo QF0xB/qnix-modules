@@ -103,7 +103,7 @@ confirmation.
 | `apps.file-manager` | Integrated + standalone Home | `hyprland` | `desktop.xdg-folders` | — | finished | Nemo with XDG directory pins; Yazi with Git, GVfs mounting, archive, trash, and navigation tooling |
 | `apps.opencode`     | NixOS + integrated + standalone Home | `hyprland` | Home Manager OpenCode module, `llm-agents.nix` | OpenCode session, authentication data, installed skills | implemented | OpenCode with MCP servers, CodeGraph, RTK, Fence, and upstream Agent Browser, OfficeCLI, and PDFVision skills |
 | `apps.bitwarden`    | NixOS + Home       | `personal`              | —            | Vault/config?      | planned | Package/config; package availability uncertain                   |
-| `apps.music`        | NixOS + Home       | `personal`              | —            | Music client state | planned | Music client                                                     |
+| `apps.music`        | NixOS + Home       | `hyprland`              | —            | `.config/tidal-hifi` | implemented | Tidal HiFi client with persisted profile state                  |
 | `apps.notes`        | NixOS + Home       | `personal`              | —            | Notes data         | planned | Notes application                                                |
 | `apps.obs`          | NixOS + Home       | `creator`               | —            | OBS config         | planned | Creator tooling                                                  |
 | `apps.social`       | NixOS + Home       | `personal`              | —            | Application state  | planned | Social application                                               |
