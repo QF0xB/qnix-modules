@@ -134,11 +134,20 @@
       cfg,
       context,
       lib,
+      osConfig ? null,
       pkgs,
       ...
     }:
     let
       modifier = if context.vm or false then "ALT" else "super";
+      # Integrated Home Manager must use the same XKB list as NixOS. Keeping a
+      # separate Hyprland default made newly attached keyboards start on a
+      # different layout and made layout indices appear to change randomly.
+      keyboard =
+        if osConfig == null then
+          cfg.xkb
+        else
+          lib.attrByPath [ "qnix" "system" "localisation" "xkb" ] cfg.xkb osConfig;
     in
     {
       home.packages = with pkgs; [
@@ -206,8 +215,8 @@
             };
 
             input = {
-              kb_layout = cfg.xkb.layout;
-              kb_variant = cfg.xkb.variant;
+              kb_layout = keyboard.layout;
+              kb_variant = keyboard.variant;
               kb_model = "";
               kb_rules = "";
               follow_mouse = 1;

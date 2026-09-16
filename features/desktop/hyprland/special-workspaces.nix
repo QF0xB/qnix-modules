@@ -26,30 +26,21 @@
             exit 2
           fi
 
-          workspace="$1"
-          wanted="$2"
+          ws="$1"
+          want="$2"
           shift 3
 
-          # Closing an already visible special workspace must never depend on
-          # whether its application can still be found (or is still starting).
-          visible="$(${pkgs.hyprland}/bin/hyprctl -j monitors | ${pkgs.jq}/bin/jq -r --arg workspace "special:$workspace" '
-            any(.[]; .specialWorkspace.name == $workspace)
-          ')"
-
-          if [ "$visible" = "true" ]; then
-            ${pkgs.hyprland}/bin/hyprctl dispatch togglespecialworkspace "$workspace" >/dev/null
-            exit 0
-          fi
-
-          exists="$(${pkgs.hyprland}/bin/hyprctl -j clients | ${pkgs.jq}/bin/jq -r --arg value "$wanted" '
-            any(.[]; ((.class // "" | ascii_downcase) == ($value | ascii_downcase)) or ((.initialClass // "" | ascii_downcase) == ($value | ascii_downcase)))
-          ')"
+          exists="$(
+            hyprctl -j clients | jq -r --arg v "$want" '
+              any(.[]; (.class == $v) or (.initialClass == $v))
+            '
+          )"
 
           if [ "$exists" != "true" ]; then
             uwsm app -- "$@" >/dev/null 2>&1 &
+          else
+            hyprctl dispatch togglespecialworkspace "$ws" >/dev/null
           fi
-
-          ${pkgs.hyprland}/bin/hyprctl dispatch togglespecialworkspace "$workspace" >/dev/null
         '';
       };
     in
