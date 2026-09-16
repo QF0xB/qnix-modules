@@ -3,11 +3,9 @@
   config,
   pkgs,
   ...
-}:
-let
+}: let
   cfg = config.qnix.desktop.hyprland;
-in
-{
+in {
   config = lib.mkIf cfg.enable {
     programs.hyprland = {
       enable = true;
@@ -22,8 +20,8 @@ in
 
     # Use the upstream user unit and attach it to the graphical session instead
     # of starting systemctl from Hyprland's configuration.
-    systemd.user.packages = [ pkgs.hyprpolkitagent ];
-    systemd.user.targets.graphical-session.wants = [ "hyprpolkitagent.service" ];
+    #    systemd.user.packages = [ pkgs.hyprpolkitagent ];
+    #systemd.user.targets.graphical-session.wants = [ "hyprpolkitagent.service" ];
 
     qnix.persist.users."*".files = [
       ".config/hypr/monitors.conf"
