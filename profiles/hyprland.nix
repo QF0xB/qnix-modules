@@ -21,6 +21,7 @@
       "apps.file-manager"
       "apps.social"
       "desktop.clipboard"
+      "desktop.client-pr-notify"
       "desktop.hyprland"
       "desktop.hyprland.keybinds"
       "desktop.hyprland.monitors"
