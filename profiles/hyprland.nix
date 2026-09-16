@@ -3,6 +3,7 @@
 
   features = {
     nixos = [
+      "apps.browser"
       "desktop.displaymanager"
       "desktop.hyprland"
       "desktop.hyprland.monitors"
