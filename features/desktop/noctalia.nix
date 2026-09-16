@@ -36,6 +36,12 @@
           settingsVersion = 49;
 
           appLauncher = {
+            enableClipboardHistory = true;
+            autoPasteClipboard = false;
+            enableClipPreview = true;
+            clipboardWrapText = true;
+            clipboardWatchTextCommand = "wl-paste --type text --watch cliphist store";
+            clipboardWatchImageCommand = "wl-paste --type image --watch cliphist store";
             iconMode = "tabler";
             position = "center";
             terminalCommand = "foot -e";

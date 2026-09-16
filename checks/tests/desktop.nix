@@ -126,6 +126,12 @@ assert
   == "solarized-dark.png";
 assert noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.location.name == "Munich";
 assert !noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.notifications.sounds.enabled;
+assert
+  noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.appLauncher.enableClipboardHistory;
+assert noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.appLauncher.enableClipPreview;
+assert
+  noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.appLauncher.clipboardWatchTextCommand
+  == "wl-paste --type text --watch cliphist store";
 assert displayManagerFeature.supportedEnvironments == [ "nixos" ];
 assert displayManagerEvaluation.config.services.displayManager.sddm.enable;
 assert displayManagerEvaluation.config.services.displayManager.sddm.theme == "sddm-astronaut-theme";
