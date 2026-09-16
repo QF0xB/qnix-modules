@@ -17,7 +17,10 @@ in
   config = lib.mkIf cfg.enable {
     programs.noctalia-shell = {
       enable = true;
-      systemd.enable = true;
+      # Hyprland is managed by UWSM, so launch Noctalia from the compositor
+      # startup hook below.  The legacy systemd integration can run before
+      # UWSM has published the Wayland session environment.
+      systemd.enable = false;
       settings = lib.mkForce {
         settingsVersion = 49;
 

@@ -166,6 +166,7 @@ in
                 function()
                   hl.exec_cmd("hyprctl switchxkblayout all 1")
                   hl.exec_cmd("systemctl --user start hyprpolkitagent")
+                  hl.exec_cmd("uwsm app -- noctalia-shell")
                 end
               '')
             ];
