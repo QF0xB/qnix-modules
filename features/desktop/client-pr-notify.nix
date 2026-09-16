@@ -115,10 +115,6 @@
         };
         Service = {
           Type = "oneshot";
-          SuccessExitStatus = [
-            0
-            3
-          ];
           ExecStart = "${check}/bin/qnix-client-pr-notify";
           Environment = if tokenPath == null then [ ] else [ "GITHUB_TOKEN_FILE=${tokenPath}" ];
         };
