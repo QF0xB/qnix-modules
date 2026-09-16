@@ -49,6 +49,7 @@
           runtimeInputs = [
             pkgs.coreutils
             pkgs.grim
+            pkgs.libnotify
             pkgs.slurp
             pkgs.wl-clipboard
           ];
@@ -59,6 +60,8 @@
             mkdir -p "$directory"
             ${capture} "$filename"
             ${lib.optionalString cfg.copyToClipboard "wl-copy --type image/png < \"$filename\""}
+            notify-send --app-name="Screenshots" --icon="$filename" \
+              "Screenshot saved" "$filename"
           '';
         };
       region = mkScreenshot "qnix-screenshot-region" ''
