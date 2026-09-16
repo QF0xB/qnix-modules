@@ -86,7 +86,7 @@ confirmation.
 | `desktop.clipboard`                   | Integrated + standalone Home | `hyprland` | `desktop.wayland` | — | finished | ClipHist clipboard history with image support |
 | `desktop.lock`                        | NixOS + Home       | `hyprland` | `desktop.hyprland` | —                  | implemented | Hyprlock screen locking           |
 | `desktop.screenshots`                 | Integrated + standalone Home | `hyprland` | `desktop.hyprland`, `desktop.xdg-folders` | — | finished | Grim and Slurp screenshots with save-and-copy bindings |
-| `desktop.client-pr-notify`            | Home               | `hyprland` | `security.sops`     | —                  | planned | Repository-specific notification |
+| `desktop.client-pr-notify`            | Home               | `hyprland` | `security.sops`     | `.local/state/qnix-client-pr-notify` | implemented | Opt-in GitHub PR notifications |
 
 ## Appearance and theming
 
