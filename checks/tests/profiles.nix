@@ -11,6 +11,7 @@ assert defaultEvaluation.config.qnix.network.addressing.enable;
 assert workstationProfileEvaluation.config.qnix.hardware.bluetooth.enable;
 assert workstationProfileEvaluation.config.qnix.hardware.thunderbolt.enable;
 assert workstationProfileEvaluation.config.qnix.network.networkmanager.enable;
+assert hyprlandProfileEvaluation.config.boot.plymouth.enable;
 assert laptopProfileEvaluation.config.qnix.hardware.laptop.enable;
 assert laptopProfileEvaluation.config.qnix.hardware.power-management.enable;
 assert defaultEvaluation.config.programs.fish.enable;

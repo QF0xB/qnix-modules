@@ -10,6 +10,7 @@
       "desktop.lock"
       "desktop.sound"
       "desktop.wayland"
+      "system.plymouth"
     ];
     home = [
       "apps.browser"
