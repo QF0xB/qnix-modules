@@ -187,6 +187,7 @@ assert builtins.elem "@satas/opencode-usage-bar@0.2.0"
   opencodeHomeEvaluation.config.programs.opencode.tui.plugin;
 assert pkgs.lib.hasInfix "enabled = true"
   opencodeHomeEvaluation.config.xdg.configFile."opencode/usage-bar.toml".text;
+assert builtins.hasAttr "opencode/auth.json" opencodeHomeEvaluation.config.xdg.stateFile;
 assert builtins.hasAttr "installRtkOpenCodeHook" opencodeHomeEvaluation.config.home.activation;
 assert builtins.hasAttr "agent-browser" opencodeHomeEvaluation.config.programs.opencode.skills;
 assert builtins.hasAttr "officecli" opencodeHomeEvaluation.config.programs.opencode.skills;

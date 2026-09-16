@@ -14,6 +14,7 @@
 
   home =
     {
+      config,
       lib,
       pkgs,
       ...
@@ -78,6 +79,12 @@
         show_5h = true
         show_7d = true
       '';
+
+      # opencode-usage-bar 0.2.0 reads OpenCode's auth store from the XDG
+      # state directory, while OpenCode writes it under XDG data.
+      xdg.stateFile."opencode/auth.json".source = config.lib.file.mkOutOfStoreSymlink (
+        "${config.xdg.dataHome}/opencode/auth.json"
+      );
 
       # RTK owns and updates its OpenCode hook. This is equivalent to running
       # `rtk init -g --opencode --auto-patch` manually after each activation.
