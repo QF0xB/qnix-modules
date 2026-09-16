@@ -7,9 +7,19 @@
 
   persistence.users."*".directories = [ ".config/obsidian" ];
 
-  home =
-    { pkgs, ... }:
+  options =
+    { lib, pkgs, ... }:
     {
-      home.packages = [ pkgs.obsidian ];
+      package = lib.mkOption {
+        type = lib.types.package;
+        default = pkgs.obsidian;
+        description = "Notes application package to install.";
+      };
+    };
+
+  home =
+    { cfg, ... }:
+    {
+      home.packages = [ cfg.package ];
     };
 }

@@ -10,12 +10,22 @@
     ".config/Element"
   ];
 
-  home =
-    { pkgs, ... }:
+  options =
+    { lib, pkgs, ... }:
     {
-      home.packages = [
-        pkgs.signal-desktop
-        pkgs.element-desktop
-      ];
+      packages = lib.mkOption {
+        type = lib.types.listOf lib.types.package;
+        default = with pkgs; [
+          signal-desktop
+          element-desktop
+        ];
+        description = "Social application packages to install.";
+      };
+    };
+
+  home =
+    { cfg, ... }:
+    {
+      home.packages = cfg.packages;
     };
 }

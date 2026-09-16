@@ -5,8 +5,14 @@
   ];
 
   options =
-    { lib, ... }:
+    { lib, pkgs, ... }:
     {
+      package = lib.mkOption {
+        type = lib.types.package;
+        default = pkgs.foot;
+        description = "Terminal package to install and use.";
+      };
+
       server = lib.mkOption {
         type = lib.types.bool;
         default = true;
@@ -24,16 +30,16 @@
     {
       cfg,
       lib,
-      pkgs,
       ...
     }:
     {
       programs.foot = {
         enable = true;
+        package = cfg.package;
         server.enable = cfg.server;
         settings = cfg.settings;
       };
 
-      home.sessionVariables.TERMINAL = if cfg.server then "footclient" else lib.getExe pkgs.foot;
+      home.sessionVariables.TERMINAL = if cfg.server then "footclient" else lib.getExe cfg.package;
     };
 }

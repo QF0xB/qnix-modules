@@ -7,9 +7,19 @@
 
   persistence.users."*".directories = [ ".config/tidal-hifi" ];
 
-  home =
-    { pkgs, ... }:
+  options =
+    { lib, pkgs, ... }:
     {
-      home.packages = [ pkgs.tidal-hifi ];
+      package = lib.mkOption {
+        type = lib.types.package;
+        default = pkgs.tidal-hifi;
+        description = "Music player package to install.";
+      };
+    };
+
+  home =
+    { cfg, ... }:
+    {
+      home.packages = [ cfg.package ];
     };
 }

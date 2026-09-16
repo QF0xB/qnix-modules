@@ -159,6 +159,7 @@ assert
     "standalone-home"
   ];
 assert terminalHomeEvaluation.config.programs.foot.enable;
+assert terminalHomeEvaluation.config.programs.foot.package == pkgs.foot;
 assert terminalHomeEvaluation.config.programs.foot.server.enable;
 assert terminalHomeEvaluation.config.home.sessionVariables.TERMINAL == "footclient";
 assert !terminalFallbackHomeEvaluation.config.programs.foot.server.enable;
@@ -171,6 +172,7 @@ assert
     "standalone-home"
   ];
 assert builtins.elem pkgs.brave-origin browserHomeEvaluation.config.home.packages;
+assert browserHomeEvaluation.config.qnix.apps.browser.package == pkgs.brave-origin;
 assert
   musicFeature.supportedEnvironments == [
     "nixos"
@@ -178,15 +180,23 @@ assert
     "standalone-home"
   ];
 assert builtins.elem pkgs.tidal-hifi musicHomeEvaluation.config.home.packages;
+assert musicHomeEvaluation.config.qnix.apps.music.package == pkgs.tidal-hifi;
 assert musicNixosEvaluation.config.qnix.persist.users."*".directories == [ ".config/tidal-hifi" ];
 assert builtins.elem pkgs.obsidian notesHomeEvaluation.config.home.packages;
+assert notesHomeEvaluation.config.qnix.apps.notes.package == pkgs.obsidian;
 assert notesNixosEvaluation.config.qnix.persist.users."*".directories == [ ".config/obsidian" ];
 assert builtins.elem pkgs.obs-studio obsHomeEvaluation.config.home.packages;
+assert obsHomeEvaluation.config.qnix.apps.obs.package == pkgs.obs-studio;
 assert obsNixosEvaluation.config.qnix.persist.users."*".directories == [ ".config/obs-studio" ];
 assert builtins.all (package: builtins.elem package socialHomeEvaluation.config.home.packages) [
   pkgs.signal-desktop
   pkgs.element-desktop
 ];
+assert
+  socialHomeEvaluation.config.qnix.apps.social.packages == [
+    pkgs.signal-desktop
+    pkgs.element-desktop
+  ];
 assert
   socialNixosEvaluation.config.qnix.persist.users."*".directories == [
     ".config/Signal"

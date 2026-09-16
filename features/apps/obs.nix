@@ -7,9 +7,19 @@
 
   persistence.users."*".directories = [ ".config/obs-studio" ];
 
-  home =
-    { pkgs, ... }:
+  options =
+    { lib, pkgs, ... }:
     {
-      home.packages = [ pkgs.obs-studio ];
+      package = lib.mkOption {
+        type = lib.types.package;
+        default = pkgs.obs-studio;
+        description = "OBS Studio package to install.";
+      };
+    };
+
+  home =
+    { cfg, ... }:
+    {
+      home.packages = [ cfg.package ];
     };
 }

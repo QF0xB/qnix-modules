@@ -19,6 +19,16 @@
       };
     };
 
+  options =
+    { lib, pkgs, ... }:
+    {
+      package = lib.mkOption {
+        type = lib.types.package;
+        default = pkgs.brave-origin;
+        description = "Browser package to install.";
+      };
+    };
+
   environments = [
     "nixos"
     "integrated-home"
@@ -28,8 +38,8 @@
   persistence.users."*".directories = [ ".config/BraveSoftware" ];
 
   home =
-    { pkgs, ... }:
+    { cfg, ... }:
     {
-      home.packages = [ pkgs.brave-origin ];
+      home.packages = [ cfg.package ];
     };
 }
