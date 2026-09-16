@@ -86,7 +86,7 @@
           max_pr=$(printf '%s' "$filtered" | jq 'map(.number) | max')
           [ "$max_pr" -gt "$last" ] || exit 0
           summary=$(printf '%s' "$filtered" | jq -r 'if length == 1 then .[0] | "\(.title) (#\(.number))" else "\(length) matching PRs (highest #\(map(.number) | max))" end')
-          notify-send --app-name="QNix" "Client repo: matching PR" "${cfg.owner}/${cfg.repo} - $summary" || true
+          notify-send --app-name="QNix" "Client repo: matching PR" "${cfg.owner}/${cfg.repo} - $summary"
           printf '%s\n' "$max_pr" > "$state_file"
         '';
       };
