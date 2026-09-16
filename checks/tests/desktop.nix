@@ -182,6 +182,11 @@ assert builtins.elem pkgs.llm-agents.officecli
   opencodeHomeEvaluation.config.programs.opencode.extraPackages;
 assert builtins.elem pkgs.llm-agents.pdfvision
   opencodeHomeEvaluation.config.programs.opencode.extraPackages;
+assert builtins.elem "qnix-signed-commit" (
+  map (
+    package: package.pname or package.name
+  ) opencodeHomeEvaluation.config.programs.opencode.extraPackages
+);
 assert opencodeHomeEvaluation.config.programs.opencode.enableMcpIntegration;
 assert builtins.elem "@satas/opencode-usage-bar@0.2.0"
   opencodeHomeEvaluation.config.programs.opencode.tui.plugin;
@@ -190,6 +195,7 @@ assert pkgs.lib.hasInfix "enabled = true"
 assert builtins.hasAttr "opencode/auth.json" opencodeHomeEvaluation.config.xdg.stateFile;
 assert builtins.hasAttr "installRtkOpenCodeHook" opencodeHomeEvaluation.config.home.activation;
 assert builtins.hasAttr "agent-browser" opencodeHomeEvaluation.config.programs.opencode.skills;
+assert builtins.hasAttr "git-signing" opencodeHomeEvaluation.config.programs.opencode.skills;
 assert builtins.hasAttr "officecli" opencodeHomeEvaluation.config.programs.opencode.skills;
 assert builtins.hasAttr "pdfvision" opencodeHomeEvaluation.config.programs.opencode.skills;
 assert builtins.all

@@ -20,6 +20,44 @@
       ...
     }:
     let
+      signedCommit = pkgs.writeShellApplication {
+        name = "qnix-signed-commit";
+        runtimeInputs = [
+          pkgs.git
+          pkgs.libnotify
+        ];
+        text = ''
+          set -eu
+
+          if [ "$#" -ne 1 ]; then
+            echo "usage: qnix-signed-commit <message>" >&2
+            exit 2
+          fi
+
+          if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+            echo "qnix-signed-commit: not inside a Git repository" >&2
+            exit 2
+          fi
+
+          if git diff --cached --quiet; then
+            echo "qnix-signed-commit: no staged changes" >&2
+            exit 2
+          fi
+
+          notify-send --urgency=critical --expire-time=0 \
+            "YubiKey touch required" \
+            "Touch your YubiKey to sign the final commit."
+
+          if git commit -S -m "$1"; then
+            notify-send "Signed commit created" "$1"
+          else
+            notify-send --urgency=critical --expire-time=0 \
+              "Signed commit failed" \
+              "Complete the YubiKey prompt and retry; staged changes were preserved."
+            exit 1
+          fi
+        '';
+      };
       opencodeLauncher = pkgs.writeShellApplication {
         name = "opencode-launcher";
         runtimeInputs = [
@@ -53,18 +91,21 @@
         package = pkgs.llm-agents.opencode;
         # These skills invoke their matching CLIs, so they must be available to
         # OpenCode even when the developer profile is not selected.
-        extraPackages = with pkgs.llm-agents; [
-          agent-browser
-          officecli
-          pdfvision
-          rtk
-        ];
+        extraPackages =
+          (with pkgs.llm-agents; [
+            agent-browser
+            officecli
+            pdfvision
+            rtk
+          ])
+          ++ [ signedCommit ];
         enableMcpIntegration = true;
 
         tui.plugin = [ "@satas/opencode-usage-bar@0.2.0" ];
 
         skills = {
           agent-browser = "${pkgs.llm-agents.agent-browser.src}/skills/agent-browser";
+          git-signing = ../../skills/git-signing;
           officecli = "${pkgs.llm-agents.officecli.src}/skills/officecli";
           pdfvision = "${pkgs.llm-agents.pdfvision.src}/skills/pdfvision";
         };
