@@ -17,6 +17,7 @@
         runtimeInputs = [
           pkgs.hyprland
           pkgs.jq
+          pkgs.uwsm
         ];
         text = ''
           set -eu

@@ -103,6 +103,12 @@ assert
   ];
 assert hyprlandProfileEvaluation.config.qnix.desktop.hyprland.noHardwareCursors;
 assert hyprlandStandaloneProfileEvaluation.config.wayland.windowManager.hyprland.enable;
+assert builtins.all
+  (package: builtins.elem package hyprlandStandaloneProfileEvaluation.config.home.packages)
+  [
+    pkgs.hyprland
+    pkgs.uwsm
+  ];
 assert
   hyprlandProfileEvaluation.config.qnix.desktop.hyprland.devices."epic-mouse-v1".sensitivity == -0.5;
 assert
@@ -146,6 +152,7 @@ assert
   soundFeature.supportedEnvironments == [
     "nixos"
     "integrated-home"
+    "standalone-home"
   ];
 assert soundNixosEvaluation.config.services.pipewire.enable;
 assert soundNixosEvaluation.config.services.pipewire.alsa.enable;

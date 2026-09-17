@@ -54,7 +54,7 @@
     { cfg, lib, ... }:
     {
       boot = {
-        supportedFilesystems = lib.mkIf cfg.zfsSupport { zfs = true; };
+        supportedFilesystems = lib.mkIf cfg.zfsSupport [ "zfs" ];
 
         loader = {
           timeout = cfg.timeout;

@@ -1,6 +1,10 @@
 {
   environments = [ "nixos" ];
 
+  persistence.users."*".directories = [
+    ".config/sops/age"
+  ];
+
   options =
     { lib, ... }:
     {

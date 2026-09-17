@@ -139,6 +139,50 @@
           inherit name runtimeInputs text;
         };
 
+      qnixSignedCommit = pkgs.writeShellApplication {
+        name = "qnix-signed-commit";
+        runtimeInputs = [
+          pkgs.git
+          pkgs.libnotify
+        ];
+        text = ''
+          set -eu
+
+          if [ "$#" -ne 1 ]; then
+            echo "usage: qnix-signed-commit '<type>(<scope>)!: <summary>'" >&2
+            exit 2
+          fi
+
+          if ! [[ "$1" =~ ^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)\([[:alnum:]][[:alnum:]./_-]*\)!?:\ .+ ]]; then
+            echo "qnix-signed-commit: use a scoped Conventional Commit subject" >&2
+            exit 2
+          fi
+
+          if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+            echo "qnix-signed-commit: not inside a Git repository" >&2
+            exit 2
+          fi
+
+          if git diff --cached --quiet; then
+            echo "qnix-signed-commit: no staged changes" >&2
+            exit 2
+          fi
+
+          notify-send --urgency=critical --expire-time=0 \
+            "YubiKey touch required" \
+            "Touch your YubiKey to sign the final commit."
+
+          if git commit -S -m "$1"; then
+            notify-send "Signed commit created" "$1"
+          else
+            notify-send --urgency=critical --expire-time=0 \
+              "Signed commit failed" \
+              "Complete the YubiKey prompt and retry; staged changes were preserved."
+            exit 1
+          fi
+        '';
+      };
+
       qnixDevModules = mkTool "qnix-dev-modules" ''
         # shellcheck source=/dev/null
         source ${helper}
@@ -207,6 +251,7 @@
     in
     {
       home.packages = [
+        qnixSignedCommit
         qnixDevModules
         qnixUseRelease
         qnixSyncModules

@@ -153,11 +153,14 @@
       home.packages = with pkgs; [
         wl-clipboard
         hyprpolkitagent
+      ] ++ lib.optionals (osConfig == null) [
+        hyprland
+        uwsm
       ];
 
       wayland.windowManager.hyprland = {
         enable = true;
-        package = null;
+        package = if osConfig == null then pkgs.hyprland else null;
         portalPackage = null;
         systemd.enable = false;
         settings = {

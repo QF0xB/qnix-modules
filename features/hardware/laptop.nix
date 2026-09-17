@@ -13,6 +13,7 @@
         "suspend"
         "hibernate"
         "hybrid-sleep"
+        "suspend-then-hibernate"
         "lock"
       ];
     in

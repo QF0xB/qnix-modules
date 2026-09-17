@@ -75,13 +75,15 @@
     {
       programs.mcp.servers =
         servers
+        // {
+          codegraph = {
+            command = "${codegraphMcp}/bin/qnix-codegraph-mcp";
+          };
+        }
         // lib.optionalAttrs (githubServer != null) {
           github = githubServer // {
             command = "${githubMcp}/bin/qnix-github-mcp-server";
             args = [ ];
-          };
-          codegraph = {
-            command = "${codegraphMcp}/bin/qnix-codegraph-mcp";
           };
         };
 
