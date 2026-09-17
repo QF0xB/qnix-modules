@@ -10,6 +10,7 @@
       "dev.devenv"
       "dev.direnv"
       "dev.git"
+      "dev.jetbrains"
       "dev.mcp"
       "dev.nixfmt"
       "dev.nvf"
