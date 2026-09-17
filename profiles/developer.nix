@@ -12,6 +12,7 @@
       "dev.mcp"
       "dev.nixfmt"
       "dev.nvf"
+      "dev.postman"
       "dev.vscode"
     ];
   };
