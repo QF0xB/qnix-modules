@@ -255,7 +255,8 @@ let
     [ stylix.nixosModules.stylix ] ++ stylixFeature.optionModules ++ stylixFeature.nixosModules
   );
   sopsEvaluation = mkNixos (
-    [ sops-nix.nixosModules.sops ]
+    persistFeature.optionModules
+    ++ [ sops-nix.nixosModules.sops ]
     ++ sopsFeature.optionModules
     ++ sopsFeature.nixosModules
     ++ [
