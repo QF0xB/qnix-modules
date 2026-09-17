@@ -59,12 +59,6 @@
         description = "Whether to disable hardware cursors for Hyprland.";
       };
 
-      useSystemPackage = lib.mkOption {
-        type = lib.types.bool;
-        default = false;
-        description = "Whether a non-NixOS host provides Hyprland and its display-manager session.";
-      };
-
       xkb = {
         layout = lib.mkOption {
           type = lib.types.str;
@@ -163,13 +157,13 @@
           hyprpolkitagent
         ]
         ++ lib.optionals (osConfig == null) [
+          hyprland
           uwsm
-        ]
-        ++ lib.optionals (osConfig == null && !cfg.useSystemPackage) [ hyprland ];
+        ];
 
       wayland.windowManager.hyprland = {
         enable = true;
-        package = if osConfig == null && !cfg.useSystemPackage then pkgs.hyprland else null;
+        package = if osConfig == null then pkgs.hyprland else null;
         portalPackage = null;
         systemd.enable = false;
         settings = {
