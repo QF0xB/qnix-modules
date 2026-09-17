@@ -17,11 +17,19 @@ assert !plymouthEvaluation.config.boot.initrd.verbose;
 assert plymouthEvaluation.config.stylix.targets.plymouth.enable == false;
 assert bootEvaluation.config.boot.loader.systemd-boot.enable;
 assert bootEvaluation.config.boot.loader.timeout == 3;
-assert builtins.elem "zfs" bootEvaluation.config.boot.supportedFilesystems;
+assert
+  if builtins.isAttrs bootEvaluation.config.boot.supportedFilesystems then
+    builtins.hasAttr "zfs" bootEvaluation.config.boot.supportedFilesystems
+  else
+    builtins.elem "zfs" bootEvaluation.config.boot.supportedFilesystems;
 assert bootEvaluation.config.boot.initrd.systemd.enable;
 assert grubBootEvaluation.config.boot.loader.grub.enable;
 assert grubBootEvaluation.config.boot.loader.grub.enableCryptodisk;
-assert !(builtins.elem "zfs" grubBootEvaluation.config.boot.supportedFilesystems);
+assert
+  if builtins.isAttrs grubBootEvaluation.config.boot.supportedFilesystems then
+    !(builtins.hasAttr "zfs" grubBootEvaluation.config.boot.supportedFilesystems)
+  else
+    !(builtins.elem "zfs" grubBootEvaluation.config.boot.supportedFilesystems);
 assert userFeature.supportedEnvironments == [ "nixos" ];
 assert userEvaluation.config.users.mutableUsers == false;
 assert userEvaluation.config.users.defaultUserShell == pkgs.bash;
