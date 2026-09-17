@@ -13,10 +13,10 @@
         description = "Whether this machine creates backups or manages an append-only repository.";
       };
 
-      repository = lib.mkOption {
-        type = lib.types.str;
-        default = "";
-        description = "Borg repository URL, such as ssh://user@host:port/./repo.";
+      repositories = lib.mkOption {
+        type = lib.types.listOf lib.types.str;
+        default = [ ];
+        description = "Borg repository URLs, such as ssh://user@host:port/./repo.";
       };
 
       sshKeyPath = lib.mkOption {
@@ -80,35 +80,38 @@
         text = ''
           set -euo pipefail
 
-          export BORG_REPO=${lib.escapeShellArg cfg.repository}
           export BORG_PASSCOMMAND=${lib.escapeShellArg "cat ${cfg.passphrasePath}"}
           export BORG_RSH=${lib.escapeShellArg "ssh -i ${cfg.sshKeyPath} -o IdentitiesOnly=yes"}
+          repositories=(${lib.escapeShellArgs cfg.repositories})
 
-          ${
-            if cfg.role == "client" then
-              ''
-                borg create --stats --compression zstd,6 \
-                  "::{hostname}-{now}" \
-                  ${lib.escapeShellArgs cfg.paths}
-              ''
-            else
-              ''
-                borg prune --list --glob-archives "{hostname}-*" \
-                  --keep-daily ${toString cfg.retention.daily} \
-                  --keep-weekly ${toString cfg.retention.weekly} \
-                  --keep-monthly ${toString cfg.retention.monthly}
-                borg compact
-                borg check --repository-only
-              ''
-          }
+          for repository in "''${repositories[@]}"; do
+            export BORG_REPO="$repository"
+            ${
+              if cfg.role == "client" then
+                ''
+                  borg create --stats --compression zstd,6 \
+                    "::{hostname}-{now}" \
+                    ${lib.escapeShellArgs cfg.paths}
+                ''
+              else
+                ''
+                  borg prune --list --glob-archives "{hostname}-*" \
+                    --keep-daily ${toString cfg.retention.daily} \
+                    --keep-weekly ${toString cfg.retention.weekly} \
+                    --keep-monthly ${toString cfg.retention.monthly}
+                  borg compact
+                  borg check --repository-only
+                ''
+            }
+          done
         '';
       };
     in
     {
       assertions = [
         {
-          assertion = !cfg.enable || cfg.repository != "";
-          message = "qnix.backup.borg: repository must be set when enabled.";
+          assertion = !cfg.enable || cfg.repositories != [ ];
+          message = "qnix.backup.borg: at least one repository must be set when enabled.";
         }
         {
           assertion = !cfg.enable || cfg.sshKeyPath != null;
