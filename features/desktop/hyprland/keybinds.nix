@@ -44,6 +44,7 @@
       context,
       cfg,
       lib,
+      pkgs,
       ...
     }:
     let
@@ -143,6 +144,10 @@
       ) cfg.additionalKeybinds;
     in
     {
+      home.packages = [
+        pkgs.pamixer
+        pkgs.playerctl
+      ];
       wayland.windowManager.hyprland.settings = {
         mod._var = if context.vm or false then "ALT" else "SUPER";
 

@@ -6,6 +6,7 @@
       "apps.browser"
       "desktop.displaymanager"
       "desktop.hyprland"
+      "security.polkit"
       "desktop.hyprland.monitors"
       "desktop.lock"
       "desktop.sound"
@@ -47,4 +48,6 @@
       };
     };
   };
+
+  defaults.desktop.client-pr-notify.enable = false;
 }

@@ -13,7 +13,7 @@
   persistence.users."*".directories = [ "Pictures/Screenshots" ];
 
   options =
-    { config, lib, ... }:
+    { lib, ... }:
     {
       outputDirectory = lib.mkOption {
         type = lib.types.str;

@@ -6,6 +6,7 @@
   ];
 
   requires.home = [ "desktop.hyprland" ];
+  requires.nixos = [ "system.users" ];
 
   persistence.users."*".files = [
     ".config/hypr/monitors.lua"
@@ -71,12 +72,16 @@
 
   home =
     {
+      lib,
+      osConfig ? null,
       ...
     }:
     {
-      wayland.windowManager.hyprland.extraLuaFiles.userConfig.content = ''
-        require("monitors")
-        require("workspaces")
-      '';
+      wayland.windowManager.hyprland.extraLuaFiles.userConfig.content =
+        lib.optionalString (osConfig != null)
+          ''
+            require("monitors")
+            require("workspaces")
+          '';
     };
 }

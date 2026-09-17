@@ -19,33 +19,40 @@
       ...
     }:
     let
-      mcpPkgs = pkgs.extend context."mcp-servers-nix".overlays.default;
-      evaluated = context."mcp-servers-nix".lib.evalModule mcpPkgs {
-        flavor = "claude";
+      mcpInput = lib.attrByPath [ "mcp-servers-nix" ] null context;
+      mcpPkgs = if mcpInput == null then pkgs else pkgs.extend mcpInput.overlays.default;
+      evaluated =
+        if mcpInput == null then
+          { config.settings.servers = { }; }
+        else
+          mcpInput.lib.evalModule mcpPkgs {
+            flavor = "claude";
 
-        programs = {
-          filesystem = {
-            enable = true;
-            args = [ config.xdg.userDirs.projects ];
+            programs = {
+              filesystem = {
+                enable = true;
+                args = [ config.xdg.userDirs.projects ];
+              };
+              git.enable = true;
+              github.enable = true;
+            }
+            // lib.optionalAttrs (osConfig != null) {
+              nixos.enable = true;
+            };
           };
-          git.enable = true;
-          github.enable = true;
-        }
-        // lib.optionalAttrs (osConfig != null) {
-          nixos.enable = true;
-        };
-      };
       servers = evaluated.config.settings.servers or { };
-      githubServer = servers.github;
-      githubMcp = pkgs.writeShellScriptBin "qnix-github-mcp-server" ''
-        if ! token="$(${config.programs.gh.package}/bin/gh auth token)"; then
-          echo "qnix GitHub MCP: authenticate gh before starting OpenCode" >&2
-          exit 1
-        fi
+      githubServer = servers.github or null;
+      githubMcp = lib.optionalString (githubServer != null) (
+        pkgs.writeShellScriptBin "qnix-github-mcp-server" ''
+          if ! token="$(${config.programs.gh.package}/bin/gh auth token)"; then
+            echo "qnix GitHub MCP: authenticate gh before starting OpenCode" >&2
+            exit 1
+          fi
 
-        export GITHUB_PERSONAL_ACCESS_TOKEN="$token"
-        exec ${lib.escapeShellArgs ([ githubServer.command ] ++ githubServer.args)}
-      '';
+          export GITHUB_PERSONAL_ACCESS_TOKEN="$token"
+          exec ${lib.escapeShellArgs ([ githubServer.command ] ++ githubServer.args)}
+        ''
+      );
       codegraphMcp = pkgs.writeShellApplication {
         name = "qnix-codegraph-mcp";
         runtimeInputs = [
@@ -66,15 +73,17 @@
       };
     in
     {
-      programs.mcp.servers = servers // {
-        github = githubServer // {
-          command = "${githubMcp}/bin/qnix-github-mcp-server";
-          args = [ ];
+      programs.mcp.servers =
+        servers
+        // lib.optionalAttrs (githubServer != null) {
+          github = githubServer // {
+            command = "${githubMcp}/bin/qnix-github-mcp-server";
+            args = [ ];
+          };
+          codegraph = {
+            command = "${codegraphMcp}/bin/qnix-codegraph-mcp";
+          };
         };
-        codegraph = {
-          command = "${codegraphMcp}/bin/qnix-codegraph-mcp";
-        };
-      };
 
       programs.mcp.enable = true;
     };

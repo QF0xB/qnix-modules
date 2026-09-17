@@ -6,6 +6,7 @@
     "system.localisation"
     "system.users"
     "network.addressing"
+    "network.firewall"
     "appearance.fonts"
     "storage.zfs"
   ];

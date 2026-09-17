@@ -104,7 +104,7 @@
         release_url() {
           case "$1" in
             github) printf '%s?ref=%s\n' "$GITHUB_RELEASE_PREFIX" "$3" ;;
-            flakehub) printf '%s/=%s\n' "$FLAKEHUB_RELEASE_PREFIX" "$2" ;;
+            flakehub) printf '%s/%s\n' "$FLAKEHUB_RELEASE_PREFIX" "$2" ;;
             *) die "Unsupported source: $1" ;;
           esac
         }
@@ -187,7 +187,7 @@
 
         printf '%s\n' "$version" > "$MODULES_VERSION_FILE"
         git -C "$MODULES_ROOT" add VERSION
-        git -C "$MODULES_ROOT" commit -m "release: $ref"
+        (cd "$MODULES_ROOT" && qnix-signed-commit "chore(release): $ref")
         git -C "$MODULES_ROOT" tag -a "$ref" -m "Release $ref"
         git -C "$MODULES_ROOT" push origin HEAD
         git -C "$MODULES_ROOT" push origin "$ref"
