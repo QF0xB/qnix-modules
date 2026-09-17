@@ -3,6 +3,7 @@
     nixos = [
       "dev.git"
       "dev.nh"
+      "dev.postman"
     ];
     home = [
       "dev.ai-tools"
