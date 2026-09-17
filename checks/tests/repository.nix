@@ -11,6 +11,7 @@ assert
     "apps.obs"
     "apps.opencode"
     "apps.social"
+    "backup"
     "backup.borg"
     "desktop.client-pr-notify"
     "desktop.clipboard"
@@ -47,6 +48,7 @@ assert
     "network.networkmanager"
     "pentest.network"
     "pentest.passwords"
+    "pentest.vms"
     "persist"
     "security.gnome-keyring"
     "security.gpg"
@@ -68,6 +70,7 @@ assert
 assert
   qnix.profileNames == [
     "appearance"
+    "backup"
     "base"
     "developer"
     "hyprland"
@@ -75,6 +78,7 @@ assert
     "laptop"
     "nvidia"
     "pentesting"
+    "pentest-vms"
     "secrets"
     "shell"
     "workstation"

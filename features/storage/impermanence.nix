@@ -36,44 +36,45 @@
           persistDirectories = lib.unique (
             (wildcardUser.directories or [ ]) ++ (specificUser.directories or [ ])
           );
-          cacheFiles = lib.unique (
-            (wildcardUser.cache.files or [ ]) ++ (specificUser.cache.files or [ ])
-          );
+          cacheFiles = lib.unique ((wildcardUser.cache.files or [ ]) ++ (specificUser.cache.files or [ ]));
           cacheDirectories = lib.unique (
             (wildcardUser.cache.directories or [ ]) ++ (specificUser.cache.directories or [ ])
           );
         };
 
       managedUserNames = lib.unique (
-        (lib.attrNames config.qnix.system.users.users)
-        ++ (lib.remove "*" (lib.attrNames persist.users))
+        (lib.attrNames config.qnix.system.users.users) ++ (lib.remove "*" (lib.attrNames persist.users))
       );
       managedUsers = lib.genAttrs managedUserNames mergeUser;
 
-      userPaths =
-        username: userCfg:
-        {
-          persistFiles = map (path: "/home/${username}/${lib.removePrefix "/" path}") userCfg.persistFiles;
-          persistDirectories = map (path: "/home/${username}/${lib.removePrefix "/" path}") userCfg.persistDirectories;
-          cacheFiles = map (path: "/home/${username}/${lib.removePrefix "/" path}") userCfg.cacheFiles;
-          cacheDirectories = map (path: "/home/${username}/${lib.removePrefix "/" path}") userCfg.cacheDirectories;
-        };
+      userPaths = username: userCfg: {
+        persistFiles = map (path: "/home/${username}/${lib.removePrefix "/" path}") userCfg.persistFiles;
+        persistDirectories = map (
+          path: "/home/${username}/${lib.removePrefix "/" path}"
+        ) userCfg.persistDirectories;
+        cacheFiles = map (path: "/home/${username}/${lib.removePrefix "/" path}") userCfg.cacheFiles;
+        cacheDirectories = map (
+          path: "/home/${username}/${lib.removePrefix "/" path}"
+        ) userCfg.cacheDirectories;
+      };
 
       expandedUsers = lib.mapAttrs userPaths managedUsers;
       allUserPaths = lib.attrValues expandedUsers;
 
-      impermanenceJson = pkgs.writeText "impermanence.json" (builtins.toJSON {
-        directories = lib.unique (
-          persist.root.directories
-          ++ persist.root.cache.directories
-          ++ lib.concatMap (user: user.persistDirectories ++ user.cacheDirectories) allUserPaths
-        );
-        files = lib.unique (
-          persist.root.files
-          ++ persist.root.cache.files
-          ++ lib.concatMap (user: user.persistFiles ++ user.cacheFiles) allUserPaths
-        );
-      });
+      impermanenceJson = pkgs.writeText "impermanence.json" (
+        builtins.toJSON {
+          directories = lib.unique (
+            persist.root.directories
+            ++ persist.root.cache.directories
+            ++ lib.concatMap (user: user.persistDirectories ++ user.cacheDirectories) allUserPaths
+          );
+          files = lib.unique (
+            persist.root.files
+            ++ persist.root.cache.files
+            ++ lib.concatMap (user: user.persistFiles ++ user.cacheFiles) allUserPaths
+          );
+        }
+      );
 
     in
     {
@@ -84,12 +85,20 @@
       ];
       qnix.persist.users."*" = {
         directories = lib.mkBefore [
+          "Desktop"
+          "Documents"
+          "Music"
+          "Pictures"
           "Projects"
+          "Public"
           ".ssh"
+          "Templates"
+          "Videos"
         ];
         cache.directories = lib.mkBefore [
           ".cache"
           ".gradle"
+          "Downloads"
         ];
       };
 

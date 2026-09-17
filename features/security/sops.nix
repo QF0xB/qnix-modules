@@ -38,6 +38,10 @@
         type = lib.types.attrsOf (
           lib.types.submodule {
             options = {
+              sopsFile = lib.mkOption {
+                type = lib.types.nullOr lib.types.path;
+                default = null;
+              };
               key = lib.mkOption {
                 type = lib.types.nullOr lib.types.str;
                 default = null;
@@ -91,6 +95,7 @@
           _name: secretCfg:
           lib.filterAttrs (_: value: value != null) {
             key = secretCfg.key;
+            sopsFile = secretCfg.sopsFile;
             path = secretCfg.path;
             owner = secretCfg.owner;
             group = secretCfg.group;

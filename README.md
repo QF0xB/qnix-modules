@@ -50,6 +50,13 @@ If Home Manager is added to the VM later, it can select ordinary profiles such
 as `hyprland`. The inventory and VM setup should document which Kali
 metapackage is selected.
 
+`pentest.vms` configures a libvirt host and exposes explicit
+`qnix-kali-vm-create-<name>` commands for configured Kali installer ISOs. It
+does not create guests during activation, so an installed foreign OS is never
+overwritten. Each VM supports `isolated-nat`, physical `interface`, or
+`air-gapped` networking. After installing Kali, install Nix and Home Manager
+inside the guest; the guest can then use the QNix standalone Home modules.
+
 ## Checks
 
 The nested checks flake evaluates the published factory against this repository:

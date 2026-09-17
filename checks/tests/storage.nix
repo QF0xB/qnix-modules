@@ -70,8 +70,15 @@ assert
 assert
   directoryPaths
     impermanenceEvaluation.config.environment.persistence."/persist".users.tester.directories == [
+    "Desktop"
+    "Documents"
+    "Music"
+    "Pictures"
     "Projects"
+    "Public"
     ".ssh"
+    "Templates"
+    "Videos"
     ".local/share/example"
   ];
 assert
@@ -82,6 +89,7 @@ assert
     impermanenceEvaluation.config.environment.persistence."/cache".users.tester.directories == [
     ".cache"
     ".gradle"
+    "Downloads"
     ".cache/example"
   ];
 assert
@@ -92,8 +100,15 @@ assert
 assert
   directoryPaths
     impermanenceEvaluation.config.environment.persistence."/persist".users.alice.directories == [
+    "Desktop"
+    "Documents"
+    "Music"
+    "Pictures"
     "Projects"
+    "Public"
     ".ssh"
+    "Templates"
+    "Videos"
     ".local/share/example"
     "alice-data"
   ];
@@ -102,6 +117,7 @@ assert
     impermanenceEvaluation.config.environment.persistence."/cache".users.alice.directories == [
     ".cache"
     ".gradle"
+    "Downloads"
     ".cache/example"
   ];
 assert impermanenceEvaluation.config.environment.etc."impermanence.json".source != null;

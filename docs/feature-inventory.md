@@ -134,6 +134,7 @@ confirmation.
 | `pentest.gpu-cracking` | NixOS              | `pentest-host` | GPU hardware           | —           | planned | Host-only GPU cracking tasks                            |
 | `pentest.hash-testing` | NixOS              | `pentest-host` | `pentest.gpu-cracking` | —           | planned | Host-only hash testing                                  |
 | `pentest.usb-access`   | NixOS              | `pentest-host` | —                      | —           | planned | Host-side USB/device access for passthrough and capture |
+| `pentest.vms`          | NixOS              | `pentest-vms`  | libvirt, QEMU, SPICE   | `/var/lib/libvirt` | implemented | Kali VM host inventory and explicit creation helpers |
 
 ## Profiles
 
