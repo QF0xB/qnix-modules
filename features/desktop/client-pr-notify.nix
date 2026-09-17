@@ -65,11 +65,6 @@
         ];
         text = ''
           set -euo pipefail
-          state_dir="''${XDG_STATE_HOME:-$HOME/.local/state}/qnix-client-pr-notify"
-          state_file="$state_dir/last-max-pr-number"
-          mkdir -p "$state_dir"
-          last=0
-          [ -f "$state_file" ] && last=$(tr -d '[:space:]' < "$state_file" || true)
           auth=()
           if [ -n "''${GITHUB_TOKEN_FILE:-}" ] && [ -f "''${GITHUB_TOKEN_FILE}" ]; then
             auth=(-H "Authorization: Bearer $(<"$GITHUB_TOKEN_FILE")" -H "Accept: application/vnd.github+json")
@@ -83,11 +78,8 @@
             '[.[] | . as $pr | select(($authors | length) == 0 or any($authors[]; . == $pr.user.login)) | select(($labels | length) == 0 or any($pr.labels[]; .name as $label | any($labels[]; . == $label))) | select(($title | length) == 0 or ($pr.title | contains($title)))]')
           count=$(printf '%s' "$filtered" | jq 'length')
           [ "$count" -gt 0 ] || exit 0
-          max_pr=$(printf '%s' "$filtered" | jq 'map(.number) | max')
-          [ "$max_pr" -gt "$last" ] || exit 0
           summary=$(printf '%s' "$filtered" | jq -r 'if length == 1 then .[0] | "\(.title) (#\(.number))" else "\(length) matching PRs (highest #\(map(.number) | max))" end')
-          notify-send --app-name="QNix" "Client repo: matching PR" "${cfg.owner}/${cfg.repo} - $summary"
-          printf '%s\n' "$max_pr" > "$state_file"
+          notify-send --app-name="QNix" "QNix update available" "Tested update: ${cfg.owner}/${cfg.repo} - $summary"
         '';
       };
     in

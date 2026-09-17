@@ -573,7 +573,18 @@ let
   );
   hyprlandProfileEvaluation = mkNixos (qnix.modulesFor.nixos [ "hyprland" ]);
   hyprlandStandaloneProfileEvaluation = mkHome (
-    [ noctaliaStub ] ++ qnix.modulesFor.standaloneHome [ "hyprland" ]
+    [
+      noctaliaStub
+      {
+        qnix.desktop.client-pr-notify = {
+          owner = "QF0xB";
+          repo = "qnix-modules";
+          matchAuthors = [ "QF0xB" ];
+          githubTokenPath = "/run/secrets/github-token";
+        };
+      }
+    ]
+    ++ qnix.modulesFor.standaloneHome [ "hyprland" ]
   );
   noctaliaStub =
     { lib, ... }:
@@ -640,22 +651,42 @@ let
     browserFeature.optionModules ++ browserFeature.__homeModuleFor "standalone-home"
   );
   browserNixosEvaluation = mkNixos (browserFeature.optionModules ++ browserFeature.nixosModules);
-  musicNixosEvaluation = mkNixos (musicFeature.optionModules ++ musicFeature.nixosModules);
+  musicNixosEvaluation = mkNixos (
+    persistFeature.optionModules
+    ++ persistFeature.nixosModules
+    ++ musicFeature.optionModules
+    ++ musicFeature.nixosModules
+  );
   musicHomeEvaluation = mkHome (
     musicFeature.optionModules ++ musicFeature.__homeModuleFor "standalone-home"
   );
   notesHomeEvaluation = mkHome (
     notesFeature.optionModules ++ notesFeature.__homeModuleFor "standalone-home"
   );
-  notesNixosEvaluation = mkNixos (notesFeature.optionModules ++ notesFeature.nixosModules);
+  notesNixosEvaluation = mkNixos (
+    persistFeature.optionModules
+    ++ persistFeature.nixosModules
+    ++ notesFeature.optionModules
+    ++ notesFeature.nixosModules
+  );
   obsHomeEvaluation = mkHome (
     obsFeature.optionModules ++ obsFeature.__homeModuleFor "standalone-home"
   );
-  obsNixosEvaluation = mkNixos (obsFeature.optionModules ++ obsFeature.nixosModules);
+  obsNixosEvaluation = mkNixos (
+    persistFeature.optionModules
+    ++ persistFeature.nixosModules
+    ++ obsFeature.optionModules
+    ++ obsFeature.nixosModules
+  );
   socialHomeEvaluation = mkHome (
     socialFeature.optionModules ++ socialFeature.__homeModuleFor "standalone-home"
   );
-  socialNixosEvaluation = mkNixos (socialFeature.optionModules ++ socialFeature.nixosModules);
+  socialNixosEvaluation = mkNixos (
+    persistFeature.optionModules
+    ++ persistFeature.nixosModules
+    ++ socialFeature.optionModules
+    ++ socialFeature.nixosModules
+  );
   opencodeHomeEvaluation = mkHome (
     xdgFoldersFeature.optionModules
     ++ xdgFoldersFeature.__homeModuleFor "standalone-home"
@@ -856,6 +887,10 @@ in
     mkHome
     persistFeature
     browserFeature
+    musicFeature
+    notesFeature
+    obsFeature
+    socialFeature
     opencodeFeature
     vscodeFeature
     mcpFeature
