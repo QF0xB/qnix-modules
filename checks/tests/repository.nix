@@ -11,6 +11,7 @@ assert
     "apps.obs"
     "apps.opencode"
     "apps.social"
+    "backup.borg"
     "desktop.client-pr-notify"
     "desktop.clipboard"
     "desktop.displaymanager"
