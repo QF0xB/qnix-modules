@@ -15,12 +15,6 @@
   options =
     { lib, ... }:
     {
-      outputDirectory = lib.mkOption {
-        type = lib.types.str;
-        default = "Pictures/Screenshots";
-        description = "Screenshot directory, relative to the home directory unless absolute.";
-      };
-
       copyToClipboard = lib.mkOption {
         type = lib.types.bool;
         default = true;
@@ -37,11 +31,7 @@
       ...
     }:
     let
-      outputDirectory =
-        if lib.hasPrefix "/" cfg.outputDirectory then
-          cfg.outputDirectory
-        else
-          "${config.home.homeDirectory}/${cfg.outputDirectory}";
+      outputDirectory = "${config.home.homeDirectory}/Pictures/Screenshots";
       mkScreenshot =
         name: capture:
         pkgs.writeShellApplication {
