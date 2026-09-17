@@ -45,7 +45,7 @@ assert
 assert hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.config.misc.vrr == 1;
 assert
   hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.config.misc.swallow_regex
-  == "'^(foot)$'";
+  == "'^(foot|footclient)$'";
 assert
   hyprlandHomeEvaluation.config.wayland.windowManager.hyprland.settings.config.decoration.rounding
   == 10;
