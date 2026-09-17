@@ -1,0 +1,3 @@
+{
+  features.nixos = [ "hardware.nvidia" ];
+}

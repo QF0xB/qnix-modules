@@ -1,0 +1,5 @@
+{
+  features.nixos = [
+    "backup.borg"
+  ];
+}

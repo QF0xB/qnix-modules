@@ -5,7 +5,11 @@ result-*
 # Ignore automatically generated direnv output
 .direnv
 
-# CI flake.lock ignore
-checks/flake.lock
+# Local environment files
+.env
+.env.*
+*.env
 
-old
+# Temporary legacy archive
+old/
+.codegraph/
