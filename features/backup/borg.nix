@@ -20,14 +20,14 @@
       };
 
       sshKeyPath = lib.mkOption {
-        type = lib.types.nullOr lib.types.str;
-        default = null;
+        type = lib.types.str;
+        default = "";
         description = "Path to the SSH private key used to access BorgBase.";
       };
 
       passphrasePath = lib.mkOption {
-        type = lib.types.nullOr lib.types.str;
-        default = null;
+        type = lib.types.str;
+        default = "";
         description = "Path to the Borg encryption passphrase.";
       };
 
@@ -114,11 +114,11 @@
           message = "qnix.backup.borg: at least one repository must be set when enabled.";
         }
         {
-          assertion = !cfg.enable || cfg.sshKeyPath != null;
+          assertion = !cfg.enable || cfg.sshKeyPath != "";
           message = "qnix.backup.borg: sshKeyPath must be set when enabled.";
         }
         {
-          assertion = !cfg.enable || cfg.passphrasePath != null;
+          assertion = !cfg.enable || cfg.passphrasePath != "";
           message = "qnix.backup.borg: passphrasePath must be set when enabled.";
         }
       ];
