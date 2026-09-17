@@ -650,12 +650,11 @@ let
   browserHomeEvaluation = mkHome (
     browserFeature.optionModules ++ browserFeature.__homeModuleFor "standalone-home"
   );
-  browserNixosEvaluation = mkNixos (browserFeature.optionModules ++ browserFeature.nixosModules);
+  browserNixosEvaluation = mkNixos (
+    persistFeature.optionModules ++ browserFeature.optionModules ++ browserFeature.nixosModules
+  );
   musicNixosEvaluation = mkNixos (
-    persistFeature.optionModules
-    ++ persistFeature.nixosModules
-    ++ musicFeature.optionModules
-    ++ musicFeature.nixosModules
+    persistFeature.optionModules ++ musicFeature.optionModules ++ musicFeature.nixosModules
   );
   musicHomeEvaluation = mkHome (
     musicFeature.optionModules ++ musicFeature.__homeModuleFor "standalone-home"
@@ -664,28 +663,19 @@ let
     notesFeature.optionModules ++ notesFeature.__homeModuleFor "standalone-home"
   );
   notesNixosEvaluation = mkNixos (
-    persistFeature.optionModules
-    ++ persistFeature.nixosModules
-    ++ notesFeature.optionModules
-    ++ notesFeature.nixosModules
+    persistFeature.optionModules ++ notesFeature.optionModules ++ notesFeature.nixosModules
   );
   obsHomeEvaluation = mkHome (
     obsFeature.optionModules ++ obsFeature.__homeModuleFor "standalone-home"
   );
   obsNixosEvaluation = mkNixos (
-    persistFeature.optionModules
-    ++ persistFeature.nixosModules
-    ++ obsFeature.optionModules
-    ++ obsFeature.nixosModules
+    persistFeature.optionModules ++ obsFeature.optionModules ++ obsFeature.nixosModules
   );
   socialHomeEvaluation = mkHome (
     socialFeature.optionModules ++ socialFeature.__homeModuleFor "standalone-home"
   );
   socialNixosEvaluation = mkNixos (
-    persistFeature.optionModules
-    ++ persistFeature.nixosModules
-    ++ socialFeature.optionModules
-    ++ socialFeature.nixosModules
+    persistFeature.optionModules ++ socialFeature.optionModules ++ socialFeature.nixosModules
   );
   opencodeHomeEvaluation = mkHome (
     xdgFoldersFeature.optionModules
