@@ -199,6 +199,13 @@ assert musicNixosEvaluation.config.qnix.persist.users."*".directories == [ ".con
 assert builtins.elem pkgs.obsidian notesHomeEvaluation.config.home.packages;
 assert notesHomeEvaluation.config.qnix.apps.notes.package == pkgs.obsidian;
 assert notesNixosEvaluation.config.qnix.persist.users."*".directories == [ ".config/obsidian" ];
+assert notesNixosEvaluation.config.qnix.persist.users."*".cache.directories == [
+  ".config/obsidian/Cache"
+  ".config/obsidian/Code Cache"
+  ".config/obsidian/GPUCache"
+  ".config/obsidian/DawnGraphiteCache"
+  ".config/obsidian/DawnWebGPUCache"
+];
 assert builtins.elem pkgs.obs-studio obsHomeEvaluation.config.home.packages;
 assert obsHomeEvaluation.config.qnix.apps.obs.package == pkgs.obs-studio;
 assert obsNixosEvaluation.config.qnix.persist.users."*".directories == [ ".config/obs-studio" ];

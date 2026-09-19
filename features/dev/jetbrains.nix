@@ -5,10 +5,8 @@
     "standalone-home"
   ];
 
-  persistence.users."*".directories = [
-    ".config/JetBrains"
-    ".local/share/JetBrains"
-  ];
+  persistence.users."*".directories = [ ".config/JetBrains" ];
+  persistence.users."*".cache.directories = [ ".local/share/JetBrains" ];
 
   options =
     { lib, ... }:
