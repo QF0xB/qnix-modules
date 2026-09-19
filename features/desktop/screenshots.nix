@@ -54,9 +54,7 @@
               "Screenshot saved" "$filename"
           '';
         };
-      region = mkScreenshot "qnix-screenshot-region" ''
-        grim -g "$(slurp)"
-      '';
+      region = mkScreenshot "qnix-screenshot-region" ''grim -g "$(slurp)"'';
       full = mkScreenshot "qnix-screenshot-full" "grim";
     in
     {
@@ -74,7 +72,7 @@
         }
         {
           _args = [
-            "SHIFT + code:107"
+            "SHIFT + Print"
             (lib.generators.mkLuaInline "hl.dsp.exec_cmd(${lib.generators.toLua { } (lib.getExe region)})")
           ];
         }
