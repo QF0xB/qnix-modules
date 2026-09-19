@@ -74,7 +74,7 @@
         }
         {
           _args = [
-            "SHIFT + Print"
+            "SHIFT + code:107"
             (lib.generators.mkLuaInline "hl.dsp.exec_cmd(${lib.generators.toLua { } (lib.getExe region)})")
           ];
         }
