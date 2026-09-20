@@ -147,7 +147,8 @@
       home.packages = [
         pkgs.pamixer
         pkgs.playerctl
-      ];
+      ]
+      ++ lib.optionals (context.laptop or false) [ pkgs.brightnessctl ];
       wayland.windowManager.hyprland.settings = {
         mod._var = if context.vm or false then "ALT" else "SUPER";
 
@@ -190,6 +191,10 @@
           (mkBind "SUPER + Tab" "hl.dsp.window.swap({ next = true })" { })
           (mkBind "ALT + Tab" "hl.dsp.window.cycle_next()" { })
           (mkBind "CTRL + Tab" (focusWorkspace "e+1") { })
+        ]
+        ++ lib.optionals (context.laptop or false) [
+          (mkBind "XF86MonBrightnessUp" (exec "brightnessctl set 5%+") { locked = true; })
+          (mkBind "XF86MonBrightnessDown" (exec "brightnessctl set 5%-") { locked = true; })
         ]
         ++ workspaceBinds
         ++ additionalBinds;
