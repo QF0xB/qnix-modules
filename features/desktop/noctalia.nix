@@ -113,21 +113,11 @@
               ];
               right = [
                 { id = "Tray"; }
-                { id = "plugin:privacy-indicator"; }
-                { id = "plugin:keybind-cheatsheet"; }
                 { id = "NotificationHistory"; }
                 {
                   id = "Volume";
                   displayMode = "alwaysHide";
                   middleClickCommand = "pwvucontrol || pavucontrol";
-                }
-                { id = "plugin:hyprland-steam-overlay"; }
-                {
-                  id = "ControlCenter";
-                  colorizeDistroLogo = false;
-                  colorizeSystemIcon = "primary";
-                  icon = "noctalia";
-                  useDistroLogo = true;
                 }
               ]
               ++ lib.optionals (context.laptop or false) [
@@ -143,6 +133,15 @@
                 {
                   id = "Brightness";
                   displayMode = "alwaysHide";
+                }
+              ]
+              ++ [
+                {
+                  id = "ControlCenter";
+                  colorizeDistroLogo = false;
+                  colorizeSystemIcon = "primary";
+                  icon = "noctalia";
+                  useDistroLogo = true;
                 }
               ];
             };

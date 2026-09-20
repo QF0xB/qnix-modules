@@ -432,11 +432,19 @@ assert
     widget: widget.id
   ) noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.bar.widgets.right == [
     "Tray"
-    "plugin:privacy-indicator"
-    "plugin:keybind-cheatsheet"
     "NotificationHistory"
     "Volume"
-    "plugin:hyprland-steam-overlay"
+    "ControlCenter"
+  ];
+assert
+  map (
+    widget: widget.id
+  ) laptopNoctaliaHomeEvaluation.config.programs.noctalia-shell.settings.bar.widgets.right == [
+    "Tray"
+    "NotificationHistory"
+    "Volume"
+    "Battery"
+    "Brightness"
     "ControlCenter"
   ];
 assert noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.settingsVersion == 49;

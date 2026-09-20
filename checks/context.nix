@@ -95,6 +95,7 @@ let
   clipboardFeature = qnix.features."desktop.clipboard";
   screenshotsFeature = qnix.features."desktop.screenshots";
   noctaliaFeature = qnix.features."desktop.noctalia";
+  laptopNoctaliaFeature = laptopQnix.features."desktop.noctalia";
   soundFeature = qnix.features."desktop.sound";
   terminalFeature = qnix.features."desktop.terminal";
   xdgFoldersFeature = qnix.features."desktop.xdg-folders";
@@ -629,6 +630,17 @@ let
     ++ noctaliaFeature.optionModules
     ++ noctaliaFeature.__homeModuleFor "standalone-home"
   );
+  laptopNoctaliaHomeEvaluation = mkHome (
+    [ noctaliaStub ]
+    ++ waylandFeature.optionModules
+    ++ waylandFeature.__homeModuleFor "standalone-home"
+    ++ hyprlandFeature.optionModules
+    ++ hyprlandFeature.__homeModuleFor "standalone-home"
+    ++ terminalFeature.optionModules
+    ++ terminalFeature.__homeModuleFor "standalone-home"
+    ++ laptopNoctaliaFeature.optionModules
+    ++ laptopNoctaliaFeature.__homeModuleFor "standalone-home"
+  );
   soundNixosEvaluation = mkNixos (
     persistFeature.optionModules
     ++ soundFeature.optionModules
@@ -997,6 +1009,7 @@ in
     hyprlandStandaloneProfileEvaluation
     noctaliaStub
     noctaliaHomeEvaluation
+    laptopNoctaliaHomeEvaluation
     soundNixosEvaluation
     soundIntegratedEvaluation
     terminalHomeEvaluation
