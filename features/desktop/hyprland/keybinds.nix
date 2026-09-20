@@ -164,6 +164,9 @@
           (mkModBind "mouse:272" "hl.dsp.window.drag()" { mouse = true; })
           (mkModBind "mouse:273" "hl.dsp.window.resize()" { mouse = true; })
           (mkModBind "return" (specialApp "scratch" "foot --app-id=scratchpad") { })
+          (mkModBind "SHIFT + code:24"
+            (exec "hypr-special scratch opencode-scratch -- foot --app-id=opencode-scratch -e opencode-launcher")
+            { })
           (mkModBind "SHIFT + return" (exec "uwsm app -- ${terminal}") { })
           (mkModBind "CTRL + return" (exec "uwsm app -- ${terminal} --app-id floating") { })
           (mkModBind "SHIFT + code:53" (exec "uwsm stop") { })
@@ -183,7 +186,7 @@
           (mkModBind "CTRL + code:47" (exec "uwsm app -- brave-origin --private-window") { })
           (mkModBind "code:25" (exec "noctalia-shell ipc call launcher toggle") { })
           (mkModBind "code:29" (specialApp "obs" "obs") { })
-          (mkModBind "code:40" (exec "uwsm app -- ${terminal} -e yazi") { })
+          (mkModBind "code:40" (exec "uwsm app -- ${terminal} --app-id=yazi -e yazi") { })
           (mkModBind "code:57" (specialApp "secrets" "bitwarden") { })
           (mkModBind "code:26" (specialApp "notes" "obsidian") { })
           (mkModBind "code:43" (specialApp "music" "tidal-hifi") { })

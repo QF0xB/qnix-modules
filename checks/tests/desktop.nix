@@ -75,6 +75,18 @@ assert builtins.any (
 ) hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind;
 assert builtins.any (
   binding:
+  builtins.isAttrs (builtins.elemAt binding._args 0)
+  && pkgs.lib.hasInfix "SHIFT + code:24" (builtins.elemAt binding._args 0).expr
+  && pkgs.lib.hasInfix "opencode-scratch" (builtins.elemAt binding._args 1).expr
+) hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind;
+assert builtins.any (
+  rule:
+  rule.name == "opencode-scratch-workspace"
+  && rule.match.class == "^(opencode-scratch)$"
+  && rule.workspace == "special:scratch"
+) hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.window_rule;
+assert builtins.any (
+  binding:
   pkgs.lib.hasInfix "hl.get_workspace(\"special:obs\")" (builtins.elemAt binding._args 1).expr
   && pkgs.lib.hasInfix "toggle_special(\"obs\")" (builtins.elemAt binding._args 1).expr
 ) hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind;
@@ -83,6 +95,12 @@ assert builtins.any (
 ) hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind;
 assert builtins.any (
   rule: rule.name == "test-rule"
+) hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.window_rule;
+assert builtins.any (
+  rule:
+  rule.name == "yazi-workspace"
+  && rule.match.class == "^(yazi)$"
+  && rule.workspace == "9"
 ) hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.window_rule;
 assert builtins.any (
   rule:

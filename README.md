@@ -34,6 +34,8 @@ definitions yet.
 The migration scope is tracked in [`docs/feature-inventory.md`](./docs/feature-inventory.md).
 The configured file-manager workflow is described in
 [`docs/yazi.md`](./docs/yazi.md).
+The Hyprland keyboard shortcuts are listed in
+[`docs/keymap.md`](./docs/keymap.md).
 
 External modules belong in the client’s module composition, not in this flake’s
 feature definitions.

@@ -200,6 +200,11 @@
           workspace = "9";
         }
         {
+          name = "yazi-workspace";
+          match.class = "^(yazi)$";
+          workspace = "9";
+        }
+        {
           name = "music-workspace";
           match.tag = "music";
           workspace = "special:music";
@@ -207,6 +212,11 @@
         {
           name = "scratchpad-workspace";
           match.class = "^(scratchpad)$";
+          workspace = "special:scratch";
+        }
+        {
+          name = "opencode-scratch-workspace";
+          match.class = "^(opencode-scratch)$";
           workspace = "special:scratch";
         }
         {
