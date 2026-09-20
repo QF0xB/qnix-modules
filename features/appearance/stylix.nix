@@ -149,7 +149,7 @@
     lib.mkIf cfg.enable {
       stylix = {
         enable = true;
-        base16Scheme = "${pkgs.base16-schemes}/share/themes/${cfg.colorScheme}.yaml";
+        base16Scheme = "${pkgs.base16-schemes.src}/base16/${cfg.colorScheme}.yaml";
         polarity = "dark";
         override = cfg.colorSchemeOverrides;
         cursor = { inherit (cfg.cursor) package name size; };
@@ -172,7 +172,7 @@
     lib.mkIf cfg.enable {
       stylix = {
         enable = true;
-        base16Scheme = "${pkgs.base16-schemes}/share/themes/${cfg.colorScheme}.yaml";
+        base16Scheme = "${pkgs.base16-schemes.src}/base16/${cfg.colorScheme}.yaml";
         polarity = "dark";
         override = cfg.colorSchemeOverrides;
         targets = {
