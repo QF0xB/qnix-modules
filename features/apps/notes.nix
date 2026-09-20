@@ -6,13 +6,6 @@
   ];
 
   persistence.users."*".directories = [ ".config/obsidian" ];
-  persistence.users."*".cache.directories = [
-    ".config/obsidian/Cache"
-    ".config/obsidian/Code Cache"
-    ".config/obsidian/GPUCache"
-    ".config/obsidian/DawnGraphiteCache"
-    ".config/obsidian/DawnWebGPUCache"
-  ];
 
   options =
     { lib, pkgs, ... }:
