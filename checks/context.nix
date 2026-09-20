@@ -86,6 +86,7 @@ let
   localisationFeature = qnix.features."system.localisation";
   hyprlandFeature = qnix.features."desktop.hyprland";
   hyprlandKeybindsFeature = qnix.features."desktop.hyprland.keybinds";
+  laptopHyprlandKeybindsFeature = laptopQnix.features."desktop.hyprland.keybinds";
   vmHyprlandFeature = vmQnix.features."desktop.hyprland";
   vmHyprlandKeybindsFeature = vmQnix.features."desktop.hyprland.keybinds";
   hyprlandMonitorsFeature = qnix.features."desktop.hyprland.monitors";
@@ -551,6 +552,18 @@ let
       }
     ]
   );
+  laptopHyprlandKeybindsEvaluation = mkHome (
+    waylandFeature.optionModules
+    ++ waylandFeature.__homeModuleFor "standalone-home"
+    ++ hyprlandFeature.optionModules
+    ++ hyprlandFeature.__homeModuleFor "standalone-home"
+    ++ terminalFeature.optionModules
+    ++ terminalFeature.__homeModuleFor "standalone-home"
+    ++ laptopHyprlandKeybindsFeature.optionModules
+    ++ laptopHyprlandKeybindsFeature.__homeModuleFor "standalone-home"
+    ++ hyprlandSpecialWorkspacesFeature.optionModules
+    ++ hyprlandSpecialWorkspacesFeature.__homeModuleFor "standalone-home"
+  );
   vmHyprlandFullHomeEvaluation = mkHome (
     localisationFeature.optionModules
     ++ localisationFeature.__homeModuleFor "standalone-home"
@@ -977,6 +990,7 @@ in
     hyprlandNixosEvaluation
     hyprlandHomeEvaluation
     hyprlandFullHomeEvaluation
+    laptopHyprlandKeybindsEvaluation
     vmHyprlandFullHomeEvaluation
     hyprlandPersistenceEvaluation
     hyprlandProfileEvaluation

@@ -128,7 +128,7 @@ assert builtins.any (
 ) hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind;
 assert builtins.any (
   binding: pkgs.lib.hasInfix "brightnessctl set 5%+" (builtins.elemAt binding._args 1).expr
-) hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind;
+) laptopHyprlandKeybindsEvaluation.config.wayland.windowManager.hyprland.settings.bind;
 assert
   builtins.baseNameOf
     noctaliaHomeEvaluation.config.home.file."Pictures/wallpaper/solarized-dark.png".source
