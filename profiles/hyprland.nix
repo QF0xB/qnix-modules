@@ -7,6 +7,7 @@
       "desktop.displaymanager"
       "desktop.hyprland"
       "security.polkit"
+      "security.gnome-keyring"
       "desktop.hyprland.monitors"
       "desktop.lock"
       "desktop.sound"
