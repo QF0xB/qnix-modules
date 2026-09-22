@@ -33,6 +33,9 @@ assert builtins.all
   ];
 assert developerHomeProfileEvaluation.config.programs.nvf.enable;
 assert developerHomeProfileEvaluation.config.programs.git.enable;
+assert developerProfileEvaluation.config.virtualisation.docker.enable;
+assert builtins.elem "docker"
+  developerProfileEvaluation.config.qnix.system.users.defaultExtraGroups;
 assert builtins.all
   (path: builtins.elem path developerProfileEvaluation.config.qnix.persist.users."*".directories)
   [

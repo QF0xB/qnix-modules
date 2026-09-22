@@ -4,6 +4,7 @@
       "dev.git"
       "dev.nh"
       "dev.postman"
+      "dev.docker"
     ];
     home = [
       "dev.ai-tools"
