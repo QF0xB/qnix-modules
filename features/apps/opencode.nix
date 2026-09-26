@@ -9,6 +9,7 @@
 
   persistence.users."*".directories = [
     ".config/opencode/skills"
+    ".local/state/opencode"
     ".local/share/opencode"
   ];
 

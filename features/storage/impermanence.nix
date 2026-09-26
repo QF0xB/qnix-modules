@@ -78,6 +78,9 @@
 
     in
     {
+      # Credential encryption keys are bound to the machine ID. Keep the ID
+      # stable across impermanent-root rollbacks.
+      qnix.persist.root.files = lib.mkBefore [ "/etc/machine-id" ];
       qnix.persist.root.directories = lib.mkBefore [ "/var/lib/nixos" ];
       qnix.persist.root.cache.directories = lib.mkBefore [
         "/var/log"
