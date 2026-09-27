@@ -177,6 +177,7 @@
         override = cfg.colorSchemeOverrides;
         targets = {
           foot.enable = true;
+          opencode.enable = true;
           vencord.enable = false;
           vesktop.enable = false;
           nixcord.enable = false;

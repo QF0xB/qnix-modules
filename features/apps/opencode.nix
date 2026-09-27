@@ -92,7 +92,11 @@
       };
     in
     {
-      home.packages = [ signedCommit ];
+      home.packages = [
+        pkgs.opencode-desktop
+        pkgs.vscode
+        signedCommit
+      ];
 
       programs.opencode = {
         enable = true;
