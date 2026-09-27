@@ -293,6 +293,7 @@ assert builtins.elem "qnix-signed-commit" (
 assert builtins.elem pkgs.opencode-desktop opencodeHomeEvaluation.config.home.packages;
 assert builtins.elem pkgs.vscode opencodeHomeEvaluation.config.home.packages;
 assert builtins.elem pkgs.paseo opencodeHomeEvaluation.config.home.packages;
+assert builtins.elem pkgs.codex opencodeHomeEvaluation.config.home.packages;
 assert opencodeHomeEvaluation.config.programs.opencode.enableMcpIntegration;
 assert builtins.elem "@satas/opencode-usage-bar@0.2.0"
   opencodeHomeEvaluation.config.programs.opencode.tui.plugin;
@@ -420,6 +421,7 @@ assert builtins.all
   (path: builtins.elem path hyprlandProfileEvaluation.config.qnix.persist.users."*".directories)
   [
     ".config/BraveSoftware"
+    ".codex"
     ".config/opencode/skills"
     ".local/share/opencode"
     ".local/share/yazi"

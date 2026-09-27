@@ -8,6 +8,7 @@
   requires.home = [ "dev.mcp" ];
 
   persistence.users."*".directories = [
+    ".codex"
     ".config/opencode/skills"
     ".local/state/opencode"
     ".local/share/opencode"
@@ -96,6 +97,7 @@
         pkgs.opencode-desktop
         pkgs.vscode
         pkgs.paseo
+        pkgs.codex
         signedCommit
       ];
 
