@@ -5,6 +5,7 @@
   stylix,
   sops-nix,
   llm-agents,
+  paseo,
   mcp-servers-nix,
   nvf,
   qnix-modules,
@@ -50,7 +51,10 @@ let
     modules:
     home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
-      extraSpecialArgs = { inherit pkgs; };
+      extraSpecialArgs = {
+        inherit pkgs;
+        inputs = { inherit paseo; };
+      };
       modules = [
         {
           home.username = "check";
@@ -68,6 +72,7 @@ let
   obsFeature = qnix.features."apps.obs";
   socialFeature = qnix.features."apps.social";
   opencodeFeature = qnix.features."apps.opencode";
+  paseoFeature = qnix.features."apps.paseo";
   vscodeFeature = qnix.features."dev.vscode";
   mcpFeature = qnix.features."dev.mcp";
   aiToolsFeature = qnix.features."dev.ai-tools";
@@ -711,6 +716,9 @@ let
     ++ opencodeFeature.optionModules
     ++ opencodeFeature.__homeModuleFor "standalone-home"
   );
+  paseoHomeEvaluation = mkHome (
+    paseoFeature.optionModules ++ paseoFeature.__homeModuleFor "standalone-home"
+  );
   vscodeHomeEvaluation = mkHome (
     vscodeFeature.optionModules ++ vscodeFeature.__homeModuleFor "standalone-home"
   );
@@ -897,6 +905,7 @@ in
   inherit
     system
     pkgs
+    paseo
     qnix
     laptopQnix
     mkNixos
@@ -908,6 +917,7 @@ in
     obsFeature
     socialFeature
     opencodeFeature
+    paseoFeature
     vscodeFeature
     mcpFeature
     aiToolsFeature
@@ -1026,6 +1036,7 @@ in
     socialHomeEvaluation
     socialNixosEvaluation
     opencodeHomeEvaluation
+    paseoHomeEvaluation
     vscodeHomeEvaluation
     mcpHomeEvaluation
     aiToolsHomeEvaluation

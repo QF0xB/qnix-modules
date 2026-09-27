@@ -20,6 +20,7 @@
       "apps.notes"
       "apps.obs"
       "apps.opencode"
+      "apps.paseo"
       "apps.file-manager"
       "apps.social"
       "desktop.clipboard"

@@ -292,8 +292,15 @@ assert builtins.elem "qnix-signed-commit" (
 );
 assert builtins.elem pkgs.opencode-desktop opencodeHomeEvaluation.config.home.packages;
 assert builtins.elem pkgs.vscode opencodeHomeEvaluation.config.home.packages;
-assert builtins.elem pkgs.paseo opencodeHomeEvaluation.config.home.packages;
 assert builtins.elem pkgs.codex opencodeHomeEvaluation.config.home.packages;
+assert
+  paseoFeature.supportedEnvironments == [
+    "nixos"
+    "integrated-home"
+    "standalone-home"
+  ];
+assert builtins.elem paseo.packages.${system}.default paseoHomeEvaluation.config.home.packages;
+assert builtins.elem paseo.packages.${system}.desktop paseoHomeEvaluation.config.home.packages;
 assert opencodeHomeEvaluation.config.programs.opencode.enableMcpIntegration;
 assert builtins.elem "@satas/opencode-usage-bar@0.2.0"
   opencodeHomeEvaluation.config.programs.opencode.tui.plugin;
@@ -422,6 +429,8 @@ assert builtins.all
   [
     ".config/BraveSoftware"
     ".codex"
+    ".config/Paseo"
+    ".paseo"
     ".config/opencode/skills"
     ".local/share/opencode"
     ".local/share/yazi"

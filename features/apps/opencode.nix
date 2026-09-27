@@ -96,7 +96,6 @@
       home.packages = [
         pkgs.opencode-desktop
         pkgs.vscode
-        pkgs.paseo
         pkgs.codex
         signedCommit
       ];

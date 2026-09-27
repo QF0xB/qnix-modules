@@ -102,6 +102,7 @@ confirmation.
 | `apps.browser`      | Integrated + standalone Home | `hyprland` | — | Browser profile | finished | Brave Origin browser package |
 | `apps.file-manager` | Integrated + standalone Home | `hyprland` | `desktop.xdg-folders` | — | finished | Nemo with XDG directory pins; Yazi with Git, GVfs mounting, archive, trash, and navigation tooling |
 | `apps.opencode`     | NixOS + integrated + standalone Home | `hyprland` | Home Manager OpenCode module, `llm-agents.nix` | OpenCode session, authentication data, installed skills | implemented | OpenCode with MCP servers, CodeGraph, RTK, Fence, and upstream Agent Browser, OfficeCLI, and PDFVision skills |
+| `apps.paseo`        | NixOS + integrated + standalone Home | `hyprland` | Paseo flake desktop and CLI packages | Paseo application and CLI state | implemented | Paseo desktop client and CLI for orchestrating coding agents |
 | `apps.bitwarden`    | NixOS + Home       | `personal`              | —            | Vault/config?      | planned | Package/config; package availability uncertain                   |
 | `apps.music`        | NixOS + Home       | `hyprland`              | —            | `.config/tidal-hifi` | implemented | Tidal HiFi client with persisted profile state                  |
 | `apps.notes`        | NixOS + Home       | `hyprland`              | —            | `.config/obsidian`  | implemented | Obsidian notes application                                      |

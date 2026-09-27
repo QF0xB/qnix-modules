@@ -10,6 +10,7 @@ assert
     "apps.notes"
     "apps.obs"
     "apps.opencode"
+    "apps.paseo"
     "apps.social"
     "backup.borg"
     "desktop.client-pr-notify"
