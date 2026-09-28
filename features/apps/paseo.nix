@@ -16,10 +16,18 @@
       pkgs,
       ...
     }:
+    let
+      paseoPackages = inputs.paseo.packages.${pkgs.stdenv.hostPlatform.system};
+      paseo = paseoPackages.default.override {
+        npmDepsHash = "sha256-UXnB6q5tubKpTs+A5+u/NLSzc8ZK6rAsQs+kEphEKd8=";
+      };
+      paseoDesktop = paseoPackages.desktop.override { inherit paseo; };
+    in
     {
-      home.packages = with inputs.paseo.packages.${pkgs.stdenv.hostPlatform.system}; [
-        default
-        desktop
+      home.packages = [
+        paseo
+        paseoDesktop
+        pkgs.nodejs_22
       ];
     };
 }

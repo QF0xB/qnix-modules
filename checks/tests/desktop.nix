@@ -299,8 +299,13 @@ assert
     "integrated-home"
     "standalone-home"
   ];
-assert builtins.elem paseo.packages.${system}.default paseoHomeEvaluation.config.home.packages;
-assert builtins.elem paseo.packages.${system}.desktop paseoHomeEvaluation.config.home.packages;
+assert builtins.elem "paseo" (
+  map (package: package.pname or package.name) paseoHomeEvaluation.config.home.packages
+);
+assert builtins.elem "paseo-desktop" (
+  map (package: package.pname or package.name) paseoHomeEvaluation.config.home.packages
+);
+assert builtins.elem pkgs.nodejs_22 paseoHomeEvaluation.config.home.packages;
 assert opencodeHomeEvaluation.config.programs.opencode.enableMcpIntegration;
 assert builtins.elem "@satas/opencode-usage-bar@0.2.0"
   opencodeHomeEvaluation.config.programs.opencode.tui.plugin;
