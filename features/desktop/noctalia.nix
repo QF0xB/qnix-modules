@@ -10,243 +10,101 @@
   ];
 
   options =
-    { context, lib, ... }:
+    { lib, pkgs, ... }:
     {
       autostart = lib.mkOption {
         type = lib.types.bool;
         default = true;
-        description = "Whether Noctalia should start with the graphical session.";
-      };
-
-      notificationSounds = lib.mkOption {
-        type = lib.types.bool;
-        default = !(context.laptop or false);
-        description = "Whether Noctalia notification sounds are enabled.";
-      };
-
-      location = lib.mkOption {
-        type = lib.types.str;
-        default = "Munich";
-        description = "City used by Noctalia for weather and location-aware features.";
+        description = "Whether to start Noctalia through systemd with the graphical session.";
       };
 
       settings = lib.mkOption {
-        type = lib.types.attrs;
-        default = {
-          settingsVersion = 49;
-
-          appLauncher = {
-            enableClipboardHistory = true;
-            autoPasteClipboard = false;
-            enableClipPreview = true;
-            clipboardWrapText = true;
-            clipboardWatchTextCommand = "wl-paste --type text --watch cliphist store";
-            clipboardWatchImageCommand = "wl-paste --type image --watch cliphist store";
-            iconMode = "tabler";
-            position = "center";
-            terminalCommand = "foot -e";
-            viewMode = "grid";
-          };
-
-          audio = {
-            volumeFeedback = false;
-            volumeOverdrive = false;
-            volumeStep = 5;
-          };
-
-          bar = {
-            barType = "floating";
-            capsuleColorKey = "none";
-            density = "comfortable";
-            displayMode = "always_visible";
-            frameRadius = 10;
-            frameThickness = 2;
-            floating = true;
-            hideOnOverview = false;
-            marginHorizontal = 8;
-            marginVertical = 16;
-            outerCorners = true;
-            position = "left";
-            showCapsule = true;
-            showOutline = false;
-            widgets = {
-              center = [
-                {
-                  characterCount = 2;
-                  colorizeIcons = false;
-                  emptyColor = "secondary";
-                  enableScrollWheel = true;
-                  focusedColor = "primary";
-                  hideUnoccupied = true;
-                  id = "Workspace";
-                  iconScale = 0.8;
-                  labelMode = "index";
-                  occupiedColor = "secondary";
-                  pillSize = 0.6;
-                  reverseScroll = true;
-                  showApplications = false;
-                  showBadge = true;
-                  showLabelsOnlyWhenOccupied = true;
-                }
-              ];
-              left = [
-                {
-                  icon = "rocket";
-                  id = "Launcher";
-                }
-                {
-                  id = "Clock";
-                  clockColor = "none";
-                  formatHorizontal = "HH:mm";
-                  formatVertical = "HH mm";
-                  tooltipFormat = "HH:mm ddd, MMM dd";
-                }
-                {
-                  id = "KeyboardLayout";
-                  displayMode = "forceOpen";
-                  showIcon = true;
-                }
-                {
-                  id = "Network";
-                  displayMode = "onhover";
-                }
-              ];
-              right = [
-                { id = "Tray"; }
-                { id = "NotificationHistory"; }
-                {
-                  id = "Volume";
-                  displayMode = "alwaysHide";
-                  middleClickCommand = "pwvucontrol || pavucontrol";
-                }
-              ]
-              ++ lib.optionals (context.laptop or false) [
-                {
-                  id = "Battery";
-                  deviceNativePath = "__default__";
-                  displayMode = "graphic-clean";
-                  hideIfIdle = false;
-                  hideIfNotDetected = true;
-                  showNoctaliaPerformance = true;
-                  showPowerProfiles = true;
-                }
-                {
-                  id = "Brightness";
-                  displayMode = "alwaysHide";
-                }
-              ]
-              ++ [
-                {
-                  id = "ControlCenter";
-                  colorizeDistroLogo = false;
-                  colorizeSystemIcon = "primary";
-                  icon = "noctalia";
-                  useDistroLogo = true;
-                }
-              ];
-            };
-          };
-
-          controlCenter = {
-            diskPath = "/";
-            position = "bottom_left";
-          };
-
-          general = {
-            animationDisabled = false;
-            animationSpeed = 1;
-            autoStartAuth = false;
-            clockFormat = "hh\\nmmddd, MMM dd ";
-            clockStyle = "custom";
-            compactLockScreen = false;
-            dimmerOpacity = 0.2;
-            enableLockScreenCountdown = true;
-            enableShadows = true;
-            lockScreenAnimations = true;
-            lockOnSuspend = true;
-            showSessionButtonsOnLockScreen = true;
-            telemetryEnabled = false;
-          };
-
-          location = {
-            name = "Munich";
-            showCalendarEvents = true;
-            showCalendarWeather = true;
-            use12hourFormat = false;
-            weatherEnabled = true;
-          };
-
-          notifications = {
-            enabled = true;
-            location = "top_right";
-            sounds.enabled = false;
-          };
-
-          osd = {
-            enabled = true;
-            location = "top_right";
-          };
-
-          ui = {
-            fontDefault = "Fira Sans";
-            fontFixed = "JetBrains Mono Nerd Font";
-            fontDefaultScale = 1;
-            fontFixedScale = 1;
-            panelBackgroundOpacity = 1.0;
-            panelsAttachedToBar = true;
-            settingsPanelMode = "attached";
-            tooltipsEnabled = true;
-          };
-
-          wallpaper = {
-            automationEnabled = false;
-            enabled = true;
-            fillMode = "crop";
-            setWallpaperOnAllMonitors = true;
-            transitionDuration = 2500;
-            transitionType = "honeycomb";
-          };
+        type = (pkgs.formats.toml { }).type;
+        default = { };
+        description = "Overrides for Noctalia's upstream defaults, serialized as TOML by Home Manager.";
+        example = {
+          bar.main.position = "left";
+          location.address = "Munich";
         };
-        description = "Default Noctalia shell settings.";
       };
     };
 
   home =
     {
       cfg,
-      config,
+      context,
       lib,
       ...
     }:
-    let
-      terminal = if config.programs.foot.server.enable then "footclient" else "foot";
-    in
     {
       home.file."Pictures/wallpaper/solarized-dark.png".source =
         ../../assets/wallpapers/solarized-dark.png;
 
-      programs.noctalia-shell = {
+      programs.noctalia = {
         enable = true;
-        settings = lib.recursiveUpdate cfg.settings {
-          appLauncher.terminalCommand = "${terminal} -e";
-          location.name = cfg.location;
-          notifications.sounds.enabled = cfg.notificationSounds;
-          wallpaper.directory =
-            cfg.settings.wallpaper.directory or "${config.home.homeDirectory}/Pictures/wallpaper";
-        };
-      };
+        systemd.enable = cfg.autostart;
+        settings = lib.mkMerge [
+          {
+            calendar = {
+              enabled = true;
+            };
+            location = {
+              auto_locate = true;
+            };
 
-      wayland.windowManager.hyprland.settings.on = lib.mkIf cfg.autostart [
-        {
-          _args = [
-            "hyprland.start"
-            (lib.generators.mkLuaInline ''
-              function()
-                hl.exec_cmd("noctalia-shell")
-              end
-            '')
-          ];
-        }
-      ];
+            wallpaper = {
+              directory = "/home/q.braendli/Pictures/wallpaper";
+              transition = [ "honeycomb" ];
+            };
+
+            wallpaper.default = {
+              path = "/home/q.braendli/Pictures/wallpaper/solarized-dark-with-mountain.png";
+            };
+
+            bar.default = {
+              capsule = lib.mkDefault true;
+              capsule_fill = lib.mkDefault "#073642";
+              concave_edge_corners = lib.mkDefault false;
+              margin_edge = lib.mkDefault 10;
+              margin_ends = lib.mkDefault 20;
+              position = lib.mkDefault "left";
+              scale = lib.mkDefault 1.1000000089406967;
+            };
+            lockscreen = {
+              enabled = lib.mkDefault true;
+              lock_before_suspend = lib.mkDefault true;
+            };
+
+            shell = {
+              external_ip_enabled = lib.mkDefault true;
+              settings_window_translucent = lib.mkDefault true;
+              polkit_agent = lib.mkDefault true;
+            };
+
+            shell.greeter_sync = {
+              auto_sync = true;
+            };
+
+            shell.panel = {
+              open_near_click_control_center = lib.mkDefault true;
+            };
+
+            notification = {
+              follow_focused_output = lib.mkDefault true;
+            };
+          }
+          (lib.mkIf (!(context.laptop or false)) {
+            control_center.shortcuts = lib.mkDefault [
+              { type = "wifi"; }
+              { type = "bluetooth"; }
+              { type = "caffeine"; }
+              { type = "nightlight"; }
+              { type = "notification"; }
+              { type = "clipboard"; }
+            ];
+          })
+          cfg.settings
+        ];
+      };
     };
 }

@@ -4,12 +4,11 @@
   features = {
     nixos = [
       "apps.browser"
-      "desktop.displaymanager"
+      "desktop.noctalia-greeter"
       "desktop.hyprland"
       "security.polkit"
       "security.gnome-keyring"
       "desktop.hyprland.monitors"
-      "desktop.lock"
       "desktop.sound"
       "desktop.wayland"
       "system.plymouth"
@@ -30,7 +29,6 @@
       "desktop.hyprland.monitors"
       "desktop.hyprland.rules"
       "desktop.hyprland.special-workspaces"
-      "desktop.lock"
       "desktop.noctalia"
       "desktop.screenshots"
       "desktop.terminal"

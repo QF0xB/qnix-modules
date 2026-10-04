@@ -1,5 +1,7 @@
 # QNix Modules
 
+> Second display test: **bold text**, *italic text*, and `inline code`.
+
 This flake publishes reusable QNix feature and profile definitions.
 
 ## Rewrite status
