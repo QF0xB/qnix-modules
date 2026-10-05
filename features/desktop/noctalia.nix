@@ -381,10 +381,10 @@
             };
 
             plugin_settings."ahmedhossamdev/reading-list" = {
-              save_path = "~/Documents/personal/Area/Reading";
+              save_path = "~/Documents/personal/50 - Sources/ReadingList";
             };
             plugin_settings."davemhammer/obsidian" = {
-              daily_folder = "Journal/Daily/";
+              daily_folder = "30 - Journal/Daily/";
               manager_placement = "attached";
               vault_path = "/home/q.braendli/Documents/personal/";
             };
