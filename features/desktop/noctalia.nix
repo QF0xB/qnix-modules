@@ -162,7 +162,7 @@
                 "battery"
                 "control-center"
               ];
-              start = [ "launcher" "clock" "privacy" "lock_keys" ];
+              start = [ "launcher" "clock" "group:g3" "privacy" "lock_keys" ];
               capsule_group = [
                 {
                   accordion = true;
@@ -183,6 +183,17 @@
                   fill = "#073642";
                   id = "g2";
                   members = [ "nix-monitor" "status_2" "nextboot-selector" ];
+                  opacity = 1.0;
+                  padding = 6.0;
+                }
+                {
+                  accordion = true;
+                  accordion_direction = "end";
+                  border_width = 1.0;
+                  enabled = true;
+                  fill = "#073642";
+                  id = "g3";
+                  members = [ "bar" "status" ];
                   opacity = 1.0;
                   padding = 6.0;
                 }
@@ -261,6 +272,7 @@
             };
 
             widget = {
+              bar.type = "ahmedhossamdev/reading-list:bar";
               launcher.glyph = "rocket";
               lock_keys = {
                 hide_when_off = true;
@@ -273,6 +285,10 @@
                 type = "avivbintangaringga/nix-monitor:nix-monitor";
               };
               privacy.hide_inactive = true;
+              status = {
+                type = "davemhammer/obsidian:status";
+                show_dirty = false;
+              };
               status_2.type = "tiobaka/vm-manager:status";
               tray = {
                 drawer = true;
@@ -356,7 +372,7 @@
               "nightwatch75/file-search"
               "cleboost/jetbrains-provider"
               "8bury/mini-docker"
-              "davemhammer/obsidian",
+              "davemhammer/obsidian"
               "ahmedhossamdev/reading-list"
             ];
             plugin_settings."umedbazarov/crashes" = {
@@ -365,7 +381,7 @@
             };
 
             plugin_settings."ahmedhossamdev/reading-list" = {
-              save_path = "~/Documents/personal/inbox";
+              save_path = "~/Documents/personal/Knowledge/ReadingList";
             };
             plugin_settings."davemhammer/obsidian" = {
               daily_folder = "Journal/Daily/";
