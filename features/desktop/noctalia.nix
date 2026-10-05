@@ -356,10 +356,21 @@
               "nightwatch75/file-search"
               "cleboost/jetbrains-provider"
               "8bury/mini-docker"
+              "davemhammer/obsidian",
+              "ahmedhossamdev/reading-list"
             ];
             plugin_settings."umedbazarov/crashes" = {
               agent_cmd = "paseo run --provider codex/gpt-6-luna";
               terminal_cmd = "footclient -e";
+            };
+
+            plugin_settings."ahmedhossamdev/reading-list" = {
+              save_path = "~/Documents/personal/inbox";
+            };
+            plugin_settings."davemhammer/obsidian" = {
+              daily_folder = "Journal/Daily/";
+              manager_placement = "attached";
+              vault_path = "/home/q.braendli/Documents/personal/";
             };
             plugin_settings."avivbintangaringga/nextboot-selector".privilege_command = "pkexec";
           }
