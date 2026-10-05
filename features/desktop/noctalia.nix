@@ -381,7 +381,7 @@
             };
 
             plugin_settings."ahmedhossamdev/reading-list" = {
-              save_path = "~/Documents/personal/Knowledge/ReadingList";
+              save_path = "~/Documents/personal/Area/Reading";
             };
             plugin_settings."davemhammer/obsidian" = {
               daily_folder = "Journal/Daily/";
