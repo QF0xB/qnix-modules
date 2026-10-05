@@ -97,10 +97,7 @@ assert builtins.any (
   rule: rule.name == "test-rule"
 ) hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.window_rule;
 assert builtins.any (
-  rule:
-  rule.name == "yazi-workspace"
-  && rule.match.class == "^(yazi)$"
-  && rule.workspace == "9"
+  rule: rule.name == "yazi-workspace" && rule.match.class == "^(yazi)$" && rule.workspace == "9"
 ) hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.window_rule;
 assert builtins.any (
   rule:
@@ -120,6 +117,9 @@ assert
     ".config/hypr/workspaces.lua"
   ];
 assert hyprlandProfileEvaluation.config.qnix.desktop.hyprland.noHardwareCursors;
+assert hyprlandProfileEvaluation.config.security.polkit.enable;
+assert builtins.elem pkgs.efibootmgr hyprlandProfileEvaluation.config.environment.systemPackages;
+assert builtins.elem pkgs.linux-wifi-hotspot hyprlandProfileEvaluation.config.environment.systemPackages;
 assert hyprlandStandaloneProfileEvaluation.config.wayland.windowManager.hyprland.enable;
 assert builtins.all
   (package: builtins.elem package hyprlandStandaloneProfileEvaluation.config.home.packages)
@@ -133,42 +133,149 @@ assert
   noctaliaFeature.supportedEnvironments == [
     "integrated-home"
     "standalone-home"
+    "nixos"
   ];
-assert noctaliaHomeEvaluation.config.programs.noctalia-shell.enable;
-assert !noctaliaHomeEvaluation.config.programs.noctalia-shell.systemd.enable;
+assert noctaliaHomeEvaluation.config.programs.noctalia.enable;
+assert noctaliaHomeEvaluation.config.programs.noctalia.systemd.enable;
+assert builtins.all (package: builtins.elem package noctaliaHomeEvaluation.config.home.packages) [
+  pkgs.jq
+  pkgs.libnotify
+  pkgs.networkmanager
+  pkgs.iproute2
+  pkgs.iw
+  pkgs.nix-search-tv
+  pkgs.fzf
+  pkgs.xdg-utils
+  pkgs.git
+  pkgs.coreutils
+  pkgs.gawk
+  pkgs.gnugrep
+  pkgs.procps
+  pkgs.openssh
+  pkgs.libvirt
+  pkgs.virt-viewer
+  pkgs.findutils
+  pkgs.util-linux
+  pkgs.glib.bin
+  pkgs.bash
+  pkgs.docker-client
+];
+assert noctaliaHomeEvaluation.config.programs.noctalia.settings.plugins.enabled == [
+  "conqazht/share-wifi"
+  "umedbazarov/crashes"
+  "avivbintangaringga/nextboot-selector"
+  "avivbintangaringga/nix-monitor"
+  "knyrps/nix-search"
+  "cleboost/ssh-launcher"
+  "srounce/systemd"
+  "tiobaka/vm-manager"
+  "nightwatch75/file-search"
+  "cleboost/jetbrains-provider"
+  "8bury/mini-docker"
+];
 assert
-  builtins.length noctaliaHomeEvaluation.config.wayland.windowManager.hyprland.settings.on == 2;
+  noctaliaHomeEvaluation.config.programs.noctalia.settings.plugin_settings."umedbazarov/crashes".agent_cmd
+  == "paseo run --provider codex/gpt-6-luna";
+assert
+  noctaliaHomeEvaluation.config.programs.noctalia.settings.plugin_settings."umedbazarov/crashes".terminal_cmd
+  == "footclient -e";
+assert
+  noctaliaHomeEvaluation.config.programs.noctalia.settings.plugin_settings."avivbintangaringga/nextboot-selector".privilege_command
+  == "pkexec";
+assert noctaliaHomeEvaluation.config.programs.noctalia.settings.hooks.started != "";
+assert noctaliaHomeEvaluation.config.programs.noctalia.settings.hooks.wallpaper_changed != "";
+assert builtins.elem ".local/state/qnix/noctalia-wallpapers"
+  hyprlandProfileEvaluation.config.qnix.persist.users."*".directories;
+assert noctaliaHomeEvaluation.config.wayland.windowManager.hyprland.settings.on == [ ];
+assert
+  noctaliaHomeEvaluation.config.systemd.user.services.noctalia.Install.WantedBy
+  == [ noctaliaHomeEvaluation.config.wayland.systemd.target ];
+assert noctaliaHomeEvaluation.config.systemd.user.services.noctalia.Service.Restart == "on-failure";
 assert builtins.any (
-  hook: pkgs.lib.hasInfix "noctalia-shell" (builtins.elemAt hook._args 1).expr
-) noctaliaHomeEvaluation.config.wayland.windowManager.hyprland.settings.on;
-assert builtins.any (
-  binding: pkgs.lib.hasInfix "launcher toggle" (builtins.elemAt binding._args 1).expr
+  binding:
+  pkgs.lib.hasInfix "noctalia msg panel-toggle launcher" (builtins.elemAt binding._args 1).expr
 ) hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind;
 assert builtins.any (
   binding: pkgs.lib.hasInfix "brightnessctl set 5%+" (builtins.elemAt binding._args 1).expr
 ) laptopHyprlandKeybindsEvaluation.config.wayland.windowManager.hyprland.settings.bind;
+assert noctaliaHomeEvaluation.config.qnix.desktop.noctalia.settings == { };
 assert
-  builtins.baseNameOf
-    noctaliaHomeEvaluation.config.home.file."Pictures/wallpaper/solarized-dark.png".source
-  == "solarized-dark.png";
-assert noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.location.name == "Munich";
-assert noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.notifications.sounds.enabled;
+  {
+    default = builtins.removeAttrs noctaliaHomeEvaluation.config.programs.noctalia.settings.bar.default [
+      "center" "start" "end" "capsule_group"
+    ];
+  } == {
+    default = {
+      capsule = true;
+      capsule_fill = "#073642";
+      concave_edge_corners = false;
+      margin_edge = 10;
+      margin_ends = 20;
+      position = "left";
+      scale = 1.1000000089406967;
+    };
+  };
 assert
-  noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.appLauncher.enableClipboardHistory;
-assert noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.appLauncher.enableClipPreview;
+  laptopNoctaliaHomeEvaluation.config.programs.noctalia.settings.bar
+  == noctaliaHomeEvaluation.config.programs.noctalia.settings.bar;
 assert
-  noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.appLauncher.clipboardWatchTextCommand
-  == "wl-paste --type text --watch cliphist store";
+  map (
+    shortcut: shortcut.type
+  ) noctaliaHomeEvaluation.config.programs.noctalia.settings.control_center.shortcuts == [
+    "wifi"
+    "bluetooth"
+    "caffeine"
+    "nightlight"
+    "notification"
+    "clipboard"
+  ];
+assert !(laptopNoctaliaHomeEvaluation.config.programs.noctalia.settings ? control_center);
+assert !noctaliaOverrideHomeEvaluation.config.programs.noctalia.systemd.enable;
+assert !(noctaliaOverrideHomeEvaluation.config.systemd.user.services ? noctalia);
+assert
+  noctaliaOverrideHomeEvaluation.config.programs.noctalia.settings.shell.font_family == "Fira Sans";
+assert
+  noctaliaOverrideHomeEvaluation.config.programs.noctalia.settings.shell.clipboard_auto_paste
+  == "off";
+assert noctaliaOverrideHomeEvaluation.config.programs.noctalia.settings.shell.polkit_agent;
+assert noctaliaOverrideHomeEvaluation.config.programs.noctalia.settings.lockscreen.enabled;
+assert
+  !noctaliaOverrideHomeEvaluation.config.programs.noctalia.settings.lockscreen.lock_before_suspend;
+assert noctaliaHomeEvaluation.config.programs.noctalia.settings.lockscreen.enabled;
+assert noctaliaHomeEvaluation.config.programs.noctalia.settings.lockscreen.lock_before_suspend;
+assert noctaliaHomeEvaluation.config.programs.noctalia.settings.lockscreen.transition == [ "honeycomb" ];
+assert noctaliaHomeEvaluation.config.programs.noctalia.settings.shell.panel.open_near_click_session;
+assert noctaliaHomeEvaluation.config.programs.noctalia.settings.shell.launch_apps_as_systemd_services;
+assert noctaliaHomeEvaluation.config.programs.noctalia.settings.shell.polkit_agent;
+assert !builtins.elem pkgs.hyprpolkitagent noctaliaHomeEvaluation.config.home.packages;
+assert !noctaliaHomeEvaluation.config.programs.hyprlock.enable;
+assert noctaliaHomeEvaluation.config.xdg.configFile ? "noctalia/config.toml";
 assert displayManagerFeature.supportedEnvironments == [ "nixos" ];
 assert displayManagerEvaluation.config.services.displayManager.sddm.enable;
 assert displayManagerEvaluation.config.services.displayManager.sddm.theme == "sddm-astronaut-theme";
 assert displayManagerEvaluation.config.services.xserver.enable;
+assert noctaliaGreeterFeature.supportedEnvironments == [ "nixos" ];
+assert noctaliaGreeterEvaluation.config.services.displayManager.noctalia-greeter.enable;
+assert noctaliaGreeterEvaluation.config.services.greetd.enable;
+assert !noctaliaGreeterEvaluation.config.services.displayManager.sddm.enable;
+assert noctaliaGreeterEvaluation.config.security.pam.services.greetd.enable;
+assert noctaliaGreeterEvaluation.config.security.pam.services.login.enable;
 assert
-  lockFeature.supportedEnvironments == [
-    "nixos"
-    "integrated-home"
-    "standalone-home"
-  ];
+  noctaliaGreeterEvaluation.config.services.displayManager.noctalia-greeter.settings.keyboard.layout
+  == "de";
+assert
+  noctaliaGreeterEvaluation.config.services.displayManager.noctalia-greeter.settings.keyboard.variant
+  == "koy";
+assert
+  noctaliaGreeterEvaluation.config.services.displayManager.noctalia-greeter.settings.session.default
+  == "Hyprland (uwsm-managed)";
+assert pkgs.lib.hasInfix "noctalia-greeter-session"
+  noctaliaGreeterEvaluation.config.services.greetd.settings.default_session.command;
+assert hyprlandProfileEvaluation.config.services.displayManager.noctalia-greeter.enable;
+assert !hyprlandProfileEvaluation.config.services.displayManager.sddm.enable;
+assert builtins.any (
+  binding: pkgs.lib.hasInfix "noctalia msg session lock" (builtins.elemAt binding._args 1).expr
+) hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.bind;
 assert
   soundFeature.supportedEnvironments == [
     "nixos"
@@ -208,6 +315,24 @@ assert
   ];
 assert builtins.elem pkgs.brave-origin browserHomeEvaluation.config.home.packages;
 assert browserHomeEvaluation.config.qnix.apps.browser.package == pkgs.brave-origin;
+assert
+  bitwardenFeature.supportedEnvironments == [
+    "nixos"
+    "integrated-home"
+    "standalone-home"
+  ];
+assert builtins.elem pkgs.bitwarden-desktop bitwardenHomeEvaluation.config.home.packages;
+assert !(builtins.elem pkgs.bitwarden-cli bitwardenHomeEvaluation.config.home.packages);
+assert !(builtins.elem "noctalia/bitwarden" (
+  bitwardenHomeEvaluation.config.programs.noctalia.settings.plugins.enabled or [ ]
+));
+assert builtins.elem pkgs.bitwarden-desktop
+  bitwardenWithoutNoctaliaHomeEvaluation.config.home.packages;
+assert !(builtins.elem pkgs.bitwarden-cli
+  bitwardenWithoutNoctaliaHomeEvaluation.config.home.packages);
+assert bitwardenNixosEvaluation.config.qnix.persist.users."*".directories == [
+  ".config/Bitwarden"
+];
 assert
   musicFeature.supportedEnvironments == [
     "nixos"
@@ -302,6 +427,9 @@ assert
 assert builtins.elem "paseo" (
   map (package: package.pname or package.name) paseoHomeEvaluation.config.home.packages
 );
+assert builtins.elem "paseo" (
+  map (package: package.pname or package.name) hyprlandStandaloneProfileEvaluation.config.home.packages
+);
 assert builtins.elem "paseo-desktop" (
   map (package: package.pname or package.name) paseoHomeEvaluation.config.home.packages
 );
@@ -387,9 +515,7 @@ assert
   ];
 assert
   builtins.length hyprlandFullHomeEvaluation.config.wayland.windowManager.hyprland.settings.on == 1;
-assert
-  noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.appLauncher.terminalCommand
-  == "footclient -e";
+assert noctaliaHomeEvaluation.config.home.sessionVariables.TERMINAL == "footclient";
 assert
   xdgFoldersFeature.supportedEnvironments == [
     "integrated-home"
@@ -433,6 +559,7 @@ assert builtins.all
   (path: builtins.elem path hyprlandProfileEvaluation.config.qnix.persist.users."*".directories)
   [
     ".config/BraveSoftware"
+    ".config/Bitwarden"
     ".codex"
     ".config/Paseo"
     ".paseo"
@@ -446,36 +573,43 @@ assert builtins.all
   ];
 assert builtins.elem ".config/pavucontrol.ini"
   hyprlandProfileEvaluation.config.qnix.persist.users."*".files;
-assert lockNixosEvaluation.config.security.pam.services.hyprlock.enable;
-assert lockHomeEvaluation.config.programs.hyprlock.enable;
-assert
-  builtins.baseNameOf (
-    toString (builtins.elemAt lockHomeEvaluation.config.programs.hyprlock.settings.background 0).path
-  ) == "solarized-dark.png";
-assert
-  (builtins.elemAt lockHomeEvaluation.config.programs.hyprlock.settings.background 0).blur_passes
-  == 3;
-assert
-  (builtins.elemAt lockHomeEvaluation.config.programs.hyprlock.settings.input-field 0).rounding == 10;
-assert
-  map (
-    widget: widget.id
-  ) noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.bar.widgets.right == [
-    "Tray"
-    "NotificationHistory"
-    "Volume"
-    "ControlCenter"
-  ];
-assert
-  map (
-    widget: widget.id
-  ) laptopNoctaliaHomeEvaluation.config.programs.noctalia-shell.settings.bar.widgets.right == [
-    "Tray"
-    "NotificationHistory"
-    "Volume"
-    "Battery"
-    "Brightness"
-    "ControlCenter"
-  ];
-assert noctaliaHomeEvaluation.config.programs.noctalia-shell.settings.settingsVersion == 49;
-pkgs.runCommand "qnix-desktop-check" { } "touch $out"
+pkgs.runCommand "qnix-desktop-check"
+  {
+    desktopConfig = noctaliaHomeEvaluation.config.xdg.configFile."noctalia/config.toml".source;
+    laptopConfig = laptopNoctaliaHomeEvaluation.config.xdg.configFile."noctalia/config.toml".source;
+    overrideConfig = noctaliaOverrideHomeEvaluation.config.xdg.configFile."noctalia/config.toml".source;
+    wallpaperSaveHook = noctaliaHomeEvaluation.config.programs.noctalia.settings.hooks.wallpaper_changed;
+    wallpaperStartedHook = noctaliaHomeEvaluation.config.programs.noctalia.settings.hooks.started;
+    noctaliaMock = pkgs.writeShellScriptBin "noctalia" ''
+      printf '%s\n' "$*" >> "$HOME/noctalia-calls"
+    '';
+    greeterConfig =
+      noctaliaGreeterEvaluation.config.systemd.tmpfiles.settings."10-noctalia-greeter"."/var/lib/noctalia-greeter/greeter.toml"."L+".argument;
+  }
+  ''
+    test -s "$desktopConfig"
+    test -s "$laptopConfig"
+    test -s "$overrideConfig"
+    test -s "$greeterConfig"
+
+    export HOME="$TMPDIR/noctalia-home"
+    mkdir -p "$HOME"
+    export PATH="$noctaliaMock/bin:$PATH"
+
+    eval "$wallpaperStartedHook"
+    test -d "$HOME/.local/state/qnix/noctalia-wallpapers"
+    test ! -e "$HOME/noctalia-calls"
+
+    export NOCTALIA_WALLPAPER_CONNECTOR="DP-1"
+    export NOCTALIA_WALLPAPER_PATH="/home/check/Wallpapers/wall paper.png"
+    eval "$wallpaperSaveHook"
+
+    savedWallpaper="$HOME/.local/state/qnix/noctalia-wallpapers/monitor-DP-1"
+    IFS= read -r savedPath < "$savedWallpaper"
+    test "$savedPath" = "$NOCTALIA_WALLPAPER_PATH"
+
+    eval "$wallpaperStartedHook"
+    IFS= read -r restoreCall < "$HOME/noctalia-calls"
+    test "$restoreCall" = "msg wallpaper-set DP-1 $NOCTALIA_WALLPAPER_PATH"
+    touch $out
+  ''

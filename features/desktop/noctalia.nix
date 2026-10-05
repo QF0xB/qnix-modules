@@ -2,251 +2,379 @@
   environments = [
     "integrated-home"
     "standalone-home"
+    "nixos"
   ];
 
-  requires.home = [
-    "desktop.hyprland"
-    "desktop.terminal"
-  ];
+  requires = {
+    home = [
+      "desktop.hyprland"
+      "desktop.terminal"
+    ];
+    nixos = [ "security.polkit" ];
+  };
+
+  persistence.users."*".directories = [ ".local/state/qnix/noctalia-wallpapers" ];
 
   options =
-    { context, lib, ... }:
+    { lib, pkgs, ... }:
     {
       autostart = lib.mkOption {
         type = lib.types.bool;
         default = true;
-        description = "Whether Noctalia should start with the graphical session.";
-      };
-
-      notificationSounds = lib.mkOption {
-        type = lib.types.bool;
-        default = !(context.laptop or false);
-        description = "Whether Noctalia notification sounds are enabled.";
-      };
-
-      location = lib.mkOption {
-        type = lib.types.str;
-        default = "Munich";
-        description = "City used by Noctalia for weather and location-aware features.";
+        description = "Whether to start Noctalia through systemd with the graphical session.";
       };
 
       settings = lib.mkOption {
-        type = lib.types.attrs;
-        default = {
-          settingsVersion = 49;
-
-          appLauncher = {
-            enableClipboardHistory = true;
-            autoPasteClipboard = false;
-            enableClipPreview = true;
-            clipboardWrapText = true;
-            clipboardWatchTextCommand = "wl-paste --type text --watch cliphist store";
-            clipboardWatchImageCommand = "wl-paste --type image --watch cliphist store";
-            iconMode = "tabler";
-            position = "center";
-            terminalCommand = "foot -e";
-            viewMode = "grid";
-          };
-
-          audio = {
-            volumeFeedback = false;
-            volumeOverdrive = false;
-            volumeStep = 5;
-          };
-
-          bar = {
-            barType = "floating";
-            capsuleColorKey = "none";
-            density = "comfortable";
-            displayMode = "always_visible";
-            frameRadius = 10;
-            frameThickness = 2;
-            floating = true;
-            hideOnOverview = false;
-            marginHorizontal = 8;
-            marginVertical = 16;
-            outerCorners = true;
-            position = "left";
-            showCapsule = true;
-            showOutline = false;
-            widgets = {
-              center = [
-                {
-                  characterCount = 2;
-                  colorizeIcons = false;
-                  emptyColor = "secondary";
-                  enableScrollWheel = true;
-                  focusedColor = "primary";
-                  hideUnoccupied = true;
-                  id = "Workspace";
-                  iconScale = 0.8;
-                  labelMode = "index";
-                  occupiedColor = "secondary";
-                  pillSize = 0.6;
-                  reverseScroll = true;
-                  showApplications = false;
-                  showBadge = true;
-                  showLabelsOnlyWhenOccupied = true;
-                }
-              ];
-              left = [
-                {
-                  icon = "rocket";
-                  id = "Launcher";
-                }
-                {
-                  id = "Clock";
-                  clockColor = "none";
-                  formatHorizontal = "HH:mm";
-                  formatVertical = "HH mm";
-                  tooltipFormat = "HH:mm ddd, MMM dd";
-                }
-                {
-                  id = "KeyboardLayout";
-                  displayMode = "forceOpen";
-                  showIcon = true;
-                }
-                {
-                  id = "Network";
-                  displayMode = "onhover";
-                }
-              ];
-              right = [
-                { id = "Tray"; }
-                { id = "NotificationHistory"; }
-                {
-                  id = "Volume";
-                  displayMode = "alwaysHide";
-                  middleClickCommand = "pwvucontrol || pavucontrol";
-                }
-              ]
-              ++ lib.optionals (context.laptop or false) [
-                {
-                  id = "Battery";
-                  deviceNativePath = "__default__";
-                  displayMode = "graphic-clean";
-                  hideIfIdle = false;
-                  hideIfNotDetected = true;
-                  showNoctaliaPerformance = true;
-                  showPowerProfiles = true;
-                }
-                {
-                  id = "Brightness";
-                  displayMode = "alwaysHide";
-                }
-              ]
-              ++ [
-                {
-                  id = "ControlCenter";
-                  colorizeDistroLogo = false;
-                  colorizeSystemIcon = "primary";
-                  icon = "noctalia";
-                  useDistroLogo = true;
-                }
-              ];
-            };
-          };
-
-          controlCenter = {
-            diskPath = "/";
-            position = "bottom_left";
-          };
-
-          general = {
-            animationDisabled = false;
-            animationSpeed = 1;
-            autoStartAuth = false;
-            clockFormat = "hh\\nmmddd, MMM dd ";
-            clockStyle = "custom";
-            compactLockScreen = false;
-            dimmerOpacity = 0.2;
-            enableLockScreenCountdown = true;
-            enableShadows = true;
-            lockScreenAnimations = true;
-            lockOnSuspend = true;
-            showSessionButtonsOnLockScreen = true;
-            telemetryEnabled = false;
-          };
-
-          location = {
-            name = "Munich";
-            showCalendarEvents = true;
-            showCalendarWeather = true;
-            use12hourFormat = false;
-            weatherEnabled = true;
-          };
-
-          notifications = {
-            enabled = true;
-            location = "top_right";
-            sounds.enabled = false;
-          };
-
-          osd = {
-            enabled = true;
-            location = "top_right";
-          };
-
-          ui = {
-            fontDefault = "Fira Sans";
-            fontFixed = "JetBrains Mono Nerd Font";
-            fontDefaultScale = 1;
-            fontFixedScale = 1;
-            panelBackgroundOpacity = 1.0;
-            panelsAttachedToBar = true;
-            settingsPanelMode = "attached";
-            tooltipsEnabled = true;
-          };
-
-          wallpaper = {
-            automationEnabled = false;
-            enabled = true;
-            fillMode = "crop";
-            setWallpaperOnAllMonitors = true;
-            transitionDuration = 2500;
-            transitionType = "honeycomb";
-          };
+        type = (pkgs.formats.toml { }).type;
+        default = { };
+        description = "Overrides for Noctalia's upstream defaults, serialized as TOML by Home Manager.";
+        example = {
+          bar.main.position = "left";
+          location.address = "Munich";
         };
-        description = "Default Noctalia shell settings.";
       };
+    };
+
+  nixos =
+    { pkgs, ... }:
+    {
+      environment.systemPackages = [
+        pkgs.efibootmgr
+        pkgs.linux-wifi-hotspot
+      ];
     };
 
   home =
     {
       cfg,
-      config,
+      context,
       lib,
+      pkgs,
       ...
     }:
     let
-      terminal = if config.programs.foot.server.enable then "footclient" else "foot";
+      wallpaperStateScript = pkgs.writeShellScript "qnix-noctalia-wallpaper-state" ''
+        set -euo pipefail
+
+        state_dir="$HOME/.local/state/qnix/noctalia-wallpapers"
+
+        case "''${1:-}" in
+          save)
+            path="''${NOCTALIA_WALLPAPER_PATH:-}"
+            connector="''${NOCTALIA_WALLPAPER_CONNECTOR:-}"
+            [[ -n "$path" ]] || exit 0
+
+            if [[ -n "$connector" ]]; then
+              [[ "$connector" =~ ^[[:alnum:]_.-]+$ ]] || exit 0
+              state_file="$state_dir/monitor-$connector"
+            else
+              state_file="$state_dir/default"
+            fi
+
+            umask 077
+            mkdir -p "$state_dir"
+            printf '%s\n' "$path" > "$state_file.tmp.$$"
+            mv "$state_file.tmp.$$" "$state_file"
+            ;;
+
+          restore)
+            mkdir -p "$state_dir"
+
+            if [[ -r "$state_dir/default" ]]; then
+              path="$(< "$state_dir/default")"
+              [[ -n "$path" ]] && noctalia msg wallpaper-set "$path" || true
+            fi
+
+            for state_file in "$state_dir"/monitor-*; do
+              [[ -f "$state_file" ]] || continue
+              connector="''${state_file##*/monitor-}"
+              path="$(< "$state_file")"
+              [[ "$connector" =~ ^[[:alnum:]_.-]+$ && -n "$path" ]] || continue
+              noctalia msg wallpaper-set "$connector" "$path" || true
+            done
+            ;;
+
+          *)
+            exit 64
+            ;;
+        esac
+      '';
     in
     {
-      home.file."Pictures/wallpaper/solarized-dark.png".source =
-        ../../assets/wallpapers/solarized-dark.png;
-
-      programs.noctalia-shell = {
-        enable = true;
-        settings = lib.recursiveUpdate cfg.settings {
-          appLauncher.terminalCommand = "${terminal} -e";
-          location.name = cfg.location;
-          notifications.sounds.enabled = cfg.notificationSounds;
-          wallpaper.directory =
-            cfg.settings.wallpaper.directory or "${config.home.homeDirectory}/Pictures/wallpaper";
-        };
-      };
-
-      wayland.windowManager.hyprland.settings.on = lib.mkIf cfg.autostart [
-        {
-          _args = [
-            "hyprland.start"
-            (lib.generators.mkLuaInline ''
-              function()
-                hl.exec_cmd("noctalia-shell")
-              end
-            '')
-          ];
-        }
+      home.packages = with pkgs; [
+        jq
+        libnotify
+        networkmanager
+        iproute2
+        iw
+        nix-search-tv
+        fzf
+        xdg-utils
+        git
+        coreutils
+        gawk
+        gnugrep
+        procps
+        openssh
+        libvirt
+        virt-viewer
+        findutils
+        util-linux
+        glib.bin
+        bash
+        docker-client
       ];
+
+      home.file."Pictures/wallpaper".source =
+        ../../assets/wallpapers;
+
+      programs.noctalia = {
+        enable = true;
+        systemd.enable = cfg.autostart;
+        settings = lib.mkMerge [
+          {
+            calendar = {
+              enabled = true;
+            };
+            location = {
+              auto_locate = true;
+            };
+
+            wallpaper = {
+              directory = "/home/q.braendli/Pictures/wallpaper";
+              transition = [ "honeycomb" ];
+            };
+
+            wallpaper.default = {
+              path = "/home/q.braendli/Pictures/wallpaper/solarized-dark.png";
+            };
+
+            bar.default = {
+              center = [ "workspaces" ];
+              end = [
+                "tray"
+                "group:g2"
+                "notifications"
+                "clipboard"
+                "group:g1"
+                "volume"
+                "brightness"
+                "battery"
+                "control-center"
+              ];
+              start = [ "launcher" "clock" "privacy" "lock_keys" ];
+              capsule_group = [
+                {
+                  accordion = true;
+                  accordion_direction = "start";
+                  border_width = 1.0;
+                  enabled = true;
+                  fill = "#073642";
+                  id = "g1";
+                  members = [ "network" "bluetooth" ];
+                  opacity = 1.0;
+                  padding = 6.0;
+                }
+                {
+                  accordion = true;
+                  accordion_direction = "start";
+                  border_width = 1.0;
+                  enabled = true;
+                  fill = "#073642";
+                  id = "g2";
+                  members = [ "nix-monitor" "status_2" "nextboot-selector" ];
+                  opacity = 1.0;
+                  padding = 6.0;
+                }
+              ];
+              capsule = lib.mkDefault true;
+              capsule_fill = lib.mkDefault "#073642";
+              concave_edge_corners = lib.mkDefault false;
+              margin_edge = lib.mkDefault 10;
+              margin_ends = lib.mkDefault 20;
+              position = lib.mkDefault "left";
+              scale = lib.mkDefault 1.1000000089406967;
+            };
+            lockscreen = {
+              enabled = lib.mkDefault true;
+              lock_before_suspend = lib.mkDefault true;
+              transition = lib.mkDefault [ "honeycomb" ];
+            };
+
+            lockscreen_widgets = {
+              enabled = false;
+              schema_version = 2;
+              widget_order = [
+                "lockscreen-login-box@DP-5"
+                "lockscreen-login-box@DP-3"
+                "lockscreen-login-box@HDMI-A-2"
+              ];
+              grid = {
+                cell_size = 16;
+                major_interval = 4;
+                visible = true;
+              };
+              widget = lib.mapAttrs (_: geometry: geometry // {
+                box_height = 196.0;
+                box_width = 810.0;
+                rotation = 0.0;
+                type = "login_box";
+                settings = {
+                  background_color = "surface_variant";
+                  background_opacity = 0.88;
+                  background_radius = 12.0;
+                  center_password_text = false;
+                  input_opacity = 1.0;
+                  input_radius = 6.0;
+                  layout = "regular";
+                  show_caps_lock = true;
+                  show_keyboard_layout = true;
+                  show_login_button = true;
+                  show_media = true;
+                  show_session_buttons = true;
+                  show_unlock_hint = true;
+                  show_weather = true;
+                };
+              }) {
+                "lockscreen-login-box@DP-3" = {
+                  cx = 1280.0;
+                  cy = 1258.0;
+                  output = "DP-3";
+                  placement_height = 1440.0;
+                  placement_width = 2560.0;
+                };
+                "lockscreen-login-box@DP-5" = {
+                  cx = 960.0;
+                  cy = 1018.0;
+                  output = "DP-5";
+                  placement_height = 1200.0;
+                  placement_width = 1920.0;
+                };
+                "lockscreen-login-box@HDMI-A-2" = {
+                  cx = 640.0;
+                  cy = 538.0;
+                  output = "HDMI-A-2";
+                  placement_height = 720.0;
+                  placement_width = 1280.0;
+                };
+              };
+            };
+
+            widget = {
+              launcher.glyph = "rocket";
+              lock_keys = {
+                hide_when_off = true;
+                show_num_lock = false;
+              };
+              network.show_label = true;
+              nextboot-selector.type = "avivbintangaringga/nextboot-selector:nextboot-selector";
+              nix-monitor = {
+                show_text = false;
+                type = "avivbintangaringga/nix-monitor:nix-monitor";
+              };
+              privacy.hide_inactive = true;
+              status_2.type = "tiobaka/vm-manager:status";
+              tray = {
+                drawer = true;
+                hidden = [ "nm-applet" "blueman" ];
+              };
+              volume.show_label = false;
+            };
+
+            shell = {
+              external_ip_enabled = lib.mkDefault true;
+              settings_window_translucent = lib.mkDefault true;
+              polkit_agent = lib.mkDefault true;
+              launch_apps_as_systemd_services = lib.mkDefault true;
+              session.actions = [
+                {
+                  action = "lock";
+                  countdown_seconds = 0.0;
+                  enabled = true;
+                  shortcut = "1";
+                  variant = "default";
+                }
+                {
+                  action = "logout";
+                  command = "uwsm stop";
+                  countdown_seconds = 0.0;
+                  enabled = true;
+                  shortcut = "2";
+                  variant = "default";
+                }
+                {
+                  action = "lock_and_suspend";
+                  countdown_seconds = 0.0;
+                  enabled = true;
+                  shortcut = "3";
+                  variant = "default";
+                }
+                {
+                  action = "reboot";
+                  countdown_seconds = 0.0;
+                  enabled = true;
+                  shortcut = "4";
+                  variant = "default";
+                }
+                {
+                  action = "shutdown";
+                  countdown_seconds = 0.0;
+                  enabled = true;
+                  shortcut = "5";
+                  variant = "destructive";
+                }
+              ];
+            };
+
+            shell.greeter_sync = {
+              auto_sync = true;
+            };
+
+            hooks = {
+              started = "${wallpaperStateScript} restore";
+              wallpaper_changed = "${wallpaperStateScript} save";
+            };
+
+            shell.panel = {
+              open_near_click_control_center = lib.mkDefault true;
+              open_near_click_session = lib.mkDefault true;
+            };
+
+            notification = {
+              follow_focused_output = lib.mkDefault true;
+            };
+
+            plugins.enabled = [
+              "conqazht/share-wifi"
+              "umedbazarov/crashes"
+              "avivbintangaringga/nextboot-selector"
+              "avivbintangaringga/nix-monitor"
+              "knyrps/nix-search"
+              "cleboost/ssh-launcher"
+              "srounce/systemd"
+              "tiobaka/vm-manager"
+              "nightwatch75/file-search"
+              "cleboost/jetbrains-provider"
+              "8bury/mini-docker"
+            ];
+            plugin_settings."umedbazarov/crashes" = {
+              agent_cmd = "paseo run --provider codex/gpt-6-luna";
+              terminal_cmd = "footclient -e";
+            };
+            plugin_settings."avivbintangaringga/nextboot-selector".privilege_command = "pkexec";
+          }
+          (lib.mkIf (!(context.laptop or false)) {
+            control_center.shortcuts = lib.mkDefault [
+              { type = "wifi"; }
+              { type = "bluetooth"; }
+              { type = "caffeine"; }
+              { type = "nightlight"; }
+              { type = "notification"; }
+              { type = "clipboard"; }
+            ];
+          })
+          cfg.settings
+        ];
+      };
     };
 }

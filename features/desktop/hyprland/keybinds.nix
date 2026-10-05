@@ -119,7 +119,7 @@
         }
         {
           num = "10";
-          code = "65";
+          code = "19";
         }
       ];
       visibleWorkspace = workspace: if workspace == "10" then "0" else workspace;
@@ -130,12 +130,15 @@
             visible = visibleWorkspace workspace.num;
           in
           [
-            (mkModBind visible (focusWorkspace visible) { })
             (mkModBind "code:${workspace.code}" (focusWorkspace workspace.num) { })
-            (mkModBind "SHIFT + CTRL + ${visible}" (moveWorkspace visible true) { })
             (mkModBind "SHIFT + CTRL + code:${workspace.code}" (moveWorkspace workspace.num true) { })
-            (mkModBind "CTRL + ${visible}" (moveWorkspace visible false) { })
             (mkModBind "CTRL + code:${workspace.code}" (moveWorkspace workspace.num false) { })
+          ] ++ lib.optionals (workspace.num != "10") [
+            (mkModBind visible (focusWorkspace workspace.num) { })
+            (mkModBind "SHIFT + CTRL + ${visible}" (moveWorkspace workspace.num true) { })
+            (mkModBind "CTRL + ${visible}" (moveWorkspace workspace.num false) { })
+          ] ++ lib.optionals (workspace.num == "10") [
+            (mkModBind "SHIFT + code:19" (moveWorkspace "10" false) { })
           ]
         ) workspaces
       );
@@ -153,7 +156,8 @@
         mod._var = if context.vm or false then "ALT" else "SUPER";
 
         bind = [
-          (mkBind "switch:Lid Switch" (exec "uwsm app -- hyprlock") { locked = true; })
+          (mkBind "switch:on:Lid Switch" (exec "noctalia msg session lock") { locked = true; })
+          (mkModBind "code:46" (exec "noctalia msg session lock") { })
           (mkBind "XF86AudioRaiseVolume" (exec "pamixer -i 5") { locked = true; })
           (mkBind "XF86AudioLowerVolume" (exec "pamixer -d 5") { locked = true; })
           (mkBind "XF86AudioMute" (exec "pamixer -t") { locked = true; })
@@ -166,7 +170,8 @@
           (mkModBind "return" (specialApp "scratch" "foot --app-id=scratchpad") { })
           (mkModBind "SHIFT + code:24"
             (exec "hypr-special scratch opencode-scratch -- foot --app-id=opencode-scratch -e opencode-launcher")
-            { })
+            { }
+          )
           (mkModBind "SHIFT + return" (exec "uwsm app -- ${terminal}") { })
           (mkModBind "CTRL + return" (exec "uwsm app -- ${terminal} --app-id floating") { })
           (mkModBind "SHIFT + code:53" (exec "uwsm stop") { })
@@ -184,7 +189,8 @@
           (mkModBind "down" ''hl.dsp.focus({ direction = "down" })'' { })
           (mkModBind "code:47" (exec "uwsm app -- brave-origin") { })
           (mkModBind "CTRL + code:47" (exec "uwsm app -- brave-origin --private-window") { })
-          (mkModBind "code:25" (exec "noctalia-shell ipc call launcher toggle") { })
+          (mkModBind "code:65" (exec "noctalia msg panel-toggle launcher") { })
+          (mkModBind "code:25" (exec "noctalia msg panel-toggle launcher") { })
           (mkModBind "code:29" (specialApp "obs" "obs") { })
           (mkModBind "code:40" (exec "uwsm app -- ${terminal} --app-id=yazi -e yazi") { })
           (mkModBind "code:57" (specialApp "secrets" "bitwarden") { })

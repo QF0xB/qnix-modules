@@ -72,19 +72,19 @@ confirmation.
 
 | Feature                               | Likely environment | Profiles   | Dependencies        | Persistence        | Status  | Notes                            |
 |---------------------------------------|--------------------|------------|---------------------|--------------------|---------|----------------------------------|
-| `desktop.displaymanager`              | NixOS              | `hyprland` | `desktop.wayland`  | —                  | implemented | SDDM display manager and theme   |
+| `desktop.displaymanager`              | NixOS              | Optional | `desktop.wayland`  | —                  | implemented | SDDM display manager and theme   |
+| `desktop.noctalia-greeter`             | NixOS              | `hyprland` | `desktop.wayland`, `system.localisation` | `/var/lib/noctalia-greeter` | implemented | Noctalia login greeter through greetd |
 | `desktop.wayland`                     | NixOS + Home       | `hyprland` | `security.polkit`  | —                  | implemented | Wayland session, XWayland, and desktop portals |
 | `desktop.hyprland`                    | NixOS + Home       | `hyprland` | `desktop.wayland`   | —                  | implemented | Main compositor                  |
 | `desktop.hyprland.keybinds`           | Home               | `hyprland` | `desktop.hyprland`  | —                  | implemented | Hyprland keybindings             |
 | `desktop.hyprland.monitors`           | NixOS + Home       | `hyprland` | `desktop.hyprland`  | Monitor files      | implemented | Monitor and workspace persistence |
 | `desktop.hyprland.rules`              | Home               | `hyprland` | `desktop.hyprland`  | —                  | implemented | Hyprland window rules             |
 | `desktop.hyprland.special-workspaces` | Home               | `hyprland` | `desktop.hyprland`  | —                  | implemented | Special workspace helper tooling  |
-| `desktop.noctalia`                    | Home               | `hyprland` | `desktop.hyprland` | Shell state?       | implemented | Noctalia desktop shell and autostart |
+| `desktop.noctalia`                    | Home               | `hyprland` | `desktop.hyprland`, `desktop.terminal` | Shell state? | implemented | Noctalia v5 shell, screen locking, Polkit agent, and autostart |
 | `desktop.sound`                       | NixOS + integrated Home | `hyprland` | —                   | `.local/state/wireplumber` | finished | PipeWire audio, playerctl, and optional graphical audio tools |
 | `desktop.terminal`                    | Integrated + standalone Home | `hyprland` | —                   | — | finished | Foot terminal with an optional persistent server |
 | `desktop.xdg-folders`                 | Integrated + standalone Home | `hyprland` | — | — | finished | Standard XDG directories plus the `Projects` directory |
 | `desktop.clipboard`                   | Integrated + standalone Home | `hyprland` | `desktop.wayland` | — | finished | ClipHist clipboard history with image support |
-| `desktop.lock`                        | NixOS + Home       | `hyprland` | `desktop.hyprland` | —                  | implemented | Hyprlock screen locking           |
 | `desktop.screenshots`                 | Integrated + standalone Home | `hyprland` | `desktop.hyprland`, `desktop.xdg-folders` | — | finished | Grim and Slurp screenshots with save-and-copy bindings |
 | `desktop.client-pr-notify`            | Home               | `hyprland` | `security.sops`     | `.local/state/qnix-client-pr-notify` | implemented | Opt-in GitHub PR notifications |
 

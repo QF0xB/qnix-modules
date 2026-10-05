@@ -3,19 +3,21 @@
 
   features = {
     nixos = [
+      "apps.bitwarden"
       "apps.browser"
-      "desktop.displaymanager"
+      "desktop.noctalia-greeter"
+      "desktop.noctalia"
       "desktop.hyprland"
       "security.polkit"
       "security.gnome-keyring"
       "desktop.hyprland.monitors"
-      "desktop.lock"
       "desktop.sound"
       "desktop.wayland"
       "system.plymouth"
     ];
     home = [
       "apps.browser"
+      "apps.bitwarden"
       "apps.music"
       "apps.notes"
       "apps.obs"
@@ -30,7 +32,6 @@
       "desktop.hyprland.monitors"
       "desktop.hyprland.rules"
       "desktop.hyprland.special-workspaces"
-      "desktop.lock"
       "desktop.noctalia"
       "desktop.screenshots"
       "desktop.terminal"

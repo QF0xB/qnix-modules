@@ -132,6 +132,7 @@
   home =
     {
       cfg,
+      config,
       context,
       lib,
       osConfig ? null,
@@ -140,6 +141,9 @@
     }:
     let
       modifier = if context.vm or false then "ALT" else "super";
+      noctaliaPolkit =
+        (config.programs.noctalia.enable or false)
+        && (config.programs.noctalia.settings.shell.polkit_agent or false);
       # Integrated Home Manager must use the same XKB list as NixOS. Keeping a
       # separate Hyprland default made newly attached keyboards start on a
       # different layout and made layout indices appear to change randomly.
@@ -154,8 +158,8 @@
         with pkgs;
         [
           wl-clipboard
-          hyprpolkitagent
         ]
+        ++ lib.optional (!noctaliaPolkit) hyprpolkitagent
         ++ lib.optionals (osConfig == null) [
           hyprland
           uwsm
@@ -305,8 +309,8 @@
             }
           ) cfg.devices;
 
-          on = [
-            {
+          on =
+            lib.optional (!noctaliaPolkit) {
               _args = [
                 "hyprland.start"
                 (lib.generators.mkLuaInline ''
@@ -316,17 +320,16 @@
                 '')
               ];
             }
-          ]
-          ++ lib.optional (context.laptop or false) {
-            _args = [
-              "hyprland.start"
-              (lib.generators.mkLuaInline ''
-                function()
-                  hl.exec_cmd("light -I")
-                end
-              '')
-            ];
-          };
+            ++ lib.optional (context.laptop or false) {
+              _args = [
+                "hyprland.start"
+                (lib.generators.mkLuaInline ''
+                  function()
+                    hl.exec_cmd("light -I")
+                  end
+                '')
+              ];
+            };
         };
       };
     };

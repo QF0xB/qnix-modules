@@ -58,5 +58,11 @@ assert yubikeyEvaluation.config.security.pam.u2f.settings.origin == "pam://check
 assert yubikeyEvaluation.config.security.pam.services.login.u2f.enable;
 assert yubikeyEvaluation.config.security.pam.services.sudo.u2f.enable;
 assert yubikeyEvaluation.config.qnix.security.yubikey.gui;
+assert yubikeyEvaluation.config.qnix.security.yubikey.touchDetector;
 assert builtins.elem pkgs.yubioath-flutter yubikeyEvaluation.config.environment.systemPackages;
+assert builtins.elem pkgs.yubikey-touch-detector yubikeyEvaluation.config.environment.systemPackages;
+assert yubikeyEvaluation.config.systemd.user.services.yubikey-touch-detector.wantedBy
+  == [ "graphical-session.target" ];
+assert yubikeyEvaluation.config.systemd.user.services.yubikey-touch-detector.serviceConfig.ExecStart
+  == "${pkgs.yubikey-touch-detector}/bin/yubikey-touch-detector --notify";
 pkgs.runCommand "qnix-security-check" { } "touch $out"

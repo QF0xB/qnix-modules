@@ -62,8 +62,10 @@ assert
 assert impermanenceEvaluation.config.environment.persistence."/persist".allowTrash;
 assert impermanenceEvaluation.config.environment.persistence."/cache".allowTrash;
 assert
-  filePaths impermanenceEvaluation.config.environment.persistence."/persist".files
-  == [ "/etc/example.conf" ];
+  filePaths impermanenceEvaluation.config.environment.persistence."/persist".files == [
+    "/etc/machine-id"
+    "/etc/example.conf"
+  ];
 assert
   filePaths impermanenceEvaluation.config.environment.persistence."/cache".files
   == [ "/var/cache/example.state" ];

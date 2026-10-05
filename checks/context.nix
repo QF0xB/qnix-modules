@@ -67,6 +67,7 @@ let
 
   persistFeature = qnix.features.persist;
   browserFeature = qnix.features."apps.browser";
+  bitwardenFeature = qnix.features."apps.bitwarden";
   musicFeature = qnix.features."apps.music";
   notesFeature = qnix.features."apps.notes";
   obsFeature = qnix.features."apps.obs";
@@ -87,7 +88,7 @@ let
   plymouthFeature = qnix.features."system.plymouth";
   waylandFeature = qnix.features."desktop.wayland";
   displayManagerFeature = qnix.features."desktop.displaymanager";
-  lockFeature = qnix.features."desktop.lock";
+  noctaliaGreeterFeature = qnix.features."desktop.noctalia-greeter";
   localisationFeature = qnix.features."system.localisation";
   hyprlandFeature = qnix.features."desktop.hyprland";
   hyprlandKeybindsFeature = qnix.features."desktop.hyprland.keybinds";
@@ -110,19 +111,14 @@ let
     ++ displayManagerFeature.optionModules
     ++ displayManagerFeature.nixosModules
   );
-  lockNixosEvaluation = mkNixos (
-    waylandFeature.optionModules
+  noctaliaGreeterEvaluation = mkNixos (
+    persistFeature.optionModules
+    ++ waylandFeature.optionModules
     ++ waylandFeature.nixosModules
-    ++ lockFeature.optionModules
-    ++ lockFeature.nixosModules
-  );
-  lockHomeEvaluation = mkHome (
-    waylandFeature.optionModules
-    ++ waylandFeature.__homeModuleFor "standalone-home"
-    ++ hyprlandFeature.optionModules
-    ++ hyprlandFeature.__homeModuleFor "standalone-home"
-    ++ lockFeature.optionModules
-    ++ lockFeature.__homeModuleFor "standalone-home"
+    ++ localisationFeature.optionModules
+    ++ localisationFeature.nixosModules
+    ++ noctaliaGreeterFeature.optionModules
+    ++ noctaliaGreeterFeature.nixosModules
   );
   laptopFeature = qnix.features."hardware.laptop";
   nvidiaFeature = qnix.features."hardware.nvidia";
@@ -594,7 +590,6 @@ let
   hyprlandProfileEvaluation = mkNixos (qnix.modulesFor.nixos [ "hyprland" ]);
   hyprlandStandaloneProfileEvaluation = mkHome (
     [
-      noctaliaStub
       {
         qnix.desktop.client-pr-notify = {
           owner = "QF0xB";
@@ -606,38 +601,33 @@ let
     ]
     ++ qnix.modulesFor.standaloneHome [ "hyprland" ]
   );
-  noctaliaStub =
-    { lib, ... }:
-    {
-      options.programs.noctalia-shell = {
-        enable = lib.mkOption {
-          type = lib.types.bool;
-          default = false;
-        };
-        systemd.enable = lib.mkOption {
-          type = lib.types.bool;
-          default = false;
-        };
-        settings = lib.mkOption {
-          type = lib.types.attrs;
-          default = { };
-        };
-      };
-    };
-  noctaliaHomeEvaluation = mkHome (
-    [ noctaliaStub ]
-    ++ waylandFeature.optionModules
+  noctaliaHomeModules =
+    waylandFeature.optionModules
     ++ waylandFeature.__homeModuleFor "standalone-home"
     ++ hyprlandFeature.optionModules
     ++ hyprlandFeature.__homeModuleFor "standalone-home"
     ++ terminalFeature.optionModules
     ++ terminalFeature.__homeModuleFor "standalone-home"
     ++ noctaliaFeature.optionModules
-    ++ noctaliaFeature.__homeModuleFor "standalone-home"
+    ++ noctaliaFeature.__homeModuleFor "standalone-home";
+  noctaliaHomeEvaluation = mkHome noctaliaHomeModules;
+  noctaliaOverrideHomeEvaluation = mkHome (
+    noctaliaHomeModules
+    ++ [
+      {
+        qnix.desktop.noctalia = {
+          autostart = false;
+          settings = {
+            shell.font_family = "Fira Sans";
+            lockscreen.lock_before_suspend = false;
+          };
+        };
+        programs.noctalia.settings.shell.clipboard_auto_paste = "off";
+      }
+    ]
   );
   laptopNoctaliaHomeEvaluation = mkHome (
-    [ noctaliaStub ]
-    ++ waylandFeature.optionModules
+    waylandFeature.optionModules
     ++ waylandFeature.__homeModuleFor "standalone-home"
     ++ hyprlandFeature.optionModules
     ++ hyprlandFeature.__homeModuleFor "standalone-home"
@@ -683,6 +673,20 @@ let
   );
   browserNixosEvaluation = mkNixos (
     persistFeature.optionModules ++ browserFeature.optionModules ++ browserFeature.nixosModules
+  );
+  bitwardenHomeEvaluation = mkHome (
+    noctaliaHomeModules
+    ++ bitwardenFeature.optionModules
+    ++ bitwardenFeature.__homeModuleFor "standalone-home"
+  );
+  bitwardenWithoutNoctaliaHomeEvaluation = mkHome (
+    bitwardenFeature.optionModules
+    ++ bitwardenFeature.__homeModuleFor "standalone-home"
+  );
+  bitwardenNixosEvaluation = mkNixos (
+    persistFeature.optionModules
+    ++ bitwardenFeature.optionModules
+    ++ bitwardenFeature.nixosModules
   );
   musicNixosEvaluation = mkNixos (
     persistFeature.optionModules ++ musicFeature.optionModules ++ musicFeature.nixosModules
@@ -912,6 +916,7 @@ in
     mkHome
     persistFeature
     browserFeature
+    bitwardenFeature
     musicFeature
     notesFeature
     obsFeature
@@ -932,7 +937,7 @@ in
     plymouthFeature
     waylandFeature
     displayManagerFeature
-    lockFeature
+    noctaliaGreeterFeature
     localisationFeature
     hyprlandFeature
     hyprlandKeybindsFeature
@@ -946,8 +951,7 @@ in
     terminalFeature
     xdgFoldersFeature
     displayManagerEvaluation
-    lockNixosEvaluation
-    lockHomeEvaluation
+    noctaliaGreeterEvaluation
     laptopFeature
     nvidiaFeature
     powerManagementFeature
@@ -1017,8 +1021,8 @@ in
     hyprlandPersistenceEvaluation
     hyprlandProfileEvaluation
     hyprlandStandaloneProfileEvaluation
-    noctaliaStub
     noctaliaHomeEvaluation
+    noctaliaOverrideHomeEvaluation
     laptopNoctaliaHomeEvaluation
     soundNixosEvaluation
     soundIntegratedEvaluation
@@ -1027,6 +1031,9 @@ in
     xdgFoldersHomeEvaluation
     browserHomeEvaluation
     browserNixosEvaluation
+    bitwardenHomeEvaluation
+    bitwardenWithoutNoctaliaHomeEvaluation
+    bitwardenNixosEvaluation
     musicNixosEvaluation
     musicHomeEvaluation
     notesHomeEvaluation

@@ -12,7 +12,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     llm-agents.url = "github:numtide/llm-agents.nix";
     paseo = {
-      url = "github:getpaseo/paseo/v0.9.2";
+      url = "github:getpaseo/paseo/v0.11.0-beta.3";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     mcp-servers-nix.url = "github:natsukium/mcp-servers-nix";

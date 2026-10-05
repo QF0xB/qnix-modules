@@ -171,7 +171,7 @@
         }
         {
           name = "tag-notes";
-          match.class = "^(obsidian)$";
+          match.class = "^(obsidian|md\\.obsidian\\.Obsidian)$";
           tag = "+notes";
         }
         {
