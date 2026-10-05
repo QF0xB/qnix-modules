@@ -119,7 +119,7 @@
         }
         {
           num = "10";
-          code = "65";
+          code = "19";
         }
       ];
       visibleWorkspace = workspace: if workspace == "10" then "0" else workspace;
@@ -130,12 +130,15 @@
             visible = visibleWorkspace workspace.num;
           in
           [
-            (mkModBind visible (focusWorkspace visible) { })
             (mkModBind "code:${workspace.code}" (focusWorkspace workspace.num) { })
-            (mkModBind "SHIFT + CTRL + ${visible}" (moveWorkspace visible true) { })
             (mkModBind "SHIFT + CTRL + code:${workspace.code}" (moveWorkspace workspace.num true) { })
-            (mkModBind "CTRL + ${visible}" (moveWorkspace visible false) { })
             (mkModBind "CTRL + code:${workspace.code}" (moveWorkspace workspace.num false) { })
+          ] ++ lib.optionals (workspace.num != "10") [
+            (mkModBind visible (focusWorkspace workspace.num) { })
+            (mkModBind "SHIFT + CTRL + ${visible}" (moveWorkspace workspace.num true) { })
+            (mkModBind "CTRL + ${visible}" (moveWorkspace workspace.num false) { })
+          ] ++ lib.optionals (workspace.num == "10") [
+            (mkModBind "SHIFT + code:19" (moveWorkspace "10" false) { })
           ]
         ) workspaces
       );
@@ -186,6 +189,7 @@
           (mkModBind "down" ''hl.dsp.focus({ direction = "down" })'' { })
           (mkModBind "code:47" (exec "uwsm app -- brave-origin") { })
           (mkModBind "CTRL + code:47" (exec "uwsm app -- brave-origin --private-window") { })
+          (mkModBind "code:65" (exec "noctalia msg panel-toggle launcher") { })
           (mkModBind "code:25" (exec "noctalia msg panel-toggle launcher") { })
           (mkModBind "code:29" (specialApp "obs" "obs") { })
           (mkModBind "code:40" (exec "uwsm app -- ${terminal} --app-id=yazi -e yazi") { })

@@ -4,6 +4,7 @@ assert
   qnix.featureNames == [
     "appearance.fonts"
     "appearance.stylix"
+    "apps.bitwarden"
     "apps.browser"
     "apps.file-manager"
     "apps.music"

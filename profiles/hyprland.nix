@@ -3,8 +3,10 @@
 
   features = {
     nixos = [
+      "apps.bitwarden"
       "apps.browser"
       "desktop.noctalia-greeter"
+      "desktop.noctalia"
       "desktop.hyprland"
       "security.polkit"
       "security.gnome-keyring"
@@ -15,6 +17,7 @@
     ];
     home = [
       "apps.browser"
+      "apps.bitwarden"
       "apps.music"
       "apps.notes"
       "apps.obs"

@@ -67,6 +67,7 @@ let
 
   persistFeature = qnix.features.persist;
   browserFeature = qnix.features."apps.browser";
+  bitwardenFeature = qnix.features."apps.bitwarden";
   musicFeature = qnix.features."apps.music";
   notesFeature = qnix.features."apps.notes";
   obsFeature = qnix.features."apps.obs";
@@ -673,6 +674,20 @@ let
   browserNixosEvaluation = mkNixos (
     persistFeature.optionModules ++ browserFeature.optionModules ++ browserFeature.nixosModules
   );
+  bitwardenHomeEvaluation = mkHome (
+    noctaliaHomeModules
+    ++ bitwardenFeature.optionModules
+    ++ bitwardenFeature.__homeModuleFor "standalone-home"
+  );
+  bitwardenWithoutNoctaliaHomeEvaluation = mkHome (
+    bitwardenFeature.optionModules
+    ++ bitwardenFeature.__homeModuleFor "standalone-home"
+  );
+  bitwardenNixosEvaluation = mkNixos (
+    persistFeature.optionModules
+    ++ bitwardenFeature.optionModules
+    ++ bitwardenFeature.nixosModules
+  );
   musicNixosEvaluation = mkNixos (
     persistFeature.optionModules ++ musicFeature.optionModules ++ musicFeature.nixosModules
   );
@@ -901,6 +916,7 @@ in
     mkHome
     persistFeature
     browserFeature
+    bitwardenFeature
     musicFeature
     notesFeature
     obsFeature
@@ -1015,6 +1031,9 @@ in
     xdgFoldersHomeEvaluation
     browserHomeEvaluation
     browserNixosEvaluation
+    bitwardenHomeEvaluation
+    bitwardenWithoutNoctaliaHomeEvaluation
+    bitwardenNixosEvaluation
     musicNixosEvaluation
     musicHomeEvaluation
     notesHomeEvaluation

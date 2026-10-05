@@ -14,6 +14,12 @@
         description = "Whether to install the YubiKey graphical management tools.";
       };
 
+      touchDetector = lib.mkOption {
+        type = lib.types.bool;
+        default = isGraphical;
+        description = "Whether to notify when a YubiKey operation is waiting for a touch.";
+      };
+
       login = lib.mkOption {
         type = lib.types.bool;
         default = false;
@@ -88,7 +94,18 @@
         ''
       );
 
-      environment.systemPackages = lib.mkIf cfg.gui [ pkgs.yubioath-flutter ];
+      environment.systemPackages =
+        lib.optionals cfg.gui [ pkgs.yubioath-flutter ]
+        ++ lib.optional cfg.touchDetector pkgs.yubikey-touch-detector;
+
+      systemd.user.services.yubikey-touch-detector = lib.mkIf cfg.touchDetector {
+        description = "Notify when a YubiKey operation is waiting for a touch";
+        wantedBy = [ "graphical-session.target" ];
+        serviceConfig = {
+          ExecStart = "${pkgs.yubikey-touch-detector}/bin/yubikey-touch-detector --notify";
+          Restart = "on-failure";
+        };
+      };
 
       security.pam.u2f = {
         enable = u2fEnabled;
