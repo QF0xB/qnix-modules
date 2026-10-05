@@ -10,6 +10,25 @@
     ".paseo"
   ];
 
+  options =
+    { lib, ... }:
+    {
+      user = lib.mkOption {
+        type = lib.types.str;
+        default = "paseo";
+        description = "User account under which the Paseo daemon runs.";
+      };
+    };
+
+  nixos =
+    { cfg, ... }:
+    {
+      services.paseo = {
+        enable = true;
+        user = cfg.user;
+      };
+    };
+
   home =
     {
       inputs,

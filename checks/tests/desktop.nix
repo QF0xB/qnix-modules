@@ -434,6 +434,10 @@ assert builtins.elem "paseo-desktop" (
   map (package: package.pname or package.name) paseoHomeEvaluation.config.home.packages
 );
 assert builtins.elem pkgs.nodejs_22 paseoHomeEvaluation.config.home.packages;
+assert paseoNixosEvaluation.config.services.paseo.enable;
+assert paseoNixosEvaluation.config.systemd.services.paseo.serviceConfig.User == "check";
+assert
+  paseoNixosEvaluation.config.systemd.services.paseo.environment.PASEO_HOME == "/home/check/.paseo";
 assert opencodeHomeEvaluation.config.programs.opencode.enableMcpIntegration;
 assert builtins.elem "@satas/opencode-usage-bar@0.2.0"
   opencodeHomeEvaluation.config.programs.opencode.tui.plugin;

@@ -44,7 +44,11 @@ let
     nixpkgs.lib.nixosSystem {
       inherit system;
       specialArgs = { inherit pkgs; };
-      modules = [ { system.stateVersion = "26.11"; } ] ++ modules;
+      modules = [
+        paseo.nixosModules.default
+        { system.stateVersion = "26.11"; }
+      ]
+      ++ modules;
     };
 
   mkHome =
@@ -723,6 +727,12 @@ let
   paseoHomeEvaluation = mkHome (
     paseoFeature.optionModules ++ paseoFeature.__homeModuleFor "standalone-home"
   );
+  paseoNixosEvaluation = mkNixos (
+    persistFeature.optionModules
+    ++ paseoFeature.optionModules
+    ++ paseoFeature.nixosModules
+    ++ [ { qnix.apps.paseo.user = "check"; } ]
+  );
   vscodeHomeEvaluation = mkHome (
     vscodeFeature.optionModules ++ vscodeFeature.__homeModuleFor "standalone-home"
   );
@@ -1044,6 +1054,7 @@ in
     socialNixosEvaluation
     opencodeHomeEvaluation
     paseoHomeEvaluation
+    paseoNixosEvaluation
     vscodeHomeEvaluation
     mcpHomeEvaluation
     aiToolsHomeEvaluation
