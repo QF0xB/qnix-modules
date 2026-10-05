@@ -170,6 +170,13 @@
           tag = "+messenger";
         }
         {
+          name = "obsidian-settings";
+          match.class = "^(obsidian|md\\.obsidian\\.Obsidian)$";
+          match.title = "^Settings - .* - Obsidian.*$";
+          float = true;
+          center = true;
+        }
+        {
           name = "tag-notes";
           match.class = "^(obsidian|md\\.obsidian\\.Obsidian)$";
           tag = "+notes";
