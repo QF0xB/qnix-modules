@@ -136,6 +136,18 @@ assert
     "nixos"
   ];
 assert noctaliaHomeEvaluation.config.programs.noctalia.enable;
+assert noctaliaHomeEvaluation.config.programs.noctalia.settings.calendar.enabled;
+assert !(noctaliaHomeEvaluation.config.programs.noctalia.settings.calendar ? account.personal_icloud);
+assert !noctaliaOverrideHomeEvaluation.config.programs.noctalia.settings.calendar.enabled;
+assert noctaliaOverrideHomeEvaluation.config.programs.noctalia.settings.calendar.account.personal_icloud == {
+  type = "caldav";
+  provider = "icloud";
+  name = "Personal";
+  username = "calendar@example.test";
+  calendars = [ "personal" ];
+  credential_source = "file";
+  password_file = "/run/secrets/apple-app-password";
+};
 assert noctaliaHomeEvaluation.config.programs.noctalia.systemd.enable;
 assert builtins.all (package: builtins.elem package noctaliaHomeEvaluation.config.home.packages) [
   pkgs.jq
@@ -172,6 +184,8 @@ assert noctaliaHomeEvaluation.config.programs.noctalia.settings.plugins.enabled 
   "nightwatch75/file-search"
   "cleboost/jetbrains-provider"
   "8bury/mini-docker"
+  "davemhammer/obsidian"
+  "ahmedhossamdev/reading-list"
 ];
 assert
   noctaliaHomeEvaluation.config.programs.noctalia.settings.plugin_settings."umedbazarov/crashes".agent_cmd

@@ -43,7 +43,10 @@ let
     modules:
     nixpkgs.lib.nixosSystem {
       inherit system;
-      specialArgs = { inherit pkgs; };
+      specialArgs = {
+        inherit pkgs;
+        inputs = { inherit paseo; };
+      };
       modules = [
         paseo.nixosModules.default
         { system.stateVersion = "26.11"; }
@@ -621,6 +624,16 @@ let
       {
         qnix.desktop.noctalia = {
           autostart = false;
+          calendar = {
+            enable = false;
+            icloud = {
+              enable = true;
+              email = "calendar@example.test";
+              name = "Personal";
+              passwordFile = "/run/secrets/apple-app-password";
+              calendars = [ "personal" ];
+            };
+          };
           settings = {
             shell.font_family = "Fira Sans";
             lockscreen.lock_before_suspend = false;

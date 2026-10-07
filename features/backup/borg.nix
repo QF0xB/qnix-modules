@@ -1,6 +1,8 @@
 {
   environments = [ "nixos" ];
 
+  persistence.root.directories = [ "/var/lib/systemd/timers" ];
+
   options =
     { lib, ... }:
     {
@@ -34,6 +36,12 @@
         description = "systemd calendar expression for the Borg job.";
       };
 
+      persistentTimer = lib.mkOption {
+        type = lib.types.bool;
+        default = true;
+        description = "Whether to catch up on scheduled backups missed while the device was powered off.";
+      };
+
     };
 
   nixos =
@@ -63,6 +71,7 @@
           repo = repository;
           paths = cfg.paths;
           startAt = cfg.schedule;
+          persistentTimer = cfg.persistentTimer;
           doInit = true;
           compression = "zstd,6";
           extraCreateArgs = [ "--progress" ];

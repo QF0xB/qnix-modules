@@ -21,11 +21,14 @@
     };
 
   nixos =
-    { cfg, ... }:
+    { cfg, inputs, pkgs, ... }:
     {
       services.paseo = {
         enable = true;
         user = cfg.user;
+        package = inputs.paseo.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
+          npmDepsHash = "sha256-4X3h5SM6xUr3kpJTPX+v3ABacDz7fS2VbJnN3/f0bkk=";
+        };
       };
     };
 
