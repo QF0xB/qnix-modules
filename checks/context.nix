@@ -772,6 +772,7 @@ let
           userEmail = "check@example.test";
           signingKey = "0123456789ABCDEF";
           githubTokenPath = "/run/secrets/github-token";
+          githubSshIdentityFile = "/run/secrets/github-ssh-key";
           aliases.ci = "commit";
         };
       }

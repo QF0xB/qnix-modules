@@ -69,6 +69,11 @@ assert gitHomeEvaluation.config.programs.git.settings.push.autoSetupRemote;
 assert gitHomeEvaluation.config.programs.git.settings.alias.ci == "commit";
 assert gitHomeEvaluation.config.programs.gh.enable;
 assert gitHomeEvaluation.config.programs.gh.settings.git_protocol == "ssh";
+assert pkgs.lib.hasInfix "Host github.com" gitHomeEvaluation.config.home.file.".ssh/config".text;
+assert
+  pkgs.lib.hasInfix "IdentityFile /run/secrets/github-ssh-key"
+    gitHomeEvaluation.config.home.file.".ssh/config".text;
+assert pkgs.lib.hasInfix "IdentitiesOnly yes" gitHomeEvaluation.config.home.file.".ssh/config".text;
 assert
   direnvFeature.supportedEnvironments == [
     "nixos"

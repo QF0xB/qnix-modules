@@ -25,7 +25,6 @@ assert builtins.all
     )
   )
   [
-    "qnix-signed-commit"
     "qnix-dev-modules"
     "qnix-use-release"
     "qnix-sync-modules"

@@ -421,14 +421,6 @@ assert builtins.elem pkgs.llm-agents.officecli
   opencodeHomeEvaluation.config.programs.opencode.extraPackages;
 assert builtins.elem pkgs.llm-agents.pdfvision
   opencodeHomeEvaluation.config.programs.opencode.extraPackages;
-assert builtins.elem "qnix-signed-commit" (
-  map (
-    package: package.pname or package.name
-  ) opencodeHomeEvaluation.config.programs.opencode.extraPackages
-);
-assert builtins.elem "qnix-signed-commit" (
-  map (package: package.pname or package.name) opencodeHomeEvaluation.config.home.packages
-);
 assert builtins.elem pkgs.opencode-desktop opencodeHomeEvaluation.config.home.packages;
 assert builtins.elem pkgs.vscode opencodeHomeEvaluation.config.home.packages;
 assert builtins.elem pkgs.codex opencodeHomeEvaluation.config.home.packages;

@@ -64,6 +64,18 @@
         default = null;
         description = "Runtime path to a GitHub token file used by the gh wrapper.";
       };
+
+      githubSshIdentityFile = lib.mkOption {
+        type = lib.types.nullOr lib.types.str;
+        default = null;
+        description = "Runtime path to an SSH private key for github.com. When null, no GitHub SSH configuration is generated.";
+      };
+
+      githubSshIdentitiesOnly = lib.mkOption {
+        type = lib.types.bool;
+        default = true;
+        description = "Whether GitHub SSH authentication uses only explicitly configured identities instead of offering unrelated agent keys. Applies when githubSshIdentityFile is set.";
+      };
     };
 
   nixos =
@@ -84,6 +96,21 @@
           cfg.githubTokenPath
         else
           lib.attrByPath [ "qnix" "dev" "git" "githubTokenPath" ] cfg.githubTokenPath osConfig;
+      githubSshIdentityFile =
+        if osConfig == null then
+          cfg.githubSshIdentityFile
+        else
+          lib.attrByPath [ "qnix" "dev" "git" "githubSshIdentityFile" ] cfg.githubSshIdentityFile osConfig;
+      githubSshIdentitiesOnly =
+        if osConfig == null then
+          cfg.githubSshIdentitiesOnly
+        else
+          lib.attrByPath [
+            "qnix"
+            "dev"
+            "git"
+            "githubSshIdentitiesOnly"
+          ] cfg.githubSshIdentitiesOnly osConfig;
       userName =
         if osConfig == null then
           cfg.userName
@@ -126,6 +153,15 @@
         enable = true;
         package = ghPackage;
         settings.git_protocol = "ssh";
+      };
+
+      programs.ssh = lib.mkIf (githubSshIdentityFile != null) {
+        enable = true;
+        enableDefaultConfig = lib.mkDefault false;
+        settings."github.com" = {
+          IdentityFile = githubSshIdentityFile;
+          IdentitiesOnly = githubSshIdentitiesOnly;
+        };
       };
     };
 }
