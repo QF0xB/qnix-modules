@@ -6,6 +6,7 @@ assert
     "appearance.stylix"
     "apps.bitwarden"
     "apps.browser"
+    "apps.claude-code"
     "apps.file-manager"
     "apps.music"
     "apps.notes"

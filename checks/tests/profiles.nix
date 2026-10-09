@@ -32,6 +32,11 @@ assert builtins.all
   ];
 assert developerHomeProfileEvaluation.config.programs.nvf.enable;
 assert developerHomeProfileEvaluation.config.programs.git.enable;
+assert developerHomeProfileEvaluation.config.programs.claude-code.enable;
+assert developerHomeProfileEvaluation.config.programs.claude-code.enableMcpIntegration;
+assert builtins.hasAttr "git-signing"
+  developerHomeProfileEvaluation.config.programs.claude-code.skills;
+assert builtins.elem ".claude.json" developerProfileEvaluation.config.qnix.persist.users."*".files;
 assert developerProfileEvaluation.config.virtualisation.docker.enable;
 assert builtins.elem "docker"
   developerProfileEvaluation.config.qnix.system.users.defaultExtraGroups;
@@ -39,6 +44,7 @@ assert builtins.all
   (path: builtins.elem path developerProfileEvaluation.config.qnix.persist.users."*".directories)
   [
     ".agentsview"
+    ".claude"
     ".config/Code"
     ".ctx"
     ".vscode/extensions"

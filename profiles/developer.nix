@@ -7,6 +7,7 @@
       "dev.docker"
     ];
     home = [
+      "apps.claude-code"
       "dev.ai-tools"
       "dev.devenv"
       "dev.direnv"

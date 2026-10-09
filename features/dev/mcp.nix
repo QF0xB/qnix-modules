@@ -45,7 +45,7 @@
       githubMcp = lib.optionalString (githubServer != null) (
         pkgs.writeShellScriptBin "qnix-github-mcp-server" ''
           if ! token="$(${config.programs.gh.package}/bin/gh auth token)"; then
-            echo "qnix GitHub MCP: authenticate gh before starting OpenCode" >&2
+            echo "qnix GitHub MCP: authenticate gh before starting an AI coding agent" >&2
             exit 1
           fi
 

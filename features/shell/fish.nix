@@ -49,6 +49,12 @@
           set fish_greeting
         '';
 
+        interactiveShellInit = ''
+          if command -q devenv
+            devenv hook fish | source
+          end
+        '';
+
         shellAliases = lib.mkIf cfg.aliases {
           c = "clear";
           ls = "clear && lsd -l";
