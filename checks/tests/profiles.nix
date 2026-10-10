@@ -34,6 +34,12 @@ assert developerHomeProfileEvaluation.config.programs.nvf.enable;
 assert developerHomeProfileEvaluation.config.programs.git.enable;
 assert developerHomeProfileEvaluation.config.programs.claude-code.enable;
 assert developerHomeProfileEvaluation.config.programs.claude-code.enableMcpIntegration;
+assert
+  developerHomeProfileEvaluation.config.programs.claude-code.settings.attribution == {
+    commit = "";
+    pr = "";
+    sessionUrl = false;
+  };
 assert builtins.hasAttr "git-signing"
   developerHomeProfileEvaluation.config.programs.claude-code.skills;
 assert builtins.elem ".claude.json" developerProfileEvaluation.config.qnix.persist.users."*".files;

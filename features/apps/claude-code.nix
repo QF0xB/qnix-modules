@@ -24,6 +24,11 @@
       programs.claude-code = {
         enable = true;
         enableMcpIntegration = true;
+        settings.attribution = {
+          commit = "";
+          pr = "";
+          sessionUrl = false;
+        };
 
         skills = {
           agent-browser = "${pkgs.llm-agents.agent-browser.src}/skills/agent-browser";
