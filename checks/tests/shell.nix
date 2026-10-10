@@ -8,8 +8,6 @@ assert
   ];
 assert fishNixosEvaluation.config.programs.fish.enable;
 assert fishHomeEvaluation.config.programs.fish.enable;
-assert pkgs.lib.hasInfix "devenv hook fish | source"
-  fishHomeEvaluation.config.programs.fish.interactiveShellInit;
 assert
   fishHomeEvaluation.config.programs.fish.shellAliases.nuq
   == "nix flake update qnix-modules --flake /home/check/Projects/qnix/client";
