@@ -26,6 +26,28 @@
       description = "Whether to start Noctalia through systemd with the graphical session.";
     };
 
+    lockscreen.loginBox = {
+      width = lib.mkOption {
+        type = lib.types.float;
+        default = 810.0;
+        description = "Shared width of all lockscreen login boxes.";
+      };
+      height = lib.mkOption {
+        type = lib.types.float;
+        default = 196.0;
+        description = "Shared height of all lockscreen login boxes.";
+      };
+      settings = lib.mkOption {
+        type = (pkgs.formats.toml {}).type;
+        default = {};
+        description = "Shared appearance and controls for all lockscreen login boxes, overriding the module defaults.";
+        example = {
+          background_opacity = 0.9;
+          show_weather = false;
+        };
+      };
+    };
+
     calendar = {
       subscriptions = lib.mkOption {
         type = lib.types.attrsOf (lib.types.submodule ({name, ...}: {
@@ -303,26 +325,28 @@
           };
 
           lockscreen_widgets = {
-            enabled = false;
+            enabled = lib.mkDefault true;
             schema_version = 2;
             widget_order = [
+              "lockscreen-login-box@eDP-1"
               "lockscreen-login-box@DP-5"
               "lockscreen-login-box@DP-3"
               "lockscreen-login-box@HDMI-A-2"
+              "lockscreen-widget-0000000000000001"
             ];
             grid = {
               cell_size = 16;
               major_interval = 4;
               visible = true;
             };
-            widget = lib.mapAttrs (_: geometry:
+            widget = (lib.mapAttrs (_: geometry:
               geometry
               // {
-                box_height = 196.0;
-                box_width = 810.0;
+                box_height = cfg.lockscreen.loginBox.height;
+                box_width = cfg.lockscreen.loginBox.width;
                 rotation = 0.0;
                 type = "login_box";
-                settings = {
+                settings = lib.recursiveUpdate {
                   background_color = "surface_variant";
                   background_opacity = 0.88;
                   background_radius = 12.0;
@@ -337,7 +361,7 @@
                   show_session_buttons = true;
                   show_unlock_hint = true;
                   show_weather = true;
-                };
+                } cfg.lockscreen.loginBox.settings;
               }) {
               "lockscreen-login-box@DP-3" = {
                 cx = 1280.0;
@@ -359,6 +383,29 @@
                 output = "HDMI-A-2";
                 placement_height = 720.0;
                 placement_width = 1280.0;
+              };
+              "lockscreen-login-box@eDP-1" = {
+                cx = 846.0;
+                cy = 946.0;
+                output = "eDP-1";
+                placement_height = 1128.0;
+                placement_width = 1692.0;
+              };
+            }) // {
+              "lockscreen-widget-0000000000000001" = {
+                box_height = 0.0;
+                box_width = 0.0;
+                cx = 846.0;
+                cy = 564.0;
+                output = "eDP-1";
+                placement_height = 1128.0;
+                placement_width = 1692.0;
+                rotation = 0.0;
+                type = "clock";
+                settings = {
+                  background_opacity = 0.2;
+                  shadow = false;
+                };
               };
             };
           };
