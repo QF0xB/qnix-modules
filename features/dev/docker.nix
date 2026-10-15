@@ -6,7 +6,10 @@
   nixos =
     { ... }:
     {
-      virtualisation.docker.enable = true;
+      virtualisation.docker = {
+        enable = true;
+        logDriver = "local";
+      };
       qnix.system.users.defaultExtraGroups = [ "docker" ];
     };
 }

@@ -44,6 +44,7 @@ assert builtins.hasAttr "git-signing"
   developerHomeProfileEvaluation.config.programs.claude-code.skills;
 assert builtins.elem ".claude.json" developerProfileEvaluation.config.qnix.persist.users."*".files;
 assert developerProfileEvaluation.config.virtualisation.docker.enable;
+assert developerProfileEvaluation.config.virtualisation.docker.logDriver == "local";
 assert builtins.elem "docker"
   developerProfileEvaluation.config.qnix.system.users.defaultExtraGroups;
 assert builtins.all
