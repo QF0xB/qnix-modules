@@ -157,7 +157,6 @@
 
         bind = [
           (mkBind "switch:on:Lid Switch" (exec "noctalia msg session lock") { locked = true; })
-          (mkModBind "code:46" (exec "noctalia msg session lock") { })
           (mkBind "XF86AudioRaiseVolume" (exec "pamixer -i 5") { locked = true; })
           (mkBind "XF86AudioLowerVolume" (exec "pamixer -d 5") { locked = true; })
           (mkBind "XF86AudioMute" (exec "pamixer -t") { locked = true; })
