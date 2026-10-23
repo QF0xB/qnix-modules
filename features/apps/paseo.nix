@@ -60,6 +60,13 @@
       systemUser = cfg.user == "paseo";
       dataDir = if systemUser then "/var/lib/paseo" else "/home/${cfg.user}/.paseo";
       group = "paseo";
+      desktopOpen = pkgs.writeShellScriptBin "xdg-open" ''
+        export XDG_RUNTIME_DIR="/run/user/$(${lib.getExe' pkgs.coreutils "id"} -u)"
+        export DBUS_SESSION_BUS_ADDRESS="unix:path=$XDG_RUNTIME_DIR/bus"
+        exec ${lib.getExe' pkgs.systemd "systemd-run"} --user --collect --wait --pipe --quiet \
+          --working-directory="$PWD" --expand-environment=no -- \
+          ${lib.getExe' pkgs.xdg-utils "xdg-open"} "$@"
+      '';
     in
     {
       users.users.paseo = lib.mkIf systemUser {
@@ -84,8 +91,10 @@
         // lib.optionalAttrs (!systemUser) {
           # Agents started by the daemon need the user's tools, including
           # launchers that plugins install into ~/.local/bin.
+          # Open files through the user manager, which owns the desktop session.
           PATH = lib.mkForce (
             lib.concatStringsSep ":" [
+              "${desktopOpen}/bin"
               "/home/${cfg.user}/.local/bin"
               "/home/${cfg.user}/.nix-profile/bin"
               "/home/${cfg.user}/.local/state/nix/profile/bin"

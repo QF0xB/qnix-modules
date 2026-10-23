@@ -467,6 +467,11 @@ assert pkgs.lib.hasPrefix "${pkgs.paseo}/bin/paseo-server"
 assert paseoNixosEvaluation.config.systemd.services.paseo.serviceConfig.User == "check";
 assert
   paseoNixosEvaluation.config.systemd.services.paseo.environment.PASEO_HOME == "/home/check/.paseo";
+assert pkgs.lib.hasSuffix "-xdg-open/bin" (
+  builtins.head (
+    pkgs.lib.splitString ":" paseoNixosEvaluation.config.systemd.services.paseo.environment.PATH
+  )
+);
 assert paseoNixosEvaluation.config.systemd.services.paseo-plugins.serviceConfig.User == "check";
 assert pkgs.lib.hasInfix "paseo plugin install aborakati/beautiful-chat --id beautiful-chat"
   paseoNixosEvaluation.config.systemd.services.paseo-plugins.script;
