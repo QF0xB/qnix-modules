@@ -5,7 +5,6 @@
   stylix,
   sops-nix,
   llm-agents,
-  paseo,
   mcp-servers-nix,
   nvf,
   qnix-modules,
@@ -45,10 +44,9 @@ let
       inherit system;
       specialArgs = {
         inherit pkgs;
-        inputs = { inherit paseo; };
+        inputs = { };
       };
       modules = [
-        paseo.nixosModules.default
         { system.stateVersion = "26.11"; }
       ]
       ++ modules;
@@ -60,7 +58,7 @@ let
       inherit pkgs;
       extraSpecialArgs = {
         inherit pkgs;
-        inputs = { inherit paseo; };
+        inputs = { };
       };
       modules = [
         {
@@ -933,7 +931,6 @@ in
   inherit
     system
     pkgs
-    paseo
     qnix
     laptopQnix
     mkNixos

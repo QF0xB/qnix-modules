@@ -424,6 +424,27 @@ assert builtins.elem pkgs.llm-agents.pdfvision
 assert builtins.elem pkgs.opencode-desktop opencodeHomeEvaluation.config.home.packages;
 assert builtins.elem pkgs.vscode opencodeHomeEvaluation.config.home.packages;
 assert builtins.elem pkgs.codex opencodeHomeEvaluation.config.home.packages;
+assert opencodeHomeEvaluation.config.programs.codex.enable;
+assert builtins.all
+  (
+    skill:
+    builtins.hasAttr skill opencodeHomeEvaluation.config.programs.opencode.skills
+    && builtins.hasAttr skill opencodeHomeEvaluation.config.programs.codex.skills
+  )
+  [
+    "caveman"
+    "git-signing"
+    "grill-me"
+    "tdd"
+  ];
+assert
+  opencodeHomeEvaluation.config.programs.opencode.context
+  == opencodeHomeEvaluation.config.programs.codex.context;
+assert
+  (builtins.head opencodeHomeEvaluation.config.programs.codex.hooks.PreToolUse).matcher == "Bash";
+assert builtins.all (
+  name: !(opencodeHomeEvaluation.config.programs.opencode.settings.mcp.${name}.enabled or true)
+) (builtins.attrNames opencodeHomeEvaluation.config.programs.opencode.settings.mcp);
 assert
   paseoFeature.supportedEnvironments == [
     "nixos"
@@ -440,17 +461,23 @@ assert builtins.elem "paseo-desktop" (
   map (package: package.pname or package.name) paseoHomeEvaluation.config.home.packages
 );
 assert builtins.elem pkgs.nodejs_22 paseoHomeEvaluation.config.home.packages;
-assert paseoNixosEvaluation.config.services.paseo.enable;
+assert paseoNixosEvaluation.config.systemd.services.paseo.wantedBy == [ "multi-user.target" ];
+assert pkgs.lib.hasPrefix "${pkgs.paseo}/bin/paseo-server"
+  paseoNixosEvaluation.config.systemd.services.paseo.serviceConfig.ExecStart;
 assert paseoNixosEvaluation.config.systemd.services.paseo.serviceConfig.User == "check";
 assert
   paseoNixosEvaluation.config.systemd.services.paseo.environment.PASEO_HOME == "/home/check/.paseo";
+assert paseoNixosEvaluation.config.systemd.services.paseo-plugins.serviceConfig.User == "check";
+assert pkgs.lib.hasInfix "paseo plugin install aborakati/beautiful-chat --id beautiful-chat"
+  paseoNixosEvaluation.config.systemd.services.paseo-plugins.script;
 assert opencodeHomeEvaluation.config.programs.opencode.enableMcpIntegration;
 assert builtins.elem "@satas/opencode-usage-bar@0.2.0"
   opencodeHomeEvaluation.config.programs.opencode.tui.plugin;
 assert pkgs.lib.hasInfix "enabled = true"
   opencodeHomeEvaluation.config.xdg.configFile."opencode/usage-bar.toml".text;
 assert builtins.hasAttr "opencode/auth.json" opencodeHomeEvaluation.config.xdg.stateFile;
-assert builtins.hasAttr "installRtkOpenCodeHook" opencodeHomeEvaluation.config.home.activation;
+assert builtins.hasAttr "opencode/plugins/rtk.ts" opencodeHomeEvaluation.config.xdg.configFile;
+assert !(builtins.hasAttr "installRtkOpenCodeHook" opencodeHomeEvaluation.config.home.activation);
 assert builtins.hasAttr "agent-browser" opencodeHomeEvaluation.config.programs.opencode.skills;
 assert builtins.hasAttr "git-signing" opencodeHomeEvaluation.config.programs.opencode.skills;
 assert builtins.hasAttr "officecli" opencodeHomeEvaluation.config.programs.opencode.skills;

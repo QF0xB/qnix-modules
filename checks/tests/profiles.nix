@@ -42,6 +42,24 @@ assert
   };
 assert builtins.hasAttr "git-signing"
   developerHomeProfileEvaluation.config.programs.claude-code.skills;
+assert builtins.all
+  (plugin: builtins.hasAttr plugin developerHomeProfileEvaluation.config.programs.claude-code.plugins)
+  [
+    "caveman"
+    "mattpocock-skills"
+  ];
+assert builtins.hasAttr "aislop" developerHomeProfileEvaluation.config.programs.claude-code.rules;
+assert
+  (builtins.head developerHomeProfileEvaluation.config.programs.claude-code.settings.hooks.PostToolUse)
+  .matcher == "Edit|Write|MultiEdit";
+assert
+  (builtins.head developerHomeProfileEvaluation.config.programs.claude-code.settings.hooks.PreToolUse)
+  .matcher == "Bash";
+assert builtins.hasAttr "codex-delegate"
+  developerHomeProfileEvaluation.config.programs.claude-code.skills;
+assert builtins.hasAttr "plannotator"
+  developerHomeProfileEvaluation.config.programs.claude-code.plugins;
+assert builtins.hasAttr "context7" developerHomeProfileEvaluation.config.programs.mcp.servers;
 assert builtins.elem ".claude.json" developerProfileEvaluation.config.qnix.persist.users."*".files;
 assert developerProfileEvaluation.config.virtualisation.docker.enable;
 assert developerProfileEvaluation.config.virtualisation.docker.logDriver == "local";

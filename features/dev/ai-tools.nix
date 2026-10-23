@@ -45,6 +45,7 @@
           agent-browser
           agentsview
           ccusage
+          tokscale
           codegraph
           ctx
           officecli

@@ -29,6 +29,8 @@
             flavor = "claude";
 
             programs = {
+              # Current library documentation; works without an API key.
+              context7.enable = true;
               filesystem = {
                 enable = true;
                 args = [ config.xdg.userDirs.projects ];
