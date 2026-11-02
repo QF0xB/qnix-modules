@@ -26,7 +26,23 @@ let
     hash = "sha256-/mAmj7QFdyOWhLmy3Rt2/Hfsh5qwirTRax7hmQffFdo=";
   };
 
+  addyosmaniSrc = fetchFromGitHub {
+    owner = "addyosmani";
+    repo = "agent-skills";
+    tag = "0.6.15";
+    hash = "sha256-PlvPPYcFT+kNrkxWxrakNfwD38KuAT+vDnwodwUwXOw=";
+  };
+
   aislop = callPackage ./aislop.nix { };
+
+  # The rest of the catalog overlaps the mattpocock and caveman skills, which
+  # makes skill routing ambiguous.
+  addyosmaniSkillNames = [
+    "git-workflow-and-versioning"
+    "observability-and-instrumentation"
+    "performance-optimization"
+    "shipping-and-launch"
+  ];
 
   # Mirrors the `skills` list in the upstream `.claude-plugin/plugin.json`.
   mattpocockSkillNames = {
@@ -101,6 +117,18 @@ in
         > $out/.claude-plugin/plugin.json
       for skill in $(${lib.getExe jq} -r '.skills[]' ${mattpocockSrc}/.claude-plugin/plugin.json); do
         cp -r ${mattpocockSrc}/$skill $out/skills/
+      done
+    '';
+
+    # Same constraint as above. The skills link to `../../references`, so
+    # that folder stays next to `skills/`.
+    agent-skills = runCommand "agent-skills-claude-plugin" { } ''
+      mkdir -p $out/.claude-plugin $out/skills
+      ${lib.getExe jq} 'del(.skills, .commands, .experimental)' \
+        ${addyosmaniSrc}/.claude-plugin/plugin.json > $out/.claude-plugin/plugin.json
+      cp -r ${addyosmaniSrc}/references $out/
+      for skill in ${lib.escapeShellArgs addyosmaniSkillNames}; do
+        cp -r ${addyosmaniSrc}/skills/$skill $out/skills/
       done
     '';
 

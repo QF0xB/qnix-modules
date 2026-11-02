@@ -45,6 +45,7 @@ assert builtins.hasAttr "git-signing"
 assert builtins.all
   (plugin: builtins.hasAttr plugin developerHomeProfileEvaluation.config.programs.claude-code.plugins)
   [
+    "agent-skills"
     "caveman"
     "mattpocock-skills"
   ];
