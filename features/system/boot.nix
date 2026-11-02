@@ -31,12 +31,6 @@
         description = "Whether GRUB should support encrypted boot disks.";
       };
 
-      systemdSecondStage = lib.mkOption {
-        type = lib.types.bool;
-        default = true;
-        description = "Whether to enable systemd in the initrd.";
-      };
-
       dualBoot = lib.mkOption {
         type = lib.types.bool;
         default = false;
@@ -77,8 +71,6 @@
             enableCryptodisk = cfg.encrypted;
           };
         };
-
-        initrd.systemd.enable = cfg.systemdSecondStage;
       };
     };
 }

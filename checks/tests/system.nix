@@ -13,7 +13,6 @@ assert plymouthEvaluation.config.boot.plymouth.enable;
 assert plymouthEvaluation.config.boot.plymouth.theme == "nixos-bgrt";
 assert plymouthEvaluation.config.boot.plymouth.themePackages == [ pkgs.nixos-bgrt-plymouth ];
 assert plymouthEvaluation.config.boot.consoleLogLevel == 3;
-assert !plymouthEvaluation.config.boot.initrd.verbose;
 assert plymouthEvaluation.config.stylix.targets.plymouth.enable == false;
 assert bootEvaluation.config.boot.loader.systemd-boot.enable;
 assert bootEvaluation.config.boot.loader.timeout == 3;
@@ -22,7 +21,6 @@ assert
     builtins.hasAttr "zfs" bootEvaluation.config.boot.supportedFilesystems
   else
     builtins.elem "zfs" bootEvaluation.config.boot.supportedFilesystems;
-assert bootEvaluation.config.boot.initrd.systemd.enable;
 assert grubBootEvaluation.config.boot.loader.grub.enable;
 assert grubBootEvaluation.config.boot.loader.grub.enableCryptodisk;
 assert

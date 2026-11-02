@@ -15,7 +15,7 @@ confirmation.
 
 | Feature               | Likely environment | Profiles              | Dependencies | Persistence | Status   | Notes                               |
 |-----------------------|--------------------|-----------------------|--------------|-------------|----------|-------------------------------------|
-| `system.boot`         | NixOS              | `base`                | —            | —           | implemented | Bootloader, EFI, ZFS support, and initrd systemd settings |
+| `system.boot`         | NixOS              | `base`                | —            | —           | implemented | Bootloader, EFI, and ZFS support |
 | `system.localisation` | NixOS              | `base`, `workstation` | —            | —           | finished | Locale, timezone, keyboard          |
 | `system.packages`     | NixOS              | `base`                | —            | —           | planned  | Shared system packages              |
 | `system.users`        | NixOS              | `base`                | —            | —           | implemented | User declarations and defaults      |
