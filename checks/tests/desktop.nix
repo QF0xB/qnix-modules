@@ -473,7 +473,7 @@ assert pkgs.lib.hasSuffix "-xdg-open/bin" (
   )
 );
 assert paseoNixosEvaluation.config.systemd.services.paseo-plugins.serviceConfig.User == "check";
-assert pkgs.lib.hasInfix "paseo plugin install aborakati/beautiful-chat --id beautiful-chat"
+assert pkgs.lib.hasInfix "paseo plugin install roundreddot/better-paseo --id better-paseo"
   paseoNixosEvaluation.config.systemd.services.paseo-plugins.script;
 assert opencodeHomeEvaluation.config.programs.opencode.enableMcpIntegration;
 assert builtins.elem "@satas/opencode-usage-bar@0.2.0"

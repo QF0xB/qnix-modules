@@ -28,7 +28,7 @@
         type = lib.types.attrsOf lib.types.str;
         default = {
           annotations = "neunzig-zehn/annotations";
-          beautiful-chat = "aborakati/beautiful-chat";
+          better-paseo = "roundreddot/better-paseo";
           keep-awake = "hichamboushaba/keep-awake";
           mermaid = "dutchakdev/mermaid";
           paseo-cafe = "paseo-cafe/cafe";
