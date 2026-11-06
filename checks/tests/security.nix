@@ -1,5 +1,46 @@
 { ctx }:
 with ctx;
+let
+  loginEvaluation = mkNixos (
+    persistFeature.optionModules
+    ++ gnomeKeyringFeature.optionModules
+    ++ gnomeKeyringFeature.nixosModules
+    ++ yubikeyFeature.optionModules
+    ++ yubikeyFeature.nixosModules
+    ++ [
+      {
+        qnix.security.yubikey = {
+          login = true;
+          sudo = true;
+          u2f.mappings.check = [ "key-handle,public-key,es256,+presence" ];
+        };
+      }
+    ]
+  );
+  pam = loginEvaluation.config.security.pam.services;
+in
+assert builtins.all
+  (
+    name:
+    let
+      auth = pam.${name}.rules.auth;
+    in
+    auth.unix.enable
+    && auth.unix.control == "sufficient"
+    && auth.u2f.enable
+    && auth.u2f.control == "sufficient"
+    && auth.unix.order < auth.u2f.order
+    && auth.u2f.order < auth.deny.order
+    && auth.deny.enable
+    && auth.deny.control == "required"
+  )
+  [
+    "login"
+    "sddm"
+    "sudo"
+  ];
+assert pam.login.rules.auth.unix-early.order < pam.login.rules.auth.gnome_keyring.order;
+assert pam.login.rules.auth.gnome_keyring.order < pam.login.rules.auth.unix.order;
 assert
   gpgFeature.supportedEnvironments == [
     "nixos"

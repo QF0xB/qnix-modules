@@ -38,6 +38,8 @@ The configured file-manager workflow is described in
 [`docs/yazi.md`](./docs/yazi.md).
 The Hyprland keyboard shortcuts are listed in
 [`docs/keymap.md`](./docs/keymap.md).
+Desktop login, startup locking, and keyring setup are described in
+[`docs/desktop-login.md`](./docs/desktop-login.md).
 
 External modules belong in the client’s module composition, not in this flake’s
 feature definitions.

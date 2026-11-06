@@ -62,6 +62,7 @@
   nixos =
     {
       cfg,
+      config,
       lib,
       pkgs,
       ...
@@ -109,6 +110,7 @@
 
       security.pam.u2f = {
         enable = u2fEnabled;
+        control = "sufficient";
         settings = {
           cue = cfg.u2f.cue;
           origin = cfg.u2f.origin;
@@ -116,9 +118,11 @@
         };
       };
 
-      security.pam.services = {
-        login.u2f.enable = cfg.login;
-        sudo.u2f.enable = cfg.sudo;
-      };
+      security.pam.services = lib.genAttrs [ "login" "sddm" "sudo" ] (name: {
+        u2f.enable = if name == "sudo" then cfg.sudo else cfg.login;
+        # Password authentication runs first so it can unlock the keyring without
+        # waiting for a security key. Empty-password submissions fall through to U2F.
+        rules.auth.u2f.order = config.security.pam.services.${name}.rules.auth.unix.order + 10;
+      });
     };
 }

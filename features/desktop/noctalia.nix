@@ -26,6 +26,8 @@
       description = "Whether to start Noctalia through systemd with the graphical session.";
     };
 
+    lockOnStartup = lib.mkEnableOption "locking the session when Noctalia starts";
+
     lockscreen.loginBox = {
       width = lib.mkOption {
         type = lib.types.float;
@@ -122,11 +124,20 @@
 
   home = {
     cfg,
+    config,
     context,
     lib,
+    osConfig ? null,
     pkgs,
     ...
   }: let
+    autoLogin =
+      osConfig
+      != null
+      && lib.attrByPath ["qnix" "desktop" "noctalia-greeter" "autoLogin" "enable"] false osConfig
+      && lib.attrByPath ["qnix" "desktop" "noctalia-greeter" "autoLogin" "user"] "" osConfig
+      == config.home.username;
+    lockOnStartup = cfg.lockOnStartup || autoLogin;
     wallpaperStateScript = pkgs.writeShellScript "qnix-noctalia-wallpaper-state" ''
       set -euo pipefail
 
@@ -175,6 +186,11 @@
     '';
   in {
     assertions = [
+      {
+        assertion =
+          !lockOnStartup || (cfg.autostart && config.programs.noctalia.settings.lockscreen.enabled);
+        message = "Noctalia startup locking requires autostart and an enabled lockscreen.";
+      }
       {
         assertion = !cfg.calendar.icloud.enable || cfg.calendar.icloud.email != "";
         message = "qnix.desktop.noctalia.calendar.icloud.email must be set when the iCloud account is enabled.";
@@ -320,6 +336,9 @@
           };
           lockscreen = {
             enabled = lib.mkDefault true;
+            allow_empty_password = lib.mkDefault (
+              osConfig != null && lib.attrByPath ["qnix" "security" "yubikey" "login"] false osConfig
+            );
             lock_before_suspend = lib.mkDefault true;
             transition = lib.mkDefault ["honeycomb"];
           };
@@ -486,7 +505,15 @@
           };
 
           hooks = {
-            started = "${wallpaperStateScript} restore";
+            started =
+              if lockOnStartup
+              then
+                pkgs.writeShellScript "qnix-noctalia-started" ''
+                  set -euo pipefail
+                  noctalia msg session lock
+                  ${wallpaperStateScript} restore
+                ''
+              else "${wallpaperStateScript} restore";
             wallpaper_changed = "${wallpaperStateScript} save";
           };
 

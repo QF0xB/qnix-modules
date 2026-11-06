@@ -1,5 +1,36 @@
 { ctx }:
 with ctx;
+let
+  autoLoginEvaluation = noctaliaGreeterEvaluation.extendModules {
+    modules = [
+      {
+        qnix.desktop.noctalia-greeter.autoLogin = {
+          enable = true;
+          user = "check";
+        };
+      }
+    ];
+  };
+  lockedHome = mkHome (
+    waylandFeature.optionModules
+    ++ waylandFeature.__homeModuleFor "standalone-home"
+    ++ hyprlandFeature.optionModules
+    ++ hyprlandFeature.__homeModuleFor "standalone-home"
+    ++ terminalFeature.optionModules
+    ++ terminalFeature.__homeModuleFor "standalone-home"
+    ++ noctaliaFeature.optionModules
+    ++ noctaliaFeature.__homeModuleFor "standalone-home"
+    ++ [ { qnix.desktop.noctalia.lockOnStartup = true; } ]
+  );
+  startupHook = builtins.readFile lockedHome.config.programs.noctalia.settings.hooks.started;
+in
+assert !(noctaliaGreeterEvaluation.config.services.greetd.settings ? initial_session);
+assert autoLoginEvaluation.config.services.greetd.settings.initial_session.user == "check";
+assert !autoLoginEvaluation.config.services.greetd.restart;
+assert pkgs.lib.hasInfix "uwsm start -S -F"
+  autoLoginEvaluation.config.services.greetd.settings.initial_session.command;
+assert pkgs.lib.hasInfix "noctalia msg session lock" startupHook;
+assert pkgs.lib.hasInfix "restore" startupHook;
 assert
   waylandFeature.supportedEnvironments == [
     "nixos"
@@ -622,6 +653,7 @@ pkgs.runCommand "qnix-desktop-check"
     overrideConfig = noctaliaOverrideHomeEvaluation.config.xdg.configFile."noctalia/config.toml".source;
     wallpaperSaveHook = noctaliaHomeEvaluation.config.programs.noctalia.settings.hooks.wallpaper_changed;
     wallpaperStartedHook = noctaliaHomeEvaluation.config.programs.noctalia.settings.hooks.started;
+    lockedStartedHook = lockedHome.config.programs.noctalia.settings.hooks.started;
     noctaliaMock = pkgs.writeShellScriptBin "noctalia" ''
       printf '%s\n' "$*" >> "$HOME/noctalia-calls"
     '';
@@ -652,6 +684,15 @@ pkgs.runCommand "qnix-desktop-check"
 
     eval "$wallpaperStartedHook"
     IFS= read -r restoreCall < "$HOME/noctalia-calls"
+    test "$restoreCall" = "msg wallpaper-set DP-1 $NOCTALIA_WALLPAPER_PATH"
+
+    rm "$HOME/noctalia-calls"
+    "$lockedStartedHook"
+    {
+      IFS= read -r lockCall
+      IFS= read -r restoreCall
+    } < "$HOME/noctalia-calls"
+    test "$lockCall" = "msg session lock"
     test "$restoreCall" = "msg wallpaper-set DP-1 $NOCTALIA_WALLPAPER_PATH"
     touch $out
   ''
