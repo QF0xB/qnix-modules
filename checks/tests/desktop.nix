@@ -390,6 +390,14 @@ assert musicNixosEvaluation.config.qnix.persist.users."*".directories == [ ".con
 assert builtins.elem pkgs.obsidian notesHomeEvaluation.config.home.packages;
 assert notesHomeEvaluation.config.qnix.apps.notes.package == pkgs.obsidian;
 assert notesNixosEvaluation.config.qnix.persist.users."*".directories == [ ".config/obsidian" ];
+assert builtins.elem novalistHomeEvaluation.config.qnix.apps.novalist.package
+  novalistHomeEvaluation.config.home.packages;
+assert novalistHomeEvaluation.config.qnix.apps.novalist.package.pname == "novalist";
+assert novalistNixosEvaluation.config.qnix.persist.users."*".directories == [ ".config/Novalist" ];
+assert builtins.elem ".config/Novalist/Models"
+  novalistNixosEvaluation.config.qnix.persist.users."*".cache.directories;
+assert builtins.elem ".config/Novalist/extensions/com.novalist.speech/models"
+  novalistNixosEvaluation.config.qnix.persist.users."*".cache.directories;
 assert builtins.elem pkgs.obs-studio obsHomeEvaluation.config.home.packages;
 assert obsHomeEvaluation.config.qnix.apps.obs.package == pkgs.obs-studio;
 assert obsNixosEvaluation.config.qnix.persist.users."*".directories == [ ".config/obs-studio" ];

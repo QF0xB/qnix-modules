@@ -75,6 +75,7 @@ let
   bitwardenFeature = qnix.features."apps.bitwarden";
   musicFeature = qnix.features."apps.music";
   notesFeature = qnix.features."apps.notes";
+  novalistFeature = qnix.features."apps.novalist";
   obsFeature = qnix.features."apps.obs";
   socialFeature = qnix.features."apps.social";
   opencodeFeature = qnix.features."apps.opencode";
@@ -715,6 +716,12 @@ let
   notesNixosEvaluation = mkNixos (
     persistFeature.optionModules ++ notesFeature.optionModules ++ notesFeature.nixosModules
   );
+  novalistHomeEvaluation = mkHome (
+    novalistFeature.optionModules ++ novalistFeature.__homeModuleFor "standalone-home"
+  );
+  novalistNixosEvaluation = mkNixos (
+    persistFeature.optionModules ++ novalistFeature.optionModules ++ novalistFeature.nixosModules
+  );
   obsHomeEvaluation = mkHome (
     obsFeature.optionModules ++ obsFeature.__homeModuleFor "standalone-home"
   );
@@ -940,6 +947,7 @@ in
     bitwardenFeature
     musicFeature
     notesFeature
+    novalistFeature
     obsFeature
     socialFeature
     opencodeFeature
@@ -1059,6 +1067,8 @@ in
     musicHomeEvaluation
     notesHomeEvaluation
     notesNixosEvaluation
+    novalistHomeEvaluation
+    novalistNixosEvaluation
     obsHomeEvaluation
     obsNixosEvaluation
     socialHomeEvaluation

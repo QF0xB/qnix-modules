@@ -106,6 +106,7 @@ confirmation.
 | `apps.bitwarden`    | NixOS + Home       | `personal`              | —            | Vault/config?      | planned | Package/config; package availability uncertain                   |
 | `apps.music`        | NixOS + Home       | `hyprland`              | —            | `.config/tidal-hifi` | implemented | Tidal HiFi client with persisted profile state                  |
 | `apps.notes`        | NixOS + Home       | `hyprland`              | —            | `.config/obsidian`  | implemented | Obsidian notes application                                      |
+| `apps.novalist`     | NixOS + Home       | `hyprland`              | —            | `.config/Novalist`  | implemented | Novalist novel writing app; package vendored from nixpkgs#575378 until it merges |
 | `apps.obs`          | NixOS + Home       | `hyprland`              | —            | `.config/obs-studio` | implemented | OBS Studio creator tooling                                      |
 | `apps.social`       | NixOS + Home       | `hyprland`              | —            | `.config/Signal`, `.config/Element` | implemented | Signal Desktop and Element Desktop                              |
 

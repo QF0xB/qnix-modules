@@ -10,6 +10,7 @@ assert
     "apps.file-manager"
     "apps.music"
     "apps.notes"
+    "apps.novalist"
     "apps.obs"
     "apps.opencode"
     "apps.paseo"
