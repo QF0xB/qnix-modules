@@ -12,6 +12,7 @@ let
         qnix.security.yubikey = {
           login = true;
           sudo = true;
+          polkit = true;
           u2f.mappings.check = [ "key-handle,public-key,es256,+presence" ];
         };
       }
@@ -29,7 +30,8 @@ assert builtins.all
     && auth.unix.control == "sufficient"
     && auth.u2f.enable
     && auth.u2f.control == "sufficient"
-    && auth.unix.order < auth.u2f.order
+    && auth.u2f.order < auth.unix.order
+    && (!(auth ? unix-early) || auth.u2f.order < auth.unix-early.order)
     && auth.u2f.order < auth.deny.order
     && auth.deny.enable
     && auth.deny.control == "required"
@@ -38,6 +40,7 @@ assert builtins.all
     "login"
     "sddm"
     "sudo"
+    "polkit-1"
   ];
 assert pam.login.rules.auth.unix-early.order < pam.login.rules.auth.gnome_keyring.order;
 assert pam.login.rules.auth.gnome_keyring.order < pam.login.rules.auth.unix.order;
@@ -93,7 +96,12 @@ assert sopsEvaluation.config.sops.secrets.example.restartUnits == [ "example.ser
 assert yubikeyFeature.supportedEnvironments == [ "nixos" ];
 assert yubikeyEvaluation.config.services.pcscd.enable;
 assert yubikeyEvaluation.config.hardware.gpgSmartcards.enable;
-assert yubikeyEvaluation.config.security.pam.u2f.enable;
+assert !yubikeyEvaluation.config.security.pam.u2f.enable;
+assert builtins.elem pkgs.pam_u2f yubikeyEvaluation.config.environment.systemPackages;
+assert builtins.all (name: !yubikeyEvaluation.config.security.pam.services.${name}.u2f.enable) [
+  "su"
+  "other"
+];
 assert yubikeyEvaluation.config.security.pam.u2f.settings.cue == false;
 assert yubikeyEvaluation.config.security.pam.u2f.settings.origin == "pam://check";
 assert yubikeyEvaluation.config.security.pam.services.login.u2f.enable;

@@ -32,6 +32,12 @@
         description = "Whether to allow YubiKey authentication for sudo.";
       };
 
+      polkit = lib.mkOption {
+        type = lib.types.bool;
+        default = false;
+        description = "Whether to allow YubiKey authentication for polkit prompts.";
+      };
+
       autoLock = lib.mkOption {
         type = lib.types.bool;
         default = false;
@@ -62,13 +68,12 @@
   nixos =
     {
       cfg,
-      config,
       lib,
       pkgs,
       ...
     }:
     let
-      u2fEnabled = cfg.login || cfg.sudo;
+      u2fEnabled = cfg.login || cfg.sudo || cfg.polkit;
       authFile = pkgs.writeText "qnix-yubikey-u2f-mappings" (
         lib.concatStringsSep "\n" (
           lib.mapAttrsToList (
@@ -81,7 +86,7 @@
       assertions = [
         {
           assertion = !u2fEnabled || cfg.u2f.mappings != { };
-          message = "qnix.security.yubikey.u2f.mappings must be set when login or sudo authentication is enabled.";
+          message = "qnix.security.yubikey.u2f.mappings must be set when login, sudo or polkit authentication is enabled.";
         }
       ];
 
@@ -97,7 +102,8 @@
 
       environment.systemPackages =
         lib.optionals cfg.gui [ pkgs.yubioath-flutter ]
-        ++ lib.optional cfg.touchDetector pkgs.yubikey-touch-detector;
+        ++ lib.optional cfg.touchDetector pkgs.yubikey-touch-detector
+        ++ lib.optional u2fEnabled pkgs.pam_u2f;
 
       systemd.user.services.yubikey-touch-detector = lib.mkIf cfg.touchDetector {
         description = "Notify when a YubiKey operation is waiting for a touch";
@@ -109,7 +115,10 @@
       };
 
       security.pam.u2f = {
-        enable = u2fEnabled;
+        # The global switch is the default for every PAM service's u2f.enable,
+        # which would turn the key on for su, swaylock, run0 and every other
+        # service. Only the services below opt in.
+        enable = false;
         control = "sufficient";
         settings = {
           cue = cfg.u2f.cue;
@@ -118,11 +127,14 @@
         };
       };
 
-      security.pam.services = lib.genAttrs [ "login" "sddm" "sudo" ] (name: {
-        u2f.enable = if name == "sudo" then cfg.sudo else cfg.login;
-        # Password authentication runs first so it can unlock the keyring without
-        # waiting for a security key. Empty-password submissions fall through to U2F.
-        rules.auth.u2f.order = config.security.pam.services.${name}.rules.auth.unix.order + 10;
-      });
+      # pam_u2f keeps nixpkgs' rule order, ahead of the password. With the key
+      # plugged in it waits for a touch; without it, it fails at once and the
+      # stack falls through to the password prompt.
+      security.pam.services = lib.mapAttrs (_: enabled: lib.mkIf enabled { u2f.enable = true; }) {
+        login = cfg.login;
+        sddm = cfg.login;
+        sudo = cfg.sudo;
+        polkit-1 = cfg.polkit;
+      };
     };
 }
