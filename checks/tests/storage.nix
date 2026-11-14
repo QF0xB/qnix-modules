@@ -47,7 +47,7 @@ assert
   ];
 assert impermanenceEvaluation.config.fileSystems."/persist".neededForBoot;
 assert impermanenceEvaluation.config.fileSystems."/cache".neededForBoot;
-assert impermanenceEvaluation.config.services.journald.storage == "persistent";
+assert impermanenceEvaluation.config.services.journald.settings.Journal.Storage == "persistent";
 assert
   directoryPaths impermanenceEvaluation.config.environment.persistence."/persist".directories == [
     "/var/lib/nixos"

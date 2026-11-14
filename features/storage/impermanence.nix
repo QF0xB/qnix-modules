@@ -108,7 +108,7 @@
       fileSystems."/persist".neededForBoot = true;
       fileSystems."/cache".neededForBoot = true;
 
-      services.journald.storage = "persistent";
+      services.journald.settings.Journal.Storage = "persistent";
 
       environment.persistence = {
         "/persist" = {

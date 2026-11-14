@@ -155,7 +155,7 @@
 
           statusline.lualine = {
             enable = true;
-            disabledFiletypes.statusline = [ "alpha" ];
+            setupOpts.options.disabled_filetypes.statusline = [ "alpha" ];
           };
 
           tabline.nvimBufferline = {
