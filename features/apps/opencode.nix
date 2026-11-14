@@ -124,6 +124,24 @@
                 ]
               ) config.programs.mcp.servers
             );
+        # Daybreak variants of the GPT-6 models, next to the standard ones. Each
+        # sends OpenAI's cyber access program with every request.
+        settings.providers.openai.models = lib.listToAttrs (
+          map
+            (model: {
+              name = "gpt-6-${model}-daybreak";
+              value = {
+                modelID = "gpt-6-${model}";
+                name = "GPT-6 ${lib.toSentenceCase model} (Daybreak)";
+                body.access_programs.cyber = "daybreak_blue";
+              };
+            })
+            [
+              "sol"
+              "terra"
+              "luna"
+            ]
+        );
         context = agentPlugins.agentsContext;
         inherit skills;
 

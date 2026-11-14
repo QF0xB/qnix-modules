@@ -447,6 +447,16 @@ assert
     "standalone-home"
   ];
 assert opencodeHomeEvaluation.config.programs.opencode.enable;
+assert
+  opencodeHomeEvaluation.config.programs.opencode.settings.providers.openai.models."gpt-6-terra-daybreak"
+  == {
+    modelID = "gpt-6-terra";
+    name = "GPT-6 Terra (Daybreak)";
+    body.access_programs.cyber = "daybreak_blue";
+  };
+assert builtins.all (
+  model: opencodeHomeEvaluation.config.programs.opencode.settings.providers.openai.models ? "gpt-6-${model}-daybreak"
+) [ "sol" "terra" "luna" ];
 assert opencodeHomeEvaluation.config.xdg.desktopEntries.opencode.name == "OpenCode";
 assert opencodeHomeEvaluation.config.xdg.desktopEntries.opencode.terminal;
 assert pkgs.lib.hasInfix "opencode-launcher"
