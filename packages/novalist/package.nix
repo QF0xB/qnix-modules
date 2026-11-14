@@ -53,13 +53,16 @@ buildNpmPackage (finalAttrs: {
   installPhase = ''
     runHook preInstall
 
-    # electron-vite bundles every runtime dependency into out/
+    # electron-vite leaves package.json dependencies external; the shared
+    # document worker requires them at runtime, as electron-builder ships them
+    npm prune --omit=dev --no-save ''${npmFlags[@]}
     mkdir -p $out/share/novalist
-    cp -r out package.json resources $out/share/novalist/
+    cp -r out package.json resources node_modules $out/share/novalist/
 
     makeWrapper ${lib.getExe electron} $out/bin/novalist \
       --add-flags $out/share/novalist \
       --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations --enable-wayland-ime=true}}" \
+      --add-flags "--password-store=gnome-libsecret" \
       --set NOVALIST_BACKEND_PATH ${lib.getExe finalAttrs.passthru.backendFhs} \
       --set NOVALIST_DISABLE_SELF_UPDATE 1 \
       --inherit-argv0
