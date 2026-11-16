@@ -2,6 +2,7 @@
   features = {
     nixos = [
       "dev.git"
+      "dev.ios-install"
       "dev.nh"
       "dev.postman"
       "dev.docker"
@@ -12,6 +13,7 @@
       "dev.devenv"
       "dev.direnv"
       "dev.git"
+      "dev.ios-install"
       "dev.ios-remote-build"
       "dev.jetbrains"
       "dev.mcp"

@@ -36,6 +36,7 @@ assert
     "dev.direnv"
     "dev.docker"
     "dev.git"
+    "dev.ios-install"
     "dev.ios-remote-build"
     "dev.jetbrains"
     "dev.mcp"
