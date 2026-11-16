@@ -12,6 +12,7 @@
       "dev.devenv"
       "dev.direnv"
       "dev.git"
+      "dev.ios-remote-build"
       "dev.jetbrains"
       "dev.mcp"
       "dev.nixfmt"
