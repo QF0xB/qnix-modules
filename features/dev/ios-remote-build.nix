@@ -135,7 +135,9 @@
             "''${extra_args[@]}"
           )
           echo "Publishing $project ($tfm, $rid, $configuration) on $host"
-          ssh "$host" "cd $(printf '%q' "$remote_dir") && touch $marker && $(printf '%q ' "''${publish[@]}")"
+          # A login shell, because macOS only puts dotnet on PATH via /etc/zprofile.
+          build="cd $(printf '%q' "$remote_dir") && touch $marker && $(printf '%q ' "''${publish[@]}")"
+          ssh "$host" "\"\$SHELL\" -lc $(printf '%q' "$build")"
 
           mapfile -t packages < <(
             ssh "$host" "cd $(printf '%q' "$remote_dir") && find . -name '*.ipa' -newer $marker -not -path './.git/*'"
