@@ -55,7 +55,8 @@
         text = ''
           host=${lib.escapeShellArg cfg.host}
           remote_root=${lib.escapeShellArg cfg.remoteRoot}
-          tfm=${lib.escapeShellArg cfg.targetFramework}
+          default_tfm=${lib.escapeShellArg cfg.targetFramework}
+          tfm=""
           rid=${lib.escapeShellArg cfg.runtimeIdentifier}
           configuration=Release
           project=""
@@ -71,7 +72,7 @@
 
             -p, --project PATH     iOS .csproj (default: the only iOS project found)
             -H, --host HOST        SSH host (default: $host)
-            -f, --framework TFM    Target framework (default: $tfm)
+            -f, --framework TFM    Target framework (default: the project's iOS one, else $default_tfm)
             -r, --runtime RID      Runtime identifier (default: $rid)
             -c, --configuration C  Build configuration (default: $configuration)
             -o, --output DIR       Local artifact directory (default: <root>/artifacts/ios)
@@ -100,8 +101,8 @@
 
           if [[ -z "$project" ]]; then
             mapfile -t candidates < <(
-              find "$root" -name '*.csproj' -not -path '*/bin/*' -not -path '*/obj/*' -print0 \
-                | xargs -0 -r grep -l -E '<TargetFrameworks?>[^<]*-ios' \
+              find "$root" -name '*.csproj' -not -path '*/bin/*' -not -path '*/obj/*' -not -path '*/node_modules/*' -print0 \
+                | xargs -0 -r grep -l -E '<TargetFrameworks?[^>]*>[^<]*-ios' \
                 | sort
             )
             if ((''${#candidates[@]} != 1)); then
@@ -113,6 +114,15 @@
           fi
           project=$(realpath --relative-to="$root" "$project")
 
+          if [[ -z "$tfm" ]]; then
+            mapfile -t frameworks < <(grep -oE 'net[0-9]+\.[0-9]+-ios[0-9.]*' "$root/$project" | sort -u)
+            if ((''${#frameworks[@]} == 1)); then
+              tfm=''${frameworks[0]}
+            else
+              tfm=$default_tfm
+            fi
+          fi
+
           echo "Syncing $root to $host:$remote_dir"
           ssh "$host" "mkdir -p $(printf '%q' "$remote_dir")"
           rsync -az --delete \
@@ -122,6 +132,7 @@
             --exclude .idea \
             --exclude .vs \
             --exclude artifacts \
+            --exclude node_modules \
             "$root/" "$host:$remote_dir/"
 
           # Pick up only the packages this build writes, not stale ones in bin/.
