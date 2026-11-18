@@ -25,20 +25,25 @@
           match.modal = true;
           float = true;
           center = true;
+          max_size = "monitor_w*0.9 monitor_h*0.9";
           dim_around = true;
           stay_focused = true;
         }
         {
           name = "file-dialogs";
-          match.title = "^(Open File|Open Folder|Save File|Choose File|Choose Folder|File Upload|Open|Save As|Select File|Select Folder).*$";
+          match.title = "^(Open File|Open Folder|Save File|Choose File|Choose Folder|File Upload|Open|Save|Select File|Select Folder).*$";
           float = true;
           center = true;
+          size = "monitor_w*0.75 monitor_h*0.75";
+          max_size = "monitor_w*0.9 monitor_h*0.9";
         }
         {
           name = "portal-dialogs";
           match.class = "^(xdg-desktop-portal-gtk|org\.freedesktop\.impl\.portal\.desktop\.gtk)$";
           float = true;
           center = true;
+          size = "monitor_w*0.75 monitor_h*0.75";
+          max_size = "monitor_w*0.9 monitor_h*0.9";
         }
         {
           name = "authentication-dialogs";
@@ -99,9 +104,21 @@
           name = "yubico-authenticator";
           match.class = "^(yubioath-flutter|com\.yubico\.yubioath)$";
           float = true;
-          center = true;
-          size = "700 600";
+          center = false;
+          size = "460 600";
+          max_size = "monitor_w*0.9 monitor_h*0.85";
+          move = "60 (monitor_h-window_h-20)";
           no_screen_share = true;
+        }
+        {
+          name = "wireshark-dialogs";
+          match = {
+            class = "^(org\\.wireshark\\.Wireshark|[Ww]ireshark)$";
+            title = "^Wireshark · .+$";
+          };
+          float = true;
+          center = true;
+          max_size = "monitor_w*0.9 monitor_h*0.9";
         }
         {
           name = "seahorse";
