@@ -528,7 +528,6 @@
 
           plugins.enabled = [
             "conqazht/share-wifi"
-            "umedbazarov/crashes"
             "avivbintangaringga/nextboot-selector"
             "avivbintangaringga/nix-monitor"
             "knyrps/nix-search"
@@ -541,10 +540,6 @@
             "davemhammer/obsidian"
             "ahmedhossamdev/reading-list"
           ];
-          plugin_settings."umedbazarov/crashes" = {
-            agent_cmd = "paseo run --provider codex/gpt-6-luna";
-            terminal_cmd = "footclient -e";
-          };
 
           plugin_settings."ahmedhossamdev/reading-list" = {
             save_path = "~/Documents/personal/50 - Sources/ReadingList";

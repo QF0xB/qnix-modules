@@ -205,7 +205,6 @@ assert builtins.all (package: builtins.elem package noctaliaHomeEvaluation.confi
 ];
 assert noctaliaHomeEvaluation.config.programs.noctalia.settings.plugins.enabled == [
   "conqazht/share-wifi"
-  "umedbazarov/crashes"
   "avivbintangaringga/nextboot-selector"
   "avivbintangaringga/nix-monitor"
   "knyrps/nix-search"
@@ -218,12 +217,6 @@ assert noctaliaHomeEvaluation.config.programs.noctalia.settings.plugins.enabled 
   "davemhammer/obsidian"
   "ahmedhossamdev/reading-list"
 ];
-assert
-  noctaliaHomeEvaluation.config.programs.noctalia.settings.plugin_settings."umedbazarov/crashes".agent_cmd
-  == "paseo run --provider codex/gpt-6-luna";
-assert
-  noctaliaHomeEvaluation.config.programs.noctalia.settings.plugin_settings."umedbazarov/crashes".terminal_cmd
-  == "footclient -e";
 assert
   noctaliaHomeEvaluation.config.programs.noctalia.settings.plugin_settings."avivbintangaringga/nextboot-selector".privilege_command
   == "pkexec";
