@@ -1,0 +1,21 @@
+diff --git a/skills/engineering/diagnosing-bugs/SKILL.md b/skills/engineering/diagnosing-bugs/SKILL.md
+--- a/skills/engineering/diagnosing-bugs/SKILL.md
++++ b/skills/engineering/diagnosing-bugs/SKILL.md
+@@ -1,4 +1,4 @@
+ ---
+ name: diagnosing-bugs
+-description: Diagnosis loop for hard bugs and performance regressions. Use when the user says "diagnose"/"debug this", or reports something broken/throwing/failing/slow.
++description: Use for hard or intermittent bugs, unknown causes, and performance regressions requiring a reproducible diagnosis loop. A known small fix does not need this procedure.
+ ---
+diff --git a/skills/engineering/code-review/SKILL.md b/skills/engineering/code-review/SKILL.md
+--- a/skills/engineering/code-review/SKILL.md
++++ b/skills/engineering/code-review/SKILL.md
+@@ -1,4 +1,4 @@
+ ---
+ name: code-review
+-description: "Review the changes since a fixed point (commit, branch, tag, or merge-base) along two axes: Standards (does the code follow this repo's documented coding standards?) and Spec (does the code match what the originating issue/spec asked for?). Runs both reviews in parallel sub-agents and reports them side by side. Use when the user wants to review a branch, a PR, work-in-progress changes, or asks to \"review since X\"."
++description: Use when the user requests a standards-and-spec review or a review since a commit, branch, tag, or merge-base. Ordinary diff review does not require this two-axis procedure.
+ ---
+@@ -11 +11 @@
+-Both axes run as **parallel sub-agents** so they don't pollute each other's context, then this skill aggregates their findings.
++Run both axes in independent parallel subagents when available, using the actual tool schema and agent types. With Task, use `general` and specify each review role in its prompt. If delegation is unavailable, perform separate direct passes and disclose that they were not independent. Aggregate findings by axis.

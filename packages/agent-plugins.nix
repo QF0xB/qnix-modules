@@ -1,6 +1,7 @@
 # Pinned upstream plugins, skills, and rules for coding agents that are not
 # packaged in nixpkgs or llm-agents.
 {
+  applyPatches,
   callPackage,
   fetchFromGitHub,
   jq,
@@ -19,11 +20,14 @@ let
     hash = "sha256-2xZHdWkWJrPAJ8++qW0Xmb3eORZ41e+GsZjIphqTtlI=";
   };
 
-  mattpocockSrc = fetchFromGitHub {
-    owner = "mattpocock";
-    repo = "skills";
-    tag = "v1.3.1";
-    hash = "sha256-/mAmj7QFdyOWhLmy3Rt2/Hfsh5qwirTRax7hmQffFdo=";
+  mattpocockSrc = applyPatches {
+    src = fetchFromGitHub {
+      owner = "mattpocock";
+      repo = "skills";
+      tag = "v1.3.1";
+      hash = "sha256-/mAmj7QFdyOWhLmy3Rt2/Hfsh5qwirTRax7hmQffFdo=";
+    };
+    patches = [ ./skill-routing.patch ];
   };
 
   addyosmaniSrc = fetchFromGitHub {
@@ -118,6 +122,8 @@ in
       for skill in $(${lib.getExe jq} -r '.skills[]' ${mattpocockSrc}/.claude-plugin/plugin.json); do
         cp -r ${mattpocockSrc}/$skill $out/skills/
       done
+      chmod -R u+w $out/skills/research
+      cp ${../skills/research/SKILL.md} $out/skills/research/SKILL.md
     '';
 
     # Same constraint as above. The skills link to `../../references`, so
@@ -130,6 +136,9 @@ in
       for skill in ${lib.escapeShellArgs addyosmaniSkillNames}; do
         cp -r ${addyosmaniSrc}/skills/$skill $out/skills/
       done
+      chmod -R u+w $out/skills/git-workflow-and-versioning
+      cp ${../skills/git-workflow-and-versioning/SKILL.md} \
+        $out/skills/git-workflow-and-versioning/SKILL.md
     '';
 
     # Same constraint for the hook module, which only makes plan review
@@ -149,7 +158,11 @@ in
     lib.genAttrs cavemanSkillNames (name: "${cavemanSrc}/skills/${name}")
     // lib.concatMapAttrs (
       group: names: lib.genAttrs names (name: "${mattpocockSrc}/skills/${group}/${name}")
-    ) mattpocockSkillNames;
+    ) mattpocockSkillNames
+    // {
+      git-workflow-and-versioning = ../skills/git-workflow-and-versioning;
+      research = ../skills/research;
+    };
 
   claudeStatusLine = "bash ${cavemanSrc}/src/hooks/caveman-statusline.sh";
 

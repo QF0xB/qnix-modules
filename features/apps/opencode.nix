@@ -145,6 +145,19 @@
         context = agentPlugins.agentsContext;
         inherit skills;
 
+        # Keep Claude Desktop connector skills and competing routing layers out
+        # of OpenCode's catalog. Their files remain available in other harnesses.
+        settings.permission.skill = lib.genAttrs [
+          "built-in-browser"
+          "chrome-browser"
+          "computer-use"
+          "docs"
+          "cavecrew"
+          "caveman-explore"
+          "investigate-first"
+          "deep-research"
+        ] (_: "deny");
+
         tui.plugin = [ "@satas/opencode-usage-bar@0.2.0" ];
       };
 

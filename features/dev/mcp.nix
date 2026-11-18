@@ -55,18 +55,15 @@
           exec ${lib.escapeShellArgs ([ githubServer.command ] ++ githubServer.args)}
         ''
       );
+      codegraph = pkgs.callPackage ../../packages/codegraph-mcp.nix { };
       codegraphMcp = pkgs.writeShellApplication {
         name = "qnix-codegraph-mcp";
         runtimeInputs = [
           pkgs.git
-          pkgs.llm-agents.codegraph
+          codegraph
         ];
         text = ''
           if project_root="$(git rev-parse --show-toplevel 2>/dev/null)"; then
-            if [[ ! -d "$project_root/.codegraph" ]]; then
-              codegraph init "$project_root" --yes >&2
-            fi
-
             cd "$project_root"
           fi
 

@@ -529,6 +529,9 @@ assert builtins.hasAttr "agent-browser" opencodeHomeEvaluation.config.programs.o
 assert builtins.hasAttr "git-signing" opencodeHomeEvaluation.config.programs.opencode.skills;
 assert builtins.hasAttr "officecli" opencodeHomeEvaluation.config.programs.opencode.skills;
 assert builtins.hasAttr "pdfvision" opencodeHomeEvaluation.config.programs.opencode.skills;
+assert builtins.hasAttr "git-workflow-and-versioning"
+  opencodeHomeEvaluation.config.programs.opencode.skills;
+assert opencodeHomeEvaluation.config.programs.opencode.settings.permission.skill.docs == "deny";
 assert builtins.all
   (
     expected:
