@@ -78,6 +78,10 @@
       programs.mcp.servers =
         servers
         // {
+          # Remote server; authenticates through OAuth on first use.
+          cloudflare = {
+            url = "https://mcp.cloudflare.com/mcp";
+          };
           codegraph = {
             command = "${codegraphMcp}/bin/qnix-codegraph-mcp";
           };

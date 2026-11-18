@@ -61,6 +61,9 @@ assert builtins.hasAttr "codex-delegate"
 assert builtins.hasAttr "plannotator"
   developerHomeProfileEvaluation.config.programs.claude-code.plugins;
 assert builtins.hasAttr "context7" developerHomeProfileEvaluation.config.programs.mcp.servers;
+assert
+  developerHomeProfileEvaluation.config.programs.mcp.servers.cloudflare.url
+  == "https://mcp.cloudflare.com/mcp";
 assert builtins.elem ".claude.json" developerProfileEvaluation.config.qnix.persist.users."*".files;
 assert developerProfileEvaluation.config.virtualisation.docker.enable;
 assert developerProfileEvaluation.config.virtualisation.docker.logDriver == "local";
