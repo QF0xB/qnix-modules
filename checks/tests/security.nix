@@ -112,6 +112,8 @@ assert builtins.elem pkgs.yubioath-flutter yubikeyEvaluation.config.environment.
 assert builtins.elem pkgs.yubikey-touch-detector yubikeyEvaluation.config.environment.systemPackages;
 assert yubikeyEvaluation.config.systemd.user.services.yubikey-touch-detector.wantedBy
   == [ "graphical-session.target" ];
+assert builtins.elem pkgs.gnupg
+  yubikeyEvaluation.config.systemd.user.services.yubikey-touch-detector.path;
 assert yubikeyEvaluation.config.systemd.user.services.yubikey-touch-detector.serviceConfig.ExecStart
   == "${pkgs.yubikey-touch-detector}/bin/yubikey-touch-detector --notify";
 pkgs.runCommand "qnix-security-check" { } "touch $out"

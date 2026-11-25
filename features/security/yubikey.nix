@@ -108,6 +108,7 @@
       systemd.user.services.yubikey-touch-detector = lib.mkIf cfg.touchDetector {
         description = "Notify when a YubiKey operation is waiting for a touch";
         wantedBy = [ "graphical-session.target" ];
+        path = [ pkgs.gnupg ];
         serviceConfig = {
           ExecStart = "${pkgs.yubikey-touch-detector}/bin/yubikey-touch-detector --notify";
           Restart = "on-failure";
