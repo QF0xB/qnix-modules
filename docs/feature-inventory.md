@@ -99,6 +99,7 @@ confirmation.
 
 | Feature             | Likely environment | Profiles                | Dependencies | Persistence        | Status  | Notes                                                            |
 |---------------------|--------------------|-------------------------|--------------|--------------------|---------|------------------------------------------------------------------|
+| `apps.antigravity`  | NixOS + integrated + standalone Home | `developer` | Home Manager Antigravity CLI module, `llm-agents.nix` | `.gemini` (auth, sessions, config), RTK history | implemented | Antigravity CLI (`agy`) with MCP servers, an RTK rewrite hook and always-on rules plugin, and the shared agent skills including codex-delegate and git-signing |
 | `apps.browser`      | Integrated + standalone Home | `hyprland` | — | Browser profile | finished | Brave Origin browser package |
 | `apps.file-manager` | Integrated + standalone Home | `hyprland` | `desktop.xdg-folders` | — | finished | Nemo with XDG directory pins; Yazi with Git, GVfs mounting, archive, trash, and navigation tooling |
 | `apps.opencode`     | NixOS + integrated + standalone Home | `hyprland` | Home Manager OpenCode module, `llm-agents.nix` | OpenCode session, authentication data, installed skills | implemented | OpenCode with MCP servers, CodeGraph, RTK, Fence, and upstream Agent Browser, OfficeCLI, and PDFVision skills |

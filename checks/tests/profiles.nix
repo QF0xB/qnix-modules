@@ -64,6 +64,20 @@ assert builtins.hasAttr "context7" developerHomeProfileEvaluation.config.program
 assert
   developerHomeProfileEvaluation.config.programs.mcp.servers.cloudflare.url
   == "https://mcp.cloudflare.com/mcp";
+assert developerHomeProfileEvaluation.config.programs.antigravity-cli.enable;
+assert developerHomeProfileEvaluation.config.programs.antigravity-cli.enableMcpIntegration;
+assert builtins.all
+  (
+    skill: builtins.hasAttr skill developerHomeProfileEvaluation.config.programs.antigravity-cli.skills
+  )
+  [
+    "codex-delegate"
+    "git-signing"
+  ];
+assert builtins.all (file: builtins.hasAttr file developerHomeProfileEvaluation.config.home.file) [
+  ".gemini/config/plugins/qnix/hooks.json"
+  ".gemini/config/plugins/qnix/rules/AGENTS.md"
+];
 assert builtins.elem ".claude.json" developerProfileEvaluation.config.qnix.persist.users."*".files;
 assert developerProfileEvaluation.config.virtualisation.docker.enable;
 assert developerProfileEvaluation.config.virtualisation.docker.logDriver == "local";
@@ -74,6 +88,7 @@ assert builtins.all
   [
     ".agentsview"
     ".claude"
+    ".gemini"
     ".config/Code"
     ".ctx"
     ".vscode/extensions"

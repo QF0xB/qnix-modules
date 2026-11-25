@@ -8,6 +8,7 @@
       "dev.docker"
     ];
     home = [
+      "apps.antigravity"
       "apps.claude-code"
       "dev.ai-tools"
       "dev.devenv"
